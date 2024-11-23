@@ -1,0 +1,12 @@
+/* ORGANIZATION SETUP */
+.org-setup-form {
+  width: 100%; /* Default to 100% width for smaller screens */
+}
+
+@media (min-width: 1201px) {
+  .org-setup-form {
+    width: 60%; /* 50% width for screens larger than 1200px */
+  }
+}
+
+

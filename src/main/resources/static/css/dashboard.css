@@ -1,0 +1,44 @@
+ textarea {
+     resize: vertical !important;
+     min-height: 100px !important; /* Minimum height */
+     width: 100% !important;
+     overflow-y: auto !important;
+ }
+
+ .width-50{
+    width: 50%;
+ }
+
+ .width-75{
+     width: 75%;
+  }
+
+.width-100{
+    width: 100%
+}
+
+@media (min-width: 768px){
+    .width-md-50{
+        width: 50%;
+     }
+
+    .width-md-75{
+        width: 75%;
+      }
+
+    .width-md-100{
+        width: 100%
+    }
+}
+
+table {
+        border-collapse: collapse; /* Prevents double borders */
+    }
+
+table, th, td {
+    border: 1px solid black !important; /* Adds border to table, header, and cells */
+}
+
+.error{
+    color: red;
+}

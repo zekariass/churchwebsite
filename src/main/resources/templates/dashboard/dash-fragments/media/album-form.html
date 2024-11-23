@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Album</title>
+</head>
+<body th:fragment="album-form">
+  <form th:action="@{/media/albums/addNew}" method="POST">
+    <div th:fragment="album-form-fields">
+
+      <div class="my-3">
+        <label for="albumName" class="h3 form-label mb-3">Album Name</label>
+        <input id="albumName" th:field="*{album.albumName}" type="text" class="form-control">
+        <p th:if="${#fields.hasErrors('album')}" th:errors="*{album.albumName}" class="error"></p>
+      </div>
+      <div class="my-3">
+        <label for="albumDesc" class="h3 form-label mb-3">Album Description</label>
+        <textarea id="albumDesc" th:field="*{album.albumDescription}"></textarea>
+      </div>
+    </div>
+    <div>
+      <input type="submit" value="Save" class="success-button">
+    </div>
+  </form>
+  <script th:src="@{/js/custom-jodit.js}"></script>
+</body>
+</html>

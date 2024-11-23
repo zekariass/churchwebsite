@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>How to Use Summernote WYSIWYG Editor with Laravel? </title>
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.43/es2015/jodit.min.js" integrity="sha512-pyip6KKyZblKvXg4AaNzEfxJpaXUWGxdOQOC0+N+1wklVTMXpa5QSHUAxdoaAkWcmFhPY6TdoD2sWIeJ3G/c9A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+
+</head>
+<body th:fragment="blog-category-form">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.43/es2015/jodit.min.css" integrity="sha512-mU/geKgCEmXg9vy5p8Vj1NO8dhLmCxaOfP7nGCLqytQUgobAk5xpGFc96W1rUczWUNtZwY/7jvpPsQgvpsydYw==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+  <div class="g-3 container">
+     <form id="blog-cat-add-form" th:action="@{/dashboard/blogs/categories/processBlogCategoryForm}" th:object="${blogCategory}" th:method="POST">
+         <input th:field="*{blogCategoryId}" type="hidden">
+         <div class="width-100 width-md-50">
+             <label for="blogCategoryName" class="h3 form-label">Blog Category Name</label>
+             <input th:field="*{blogCategoryName}" class="form-control" id="blogCategoryName" placeholder="">
+<!--           <select th:field="*{blogCategoryName}" class="form-control" id="blogCategoryName" placeholder="">-->
+<!--             <option selected>Select Blog Category</option>-->
+<!--             <option th:each="categoryName: ${blogCategories}" th:text="categoryName">[[${categoryName}]]</option>-->
+<!--           </select>-->
+         </div>
+         <div class="width-100 width-md-75 my-3">
+             <label for="editor" class="h3 form-label mb-3">Blog Category Description</label>
+<!--             <textarea th:field="*{blogCategoryDescription}" rows="4" class="form-control" id="blogCategoryDesc"></textarea>-->
+             <textarea id="editor" th:data-content="*{blogCategoryDescription}"  th:field="*{blogCategoryDescription}"></textarea>
+
+             <!-- Hidden field to send the rich text data -->
+<!--             <input type="hidden" id="quill-content" name="blogCategoryDescription">-->
+         </div>
+        <div class="my-3">
+          <input class="success-button" type="submit" value="Submit">
+        </div>
+     </form>
+
+
+
+
+
+<!--  <textarea id="editor"></textarea>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.43/es2015/jodit.min.js" integrity="sha512-pyip6KKyZblKvXg4AaNzEfxJpaXUWGxdOQOC0+N+1wklVTMXpa5QSHUAxdoaAkWcmFhPY6TdoD2sWIeJ3G/c9A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+<!--    <script>-->
+<!--        const editor = Jodit.make("#editor", {-->
+<!--            "autofocus": true,-->
+<!--            "iframe": true,-->
+<!--            "uploader": {-->
+<!--              "insertImageAsBase64URI": true-->
+<!--            },-->
+<!--            //"readonly": true,-->
+<!--            "spellcheck": true,-->
+<!--            //"theme": "dark",-->
+<!--            "enter": "P",-->
+<!--            "defaultMode": "1",-->
+<!--            "saveHeightInStorage": true,-->
+<!--            "saveModeInStorage": true,-->
+<!--            "minHeight": 300,-->
+<!--            "iframeCSSLinks": [],-->
+<!--            "iframeBaseUrl": "http://",-->
+<!--            "allowDragAndDrop": true,-->
+<!--            //"buttons": "bold,italic,underline,strikethrough,eraser,ul,ol,font,fontsize,paragraph,lineHeight,superscript,subscript,classSpan,file,image,video,spellcheck,speechRecognize"-->
+
+
+<!--    });-->
+
+
+<!--  </script>-->
+      <script th:src="@{/js/custom-jodit.js}"></script>
+  </div>
+</body>
+</html>

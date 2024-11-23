@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="paging(nextPage, pageNum, label, tooltip)">
+    <a class="page-link"
+       th:href="@{${nextPage}+'?' + 'page=' + ${pageNum} + '&size=' + ${pageSize}}"
+       th:title="${tooltip}" rel="tooltip">
+        [[${label}]]
+    </a>
+</div>
+</body>
+</html>

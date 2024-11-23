@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summernote Full Configuration</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- Summernote CSS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <!-- Summernote JS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.css" rel="stylesheet">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
+
+</head>
+<body>
+<div id="summernote"></div>
+
+<script>
+  $(document).ready(function () {
+      $('#summernote').summernote({
+          placeholder: 'Write something amazing!',    // Placeholder text
+          height: 300,                                // Editor height
+          minHeight: 200,                             // Minimum height
+          maxHeight: 500,                             // Maximum height
+          focus: true,                                // Focus on editor load
+
+          // Toolbar configuration
+          toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+              ['fontname', ['fontname']],
+              ['fontsize', ['fontsize']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video', 'hr']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+          ],
+
+          // Font settings
+          fontNames: ['Arial', 'Comic Sans MS', 'Courier New', 'Times New Roman'],
+          fontNamesIgnoreCheck: ['My Custom Font'],   // Add custom fonts
+          fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '24', '36', '48', '64'],
+
+          // Line height options
+          lineHeights: ['1', '1.5', '2', '2.5', '3'],
+
+          // Style tags
+          styleTags: ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+
+          // Popover configuration
+          popover: {
+              image: [
+                  ['custom', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                  ['remove', ['removeMedia']]
+              ],
+              link: [
+                  ['link', ['linkDialogShow', 'unlink']]
+              ],
+              air: [
+                  ['color', ['color']],
+                  ['font', ['bold', 'underline', 'clear']],
+                  ['para', ['ul', 'paragraph']],
+                  ['insert', ['link', 'picture']]
+              ]
+          },
+
+          // Callbacks for custom behaviors
+          callbacks: {
+              onInit: function () {
+                  console.log('Editor initialized');
+              },
+              onFocus: function () {
+                  console.log('Editor focused');
+              },
+              onBlur: function () {
+                  console.log('Editor blurred');
+              },
+              onChange: function (contents, $editable) {
+                  console.log('Content changed:', contents);
+              },
+              onImageUpload: function (files) {
+                  // Custom image upload handling
+                  console.log('Image uploaded:', files);
+
+                  // Example: upload images to a server
+                  files.forEach(file => {
+                      const data = new FormData();
+                      data.append('file', file);
+
+                      // Simulate server upload
+                      fetch('https://example.com/upload', {
+                          method: 'POST',
+                          body: data
+                      }).then(response => response.json())
+                        .then(data => {
+                            // Insert uploaded image into the editor
+                            $('#summernote').summernote('insertImage', data.url, file.name);
+                        })
+                        .catch(err => console.error('Image upload failed', err));
+                  });
+              }
+          },
+
+          // Code view settings
+          codeviewFilter: true,              // Enable HTML filtering
+          codeviewIframeFilter: true,        // Enable iframe filtering
+
+          // Air mode configuration (if you want lightweight mode)
+          airMode: false,                    // Disable air mode (set to `true` to enable)
+          disableResizeEditor: false,        // Allow resizing of editor
+          disableDragAndDrop: false,         // Enable drag-and-drop
+
+          // Language settings
+          lang: 'en-US',                     // Default language
+      });
+  });
+</script>
+</body>
+</html>

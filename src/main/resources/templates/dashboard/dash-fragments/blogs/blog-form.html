@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Blog Form</title>
+</head>
+<body>
+    <div th:fragment="blog-form">
+        <div class="row g-3">
+            <div class="col-md-8">
+               <form th:action="@{/dashboard/blogs/processBlogForm}" th:object="${blog}" method="POST">
+                   <input th:if="${blog.blogId != 0}" type="hidden" th:field="*{blogId}">
+                   <div class="my-3">
+                       <label for="blogCategory" class="form-label">Blog Category</label>
+                       <select th:field="*{blogCategory}" class="form-select" id="blogCategoryName">
+                           <option th:each="category: ${blogCategories}" th:value="${category.blogCategoryId}" id="blogCategory" >[[${category.blogCategoryName}]]</option>
+                       </select>
+                   </div>
+                   <div class="my-3">
+                       <label for="blogTitle" class="form-label">Blog Title</label>
+                       <input type="text" class="form-control" th:field="*{blogTitle}" id="blogTitle">
+                   </div>
+                   <div class="my-3">
+                       <label for="editor" class="h3 form-label mb-3">Blog Description</label>
+                       <textarea id="editor" th:field="*{blogText}"></textarea>
+                   </div>
+                   <div class="row">
+                       <div th:if="${blog.blogId != 0}" class="my-3 col-md-3 col-12">
+                           <input id="isActive" type="checkbox" th:field="*{active}">
+                           <label for="isActive" class="h3 form-label mb-3">Active</label>
+                       </div>
+                       <div th:if="${blog.blogId != 0}" class="my-3 col-md-3 col-12">
+                           <input id="isArchived" type="checkbox" th:field="*{archived}">
+                           <label for="isArchived" class="h3 form-label mb-3">Archive</label>
+                       </div>
+                   </div>
+                   <input type="hidden" th:field="*{blogTime}">
+
+                   <input class="success-button" type="submit" value="Save" />
+               </form>
+            </div>
+            <div class="col-md-4">
+                <button th:onclick="@{/medias/form?for=blog}" class="success-button">Upload Media</button>
+            </div>
+    </div>
+        <script th:src="@{/js/custom-jodit.js}"></script>
+    </div>
+</body>
+</html>

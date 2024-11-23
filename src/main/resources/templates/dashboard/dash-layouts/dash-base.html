@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+  <meta
+          content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+          name="viewport"
+  />
+  <link rel="icon" th:href="@{/assets/img/kaiadmin/favicon.ico}" type="image/x-icon" />
+
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/assets/css/dash-fragments.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/theme.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}">
+
+<!--  &lt;!&ndash;  Quill JS for rich text&ndash;&gt;-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>-->
+<!--  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">-->
+
+  <!-- Fonts and icons -->
+  <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["assets/css/fonts.min.css"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+
+  <!-- CSS Files -->
+<!--  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+<!--  <link th:rel="stylesheet" th:href="@{/webjars/summernote/dist/summernote-bs5.min.css}"/>-->
+  <!--    <link th:rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />-->
+  <link th:rel="stylesheet" th:href="@{/assets/css/plugins.min.css}" />
+  <link th:rel="stylesheet" th:href="@{/assets/css/kaiadmin.min.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.43/es2015/jodit.min.css" integrity="sha512-mU/geKgCEmXg9vy5p8Vj1NO8dhLmCxaOfP7nGCLqytQUgobAk5xpGFc96W1rUczWUNtZwY/7jvpPsQgvpsydYw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.43/es2015/jodit.min.js" integrity="sha512-pyip6KKyZblKvXg4AaNzEfxJpaXUWGxdOQOC0+N+1wklVTMXpa5QSHUAxdoaAkWcmFhPY6TdoD2sWIeJ3G/c9A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+  <div th:replace="~{dashboard/dash-fragments/dash-sidebar::dash-sidebar}"></div>
+  <div th:replace="~{dashboard/dash-fragments/dash-main-panel::main-panel}"></div>
+</div>
+
+<!--<div layout:fragment="dash-content}"></div>-->
+<!--<div th:replace="~{dashboard/dash-fragments/dash-footer::dash-footer}"></div>-->
+
+<!--<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>-->
+<!--<script type="text/javascript" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>-->
+<!--<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+
+
+
+<!-- jQuery Scrollbar -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+
+<!-- Chart JS -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+
+<!-- jQuery Sparkline -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js}"></script>
+
+<!-- Chart Circle -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
+
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+
+<!-- Bootstrap Notify -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js}"></script>
+
+<!-- jQuery Vector Maps -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/jsvectormap/jsvectormap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/plugin/jsvectormap/world.js}"></script>
+
+<!-- Sweet Alert -->
+<script type="text/javascript" th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+
+<!-- Kaiadmin JS -->
+<script type="text/javascript" th:src="@{/assets/js/kaiadmin.min.js}"></script>
+
+<!-- Kaiadmin DEMO methods, don't include it in your project! -->
+<script type="text/javascript" th:src="@{/assets/js/setting-demo.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/demo.js}"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.9.1/summernote-bs5.min.js" integrity="sha512-qTQLA91yGDLA06GBOdbT7nsrQY8tN6pJqjT16iTuk08RWbfYmUz/pQD3Gly1syoINyCFNsJh7A91LtrLIwODnw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+<script>
+  $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+    type: "line",
+    height: "70",
+    width: "100%",
+    lineWidth: "2",
+    lineColor: "#177dff",
+    fillColor: "rgba(23, 125, 255, 0.14)",
+  });
+
+  $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+    type: "line",
+    height: "70",
+    width: "100%",
+    lineWidth: "2",
+    lineColor: "#f3545d",
+    fillColor: "rgba(243, 84, 93, .14)",
+  });
+
+  $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+    type: "line",
+    height: "70",
+    width: "100%",
+    lineWidth: "2",
+    lineColor: "#ffa534",
+    fillColor: "rgba(255, 165, 52, .14)",
+  });
+</script>
+
+</body>
+</html>

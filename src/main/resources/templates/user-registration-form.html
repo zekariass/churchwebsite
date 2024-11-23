@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration</title>
+  <link th:rel="stylesheet" type="text/css" media="all" th:href="@{/css/user-register.css}">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+</head>
+<body>
+<div class="container">
+  <div class="row vh-100 justify-content-center align-items-center">
+    <div class="col-12">
+      <div class="login-container my-4">
+        <h2 class="text-center">Register</h2>
+        <form th:action="@{/users/processUserRegistration}" method="POST">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <div class="mb-3">
+                <label for="email" class="form-label">Username</label>
+                <input type="text" class="form-control" th:field="*{user.username}" id="email" placeholder="Enter your email" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" th:field="*{user.password}" id="password" placeholder="Enter your password" required>
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm your password" required>
+              </div>
+              <div>
+                <ul>
+                  <li th:each="role: ${roles}">
+                    <input type="checkbox" th:value="${role.getRoleId()}" th:field="*{user.roles}"/>
+                    <span th:text="${role.getRoleName()}"></span>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" th:field="*{userProfile.firstName}" id="firstName" placeholder="Enter your first name" required>
+              </div>
+              <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" th:field="*{userProfile.lastName}" id="lastName" placeholder="Enter your last name" required>
+              </div>
+              <div class="mb-3">
+                <label for="christianName" class="form-label">Christian Name</label>
+                <input type="text" class="form-control" th:field="*{userProfile.christianName}" id="christianName" placeholder="Enter your christian name">
+              </div>
+              <div class="mb-3">
+                <label for="spiritualFatherName" class="form-label">Spiritual Father Name</label>
+                <input type="text" class="form-control" th:field="*{userProfile.spiritualFatherName}" id="spiritualFatherName" placeholder="Enter your spiritual father name">
+              </div>
+              <div>
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-control" th:field="*{userProfile.gender}" id="gender">
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                </select>
+              </div>
+              <!-- Phone -->
+              <div class="form-group mb-3">
+                <label for="phone">Phone Number</label>
+                <input type="text" th:field="*{userProfile.phoneNumber}" id="phone" class="form-control" placeholder="Enter your phone number">
+              </div>
+
+              <!-- Date of Birth -->
+              <div class="form-group mb-3">
+                <label for="dob">Date of Birth</label>
+                <input type="date" th:field="*{userProfile.dob}" id="dob" class="form-control" placeholder="Date of birth">
+              </div>
+
+              <!-- Description -->
+              <div class="form-group mb-3">
+                <label for="description">Description</label>
+                <textarea id="description" th:field="*{userProfile.description}" class="form-control" rows="3" placeholder="Tell us about yourself"></textarea>
+              </div>
+
+              <!-- Profile Photo -->
+              <div class="form-group mb-3">
+                <label for="profilePhoto">Profile Photo</label>
+                <input type="file" id="profilePhoto" class="form-control-file" placeholder="Upload your photo">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+        <div class="mt-2 text-center">
+          <p>Have an account? <a th:href="@{/user/login}">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

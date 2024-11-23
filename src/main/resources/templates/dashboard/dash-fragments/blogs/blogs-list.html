@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs-list</title>
+</head>
+<body th:fragment="blogs-list">
+    <div class="d-flex justify-content-end mx-3"> <a th:href="@{/dashboard/blogs/form}"><h6 class="text-decoration-underline">Add New Blog</h6></a> </div>
+    <h3 class="m-3">Blogs</h3>
+    <ul class="list-group list-group-light row">
+            <div th:each="blog: ${blogs}" class="col-md-6 col-12">
+                <div class="card" role="button">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-10" th:onclick="|window.location='@{/dashboard/blogs/detail/{id}(id=${blog.blogId})}'|">
+                                <li class="d-flex justify-content-between align-items-center">
+                                    <h4>[[${blog.blogTitle}]]</h4>
+                                </li>
+                                <p class="muted badge badge-secondary rounded-pill" th:text="${blog.blogTime != null ? blog.blogTime.format(@dateTimeFormatter) : ''}"></p>
+                            </div>
+                            <div class="col-2 d-flex justify-content-end"  th:onclick="|window.location='@{/dashboard/blogs/delete/{id}(id=${blog.blogId})}'|">
+                                <i class="fa-solid fa-lg fa-trash delete-icon" style="color: brown;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div>
+            <div th:replace="~{fragments/pagination::pagination}"></div>
+        </div>
+    </ul>
+</body>
+</html>

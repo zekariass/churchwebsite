@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:fragment="title">Title</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/home.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+</head>
+<body>
+    <header th:replace="~{fragments/header::header}"></header>
+    <main class="container mt-4">
+        <!-- This is where the child content will be injected -->
+        <div layout:fragment="content"></div>
+    </main>
+    <footer th:replace="~{fragments/footer::footer}">
+    </footer>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{dashboard/dash-layouts/dash-base}">
+<body>
+  <div th:fragment="main-panel">
+    <div class="main-panel">
+      <header th:replace="~{dashboard/dash-fragments/dash-header::dash-header}"></header>
+
+      <div class="container">
+        <div class="page-inner">
+          <main th:if="${activeDashPage == 'dash-landing'}">
+            <div th:replace="~{dashboard/dash-fragments/dash-landing::dash-landing}"></div>
+          </main>
+<!--          <main th:if="${activeDashPage == 'dash-landing'}" th:replace="~{dashboard/dash-fragments/dash-landing::dash-landing}"></main>-->
+          <main th:if="${activeDashPage == 'messages'}">
+            <div th:replace="~{dashboard/dash-fragments/messages::messages}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'events'}">
+            <div th:replace="~{dashboard/dash-fragments/events::events}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'organization-setup'}">
+            <div th:replace="~{dashboard/dash-fragments/organization-setup::organization-setup}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'organisation-exist'}">
+            <div th:replace="~{dashboard/dash-fragments/organisation-exist-error-page::organisation-exist}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'organisation-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/organisation-detail-page::organisation-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'organisation-not-exist'}">
+            <div th:replace="~{dashboard/dash-fragments/organisation-not-exist-page::organisation-not-exist}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'address'}">
+            <div th:replace="~{dashboard/dash-fragments/address-form::address-form}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'updateAddress'}">
+            <div th:replace="~{dashboard/dash-fragments/address-form-for-update::address-form-for-update}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'organisationBanner'}">
+            <div th:replace="~{dashboard/dash-fragments/organisation-banner-form::organisation-banner}"></div>
+          </main>
+
+          <!-- EVENT PAGES-->
+          <main th:if="${activeDashPage == 'eventRegistrationForm'}">
+            <div th:replace="~{dashboard/dash-fragments/events/event-registration-form::event-registration-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'eventsList'}">
+            <div th:replace="~{dashboard/dash-fragments/events/events-list::events-timeline}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'eventDetail'}">
+            <div th:replace="~{dashboard/dash-fragments/events/event-detail::event-detail}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'blog-category-form'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/blog-category-form::blog-category-form}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'blog-category-list'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/blog-category-list::blog-category-list}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'blog-category-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/blog-category-detail::blog-category-detail}"></div>
+          </main>
+          <main th:if="${activeDashPage == 'blog-form'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/blog-form::blog-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'blogs-list'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/blogs-list::blogs-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'blog-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/blog-detail::blog-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'media-form'}">
+            <div th:replace="~{dashboard/dash-fragments/media/media-form::media-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'media-links-list'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/media-links-list::media-links-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'albums-list'}">
+            <div th:replace="~{dashboard/dash-fragments/media/albums-list::albums-list}"></div>
+          </main>
+        </div>
+      </div>
+
+      <div th:replace="~{dashboard/dash-fragments/dash-footer::dash-footer}"></div>
+    </div>
+  </div>
+</body>
+</html>

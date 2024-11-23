@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Address</title>
+</head>
+<body>
+    <div th:fragment="address-form-for-update">
+        <form th:action="@{/address/processAddressUpdate}" th:object="${address}" method="POST">
+            <div class="row g-3">
+                <input th:field="*{addressId}" type="hidden" class="form-control"/>
+                <div class="col-12">
+                    <label for="street" class="form-label">Street</label>
+                    <input th:field="*{street}" type="text" class="form-control" id="street" placeholder="1234 Main St">
+                </div>
+                <div class="col-12">
+                    <label for="bldgno" class="form-label">Building No.</label>
+                    <input th:field="*{buildingNo}" type="text" class="form-control" id="bldgno">
+                </div>
+                <div class="col-12">
+                    <label for="houseno" class="form-label">House No.</label>
+                    <input th:field="*{houseNo}" type="text" class="form-control" id="houseno">
+                </div>
+                <div class="col-md-6">
+                    <label for="city" class="form-label">City</label>
+                    <input th:field="*{city}" type="text" class="form-control" id="city">
+                </div>
+                <div class="col-md-4">
+                    <label for="state" class="form-label">State</label>
+                    <input th:field="*{state}" type="text" class="form-control" id="state">
+                </div>
+                <div class="col-md-4">
+                    <label for="country" class="form-label">Country</label>
+                    <input th:field="*{country}" type="text" class="form-control" id="country">
+                </div>
+                <div class="col-md-2">
+                    <label for="postcode" class="form-label">Post Code</label>
+                    <input th:field="*{postCode}" type="text" class="form-control" id="postcode">
+                </div>
+                <input type="hidden" name="returnUrl" th:value="${param.returnUrl}">
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="success-button">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

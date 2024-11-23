@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:fragment="blog-category-list">
+        <ul class="list-group list-group-light row">
+            <div th:each="category: ${blogCategories}" class="col-md-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <li class="d-flex justify-content-between align-items-center row" role="button">
+                            <div class="col-md-10 col-9" th:onclick="|window.location='@{/dashboard/blogs/categories/detail/{id}(id=${category.blogCategoryId})}'|">
+                                <h4>[[${category.blogCategoryName}]]</h4>
+                            </div>
+                            <div class="col-md-2 col-3">
+                                <div class="badge badge-primary rounded-pill w-100 mb-3"> <span class="justify-content-end"> [[${category.blogs.size()}]]</span> blogs</div>
+                                <!--                            <div class="d-flex justify-content-end"  >-->
+                                <div class="d-flex justify-content-end"><i class="fa-solid fa-lg fa-trash delete-icon " style="color: brown;" th:onclick="|window.location='@{/dashboard/blogs/categories/delete/{id}(id=${category.blogCategoryId})}'|"></i></div>
+                                <!--                            </div>-->
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div th:replace="~{fragments/pagination::pagination}"></div>
+            </div>
+        </ul>
+</body>
+</html>

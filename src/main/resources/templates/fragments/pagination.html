@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div th:fragment="pagination">
+
+        <nav aria-label="Pagination" th:if="${totalPages > 0}">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                            <a th:replace="fragments/paging :: paging(${currentUrl}, 1, '<<', 'First Page')"></a>
+                        </li>
+                        <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${currentPage - 1}, 'Prev', 'Previous Page')"></a>
+                        </li>
+                        <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                        <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                            th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${page}, ${page}, 'Page ' + ${page})"></a>
+                        </li>
+                        <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                        <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${currentPage + 1},'Next', 'Next Page')"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${totalPages}, '>>', 'Last Page')"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+
+<!--                    <span>-->
+<!--                        Number of items-->
+<!--                        <select id="items-per-page" class="form-select w-25" th:onchange="updateListing()">-->
+<!--                            <option value="2">2</option>-->
+<!--                            <option value="2">4</option>-->
+<!--                            <option value="2">6</option>-->
+<!--                            <option value="2">8</option>-->
+<!--                            <option value="2">10</option>-->
+<!--                            <option value="2">12</option>-->
+<!--                            <option value="2">14</option>-->
+<!--                            <option value="2">16</option>-->
+<!--                            <option value="2">18</option>-->
+<!--                            <option value="2">20</option>-->
+<!--                        </select>-->
+<!--                    </span>-->
+                </div>
+            </div>
+        </nav>
+<!--        <script>-->
+<!--            function updateListing(){-->
+<!--                const itemsDrop = document.querySelector("#items-per-page");-->
+<!--                let currentUrl = new URL(window.location.href);-->
+<!--                currentUrl.searchParams.set("size", itemsDrop.value);-->
+<!--                window.location.href = currentUrl.toString();-->
+<!--            }-->
+
+<!--        </script>-->
+    </div>
+</body>
+</html>

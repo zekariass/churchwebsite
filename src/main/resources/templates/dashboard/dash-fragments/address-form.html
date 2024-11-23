@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Address</title>
+</head>
+<body>
+    <div th:fragment="address-form">
+            <div class="row g-3">
+                <div class="col-md-6 col-12">
+                    <label for="street" class="form-label">Street</label>
+                    <input th:field="*{address.street}" type="text" class="form-control" id="street" placeholder="1234 Main St">
+                </div>
+                <div class="col-md-6 col-12">
+                    <label for="bldgno" class="form-label">Building No.</label>
+                    <input th:field="*{address.buildingNo}" type="text" class="form-control" id="bldgno">
+                </div>
+                <div class="col-md-6 col-12">
+                    <label for="houseno" class="form-label">House No.</label>
+                    <input th:field="*{address.houseNo}" type="text" class="form-control" id="houseno">
+                </div>
+                <div class="col-md-6 col-12">
+                    <label for="city" class="form-label">City</label>
+                    <input th:field="*{address.city}" type="text" class="form-control" id="city">
+                </div>
+                <div class="col-md-6 col-12">
+                    <label for="state" class="form-label">State</label>
+                    <input th:field="*{address.state}" type="text" class="form-control" id="state">
+                </div>
+                <div class="col-md-6 col-12">
+                    <label for="country" class="form-label">Country</label>
+                    <input th:field="*{address.country}" type="text" class="form-control" id="country">
+                </div>
+                <div class="col-md-6 col-12">
+                    <label for="postcode" class="form-label">Post Code</label>
+                    <input th:field="*{address.postCode}" type="text" class="form-control" id="postcode">
+                </div>
+            </div>
+    </div>
+</body>
+</html>
