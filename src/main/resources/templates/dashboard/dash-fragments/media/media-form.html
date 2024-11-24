@@ -9,50 +9,52 @@
       <h3>Add New Media</h3>
     <form th:action="@{/medias/form}" th:object="${media}" method="POST" enctype="multipart/form-data">
       <div class="row g-3 width-md-75">
-<!--        <input th:if="${media.mediaId != 0}" type="hidden" th:field="*{mediaId}">-->
         <div class="my-3">
-
-          <div class="my-3">
+          <div th:if="${forAlbumId == 0}"  class="my-3">
             <label for="existingAlbums" class="form-label">Album</label>
             <select th:field="*{album}" class="form-select" id="existingAlbums">
               <option value="0">...Select album...</option>
-              <option th:each="album: ${albums}" th:value="${album.albumId}">[[${album.albumName}]]</option>
+                <option th:each="album : ${albums}"
+                        th:value="${album.albumId}"
+                        th:text="${album.albumName}">
+                </option>
             </select>
               <div th:if="${#fields.hasErrors('album')}">
                   <p th:errors="*{album}" class="error"></p>
               </div>
+              <div class="mt-3" id="newAlbumDiv">
+                  <input type="checkbox" class="" id="newAlbumCheck" autocomplete="off">
+                  <label class="" for="newAlbumCheck">Create New Album</label>
+              </div>
           </div>
-          <div class="mt-3" id="newAlbumDiv">
-            <input type="checkbox" class="" id="newAlbumCheck" autocomplete="off">
-            <label class="" for="newAlbumCheck">Create New Album</label>
-          </div>
+
+            <input th:if="${forAlbumId > 0}" type="hidden" name="album" th:value="${forAlbumId}">
+
           <div id="new-album-form" class="m-4" style="background-color: #ffffff; display: none">
               <div class="p-4">
                   <div th:replace="~{dashboard/dash-fragments/media/album-form::album-form-fields}"></div>
               </div>
           </div>
         </div>
+          <div class="mb-3">
+              <select th:field="*{mediaType}" class="form-select">
+                  <option value="Image">Image</option>
+                  <option value="Video">Video</option>
+              </select>
+          </div>
         <div class="my-3">
-          <label for="mediaType" class="form-label">Media Type</label>
-          <select th:field="*{mediaType}" class="form-select" id="mediaType">
-            <option th:each="mediatype: ${mediaTypes}" th:value="${mediatype.mediaTypeId}" >[[${mediatype.mediaTypeName}]]</option>
-          </select>
-        </div>
-<!--        <div class="my-3">-->
-<!--          <label for="mediaPath" class="h3 form-label mb-3">Media File</label>-->
-<!--          <input id="mediaPath" name="mediaPath" type="file" class="form-control">-->
-<!--        </div>-->
-        <div class="my-3">
-          <label for="mediaPaths" class="h3 form-label mb-3">Media Files</label>
-          <input id="mediaPaths" name="mediaPaths" type="file" class="form-control" multiple required>
+          <label for="mediaPaths" class="h3 form-label mb-3">Media Files (videos or images only)</label>
+          <input id="mediaPaths" name="mediaPaths" type="file" class="form-control" multiple required accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/svg+xml, image/tiff, image/x-icon, video/mp4, video/x-msvideo, video/quicktime, video/webm, video/x-matroska, video/x-flv, video/x-ms-wmv">
         </div>
           <div class="my-3">
               <label for="mediaName" class="h3 form-label mb-3">Media Name</label>
               <input id="mediaName" th:field="*{mediaName}" type="text" class="form-control" maxlength="100">
-          </div>
-<!--        <input type="hidden" th:field="*{uploadTime}">-->
-          <div>
-            <input class="success-button" type="submit" value="Save" />
+<!--          </div>-->
+<!--            <input type="hidden" name="returnUrl" th:value="${currentUrl}">-->
+<!--          <div>-->
+            <div class="mt-3">
+                <input class="success-button" type="submit" value="Save" />
+            </div>
           </div>
         </div>
         <script th:src="@{/js/media.js}"></script>

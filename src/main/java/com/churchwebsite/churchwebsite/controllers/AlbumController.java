@@ -3,6 +3,7 @@ package com.churchwebsite.churchwebsite.controllers;
 import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Media;
 import com.churchwebsite.churchwebsite.services.AlbumService;
+import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,21 +20,25 @@ import java.util.List;
 public class AlbumController {
 
     private final AlbumService albumService;
+    private final PaginationService paginationService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public AlbumController(AlbumService albumService) {
+    public AlbumController(AlbumService albumService, PaginationService paginationService) {
         this.albumService = albumService;
+        this.paginationService = paginationService;
     }
 
     @GetMapping("")
     public String showAlbumList(Model model,
                                 @RequestParam(value = "page", defaultValue = "1", required = false) int page,
-                                @RequestParam(value = "size", defaultValue = "4", required = false) int pageSize,
+                                @RequestParam(value = "size", required = false) Integer pageSize,
                                 HttpServletRequest request){
 
         String baseMediaPath = File.separator + Paths.get("media/centre") + File.separator;
+
+        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
         Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize);
         List<Album> albums = pagedAlbums.getContent();
@@ -66,6 +71,19 @@ public class AlbumController {
 
         model.addAttribute("album", new Album());
         model.addAttribute("activeDashPage", "album-form");
+
+        return DASHBOARD_MAIN_PANEL;
+    }
+
+    @GetMapping("/detail/{id}")
+    public String showAlbumDetail(@PathVariable(value = "id", required = false) int albumId, Model model){
+
+        Album album = albumService.getAlbumById(albumId);
+        String baseMediaPath = File.separator + Paths.get("media/centre") + File.separator;
+
+        model.addAttribute("album", album);
+        model.addAttribute("activeDashPage", "album-detail");
+        model.addAttribute("baseMediaPath", baseMediaPath);
 
         return DASHBOARD_MAIN_PANEL;
     }

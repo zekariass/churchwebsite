@@ -40,7 +40,7 @@
                </form>
             </div>
             <div class="col-md-4">
-                <button th:onclick="@{/medias/form?for=blog}" class="success-button">Upload Media</button>
+                <button th:onclick="|window.location='@{/medias/form?forAlbumId={id}(id=${album.albumId})}'|" class="success-button">Upload Media</button>
             </div>
     </div>
         <script th:src="@{/js/custom-jodit.js}"></script>

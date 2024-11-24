@@ -39,4 +39,9 @@ public class AlbumService {
                 ()->new RuntimeException("No album found!")
         );
     }
+
+    public Album findAlbumByAlbumName(String blog) {
+
+       return albumRepository.findByAlbumName(blog);
+    }
 }

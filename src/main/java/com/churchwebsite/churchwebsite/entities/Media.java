@@ -24,14 +24,7 @@ public class Media implements Cloneable {
     @CreatedDate
     private LocalDateTime uploadTime;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.REFRESH,
-            CascadeType.MERGE,
-            CascadeType.DETACH
-    })
-    @JoinColumn(name = "media_type_id")
-    private MediaType mediaType;
+    private String mediaType;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "album_id")
@@ -49,12 +42,12 @@ public class Media implements Cloneable {
     public Media() {
     }
 
-    public Media(String mediaName, String mediaPath, MediaType mediaType, Album album, User uploadedBy) {
+    public Media(String mediaName, String mediaPath, String mediaType, Album album, boolean archived) {
         this.mediaName = mediaName;
         this.mediaPath = mediaPath;
         this.mediaType = mediaType;
         this.album = album;
-        this.uploadedBy = uploadedBy;
+        this.archived = archived;
     }
 
     public int getMediaId() {
@@ -89,19 +82,19 @@ public class Media implements Cloneable {
         this.uploadTime = uploadTime;
     }
 
-    public MediaType getMediaType() {
+    public String getMediaType() {
         return mediaType;
     }
 
-    public void setMediaType(MediaType mediaType) {
+    public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
     }
 
-    public Album getAlbum() {
+    public @NotNull(message = "Album must be selected or created new one.") Album getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album) {
+    public void setAlbum(@NotNull(message = "Album must be selected or created new one.") Album album) {
         this.album = album;
     }
 
@@ -124,13 +117,14 @@ public class Media implements Cloneable {
     @Override
     public String toString() {
         return "Media{" +
-                "mediaName='" + mediaName + '\'' +
+                "mediaId=" + mediaId +
+                ", mediaName='" + mediaName + '\'' +
                 ", mediaPath='" + mediaPath + '\'' +
                 ", uploadTime=" + uploadTime +
                 ", mediaType=" + mediaType +
                 ", album=" + album +
-                ", mediaId=" + mediaId +
-                ", isArchived=" + archived +
+                ", uploadedBy=" + uploadedBy.getUsername() +
+                ", archived=" + archived +
                 '}';
     }
 

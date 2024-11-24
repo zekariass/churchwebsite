@@ -86,6 +86,10 @@
           <main th:if="${activeDashPage == 'albums-list'}">
             <div th:replace="~{dashboard/dash-fragments/media/albums-list::albums-list}"></div>
           </main>
+
+          <main th:if="${activeDashPage == 'album-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/media/album-detail::album-detail}"></div>
+          </main>
         </div>
       </div>
 

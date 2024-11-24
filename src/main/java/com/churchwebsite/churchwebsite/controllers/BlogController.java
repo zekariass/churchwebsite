@@ -1,12 +1,10 @@
 package com.churchwebsite.churchwebsite.controllers;
 
+import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Blog;
 import com.churchwebsite.churchwebsite.entities.BlogCategory;
 import com.churchwebsite.churchwebsite.entities.Settings;
-import com.churchwebsite.churchwebsite.services.BlogCategoryService;
-import com.churchwebsite.churchwebsite.services.BlogService;
-import com.churchwebsite.churchwebsite.services.SettingsService;
-import com.churchwebsite.churchwebsite.services.UserService;
+import com.churchwebsite.churchwebsite.services.*;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,7 @@ public class BlogController {
     private final BlogCategoryService blogCategoryService;
     private final SettingsService settingsService;
     private final UserService userService;
+    private final AlbumService albumService;
 
     @Value("${settings.default.page.size:10}")
     private int defaultPageSize;
@@ -35,10 +34,12 @@ public class BlogController {
     public BlogController(BlogService blogService,
                           BlogCategoryService blogCategoryService,
                           SettingsService settingsService,
+                          AlbumService albumService,
                           UserService userService) {
         this.blogService = blogService;
         this.blogCategoryService = blogCategoryService;
         this.settingsService = settingsService;
+        this.albumService = albumService;
         this.userService = userService;
     }
 
@@ -47,10 +48,12 @@ public class BlogController {
     public String showNewBlogForm(Model model){
 
         List<BlogCategory> blogCategories = blogCategoryService.findAll();
+        Album album = albumService.findAlbumByAlbumName("Blog");
 
         model.addAttribute("blog", new Blog());
         model.addAttribute("blogCategories", blogCategories);
         model.addAttribute("activeDashPage", "blog-form");
+        model.addAttribute("album", album);
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -58,7 +61,6 @@ public class BlogController {
     @PostMapping("/processBlogForm")
     public String processBlogForm(@ModelAttribute Blog blog, Model model){
 
-        System.out.println("BLOG ==============================>>>: "+ blog);
         CustomUserDetails userDetails = userService.getCurrentUser();
 
         // Set active and archive status of blog if new/existing object
@@ -123,8 +125,6 @@ public class BlogController {
 
         List<BlogCategory> blogCategories = blogCategoryService.findAll();
         Blog blog = blogService.findById(blogId);
-
-        System.out.println("BLOG ==============================>>>: "+ blog);
 
         model.addAttribute("activeDashPage", "blog-form");
         model.addAttribute("blog", blog);
