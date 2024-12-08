@@ -236,17 +236,16 @@ CREATE TABLE `news` (
     FOREIGN KEY (`posted_by`) REFERENCES `user`(`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `information`;
-CREATE TABLE `information` (
-    `information_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `information_title` VARCHAR(255) NOT NULL,
-    `information_description` MEDIUMTEXT DEFAULT NULL,
-    `post_time` DATETIME DEFAULT NULL,
+USE church_website;
+DROP TABLE IF EXISTS `landing_content`;
+CREATE TABLE `landing_content` (
+    `landing_content_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `landing_content_title` VARCHAR(255) NOT NULL,
+    `content` MEDIUMTEXT DEFAULT NULL,
+    `content_creation_time` DATETIME DEFAULT NULL,
     `is_active` BOOLEAN DEFAULT TRUE,
     `is_featured` BOOLEAN DEFAULT FALSE,
-    `is_archived` BOOLEAN DEFAULT FALSE,
-    `user_id` INT NOT NULL,
-    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
+    `is_archived` BOOLEAN DEFAULT FALSE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `payment_method`;

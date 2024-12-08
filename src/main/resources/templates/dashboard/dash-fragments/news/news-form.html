@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>News Form</title>
+  <link type="text/css" rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body th:fragment="news-form">
+  <div>
+    <form  th:action="${news.newsId == 0? '/dashboard/news/processForm': '/dashboard/news/processUpdateForm'}"
+           th:object="${news}"
+           method="POST">
+      <div class="mb-3">
+        <h3>Register a News</h3>
+      </div>
+      <input th:field="*{newsId}" type="hidden" id="newsId">
+      <div class="row g-3 ">
+        <div class="col-12">
+          <label for="newsTitle" class="form-label">News Title</label>
+          <input th:field="*{newsTitle}" type="text" class="form-control width-md-50" id="newsTitle">
+        </div>
+        <div class="col-12">
+          <label for="editor" class="form-label">News</label>
+          <textarea id="editor" th:field="*{newsText}" class="form-control width-md-50" rows="4"></textarea>
+        </div>
+        <div class="form-check col">
+          <input th:field="*{featured}" class="form-check-input" type="checkbox" id="isFeatured1">
+          <label class="form-check-label" for="isFeatured1">
+            Feature This News
+          </label>
+        </div>
+      </div>
+      <div class="mt-3">
+        <button type="submit" class="success-button">Save</button>
+      </div>
+    </form>
+  </div>
+  <script th:src="@{/js/custom-jodit.js}"></script>
+</body>
+</html>

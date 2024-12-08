@@ -77,7 +77,7 @@ public class OrganisationDetailController {
             model.addAttribute("activeDashPage", "organisation-not-exist");
         }else {
             model.addAttribute("activeDashPage", "organisation-detail");
-            model.addAttribute("baseBannersPath", baseBannersPath);
+//            model.addAttribute("baseBannersPath", baseBannersPath);
             model.addAttribute("organisationDetail", orgDetail);
         }
 

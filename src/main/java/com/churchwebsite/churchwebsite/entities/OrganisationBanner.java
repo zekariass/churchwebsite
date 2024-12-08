@@ -2,6 +2,8 @@ package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "organisation_banner")
 public class OrganisationBanner {
@@ -33,8 +35,11 @@ public class OrganisationBanner {
     }
 
     public String getOrganisationBanner() {
-        return organisationBanner;
+        String orgBanner = new String(organisationBanner);
+        return orgBanner.replace("\\", "/");
+//        return organisationBanner;
     }
+
 
     public void setOrganisationBanner(String organisationBanner) {
         this.organisationBanner = organisationBanner;

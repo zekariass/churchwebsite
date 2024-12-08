@@ -5,7 +5,9 @@
     <title>Title</title>
 </head>
 <body th:fragment="blog-category-list">
-        <ul class="list-group list-group-light row">
+    <h3 class="m-3 text-center text-md-start">Blog Categories</h3>
+
+    <ul class="list-group list-group-light row">
             <div th:each="category: ${blogCategories}" class="col-md-6 col-12">
                 <div class="card">
                     <div class="card-body">
@@ -27,5 +29,9 @@
                 <div th:replace="~{fragments/pagination::pagination}"></div>
             </div>
         </ul>
+        <!-- Show a message if there are no blogs -->
+        <div th:if="${blogCategories.size() == 0}">
+            <h4 colspan="4" class="text-center text-muted">No Blog Categories Found.</h4>
+        </div>
 </body>
 </html>

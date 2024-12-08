@@ -15,23 +15,50 @@
     align-items: center;
 }
 
-
-.main-header{
-    background-color: #DEF2F9;
-    height: 20vh;
-}
-
-@media (max-height: 480px){
-    height: 45vh;
-}
-
-@media (max-height: 768px){
-    height: 30vh;
-}
-
 body {
    background-color: #f8f9fa; /* Light background */
   }
+
+
+/* ============== HEADER ========================== */
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+
+footer{
+    position: relative;
+
+    bottom: 0;
+    left: 0;
+   }
+
+.content-page{
+    margin-top: 15px;
+    margin-left: 10%;
+    margin-right: 5%;
+}
+
+.content{
+    background-color: #FCFBF4 !important;
+}
+
+@media (max-width: 768px){
+    .content-page{
+        margin-left: 5%;
+        margin-right: 4%;
+    }
+}
+
+@media (min-width: 769px){
+     .side-links{
+        min-height: 100vh;
+    }
+}
+
+
 
 
 

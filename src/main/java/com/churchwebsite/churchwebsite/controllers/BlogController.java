@@ -24,6 +24,7 @@ public class BlogController {
     private final SettingsService settingsService;
     private final UserService userService;
     private final AlbumService albumService;
+    private final PaginationService paginationService;
 
     @Value("${settings.default.page.size:10}")
     private int defaultPageSize;
@@ -35,12 +36,14 @@ public class BlogController {
                           BlogCategoryService blogCategoryService,
                           SettingsService settingsService,
                           AlbumService albumService,
-                          UserService userService) {
+                          UserService userService,
+                          PaginationService paginationService) {
         this.blogService = blogService;
         this.blogCategoryService = blogCategoryService;
         this.settingsService = settingsService;
         this.albumService = albumService;
         this.userService = userService;
+        this.paginationService = paginationService;
     }
 
 
@@ -81,20 +84,21 @@ public class BlogController {
 
     @GetMapping("")
     public String showBlogsList( @RequestParam(value = "page", defaultValue = "1", required = false) int page,
-                                    @RequestParam(value = "size", defaultValue = "4", required = false) int pageSize,
+                                    @RequestParam(value = "size", required = false) Integer pageSize,
                                     HttpServletRequest request,
                                     Model model){
 
-        Settings settings = settingsService.findBySettingName("DEFAULT_PAGE_SIZE");
+//        Settings settings = settingsService.findBySettingName("DEFAULT_PAGE_SIZE");
 
-        if(settings != null){
-            pageSize = settings.getSettingValueInt();
-        }else{
-            pageSize = defaultPageSize;
-        }
+//        if(settings != null){
+//            pageSize = settings.getSettingValueInt();
+//        }else{
+//            pageSize = defaultPageSize;
+//        }
+
+        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
         Page<Blog> pagedBlog = blogService.findAll(page, pageSize);
-
         List<Blog> blogs = pagedBlog.getContent();
 
         model.addAttribute("activeDashPage", "blogs-list");

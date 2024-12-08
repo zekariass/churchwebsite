@@ -6,18 +6,27 @@ import com.churchwebsite.churchwebsite.services.AlbumService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("medias/albums")
 public class AlbumController {
+
+    @Autowired
+    private  ResourceLoader resourceLoader;
+
 
     private final AlbumService albumService;
     private final PaginationService paginationService;
@@ -40,11 +49,11 @@ public class AlbumController {
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize);
+        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, Sort.by(Sort.Order.desc("creationTime")));
         List<Album> albums = pagedAlbums.getContent();
 
         model.addAttribute("activeDashPage", "albums-list");
-        model.addAttribute("currentPage", pagedAlbums.getNumber()+1);
+        model.addAttribute("currentPage", pagedAlbums.getNumber() + 1);
         model.addAttribute("totalItems", pagedAlbums.getTotalElements());
         model.addAttribute("totalPages", pagedAlbums.getTotalPages());
         model.addAttribute("pageSize", pageSize);

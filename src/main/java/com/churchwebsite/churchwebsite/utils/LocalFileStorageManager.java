@@ -14,7 +14,9 @@ import java.util.UUID;
 public class LocalFileStorageManager {
 
     // File storage location
-    private final Path fileStorageLocation;
+    private Path fileStorageLocation;
+
+    public LocalFileStorageManager(){}
 
     public LocalFileStorageManager(String storageDir) {
 
@@ -39,31 +41,49 @@ public class LocalFileStorageManager {
         Path targetLocation = this.resolveFilename(filename);
         try{
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            return filename;
+            String fullPath = targetLocation.toString();
+            return fullPath.split("static")[1];
+//            return filename;
         }catch (IOException exc){
             throw new RuntimeException("Unable to copy the file from filestream.");
         }
 
     }
 
-    public Resource loadFileAsResource(String filename){
+    public Resource downloadFileAsResource(String filePath){
 
-        // Resolve the filename
-        Path fileLocation  = this.resolveFilename(filename);
+        fileStorageLocation = Paths.get("src", "main", "resources", "static", filePath).normalize();
 
         try {
-
-            // Create the downloadable resource
-            Resource resource = new UrlResource(fileLocation.toUri());
-            if (resource.exists()){
-                return resource;
-            }else{
-                throw new RuntimeException("File not found: "+ filename);
+            Resource resource = new UrlResource(fileStorageLocation.toUri());
+            if(!resource.exists()){
+                throw new RuntimeException("File not found: "+ fileStorageLocation.getFileName());
             }
-        }catch (IOException exc){
-            throw new RuntimeException("File not found: "+ filename, exc);
+
+            return resource;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+//
+//        // Resolve the filename
+//        Path fileLocation  = this.resolveFilename(filename);
+//
+//        try {
+//
+//            // Create the downloadable resource
+//            Resource resource = new UrlResource(fileLocation.toUri());
+//            if (resource.exists()){
+//                return resource;
+//            }else{
+//                throw new RuntimeException("File not found: "+ filename);
+//            }
+//        }catch (IOException exc){
+//            throw new RuntimeException("File not found: "+ filename, exc);
+//        }
+
     }
+
+
 
     public void deleteFile(String fileName){
        try{
@@ -79,4 +99,12 @@ public class LocalFileStorageManager {
         return this.fileStorageLocation.resolve(filename).normalize();
     }
 
+
+    public Path getFileStorageLocation() {
+        return fileStorageLocation;
+    }
+
+    public void setFileStorageLocation(Path fileStorageLocation) {
+        this.fileStorageLocation = fileStorageLocation;
+    }
 }

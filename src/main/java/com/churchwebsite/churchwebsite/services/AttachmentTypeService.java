@@ -20,4 +20,8 @@ public class AttachmentTypeService {
     public List<AttachmentType> getMediaTypeList() {
         return attachmentTypeRepository.findAll();
     }
+
+    public List<AttachmentType> findAll() {
+        return attachmentTypeRepository.findAll();
+    }
 }

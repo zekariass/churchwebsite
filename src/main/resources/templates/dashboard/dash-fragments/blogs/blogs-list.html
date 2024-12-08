@@ -6,7 +6,7 @@
 </head>
 <body th:fragment="blogs-list">
     <div class="d-flex justify-content-end mx-3"> <a th:href="@{/dashboard/blogs/form}"><h6 class="text-decoration-underline">Add New Blog</h6></a> </div>
-    <h3 class="m-3">Blogs</h3>
+    <h3 class="m-3 text-center text-md-start">Blogs</h3>
     <ul class="list-group list-group-light row">
             <div th:each="blog: ${blogs}" class="col-md-6 col-12">
                 <div class="card" role="button">
@@ -25,9 +25,13 @@
                     </div>
                 </div>
             </div>
-        <div>
-            <div th:replace="~{fragments/pagination::pagination}"></div>
-        </div>
     </ul>
+    <!-- Show a message if there are no blogs -->
+    <div th:if="${blogs.size() == 0}">
+        <h4 colspan="4" class="text-center text-muted">No Blogs found.</h4>
+    </div>
+    <div>
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
 </body>
 </html>

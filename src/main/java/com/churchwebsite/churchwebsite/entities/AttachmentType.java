@@ -2,8 +2,10 @@ package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name = "media_type")
+@Table(name = "attachment_type")
 public class AttachmentType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +13,9 @@ public class AttachmentType {
 
     private String attachmentTypeName;
     private String attachmentTypeDescription;
+
+    @OneToMany(mappedBy = "attachmentType")
+    private List<Attachment> attachments;
 
     public AttachmentType() {}
 
@@ -41,6 +46,14 @@ public class AttachmentType {
 
     public void setAttachmentTypeDescription(String attachmentTypeDescription) {
         this.attachmentTypeDescription = attachmentTypeDescription;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class AlbumService {
         this.albumRepository = albumRepository;
     }
 
-    public Page<Album> getAlbumList(int page, int pageSize){
+    public Page<Album> getAlbumList(int page, int pageSize, Sort sort){
         Pageable pageable = PageRequest.of(page-1, pageSize);
         return albumRepository.findAll(pageable);
     }

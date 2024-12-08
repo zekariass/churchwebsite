@@ -42,7 +42,8 @@ public class AuthSecurityConfig {
             "/*.js.map",
             "/fonts**",
             "/favicon.ico",
-            "/error"
+            "/error",
+            "/media/**"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{

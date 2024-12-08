@@ -16,6 +16,27 @@
         }
 
     })
+
+
+    // Attachment
+
+    $('#attachmentType').change(function(event){
+        var selectedText = $("#attachmentType option:selected").text()
+
+        const fileInputId = $('#attachmentPath');
+
+        if(selectedText.toLowerCase() == "word"){
+            fileInputId.attr('accept', '.doc,.docx')
+        }else if(selectedText.toLowerCase() == "pdf"){
+            fileInputId.attr('accept', '.pdf')
+        }else{
+            fileInputId.attr('accept', '.*')
+        }
+
+    })
+
+    $('#attachmentType').trigger('change');
+
  })
 
 
@@ -85,19 +106,12 @@ function copyToClipboard(button) {
 }
 
 
+ function sortByCriteria(el){
+         // Sort attachment list
+          const sortSelect = $(".sort-by");
+          const sortSelectText = $(".sort-by option:selected").val(); // Get the value of the selected option
+          const navigateTo = sortSelect.data("navigate-to"); // Access the `data-navigate-to` attribute properly
+          window.location = window.location.origin + navigateTo + "?sortBy=" + encodeURIComponent(sortSelectText);
+     }
 
-//
-// document.addEventListener("DOMContentLoaded", function(){
-//    const checkbox = document.getElementById("newAlbumCheck");
-//    const formDiv = document.getElementById("new-album-form");
-//
-//    formDiv.style.display = "none";
-//
-//    checkbox.addEventListener("change", function(){
-//        if(checkbox.checked){
-//                formDiv.style.display = "block";
-//            }else{
-//                formDiv.style.display = "none";
-//            }
-//    })
-// })
+

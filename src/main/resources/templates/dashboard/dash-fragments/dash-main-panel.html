@@ -90,6 +90,66 @@
           <main th:if="${activeDashPage == 'album-detail'}">
             <div th:replace="~{dashboard/dash-fragments/media/album-detail::album-detail}"></div>
           </main>
+
+          <main th:if="${activeDashPage == 'attachment-form'}">
+            <div th:replace="~{dashboard/dash-fragments/media/attachment-form::attachment-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'attachments-list'}">
+            <div th:replace="~{dashboard/dash-fragments/media/attachments-list::attachments-list}"></div>
+          </main>
+
+          <!-- ======= INFORMATION ====== -->
+          <main th:if="${activeDashPage == 'landing-content-form'}">
+            <div th:replace="~{dashboard/dash-fragments/landing-content/landing-content-form::landing-content-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'landing-content-list'}">
+            <div th:replace="~{dashboard/dash-fragments/landing-content/landing-content-list::landing-content-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'landing-content-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/landing-content/landing-content-detail::landing-content-detail}"></div>
+          </main>
+
+        <!-- ============== NEWS ==================== -->
+          <main th:if="${activeDashPage == 'news-form'}">
+            <div th:replace="~{dashboard/dash-fragments/news/news-form::news-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'news-list'}">
+            <div th:replace="~{dashboard/dash-fragments/news/news-list::news-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'news-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/news/news-detail::news-detail}"></div>
+          </main>
+
+         <!-- ============== MEMBERSHIP =============== -->
+
+          <main th:if="${activeDashPage == 'memberships-category-form'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-category-form::memberships-category-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'memberships-category-list'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-category-list::memberships-category-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'memberships-category-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-category-detail::memberships-category-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'membership-form'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-form::membership-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'membership-list'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-list::membership-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'membership-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-detail::membership-detail}"></div>
+          </main>
         </div>
       </div>
 

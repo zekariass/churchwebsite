@@ -94,7 +94,8 @@ public class OrganisationDetailService {
             return null;
         }
         Organisation organisation = organisations.getFirst();
-        organisation.setOrganisationLogo(File.separator + Paths.get("media/logo") + File.separator + organisation.getOrganisationLogo());
+        organisation.setOrganisationLogo(organisation.getOrganisationLogo());
+//        organisation.setOrganisationLogo(File.separator + Paths.get("media/logo") + File.separator + organisation.getOrganisationLogo());
         Address address = organisation.getAddress();
         List<OrganisationBanner> banners = organisation.getBanners();
 

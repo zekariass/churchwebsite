@@ -6,28 +6,28 @@
  }
 
  .width-50{
-    width: 50%;
+    width: 50% !important;
  }
 
  .width-75{
-     width: 75%;
+     width: 75% !important;
   }
 
 .width-100{
-    width: 100%
+    width: 100% !important;
 }
 
 @media (min-width: 768px){
     .width-md-50{
-        width: 50%;
+        width: 50% !important;
      }
 
     .width-md-75{
-        width: 75%;
+        width: 75% !important;
       }
 
     .width-md-100{
-        width: 100%
+        width: 100% !important;
     }
 }
 

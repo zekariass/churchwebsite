@@ -1,69 +1,227 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <header th:fragment="header" class="main-header">
-    <nav class="navbar navbar-expand-lg container-fluid d-flex justify-content-between align-items-center p-4">
-      <a class="navbar-brand" th:href="@{/}">Home</a>
-      <!-- Left aligned logo -->
-      <a class="navbar-brand" th:href="@{/}">
-        <img src="https://via.placeholder.com/96" alt="Logo">
-      </a>
-      <a th:href="@{/dashboard/home}" sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')" class="navbar-brand">
-        Dashboard
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
 
-      <!-- Right aligned nav items -->
-      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Services <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Donation</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">News</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Media</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Blogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">School</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Information</a>
-          </li>
-          <li sec:authorize="isAnonymous()" class="nav-item">
-            <a class="nav-link d-inline" th:href="@{/users/login}">Login</a>
-            |
-            <a class="nav-link d-inline" th:href="@{/users/register}">Register</a>
-          </li>
-          <li sec:authorize="isAuthenticated()">
-            <a class="nav-link d-inline" th:href="@{/users/logout}">Logout</a>
-          </li>
-        </ul>
+  <header class="main-header mb-3" >
+    <style>
+      .carousel-item {
+        height: 60vh;
+<!--        min-height: 500px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        top: 0px;
+      }
 
+      .navbar {
+        position: absolute; /* Position navbar above the carousel */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100; /* Make sure it is above the carousel */
+        background-color: rgba(0, 0, 0, 0.5);
+        alpha: 50%;
+      }
+
+      .navbar-collapse {
+        background-color: rgba(255, 255, 255, 1.0) !important; /* Maintain transparency when the collapse menu is open */
+  <!--      background-color: #cccccc !important;-->
+      }
+
+      .navbar .navbar-nav .nav-link {
+        color: #000 !important; /* Ensure links are readable on transparent background */
+      }
+
+      .carousel-caption h1 {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+      }
+
+      .carousel-caption p {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+      }
+
+      .logo{
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+
+      .top-menu{
+        display: none;
+      }
+
+      @media (max-width: 768px){
+          .logo{
+            width: 60px;
+            height: 60px;
+          }
+
+          .auth, .logout, .dashboard{
+            display: none !important;
+          }
+
+          .top-menu{
+            display: block;
+          }
+
+           .carousel-item {
+              height: 50vh; /* Adjust the height of the banner */
+<!--              min-height: 200px; /* Minimum height for smaller screens */-->
+              background-size: cover;
+              background-position: center;
+              position: relative;
+              top: 0px;
+            }
+      }
+
+    </style>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg p-4">
+      <div class="w-100">
+        <!-- Brand logo -->
+        <div class="row">
+          <!-- Logo on the left -->
+          <div class="col-auto shadow-lg">
+            <a class="navbar-brand" th:href="@{/}">
+              <img th:src="${organisationDetail.organisation.organisationLogo}"
+                   class="logo" style="border: 1px solid white !important;">
+            </a>
+          </div>
+
+          <!-- Right-side content (Dashboard, Login, Toggler button) -->
+          <div class="col d-flex justify-content-end align-items-center">
+            <div class="d-flex">
+              <!-- Dashboard link -->
+              <div  class="nav-item">
+                <a th:href="@{/dashboard/home}"
+                   sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')"
+                   class="navbar-brand pe-3 fw-bold fs-5 text-white dashboard">
+                  Dashboard
+                </a>
+              </div>
+
+              <!-- Login link -->
+              <div sec:authorize="isAnonymous()" class="nav-item d-flex align-items-center pe-3 auth">
+                <a class="nav-link fw-bold fs-5 text-white" th:href="@{/users/login}">Login</a>
+                <span class="mx-1">|</span>
+                <a class="nav-link fw-bold text-white fs-5" th:href="@{/users/register}">Register</a>
+              </div>
+              <div sec:authorize="isAuthenticated()" class="nav-item pe-3 logout">
+                <a class="nav-link fw-bold text-white fs-5" th:href="@{/users/logout}">Logout</a>
+              </div>
+              <select class="form-select top-menu me-3" onchange="toMenuChange()">
+                <option>-----</option>
+                <option sec:authorize="isAuthenticated()" value="dashboard">Dashboard</option>
+                <option sec:authorize="isAuthenticated()" value="logout">Logout</option>
+                <option sec:authorize="isAnonymous()" value="login">Login</option>
+                <option sec:authorize="isAnonymous()" value="register">Register</option>
+              </select>
+
+              <!-- Toggler button -->
+              <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse w-100 mt-4 rounded-pill" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Services</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Donation</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">News</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Media</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Events</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Blogs</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">School</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Information</a></li>
+          </ul>
+        </div>
       </div>
     </nav>
-</header>
 
-  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-  <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <!-- Banner Carousel (now below the navbar) -->
+    <div th:if="${activeContentPage == 'landing-page'}" id="carouselExampleIndicators" class="carousel slide " data-bs-ride="carousel">
+      <!-- Indicators -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+
+      <!-- Carousel Items -->
+      <div class="carousel-inner">
+        <div class="carousel-item active" th:style="|background-image: url('${organisationDetail.banners[0].organisationBanner}');|">
+          <div class="carousel-caption d-none d-md-block">
+  <!--          <img th:src="${organisationDetail.banners[0].organisationBanner}">-->
+            <h1>[[${organisationDetail.organisation.organisationName}]]</h1>
+            <p class="h5">[[${organisationDetail.address.city}]], [[${organisationDetail.address.country}]]</p>
+          </div>
+        </div>
+  <!--      <div class="carousel-item" style="background-image: url('https://via.placeholder.com/1920x1080/ff0000');">-->
+  <!--        <div class="carousel-caption d-none d-md-block">-->
+  <!--          <h1>Discover Our Services</h1>-->
+  <!--          <p>Explore what we have to offer.</p>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      <div class="carousel-item" style="background-image: url('https://via.placeholder.com/1920x1080/00ff00');">-->
+  <!--        <div class="carousel-caption d-none d-md-block">-->
+  <!--          <h1>Join Us Today</h1>-->
+  <!--          <p>Become a part of our community.</p>-->
+  <!--        </div>-->
+  <!--      </div>-->
+      </div>
+
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <script>
+      function toMenuChange(){
+        const text = document.querySelector(".top-menu").value;
+        if(text == "login"){
+          const url = new URL("/users/login", window.location.origin);
+          window.location.href = url.toString();
+        }else if(text == "logout"){
+          const url = new URL("/users/logout", window.location.origin);
+          window.location.href = url.toString();
+        } else if(text == "dashboard"){
+          const url = new URL("/dashboard/home", window.location.origin);
+          window.location.href = url.toString();
+        } else if(text == "register"){
+          const url = new URL("/users/register", window.location.origin);
+          window.location.href = url.toString();
+        }
+      }
+    </script>
+
+  </header>
+
+
+<!-- Bootstrap Bundle with Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+

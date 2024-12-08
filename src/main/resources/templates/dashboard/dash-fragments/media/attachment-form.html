@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Attachment Form</title>
 </head>
-<body>
+<body th:fragment="attachment-form">
     <div>
+        <a class="d-flex justify-content-end px-3 h6 text-primary" th:href="@{/medias/attachments}">List of Attachments</a>
+        <h3>Add New Attachment</h3>
+        <form th:action="@{/medias/attachments/form}" th:object="${attachment}" method="POST" enctype="multipart/form-data">
+            <div class="row g-3 width-md-75">
+                <div class="my-3">
+                  <label for="attachmentType" class="form-label">Attachment Type</label>
+                  <select th:field="*{attachmentType}" class="form-select" id="attachmentType" th:data-attachment-types="${attachmentNames}">
+                    <option th:each="attachmentType: ${attachmentTypes}" th:value="${attachmentType.attachmentTypeId}" >[[${attachmentType.attachmentTypeName}]]</option>
+                  </select>
+                </div>
+                <div class="my-3">
+                    <label for="attachmentName" class="h3 form-label mb-3">Attachment Name</label>
+                    <input id="attachmentName" th:field="*{attachmentName}" type="text" class="form-control">
+                </div>
 
+                <div class="my-3">
+                    <label for="attachmentPath" class="h3 form-label mb-3">Attachment Path</label>
+                    <input id="attachmentPath" name="attachmentFilePath" type="file" class="form-control">
+                </div>
 
-        <!--        <div class="my-3">-->
-        <!--          <label for="attachmentType" class="form-label">Media Type</label>-->
-        <!--          <select th:field="*{attachmentType}" class="form-select" id="attachmentType">-->
-        <!--            <option th:each="mediatype: ${attachmentTypes}" th:value="${mediatype.mediaTypeId}" >[[${mediatype.mediaTypeName}]]</option>-->
-        <!--          </select>-->
-        <!--        </div>-->
+                <div class="mt-3">
+                    <input class="success-button" type="submit" value="Save" />
+                </div>
+            </div>
+            <script th:src="@{/js/media.js}"></script>
+        </form>
     </div>
 </body>
 </html>

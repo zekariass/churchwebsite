@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--                xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--&lt;!&ndash;                layout:decorate="~{layouts/base}">&ndash;&gt;-->
+<head>
+    <meta charset="UTF-8">
+    <title th:fragment="title">Landing Page</title>
+</head>
+<body>
+    <main th:fragment="landing-page">
+        <div>
+            <p th:if="${param.logout}">You successfully logged out!</p>
+            <div class="row">
+                <div class="col-12 col-md-10">
+                    <div th:each="landingContent: ${landingContentList}">
+                        <div class="shadow mb-3 p-3 rounded">
+                            <p class="mb-1" th:utext="${landingContent.content}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="side-links shadow d-flex justify-content-center pt-3">
+                        News
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+

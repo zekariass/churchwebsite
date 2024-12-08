@@ -9,7 +9,7 @@
     <div class="sidebar-logo">
       <!-- Logo Header -->
       <div class="logo-header" data-background-color="blue">
-        <a href="index.html" class="logo">
+        <a th:href="@{/}" class="logo">
           <img
                   src="assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"
@@ -35,7 +35,7 @@
       <div class="sidebar-content">
         <ul class="nav nav-secondary">
           <li class="nav-item active">
-            <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+            <a data-bs-toggle="collapse" th:href="@{/dashboard/home}" class="collapsed" aria-expanded="false">
               <i class="fas fa-home"></i>
               <p>Dashboard</p>
               <span class="caret"></span>
@@ -45,7 +45,7 @@
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h"></i>
                 </span>
-            <h4 class="text-section">Services</h4>
+            <h4 class="text-section">Menu</h4>
           </li>
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#organization">
@@ -68,6 +68,14 @@
               </ul>
             </div>
           </li>
+
+          <li class="nav-item">
+            <a href="#">
+              <i class="fas fa-file"></i>
+              <p>Services</p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#events">
               <i class="fas fa-calendar-days"></i>
@@ -120,27 +128,27 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#forms">
-              <i class="fas fa-pen-square"></i>
-              <p>News</p>
-              <span class="caret"></span>
-            </a>
-            <div class="collapse" id="forms">
-              <ul class="nav nav-collapse">
-                <li>
-                  <a href="forms/forms.html">
-                    <span class="sub-item">Add News</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="forms/forms.html">
-                    <span class="sub-item">Manage</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
+<!--          <li class="nav-item">-->
+<!--            <a data-bs-toggle="collapse" href="#forms">-->
+<!--              <i class="fas fa-pen-square"></i>-->
+<!--              <p>News</p>-->
+<!--              <span class="caret"></span>-->
+<!--            </a>-->
+<!--            <div class="collapse" id="forms">-->
+<!--              <ul class="nav nav-collapse">-->
+<!--                <li>-->
+<!--                  <a href="forms/forms.html">-->
+<!--                    <span class="sub-item">Add News</span>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <a href="forms/forms.html">-->
+<!--                    <span class="sub-item">Manage</span>-->
+<!--                  </a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </li>-->
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#tables">
               <i class="fas fa-table"></i>
@@ -155,28 +163,35 @@
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{/medias/form}">
-                    <span class="sub-item">New Other Files</span>
-                  </a>
-                </li>
-                <li>
                   <a th:href="@{/medias/albums}">
                     <span class="sub-item">Albums</span>
                   </a>
                 </li>
                 <li>
-                  <a href="tables/datatables.html">
-                    <span class="sub-item">Images</span>
+                  <a th:href="@{/medias/albums/new}">
+                    <span class="sub-item">New Album</span>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" href="#attachments">
+              <i class="fas fa-table"></i>
+              <p>Attachments</p>
+              <span class="caret"></span>
+            </a>
+            <div class="collapse" id="attachments">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a th:href="@{/medias/attachments/form}">
+                    <span class="sub-item">New attachments</span>
                   </a>
                 </li>
                 <li>
-                  <a href="tables/datatables.html">
-                    <span class="sub-item">PDFs</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="tables/datatables.html">
-                    <span class="sub-item">Other Files</span>
+                  <a th:href="@{/medias/attachments?sortBy=attachmentTime}">
+                    <span class="sub-item">Attachments List</span>
                   </a>
                 </li>
               </ul>
@@ -204,28 +219,85 @@
             </div>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#charts">
-              <i class="far fa-chart-bar"></i>
-              <p>Information Center</p>
+            <a data-bs-toggle="collapse" href="#landingContent">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>Landing Content</p>
               <span class="caret"></span>
             </a>
+            <div class="collapse" id="landingContent">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a th:href="@{/dashboard/landing-contents/form}">
+                    <span class="sub-item">New Content</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/landing-contents}">
+                    <span class="sub-item">Landing Content List</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
 
 
           <li class="nav-item">
-            <a href="#">
-              <i class="fas fa-file"></i>
-              <p>News</p>
-              <span class="badge badge-secondary">1</span>
+            <a data-bs-toggle="collapse" href="#news">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>News Center</p>
+              <span class="caret"></span>
             </a>
+            <div class="collapse" id="news">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a th:href="@{/dashboard/news/form}">
+                    <span class="sub-item">Add News</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/news}">
+                    <span class="sub-item">News List</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
+
+
           <li class="nav-item">
-            <a href="#">
-              <i class="fas fa-file"></i>
+            <a data-bs-toggle="collapse" href="#mem">
+              <i class="fas fa-map-marker-alt"></i>
               <p>Memberships</p>
-              <span class="badge badge-secondary">1</span>
+              <span class="caret"></span>
             </a>
+            <div class="collapse" id="mem">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a th:href="@{/dashboard/memberships/form}">
+                    <span class="sub-item">New Member</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/memberships}">
+                    <span class="sub-item">Members List</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a th:href="@{/dashboard/memberships/categories/form}">
+                    <span class="sub-item">New Member Category</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/memberships/categories}">
+                    <span class="sub-item">Member Category List</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
+
+
           <li class="nav-item">
             <a href="#">
               <i class="fas fa-file"></i>
@@ -236,26 +308,21 @@
 <!--          <li class="nav-item">-->
 <!--            <a data-bs-toggle="collapse" href="#submenu">-->
 <!--              <i class="fas fa-bars"></i>-->
-<!--              <p>Menu Levels</p>-->
+<!--              <p>Attachment</p>-->
 <!--              <span class="caret"></span>-->
 <!--            </a>-->
 <!--            <div class="collapse" id="submenu">-->
 <!--              <ul class="nav nav-collapse">-->
 <!--                <li>-->
 <!--                  <a data-bs-toggle="collapse" href="#subnav1">-->
-<!--                    <span class="sub-item">Level 1</span>-->
+<!--                    <span class="sub-item">List</span>-->
 <!--                    <span class="caret"></span>-->
 <!--                  </a>-->
 <!--                  <div class="collapse" id="subnav1">-->
 <!--                    <ul class="nav nav-collapse subnav">-->
 <!--                      <li>-->
 <!--                        <a href="#">-->
-<!--                          <span class="sub-item">Level 2</span>-->
-<!--                        </a>-->
-<!--                      </li>-->
-<!--                      <li>-->
-<!--                        <a href="#">-->
-<!--                          <span class="sub-item">Level 2</span>-->
+<!--                          <span class="sub-item">New Attachment</span>-->
 <!--                        </a>-->
 <!--                      </li>-->
 <!--                    </ul>-->

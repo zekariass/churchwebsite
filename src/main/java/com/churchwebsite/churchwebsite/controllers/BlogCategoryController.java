@@ -3,6 +3,7 @@ package com.churchwebsite.churchwebsite.controllers;
 import com.churchwebsite.churchwebsite.entities.BlogCategory;
 import com.churchwebsite.churchwebsite.entities.Settings;
 import com.churchwebsite.churchwebsite.services.BlogCategoryService;
+import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.SettingsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
 public class BlogCategoryController {
 
     private final BlogCategoryService blogCategoryService;
-    private final SettingsService settingsService;
+    private final PaginationService paginationService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
@@ -27,9 +28,9 @@ public class BlogCategoryController {
     private int defaultPageSize;
 
     @Autowired
-    public BlogCategoryController(BlogCategoryService blogCategoryService, SettingsService settingsService) {
+    public BlogCategoryController(BlogCategoryService blogCategoryService, PaginationService paginationService) {
         this.blogCategoryService = blogCategoryService;
-        this.settingsService = settingsService;
+        this.paginationService = paginationService;
     }
 
     @GetMapping("/addBlogCategoryForm")
@@ -65,13 +66,16 @@ public class BlogCategoryController {
                                        HttpServletRequest request){
 
         // Setting for default page size
-        Settings settings = settingsService.findBySettingName("DEFAULT_PAGE_SIZE");
+//        Settings settings = settingsService.findBySettingName("DEFAULT_PAGE_SIZE");
+//
+//        if(settings != null){
+//            pageSize = settings.getSettingValueInt();
+//        }else{
+//            pageSize = defaultPageSize;
+//        }
 
-        if(settings != null){
-            pageSize = settings.getSettingValueInt();
-        }else{
-            pageSize = defaultPageSize;
-        }
+        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
+
 
         Page<BlogCategory> pagedBlogCategories = blogCategoryService.findAll(page, pageSize);
         List<BlogCategory> blogCategories = pagedBlogCategories.getContent();

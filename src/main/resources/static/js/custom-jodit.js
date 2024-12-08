@@ -1,7 +1,7 @@
 
 const editor = Jodit.make("#editor", {
             "autofocus": true,
-            "iframe": true,
+            "iframe": false,
             "uploader": {
               "insertImageAsBase64URI": true
             },
