@@ -17,17 +17,17 @@
 <!--        min-height: 500px;
         background-size: cover;
         background-position: center;
-        position: relative;
+<!--        position: relative;-->
         top: 0px;
       }
 
       .navbar {
-        position: absolute; /* Position navbar above the carousel */
+        position: relative; /* Position navbar above the carousel */
         top: 0;
         left: 0;
         width: 100%;
         z-index: 100; /* Make sure it is above the carousel */
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 128, 128, 0.5);
         alpha: 50%;
       }
 
@@ -76,7 +76,6 @@
 
            .carousel-item {
               height: 50vh; /* Adjust the height of the banner */
-<!--              min-height: 200px; /* Minimum height for smaller screens */-->
               background-size: cover;
               background-position: center;
               position: relative;
@@ -92,10 +91,11 @@
         <!-- Brand logo -->
         <div class="row">
           <!-- Logo on the left -->
-          <div class="col-auto shadow-lg">
+          <div class="col-auto">
             <a class="navbar-brand" th:href="@{/}">
-              <img th:src="${organisationDetail.organisation.organisationLogo}"
-                   class="logo" style="border: 1px solid white !important;">
+              <img th:src="${churchDetail?.church?.churchLogo}"
+                   class="logo" style="border: 1px solid white !important;"
+                   th:alt="${churchDetail?.church?.churchLogo}">
             </a>
           </div>
 
@@ -114,7 +114,7 @@
               <!-- Login link -->
               <div sec:authorize="isAnonymous()" class="nav-item d-flex align-items-center pe-3 auth">
                 <a class="nav-link fw-bold fs-5 text-white" th:href="@{/users/login}">Login</a>
-                <span class="mx-1">|</span>
+                <span class="mx-1 text-white">/</span>
                 <a class="nav-link fw-bold text-white fs-5" th:href="@{/users/register}">Register</a>
               </div>
               <div sec:authorize="isAuthenticated()" class="nav-item pe-3 logout">
@@ -136,66 +136,22 @@
           </div>
 
         </div>
-
-
         <!-- Collapsible content -->
         <div class="collapse navbar-collapse w-100 mt-4 rounded-pill" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Services</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Donation</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">News</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Media</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Events</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Blogs</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/news}">News</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Media Center</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Files</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/events}">Events</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/blogs}">Blogs</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">School</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Information</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Shop</a></li>
           </ul>
         </div>
       </div>
     </nav>
-
-    <!-- Banner Carousel (now below the navbar) -->
-    <div th:if="${activeContentPage == 'landing-page'}" id="carouselExampleIndicators" class="carousel slide " data-bs-ride="carousel">
-      <!-- Indicators -->
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-
-      <!-- Carousel Items -->
-      <div class="carousel-inner">
-        <div class="carousel-item active" th:style="|background-image: url('${organisationDetail.banners[0].organisationBanner}');|">
-          <div class="carousel-caption d-none d-md-block">
-  <!--          <img th:src="${organisationDetail.banners[0].organisationBanner}">-->
-            <h1>[[${organisationDetail.organisation.organisationName}]]</h1>
-            <p class="h5">[[${organisationDetail.address.city}]], [[${organisationDetail.address.country}]]</p>
-          </div>
-        </div>
-  <!--      <div class="carousel-item" style="background-image: url('https://via.placeholder.com/1920x1080/ff0000');">-->
-  <!--        <div class="carousel-caption d-none d-md-block">-->
-  <!--          <h1>Discover Our Services</h1>-->
-  <!--          <p>Explore what we have to offer.</p>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--      <div class="carousel-item" style="background-image: url('https://via.placeholder.com/1920x1080/00ff00');">-->
-  <!--        <div class="carousel-caption d-none d-md-block">-->
-  <!--          <h1>Join Us Today</h1>-->
-  <!--          <p>Become a part of our community.</p>-->
-  <!--        </div>-->
-  <!--      </div>-->
-      </div>
-
-      <!-- Controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
 
     <script>
       function toMenuChange(){

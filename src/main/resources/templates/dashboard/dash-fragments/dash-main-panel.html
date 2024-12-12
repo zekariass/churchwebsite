@@ -19,19 +19,19 @@
           <main th:if="${activeDashPage == 'events'}">
             <div th:replace="~{dashboard/dash-fragments/events::events}"></div>
           </main>
-          <main th:if="${activeDashPage == 'organization-setup'}">
-            <div th:replace="~{dashboard/dash-fragments/organization-setup::organization-setup}"></div>
+          <main th:if="${activeDashPage == 'church-setup'}">
+            <div th:replace="~{dashboard/dash-fragments/church-setup::church-setup}"></div>
           </main>
-          <main th:if="${activeDashPage == 'organisation-exist'}">
-            <div th:replace="~{dashboard/dash-fragments/organisation-exist-error-page::organisation-exist}"></div>
-          </main>
-
-          <main th:if="${activeDashPage == 'organisation-detail'}">
-            <div th:replace="~{dashboard/dash-fragments/organisation-detail-page::organisation-detail}"></div>
+          <main th:if="${activeDashPage == 'church-exist'}">
+            <div th:replace="~{dashboard/dash-fragments/church-exist-error-page::church-exist}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'organisation-not-exist'}">
-            <div th:replace="~{dashboard/dash-fragments/organisation-not-exist-page::organisation-not-exist}"></div>
+          <main th:if="${activeDashPage == 'church-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/church-detail-page::church-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'church-not-exist'}">
+            <div th:replace="~{dashboard/dash-fragments/church-not-exist-page::church-not-exist}"></div>
           </main>
           <main th:if="${activeDashPage == 'address'}">
             <div th:replace="~{dashboard/dash-fragments/address-form::address-form}"></div>
@@ -39,8 +39,8 @@
           <main th:if="${activeDashPage == 'updateAddress'}">
             <div th:replace="~{dashboard/dash-fragments/address-form-for-update::address-form-for-update}"></div>
           </main>
-          <main th:if="${activeDashPage == 'organisationBanner'}">
-            <div th:replace="~{dashboard/dash-fragments/organisation-banner-form::organisation-banner}"></div>
+          <main th:if="${activeDashPage == 'churchBanner'}">
+            <div th:replace="~{dashboard/dash-fragments/church-banner-form::church-banner}"></div>
           </main>
 
           <!-- EVENT PAGES-->

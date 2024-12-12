@@ -3,6 +3,7 @@ package com.churchwebsite.churchwebsite.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -15,6 +16,8 @@ public class Event {
 
     private String eventTitle;
     private String eventDescription;
+
+//    @Convert(converter = LocalDateFormatConverter.class)
     private LocalDate eventDate;
     private LocalTime eventTime;
 
@@ -126,6 +129,10 @@ public class Event {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public LocalDateTime getEventDateTime(){
+        return LocalDateTime.of(eventDate, eventTime);
     }
 
     @Override

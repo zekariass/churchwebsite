@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs-list</title>
+</head>
+<body th:fragment="blogs-list">
+    <h3 class="m-3 text-center text-md-start">Blogs</h3>
+    <div>
+        <select id="blogCategoryId" class="form-select mb-4 w-auto" onchange="onBlogCategorySelect()">
+            <option th:value="0">-- Select Blog Category --</option>
+            <option th:each="blogCategory: ${blogCategories}"
+                    th:value="${blogCategory.blogCategoryId}"
+                    th:text="${blogCategory.blogCategoryName}"
+                    th:selected="${blogCatId != null and blogCatId == blogCategory.blogCategoryId}"></option>
+        </select>
+    </div>
+    <ul class="list-group list-group-light row">
+            <div th:each="blog: ${blogs}" class="col-md-6 col-12">
+                <div class="mb-4">
+                    <div class="card shadow" role="button">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col" th:onclick="|window.location='@{/blogs/detail/{id}(id=${blog.blogId})}'|">
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        <h4>[[${blog.blogTitle}]]</h4>
+                                    </li>
+                                    <p class="muted" th:text="${blog.blogTime != null ? blog.blogTime.format(@dateTimeFormatter) : ''}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </ul>
+    <!-- Show a message if there are no blogs -->
+    <div th:if="${blogs.size() == 0}">
+        <h4 colspan="4" class="text-center text-muted">No Blogs found.</h4>
+    </div>
+    <div>
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
+    <script>
+        function onBlogCategorySelect(){
+
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+            const blogCatSel = document.querySelector("#blogCategoryId").value;
+
+            if(params.has("page")){
+                const page = params.get("page");
+                const size = params.get("size");
+                window.location.href = window.location.origin + '/blogs?blogCatId='+blogCatSel+'&page='+page+'&size='+size;
+            }else{
+                window.location.href = window.location.origin + '/blogs?blogCatId='+blogCatSel;
+            }
+        }
+    </script>
+</body>
+</html>

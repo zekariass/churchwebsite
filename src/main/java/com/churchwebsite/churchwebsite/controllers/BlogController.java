@@ -51,6 +51,8 @@ public class BlogController {
     public String showNewBlogForm(Model model){
 
         List<BlogCategory> blogCategories = blogCategoryService.findAll();
+
+        // Blog album for blog related medias
         Album album = albumService.findAlbumByAlbumName("Blog");
 
         model.addAttribute("blog", new Blog());
@@ -84,8 +86,9 @@ public class BlogController {
 
     @GetMapping("")
     public String showBlogsList( @RequestParam(value = "page", defaultValue = "1", required = false) int page,
-                                    @RequestParam(value = "size", required = false) Integer pageSize,
-                                    HttpServletRequest request,
+                                 @RequestParam(value = "size", required = false) Integer pageSize,
+                                 @RequestParam(value = "blogCatId", required = false, defaultValue = "0") Integer blogCatId,
+                                 HttpServletRequest request,
                                     Model model){
 
 //        Settings settings = settingsService.findBySettingName("DEFAULT_PAGE_SIZE");
@@ -98,8 +101,10 @@ public class BlogController {
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Blog> pagedBlog = blogService.findAll(page, pageSize);
+        Page<Blog> pagedBlog = blogService.findAll(page, pageSize, blogCatId);
         List<Blog> blogs = pagedBlog.getContent();
+
+        List<BlogCategory> blogCategories = blogCategoryService.findAll();
 
         model.addAttribute("activeDashPage", "blogs-list");
         model.addAttribute("blogs", blogs);
@@ -108,6 +113,9 @@ public class BlogController {
         model.addAttribute("totalPages", pagedBlog.getTotalPages());
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
+        model.addAttribute("blogCategories", blogCategories);
+        model.addAttribute("blogCatId", blogCatId);
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -130,9 +138,13 @@ public class BlogController {
         List<BlogCategory> blogCategories = blogCategoryService.findAll();
         Blog blog = blogService.findById(blogId);
 
+        Album album = albumService.findAlbumByAlbumName("Blog");
+
         model.addAttribute("activeDashPage", "blog-form");
         model.addAttribute("blog", blog);
         model.addAttribute("blogCategories", blogCategories);
+        model.addAttribute("album", album);
+
 
         return DASHBOARD_MAIN_PANEL;
     }

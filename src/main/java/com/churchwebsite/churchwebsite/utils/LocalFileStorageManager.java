@@ -42,7 +42,8 @@ public class LocalFileStorageManager {
         try{
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             String fullPath = targetLocation.toString();
-            return fullPath.split("static")[1];
+            String normalizedPath = fullPath.replace("\\", "/");
+            return normalizedPath.split("static")[1];
 //            return filename;
         }catch (IOException exc){
             throw new RuntimeException("Unable to copy the file from filestream.");

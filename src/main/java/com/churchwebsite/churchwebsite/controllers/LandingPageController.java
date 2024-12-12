@@ -1,11 +1,11 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.OrganisationDetailDTO;
+import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
 import com.churchwebsite.churchwebsite.entities.LandingContent;
-import com.churchwebsite.churchwebsite.entities.Organisation;
-import com.churchwebsite.churchwebsite.entities.OrganisationBanner;
+import com.churchwebsite.churchwebsite.entities.News;
 import com.churchwebsite.churchwebsite.services.LandingContentService;
-import com.churchwebsite.churchwebsite.services.OrganisationDetailService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
+import com.churchwebsite.churchwebsite.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,25 +16,27 @@ import java.util.List;
 @Controller
 public class LandingPageController {
 
-    private final OrganisationDetailService organisationDetailService;
+    private final ChurchDetailService churchDetailService;
     private final LandingContentService landingContentService;
 
     @Autowired
-    public LandingPageController(OrganisationDetailService organisationDetailService,
+    public LandingPageController(ChurchDetailService churchDetailService,
                                  LandingContentService landingContentService) {
-        this.organisationDetailService = organisationDetailService;
+        this.churchDetailService = churchDetailService;
         this.landingContentService = landingContentService;
     }
 
     @GetMapping("/")
     public String landingPage(Model model){
-        OrganisationDetailDTO organisationDetail = organisationDetailService.getOrganisationDetail();
+        ChurchDetailDTO churchDetail = churchDetailService.getChurchDetail();
 
         List<LandingContent> landingContentList = landingContentService.findAll();
 
-        model.addAttribute("organisationDetail", organisationDetail);
+        model.addAttribute("churchDetail", churchDetail);
         model.addAttribute("landingContentList", landingContentList);
         model.addAttribute("activeContentPage", "landing-page");
+
+
 
         return "layouts/base";
     }

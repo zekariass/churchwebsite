@@ -44,4 +44,8 @@ public class EventService {
     public Event updateEvent(Event event) {
         return eventRepository.save(event);
     }
+
+    public void deleteById(Integer eventId) {
+        eventRepository.deleteById(eventId);
+    }
 }

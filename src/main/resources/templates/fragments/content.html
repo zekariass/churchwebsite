@@ -5,10 +5,47 @@
     <title>Title</title>
 </head>
 <body th:fragment="content">
-    <div class="content-page">
+    <div class="content-page py-4">
         <div th:if="${activeContentPage == 'landing-page'}">
             <div th:replace="~{fragments/landing-page::landing-page}"></div>
         </div>
+
+        <div th:if="${activeContentPage == 'news-list'}">
+            <div th:replace="~{fragments/news/news-list::news-list}"></div>
+        </div>
+
+        <div th:if="${activeContentPage == 'news-detail'}">
+            <div th:replace="~{fragments/news/news-detail::news-detail}"></div>
+        </div>
+
+
+        <!-- =========== BLOG =======================================   -->
+
+        <main th:if="${activeContentPage == 'blog-category-list'}">
+            <div th:replace="~{fragments/blogs/blog-category-list::blog-category-list}"></div>
+        </main>
+        <main th:if="${activeContentPage == 'blog-category-detail'}">
+            <div th:replace="~{fragments/blogs/blog-category-detail::blog-category-detail}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'blogs-list'}">
+            <div th:replace="~{fragments/blogs/blogs-list::blogs-list}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'blog-detail'}">
+            <div th:replace="~{fragments/blogs/blog-detail::blog-detail}"></div>
+        </main>
+
+        <!-- =========== BLOG =======================================   -->
+
+        <main th:if="${activeContentPage == 'events-list'}">
+            <div th:replace="~{fragments/events/events-list::events-list}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'event-detail'}">
+            <div th:replace="~{fragments/events/event-detail::event-detail}"></div>
+        </main>
+
     </div>
 </body>
 </html>

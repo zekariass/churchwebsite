@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attachments List</title>
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+</head>
+<body th:fragment="attachments-list">
+    <div class="container my-5">
+        <h1 class="m-3 text-center text-md-start">Attachments List</h1>
+
+        <!-- Table to display the attachments -->
+        <div class="d-flex justify-content-end m-3">
+            <div class="row">
+                <label for="sort-attachment-by" class="col">Sort by: </label>
+                <select id="sort-attachment-by" class="form-select col sort-by" onchange="sortByCriteria(this)" data-navigate-to="/medias/attachments" style="width:auto;">
+<!--                    <option th:selected="${sortBy == null or sortBy == ''}">&#45;&#45; Select &#45;&#45;</option>-->
+                    <option th:value="'attachmentName'"
+                            th:selected="${sortBy == 'attachmentName'}">Attachment Name</option>
+                    <option th:value="'attachmentTime'"
+                            th:selected="${sortBy == 'attachmentTime'}">Attachment Time</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Attachment Name</th>
+                    <th>Type</th>
+                    <th>Upload Time</th>
+                    <th>Uploaded By</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Iterate through the attachments list -->
+                <tr th:each="attachment, iterStat : ${attachments}">
+                    <td th:text="${iterStat.index + 1}"></td> <!-- Row number -->
+<!--                    <td th:text="${attachment.attachmentName}"></td> &lt;!&ndash; Attachment Name &ndash;&gt;-->
+
+                    <td><a th:href="${attachment.attachmentPath}" th:text="${attachment.attachmentName}"></a></td>
+
+                    <td>
+                        <!-- Display attachment type with an icon -->
+                        <span th:if="${attachment.attachmentType.attachmentTypeName.toLowerCase() == 'pdf'}" class="badge bg-danger">[[${attachment.attachmentType.attachmentTypeName}]]</span>
+                        <span th:if="${attachment.attachmentType.attachmentTypeName.toLowerCase() == 'word'}" class="badge bg-primary">[[${attachment.attachmentType.attachmentTypeName}]]</span>
+                        <button th:if="${attachment.attachmentType.attachmentTypeName.toLowerCase() == 'other'}"
+                                class="badge bg-success">
+                            [[${attachment.attachmentType.attachmentTypeName}]]
+                        </button>
+                    </td>
+                    <td>
+                        <p th:text="${attachment.attachmentTime.format(@dateTimeFormatter)}"></p>
+                    </td>
+                    <td>
+                        [[${attachment.uploadedBy.username}]]
+                    </td>
+                    <td>
+                        <!-- Actions: View or Download -->
+<!--                        <a th:href="@{/attachments/view/{id}(id=${attachment.attachmentId})}" class="btn btn-sm btn-landing-content me-2 mb-2">View</a>-->
+                        <a th:href="@{/medias/attachments/download/{id}(id=${attachment.attachmentId})}" class="btn btn-sm btn-success me-2 mb-2">Download</a>
+                        <a class="btn btn-sm btn-secondary mb-2 path-btn"
+                           th:attr="data-copy=${attachment.attachmentPath}"
+                           onclick="copyToClipboard(this)">
+                            Copy URI
+                        </a>
+                        <P class="text-success path-copied" style="display: none;"> Path copied!</P>
+                    </td>
+                </tr>
+                <!-- Show a message if there are no attachments -->
+                <tr th:if="${attachments.size() == 0}">
+                    <td colspan="4" class="text-center text-muted">No attachments found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+        <script th:src="@{/js/media.js}"></script>
+    </div>
+
+<!-- Include Bootstrap JS -->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+</body>
+</html>

@@ -1,6 +1,8 @@
 package com.churchwebsite.churchwebsite.services;
 
 import com.churchwebsite.churchwebsite.entities.Blog;
+import com.churchwebsite.churchwebsite.entities.BlogCategory;
+import com.churchwebsite.churchwebsite.repositories.BlogCategoryRepository;
 import com.churchwebsite.churchwebsite.repositories.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,15 +14,30 @@ import org.springframework.stereotype.Service;
 public class BlogService {
 
     private final BlogRepository blogRepository;
+    private final BlogCategoryService blogCategoryService;
 
     @Autowired
-    public BlogService(BlogRepository blogRepository) {
+    public BlogService(BlogRepository blogRepository,
+                       BlogCategoryService blogCategoryService) {
         this.blogRepository = blogRepository;
+        this.blogCategoryService = blogCategoryService;
     }
 
-    public Page<Blog> findAll(int page, int pageSize) {
+    public Page<Blog> findAll(int page, int pageSize, int blogCategoryId) {
         Pageable pageable = PageRequest.of(page-1, pageSize);
-        return blogRepository.findAll(pageable);
+
+        BlogCategory blogCategory = null;
+
+        if(blogCategoryId != 0){
+            blogCategory = blogCategoryService.findById(blogCategoryId);
+        }
+
+        if(blogCategory != null){
+            return blogRepository.findByBlogCategory(pageable, blogCategory);
+        }else{
+            return blogRepository.findAll(pageable);
+        }
+
     }
 
     public Blog save(Blog blog) {

@@ -15,7 +15,11 @@
             <div class="mt-4 pt-3">
                 <ul class="timeline mb-0 row">
                   <li th:each="event: ${events}" class="col-md-6 col-12">
+
                       <div class="date bg-light p-3">
+                          <div class="d-flex justify-content-start align-items-center">
+                              <i class="fa-solid fa-lg fa-trash delete-icon" role="button" style="color: brown;" th:onclick="|window.location='@{/dashboard/events/delete/{id}(id=${event.eventId})}'|"></i>
+                          </div>
                           <h5 class="d-flex justify-content-end fs-16">[[${event.eventDate}]]</h5>
                         </div>
                         <div class="card" th:onclick="|window.location='@{/dashboard/events/detail/{id}(id=${event.eventId})}'|">

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+
+    .gallery-item .caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .gallery-item {
+        animation: fadeInUp 0.6s ease both;
+    }
+  </style>
+</head>
+
+<body th:fragment="album-detail">
+  <div class="container my-5">
+    <h1 class="text-center text-md-start mb-4">[[${album.albumName}]]</h1>
+      <div class="d-flex justify-content-md-start justify-content-center">
+          <a th:href="@{/medias/form?forAlbumId={id}(id=${album.albumId})}" role="button" class="success-button mb-3">Add new photo or video</a>
+      </div>
+    <div class="row g-4">
+      <!-- Gallery Item 1 -->
+      <div th:each="media: ${album.mediaList}" class="col-md-6">
+        <div class="card gallery-item">
+         <div class="card-body">
+<!--           <img th:src="${baseMediaPath + media.mediaPath}" alt="Image 1" width="100%" style="max-height: 500px;">-->
+           <img th:src="${media.mediaPath}" th:alt="${media.mediaPath}" width="100%" style="max-height: 500px;"  >
+           <div class="caption"></div>
+         </div>
+          <!-- Button for copying -->
+          <button class="btn btn-primary path-btn"
+                  th:attr="data-copy=${media.mediaPath}"
+                  onclick="copyToClipboard(this)">
+            Copy the Path
+          </button>
+          <P class="text-success path-copied" style="display: none;"> Path copied!</P>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/js/media.js}"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

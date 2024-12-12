@@ -32,8 +32,8 @@ public class BlogCategoryService {
     }
 
     public List<BlogCategory> findAll() {
-        List<BlogCategory> pagedCategories = blogCategoryRepository.findAll();
-        return pagedCategories;
+        List<BlogCategory> blogCategories = blogCategoryRepository.findAll();
+        return blogCategories;
     }
 
     public BlogCategory findById(Integer catId) {

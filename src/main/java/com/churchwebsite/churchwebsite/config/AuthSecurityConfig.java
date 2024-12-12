@@ -43,7 +43,13 @@ public class AuthSecurityConfig {
             "/fonts**",
             "/favicon.ico",
             "/error",
-            "/media/**"
+            "/media/**",
+            "/news",
+            "/news/**",
+            "/blogs",
+            "/blogs/**",
+            "/events",
+            "/events/**"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{

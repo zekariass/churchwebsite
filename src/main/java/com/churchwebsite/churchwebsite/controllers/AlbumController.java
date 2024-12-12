@@ -6,7 +6,6 @@ import com.churchwebsite.churchwebsite.services.AlbumService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
