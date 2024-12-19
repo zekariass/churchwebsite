@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Video Form</title>
+</head>
+<body>
+  <div th:fragment="video-form">
+      <h3>Add New Video</h3>
+    <form th:action="@{/videos/form/process}" th:object="${video}" method="POST">
+      <div class="row g-3 width-md-75">
+          <div class="my-3">
+              <label for="videoPath" class="h3 form-label mb-3">Youtube Video ID</label>
+              <input id="videoPath" th:field="*{videoPath}" type="text" class="form-control" aria-describedby="urlInfo">
+              <div id="urlInfo" class="form-text">Write full video ID from youtube, i.e 11 characters code</div>
+          </div>
+          <div class="my-3">
+              <label for="videoName" class="h3 form-label mb-3">Video Name</label>
+              <input id="videoName" th:field="*{videoName}" type="text" class="form-control" maxlength="100">
+            <div class="mt-3">
+                <input class="success-button" type="submit" value="Save" />
+            </div>
+          </div>
+      </div>
+<!--        <script th:src="@{/js/media.js}"></script>-->
+    </form>
+  </div>
+</body>
+</html>

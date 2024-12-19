@@ -5,9 +5,8 @@
     <title>New Album</title>
 </head>
 <body th:fragment="album-form">
-  <form th:action="@{/media/albums/addNew}" method="POST">
-    <div th:fragment="album-form-fields">
-
+  <form th:action="@{/images/albums/processForm}" method="POST" class="width-75">
+    <div th:fragment="album-form-fields" >
       <div class="my-3">
         <label for="albumName" class="h3 form-label mb-3">Album Name</label>
         <input id="albumName" th:field="*{album.albumName}" type="text" class="form-control">

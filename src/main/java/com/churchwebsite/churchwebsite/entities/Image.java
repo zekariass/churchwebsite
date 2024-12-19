@@ -9,22 +9,22 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "media")
+@Table(name = "image")
 @EntityListeners(AuditingEntityListener.class)
-public class Media implements Cloneable {
+public class Image implements Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int mediaId;
+    private int imageId;
 
-    private String mediaName;
+    private String imageName;
 
-    private String mediaPath;
+    private String imagePath;
 
     @CreatedDate
     private LocalDateTime uploadTime;
 
-    private String mediaType;
+//    private String mediaType;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "album_id")
@@ -39,39 +39,40 @@ public class Media implements Cloneable {
     @Column(name = "is_archived")
     private boolean archived;
 
-    public Media() {
+    public Image() {
     }
 
-    public Media(String mediaName, String mediaPath, String mediaType, Album album, boolean archived) {
-        this.mediaName = mediaName;
-        this.mediaPath = mediaPath;
-        this.mediaType = mediaType;
+    public Image(String imageName, String imagePath, LocalDateTime uploadTime, Album album, User uploadedBy, boolean archived) {
+        this.imageName = imageName;
+        this.imagePath = imagePath;
+        this.uploadTime = uploadTime;
         this.album = album;
+        this.uploadedBy = uploadedBy;
         this.archived = archived;
     }
 
-    public int getMediaId() {
-        return mediaId;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setMediaId(int mediaId) {
-        this.mediaId = mediaId;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
-    public String getMediaName() {
-        return mediaName;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setMediaName(String mediaName) {
-        this.mediaName = mediaName;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
-    public String getMediaPath() {
-        return mediaPath;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setMediaPath(String mediaPath) {
-        this.mediaPath = mediaPath;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public LocalDateTime getUploadTime() {
@@ -80,14 +81,6 @@ public class Media implements Cloneable {
 
     public void setUploadTime(LocalDateTime uploadTime) {
         this.uploadTime = uploadTime;
-    }
-
-    public String getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
     }
 
     public @NotNull(message = "Album must be selected or created new one.") Album getAlbum() {
@@ -116,22 +109,20 @@ public class Media implements Cloneable {
 
     @Override
     public String toString() {
-        return "Media{" +
-                "mediaId=" + mediaId +
-                ", mediaName='" + mediaName + '\'' +
-                ", mediaPath='" + mediaPath + '\'' +
+        return "Image{" +
+                "imageId=" + imageId +
+                ", imageName='" + imageName + '\'' +
+                ", imagePath='" + imagePath + '\'' +
                 ", uploadTime=" + uploadTime +
-                ", mediaType=" + mediaType +
                 ", album=" + album +
-                ", uploadedBy=" + uploadedBy.getUsername() +
                 ", archived=" + archived +
                 '}';
     }
 
     @Override
-    public Media clone() {
+    public Image clone() {
         try {
-            Media clone = (Media) super.clone();
+            Image clone = (Image) super.clone();
             // TODO: copy mutable state here, so the clone can't change the internals of the original
             return clone;
         } catch (CloneNotSupportedException e) {

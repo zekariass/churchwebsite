@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Detail</title>
+</head>
+<body>
+<div th:fragment="service-detail" class="container">
+    <div class="m-3">
+                <Span class="d-flex justify-content-end">
+                    <a th:href="@{/church-services}" class="mx-1">Back to the list</a>
+                </Span>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+<!--            <div class="mb-3 d-flex justify-content-md-end justify-content-center">-->
+<!--                <button class="success-button" th:onclick="|window.location='@{/dashboard/services/edit/{id}(id=${churchService.serviceId})}'|">Edit this Service</button>-->
+<!--            </div>-->
+            <div class="ps-lg-1-6 ps-xl-5">
+                <div class="mb-5 wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="h1 mb-0 text-primary">[[${churchService.serviceName}]]</h2>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div th:utext="${churchService.serviceDescription}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

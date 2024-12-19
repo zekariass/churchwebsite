@@ -6,15 +6,15 @@
     <title>Attachments List</title>
 <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
 </head>
-<body th:fragment="attachments-list">
-    <div class="container my-5">
-        <h1 class="m-3 text-center text-md-start">Attachments List</h1>
+<body >
+    <div th:fragment="attachments-list" class="container">
+        <h4 class=" text-center text-md-start">Files</h4>
 
         <!-- Table to display the attachments -->
-        <div class="d-flex justify-content-end m-3">
+        <div class="d-flex justify-content-end mb-3">
             <div class="row">
                 <label for="sort-attachment-by" class="col">Sort by: </label>
-                <select id="sort-attachment-by" class="form-select col sort-by" onchange="sortByCriteria(this)" data-navigate-to="/medias/attachments" style="width:auto;">
+                <select id="sort-attachment-by" class="form-select col sort-by" onchange="sortByCriteria(this)" data-navigate-to="/media-center/files" style="width:auto;">
 <!--                    <option th:selected="${sortBy == null or sortBy == ''}">&#45;&#45; Select &#45;&#45;</option>-->
                     <option th:value="'attachmentName'"
                             th:selected="${sortBy == 'attachmentName'}">Attachment Name</option>

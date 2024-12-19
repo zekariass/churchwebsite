@@ -29,7 +29,7 @@ public class Album {
     private boolean archived;
 
     @OneToMany(mappedBy = "album")
-    private List<Media> mediaList;
+    private List<Image> imageList;
 
     public Album() {}
 
@@ -70,12 +70,12 @@ public class Album {
         this.creationTime = creationTime;
     }
 
-    public List<Media> getMediaList() {
-        return mediaList;
+    public List<Image> getMediaList() {
+        return imageList;
     }
 
-    public void setMediaList(List<Media> mediaList) {
-        this.mediaList = mediaList;
+    public void setMediaList(List<Image> imageList) {
+        this.imageList = imageList;
     }
 
     public boolean isArchived() {
@@ -84,6 +84,14 @@ public class Album {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public List<Image> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
     }
 
     @Override

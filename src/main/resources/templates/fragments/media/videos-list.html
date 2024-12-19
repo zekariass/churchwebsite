@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Video List</title>
+  <link rel="stylesheet" href="/css/styles.css"> <!-- External CSS -->
+</head>
+<body>
+  <div th:fragment="videos-list">
+    <style>
+            /* CSS for Video List */
+
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Responsive grid classes */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            padding: 0.5rem;
+        }
+
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .col-lg-4 {
+            flex: 0 0 33.333%;
+            max-width: 33.333%;
+        }
+
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 1rem;
+            background: #fff;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #333;
+        }
+
+    </style>
+    <div class="row">
+      <div th:each="video: ${videos}" class="col-md-6 col-lg-4 col-12">
+        <div th:fragment="video-card" class="card shadow-sm">
+          <div class="video-container">
+            <iframe th:src="'https://www.youtube.com/embed/'+ ${video.youtubeVideoId}"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+            </iframe>
+          </div>
+          <div class="card-body">
+            <p class="card-text">[[${video.videoName}]]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:replace="~{fragments/pagination::pagination}"></div>
+  </div>
+</body>
+</html>

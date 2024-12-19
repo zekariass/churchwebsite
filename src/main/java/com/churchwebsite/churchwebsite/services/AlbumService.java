@@ -22,7 +22,7 @@ public class AlbumService {
     }
 
     public Page<Album> getAlbumList(int page, int pageSize, Sort sort){
-        Pageable pageable = PageRequest.of(page-1, pageSize);
+        Pageable pageable = PageRequest.of(page-1, pageSize, sort);
         return albumRepository.findAll(pageable);
     }
 

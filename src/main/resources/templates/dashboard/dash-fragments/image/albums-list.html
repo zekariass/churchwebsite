@@ -10,7 +10,7 @@
       <div class="d-flex justify-content-start mb-3">
           <div class="row">
               <label for="sort-by" class="col">Sort by: </label>
-              <select id="sort-by" class="form-select col sort-by" onchange="sortByCriteria(this)" data-navigate-to="/medias/albums" style="width:auto;">
+              <select id="sort-by" class="form-select col sort-by" onchange="sortByCriteria(this)" data-navigate-to="/images/albums" style="width:auto;">
                   <option th:value="albumName">-- Select --</option>
                   <option th:value="'albumName'"
                           th:selected="${sortBy == 'albumName'}">Album Name</option>
@@ -20,9 +20,9 @@
       <div class="row">
         <!-- Loop through albums -->
         <div class="col-md-3 mb-4" th:each="album, albumStat:${albums}">
-          <div th:if="${album.mediaList.size() > 0}">
+          <div th:if="${album.imageList.size() > 0}">
             <!-- Album Card -->
-            <div class="card shadow-sm" style="height: 500;" role="button" th:onclick="|window.location='@{/medias/albums/detail/{id}(id=${album.albumId})}'|">
+            <div class="card shadow-sm" style="height: 500;" role="button" th:onclick="|window.location='@{/images/albums/detail/{id}(id=${album.albumId})}'|">
               <div class="card-header text-center">
                 <h5 class="card-title" th:if="${album.albumName != null || album.albumName != ''}" th:text="${album.albumName}"></h5>
                 <h5 class="card-title" th:if="${album.albumName == null || album.albumName == ''}">No Album Name</h5>
@@ -31,25 +31,25 @@
                 <!-- Carousel -->
                 <div th:id="'carousel_' + ${albumStat.index}" class="carousel slide" data-bs-ride="carousel">
                   <!-- Carousel Indicators -->
-                  <div class="carousel-indicators" th:if="${album.mediaList.size() > 1}">
+                  <div class="carousel-indicators" th:if="${album.imageList.size() > 1}">
                     <button type="button"
                             th:attr="data-bs-target='#carousel_' + ${albumStat.index}"
-                            th:attrappend="data-bs-slide-to=${mediaStat.index}"
-                            th:class="${mediaStat.index == 0} ? 'active' : 'bg-white'"
-                            th:each="media, mediaStat : ${album.mediaList}"
+                            th:attrappend="data-bs-slide-to=${imageStat.index}"
+                            th:class="${imageStat.index == 0} ? 'active' : 'bg-white'"
+                            th:each="image, imageStat : ${album.imageList}"
                             style="width: 12px; height: 12px; border-radius: 50%;"
                             aria-current="true" aria-label="Slide"></button>
                   </div>
 
                   <!-- Carousel Inner -->
                   <div class="carousel-inner" >
-                    <!-- Loop through media -->
-                    <div th:each="media, mediaStat : ${album.mediaList}"
-                         th:classappend="${mediaStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                    <!-- Loop through image -->
+                    <div th:each="image, imageStat : ${album.imageList}"
+                         th:classappend="${imageStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
                       <div class="d-flex justify-content-center align-items-center"
                            style="height: 200px; background-color: f5f5f5;">
-<!--                        <img th:src="${baseMediaPath + media.mediaPath}" alt="MediaPath" width="100%" height="100%">-->
-                           <img th:src="${media.mediaPath}" alt="MediaPath" width="100%" height="100%">
+<!--                        <img th:src="${baseImagePath + image.imagePath}" alt="ImagePath" width="100%" height="100%">-->
+                           <img th:src="${image.imagePath}" alt="ImagePath" width="100%" height="100%">
 
                       </div>
                     </div>

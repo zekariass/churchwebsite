@@ -170,18 +170,33 @@ INSERT INTO album(album_id, album_name, album_description, is_archived) VALUES (
 INSERT INTO album(album_id, album_name, album_description, is_archived) VALUES (4, 'General', 'General files', false);
 								
 DROP TABLE IF EXISTS `media`;
-CREATE TABLE `media` (
-    `media_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `media_name` VARCHAR(100) DEFAULT NULL,
-    `media_path` VARCHAR(255) NOT NULL,
+DROP TABLE IF EXISTS `image`;
+CREATE TABLE `image` (
+    `image_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `image_name` VARCHAR(100) DEFAULT NULL,
+    `image_path` VARCHAR(255) NOT NULL,
     `upload_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `album_id` INT NOT NULL,
-    `media_type` VARCHAR(20) DEFAULT NULL,
+    -- `media_type` VARCHAR(20) DEFAULT NULL,
     `uploaded_by` INT DEFAULT NULL,
     `is_archived` BOOLEAN DEFAULT FALSE,
      FOREIGN KEY (`album_id`) REFERENCES `album`(`album_id`),
     FOREIGN KEY (`uploaded_by`) REFERENCES `user`(`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `video`;
+CREATE TABLE `video` (
+    `video_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `video_name` VARCHAR(100) DEFAULT NULL,
+    `youtube_video_id` VARCHAR(255) NOT NULL,
+    `upload_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    -- `album_id` INT NOT NULL,
+    -- `media_type` VARCHAR(20) DEFAULT NULL,
+    `uploaded_by` INT DEFAULT NULL,
+    `is_archived` BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (`uploaded_by`) REFERENCES `user`(`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 DROP TABLE IF EXISTS `attachment`;
 CREATE TABLE `attachment` (
@@ -354,21 +369,11 @@ CREATE TABLE `organisation_staff` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `service_type`;
-CREATE TABLE `service_type` (
-    `service_type_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `service_type_name` VARCHAR(255) NOT NULL,
-    `service_description` TEXT DEFAULT NULL,
-    `organisation_id` INT NOT NULL,
-    FOREIGN KEY (`organisation_id`) REFERENCES `organisation`(`organisation_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 DROP TABLE IF EXISTS `service`;
 CREATE TABLE `service` (
     `service_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `service_name` VARCHAR(255) NOT NULL,
-    `service_description` TEXT DEFAULT NULL,
-	`service_type_id` INT NOT NULL,
-    FOREIGN KEY (`service_type_id`) REFERENCES `service_type`(`service_type_id`)
+    `service_description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 USE `church_website`;
@@ -382,3 +387,49 @@ CREATE TABLE `settings`(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (1, 'DEFAULT_PAGE_SIZE', 'The number of items listed in a page', 8, null);
+
+DROP TABLE IF EXISTS `baptisim`;
+CREATE TABLE `baptisim`(
+	`request_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	`child_father_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `child_mother_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `child_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `child_god_parent_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `child_dob` DATETIME DEFAULT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `phone_number` VARCHAR(20) NOT NULL,
+    `address_id` INT NOT NULL,
+    `required_service` VARCHAR(50) DEFAULT "BAPTISM",
+    `service_status` VARCHAR(30) DEFAULT "REQUEST",
+    `request_date` DATE DEFAULT NULL,
+    `message` TEXT DEFAULT NULL,
+    FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `holy_matrimony`;
+CREATE TABLE `holy_matrimony`(
+	`request_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	`groom_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `bride_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `spiritual_father_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `matrimony_date` DATE DEFAULT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `phone_number` VARCHAR(20) NOT NULL,
+    `address_id` INT NOT NULL,
+    `required_service` VARCHAR(50) DEFAULT "MARRIAGE",
+    `service_status` VARCHAR(30) DEFAULT "REQUEST",
+    `request_date` DATETIME DEFAULT NULL,
+    `message` TEXT DEFAULT NULL,
+    FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `remembrance_prayer`;
+CREATE TABLE `remembrance_prayer`(
+	`request_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	`requestor_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `christian_name_of_the_prayer_is_for` VARCHAR(100) NOT NULL UNIQUE,
+    `spiritual_father_fullname` VARCHAR(100) NOT NULL UNIQUE,
+    `prayer_for_date` DATE DEFAULT NULL,
+    `request_date` DATETIME DEFAULT NULL,
+    `message` TEXT DEFAULT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

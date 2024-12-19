@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Services List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/events-timeline.css}">
+</head>
+<body>
+  <div th:fragment="services-list">
+
+      <div class="width-md-75">
+          <div class="m-4">
+              <h4 th:if="${churchServices.size() == 0}">No service found!</h4>
+          </div>
+           <div th:each="service: ${churchServices}" class="py-4 service-list shadow-sm mb-3 rounded-3 border border-info" role="button" style="">
+               <div class="row">
+                   <div class="col-10" th:onclick="|window.location='@{/church-services/detail/{id}(id=${service.serviceId})}'|">
+                       <h4 href="#" class="list-group-item list-group-item-action px-3 border-1">[[${service.serviceName}]]</h4>
+                   </div>
+               </div>
+           </div>
+      </div>
+  </div>
+</body>
+</html>

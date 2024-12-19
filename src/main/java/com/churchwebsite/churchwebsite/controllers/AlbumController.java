@@ -1,7 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.Album;
-import com.churchwebsite.churchwebsite.entities.Media;
+import com.churchwebsite.churchwebsite.entities.Image;
 import com.churchwebsite.churchwebsite.services.AlbumService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("medias/albums")
+@RequestMapping("images/albums")
 public class AlbumController {
 
     @Autowired
@@ -44,7 +42,7 @@ public class AlbumController {
                                 @RequestParam(value = "size", required = false) Integer pageSize,
                                 HttpServletRequest request){
 
-        String baseMediaPath = File.separator + Paths.get("media/centre") + File.separator;
+        String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
@@ -58,7 +56,7 @@ public class AlbumController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("albums", albums);
-        model.addAttribute("baseMediaPath", baseMediaPath);
+        model.addAttribute("baseImagePath", baseImagePath);
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -66,13 +64,13 @@ public class AlbumController {
     @GetMapping("/form")
     public String showNewAlbumForm(Model model){
 
-        model.addAttribute("media", new Media());
-        model.addAttribute("activeDashPage", "media-form");
+        model.addAttribute("album", new Album());
+        model.addAttribute("activeDashPage", "album-form");
 
         return DASHBOARD_MAIN_PANEL;
     }
 
-    @GetMapping("/processForm")
+    @PostMapping("/processForm")
     public String processAlbumForm(@ModelAttribute Album album, Model model){
 
         Album savedAlbum = albumService.save(album);
@@ -87,11 +85,11 @@ public class AlbumController {
     public String showAlbumDetail(@PathVariable(value = "id", required = false) int albumId, Model model){
 
         Album album = albumService.getAlbumById(albumId);
-        String baseMediaPath = File.separator + Paths.get("media/centre") + File.separator;
+        String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
 
         model.addAttribute("album", album);
         model.addAttribute("activeDashPage", "album-detail");
-        model.addAttribute("baseMediaPath", baseMediaPath);
+        model.addAttribute("baseImagePath", baseImagePath);
 
         return DASHBOARD_MAIN_PANEL;
     }

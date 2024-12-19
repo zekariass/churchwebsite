@@ -71,20 +71,20 @@
   <div class="container my-5">
     <h1 class="text-center text-md-start mb-4">[[${album.albumName}]]</h1>
       <div class="d-flex justify-content-md-start justify-content-center">
-          <a th:href="@{/medias/form?forAlbumId={id}(id=${album.albumId})}" role="button" class="success-button mb-3">Add new photo or video</a>
+          <a th:href="@{/images/form?forAlbumId={id}(id=${album.albumId})}" role="button" class="success-button mb-3">Add new photo or video</a>
       </div>
     <div class="row g-4">
       <!-- Gallery Item 1 -->
-      <div th:each="media: ${album.mediaList}" class="col-md-6">
+      <div th:each="image: ${album.imageList}" class="col-md-6">
         <div class="card gallery-item">
          <div class="card-body">
-<!--           <img th:src="${baseMediaPath + media.mediaPath}" alt="Image 1" width="100%" style="max-height: 500px;">-->
-           <img th:src="${media.mediaPath}" th:alt="${media.mediaPath}" width="100%" style="max-height: 500px;"  >
+<!--           <img th:src="${baseMediaPath + image.imagePath}" alt="Image 1" width="100%" style="max-height: 500px;">-->
+           <img th:src="${image.imagePath}" th:alt="${image.imagePath}" width="100%" style="max-height: 500px;"  >
            <div class="caption"></div>
          </div>
           <!-- Button for copying -->
           <button class="btn btn-primary path-btn"
-                  th:attr="data-copy=${media.mediaPath}"
+                  th:attr="data-copy=${image.imagePath}"
                   onclick="copyToClipboard(this)">
             Copy the Path
           </button>

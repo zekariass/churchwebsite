@@ -49,7 +49,11 @@ public class AuthSecurityConfig {
             "/blogs",
             "/blogs/**",
             "/events",
-            "/events/**"
+            "/events/**",
+            "/media-center",
+            "/media-center/**",
+            "/church-services",
+            "/church-services/**"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{

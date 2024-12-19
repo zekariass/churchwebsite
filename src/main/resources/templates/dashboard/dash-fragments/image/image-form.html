@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>New Media Form</title>
+  <title>New Image Form</title>
 </head>
 <body>
-  <div th:fragment="media-form">
-      <h3>Add New Media</h3>
-    <form th:action="@{/medias/form}" th:object="${media}" method="POST" enctype="multipart/form-data">
+  <div th:fragment="image-form">
+      <h3>Add New Image</h3>
+    <form th:action="@{/images/form}" th:object="${image}" method="POST" enctype="multipart/form-data">
       <div class="row g-3 width-md-75">
         <div class="my-3">
           <div th:if="${forAlbumId == 0}"  class="my-3">
@@ -32,23 +32,28 @@
 
           <div id="new-album-form" class="m-4" style="background-color: #ffffff; display: none">
               <div class="p-4">
-                  <div th:replace="~{dashboard/dash-fragments/media/album-form::album-form-fields}"></div>
+                  <div th:replace="~{dashboard/dash-fragments/image/album-form::album-form-fields}"></div>
               </div>
           </div>
         </div>
-          <div class="mb-3">
-              <select th:field="*{mediaType}" class="form-select">
-                  <option value="Image">Image</option>
-                  <option value="Video">Video</option>
-              </select>
-          </div>
+<!--          <div class="mb-3">-->
+<!--              <select th:field="*{imageType}" class="form-select">-->
+<!--                  <option value="Image">Image</option>-->
+<!--                  <option value="Video">Video</option>-->
+<!--              </select>-->
+<!--          </div>-->
         <div class="my-3">
-          <label for="mediaPaths" class="h3 form-label mb-3">Media Files (videos or images only)</label>
-          <input id="mediaPaths" name="mediaPaths" type="file" class="form-control" multiple required accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/svg+xml, image/tiff, image/x-icon, video/mp4, video/x-msvideo, video/quicktime, video/webm, video/x-matroska, video/x-flv, video/x-ms-wmv">
+          <label for="imagePaths" class="h3 form-label mb-3">Image</label>
+          <input id="imagePaths" name="imagePaths" type="file" class="form-control" multiple required accept="image/jpeg, image/png, image/gif, image/bmp, image/webp, image/svg+xml, image/tiff, image/x-icon">
+<!--           video/mp4, video/x-msvideo, video/quicktime, video/webm, video/x-matroska, video/x-flv, video/x-ms-wmv">-->
         </div>
+          <div class="my-3 d-none">
+              <label for="videoPath" class="h3 form-label mb-3">Video Path</label>
+              <input id="videoPath" name="imagePaths" type="text">
+          </div>
           <div class="my-3">
-              <label for="mediaName" class="h3 form-label mb-3">Media Name</label>
-              <input id="mediaName" th:field="*{mediaName}" type="text" class="form-control" maxlength="100">
+              <label for="imageName" class="h3 form-label mb-3">Image Name</label>
+              <input id="imageName" th:field="*{imageName}" type="text" class="form-control" maxlength="100">
 <!--          </div>-->
 <!--            <input type="hidden" name="returnUrl" th:value="${currentUrl}">-->
 <!--          <div>-->

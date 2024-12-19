@@ -75,31 +75,48 @@
             <div th:replace="~{dashboard/dash-fragments/blogs/blog-detail::blog-detail}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'media-form'}">
-            <div th:replace="~{dashboard/dash-fragments/media/media-form::media-form}"></div>
+          <main th:if="${activeDashPage == 'image-form'}">
+            <div th:replace="~{dashboard/dash-fragments/image/image-form::image-form}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'media-links-list'}">
-            <div th:replace="~{dashboard/dash-fragments/blogs/media-links-list::media-links-list}"></div>
+          <main th:if="${activeDashPage == 'album-form'}">
+            <div th:replace="~{dashboard/dash-fragments/image/album-form::album-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'image-links-list'}">
+            <div th:replace="~{dashboard/dash-fragments/blogs/image-links-list::image-links-list}"></div>
           </main>
 
           <main th:if="${activeDashPage == 'albums-list'}">
-            <div th:replace="~{dashboard/dash-fragments/media/albums-list::albums-list}"></div>
+            <div th:replace="~{dashboard/dash-fragments/image/albums-list::albums-list}"></div>
           </main>
 
           <main th:if="${activeDashPage == 'album-detail'}">
-            <div th:replace="~{dashboard/dash-fragments/media/album-detail::album-detail}"></div>
+            <div th:replace="~{dashboard/dash-fragments/image/album-detail::album-detail}"></div>
           </main>
 
           <main th:if="${activeDashPage == 'attachment-form'}">
-            <div th:replace="~{dashboard/dash-fragments/media/attachment-form::attachment-form}"></div>
+            <div th:replace="~{dashboard/dash-fragments/image/attachment-form::attachment-form}"></div>
           </main>
 
           <main th:if="${activeDashPage == 'attachments-list'}">
-            <div th:replace="~{dashboard/dash-fragments/media/attachments-list::attachments-list}"></div>
+            <div th:replace="~{dashboard/dash-fragments/image/attachments-list::attachments-list}"></div>
           </main>
 
-          <!-- ======= INFORMATION ====== -->
+          <!--    ========== VIDEO ================ --->
+          <main th:if="${activeDashPage == 'video-form'}">
+            <div th:replace="~{dashboard/dash-fragments/video/video-form::video-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'videos-list'}">
+            <div th:replace="~{dashboard/dash-fragments/video/videos-list::videos-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'video-view'}">
+            <div th:replace="~{dashboard/dash-fragments/video/video-view::video-view}"></div>
+          </main>
+
+          <!-- ======= INFORMATION ================= -->
           <main th:if="${activeDashPage == 'landing-content-form'}">
             <div th:replace="~{dashboard/dash-fragments/landing-content/landing-content-form::landing-content-form}"></div>
           </main>
@@ -149,6 +166,19 @@
 
           <main th:if="${activeDashPage == 'membership-detail'}">
             <div th:replace="~{dashboard/dash-fragments/membership/membership-detail::membership-detail}"></div>
+          </main>
+
+          <!-- ============== SERVICE ==================== -->
+          <main th:if="${activeDashPage == 'service-form'}">
+            <div th:replace="~{dashboard/dash-fragments/services/service-form::service-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'services-list'}">
+            <div th:replace="~{dashboard/dash-fragments/services/services-list::services-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'service-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/services/service-detail::service-detail}"></div>
           </main>
         </div>
       </div>

@@ -70,10 +70,25 @@
           </li>
 
           <li class="nav-item">
-            <a href="#">
-              <i class="fas fa-file"></i>
+            <a data-bs-toggle="collapse" href="#service">
+              <i class="fas fa-building"></i>
               <p>Services</p>
+              <span class="caret"></span>
             </a>
+            <div class="collapse" id="service">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a th:href="@{/dashboard/services/form}">
+                    <span class="sub-item">New Service</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/services}">
+                    <span class="sub-item">Services</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
 
           <li class="nav-item">
@@ -152,23 +167,23 @@
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#tables">
               <i class="fas fa-table"></i>
-              <p>Media Center</p>
+              <p>Images Center</p>
               <span class="caret"></span>
             </a>
             <div class="collapse" id="tables">
               <ul class="nav nav-collapse">
                 <li>
-                  <a th:href="@{/medias/form}">
-                    <span class="sub-item">New Image/Video</span>
+                  <a th:href="@{/images/form}">
+                    <span class="sub-item">New Image</span>
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{/medias/albums}">
+                  <a th:href="@{/images/albums}">
                     <span class="sub-item">Albums</span>
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{/medias/albums/form}">
+                  <a th:href="@{/images/albums/form}">
                     <span class="sub-item">New Album</span>
                   </a>
                 </li>
@@ -176,6 +191,29 @@
               </ul>
             </div>
           </li>
+
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" href="#videos">
+              <i class="fas fa-table"></i>
+              <p>Video Center</p>
+              <span class="caret"></span>
+            </a>
+            <div class="collapse" id="videos">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a th:href="@{/videos/form}">
+                    <span class="sub-item">New Video</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/videos}">
+                    <span class="sub-item">Videos</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#attachments">
               <i class="fas fa-table"></i>

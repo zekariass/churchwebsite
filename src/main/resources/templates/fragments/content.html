@@ -46,6 +46,45 @@
             <div th:replace="~{fragments/events/event-detail::event-detail}"></div>
         </main>
 
+        <!-- =========== MEDIA CENTER =======================================   -->
+
+        <main th:if="${activeContentPage == 'media-center-options'}">
+            <div th:replace="~{fragments/media/media-center-options::media-center-options}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'videos-list'}">
+            <div th:replace="~{fragments/media/videos-list::videos-list}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'albums-list'}">
+            <div th:replace="~{fragments/media/albums-list::albums-list}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'album-detail'}">
+            <div th:replace="~{fragments/media/album-detail::album-detail}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'files-list'}">
+            <div th:replace="~{fragments/image/files-list::files-list}"></div>
+        </main>
+
+        <!-- =========== Attachments =======================================   -->
+
+        <main th:if="${activeContentPage == 'attachments-list'}">
+            <div th:replace="~{fragments/media/attachments-list::attachments-list}"></div>
+        </main>
+
+
+        <!-- ============== SERVICE ==================== -->
+
+        <main th:if="${activeContentPage == 'services-list'}">
+            <div th:replace="~{fragments/services/services-list::services-list}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'service-detail'}">
+            <div th:replace="~{fragments/services/service-detail::service-detail}"></div>
+        </main>
+
     </div>
 </body>
 </html>
