@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification List</title>
+</head>
+<body>
+<div th:fragment="notifications-list">
+    <div class="container mt-5">
+        <h1 class="mb-4">Email Notifications</h1>
+        <div class="d-flex justify-content-end my-3">
+            <a th:href="@{/dashboard/notifications/form}" class="success-button">Create New Notification</a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Subject</th>
+                <th>Sent Time</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="notification : ${notifications}">
+                <td th:text="${notification.notificationId}"></td>
+                <td th:text="${notification.notificationSubject}"></td>
+                <td th:text="${notification.notificationSentTime.format(@dateTimeFormatter)}"></td>
+                <td>
+                    <a th:href="@{/dashboard/notifications/detail/{id}(id=${notification.notificationId})}" class="btn btn-info btn-sm">Detail</a>
+<!--                    <a th:href="@{/dashboard/notifications/{id}/edit(id=${notification.notificationId})}" class="btn btn-warning btn-sm">Edit</a>-->
+                    <form th:action="@{/dashboard/notifications/{id}/delete(id=${notification.notificationId})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-4">
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
+</div>
+</body>
+</html>

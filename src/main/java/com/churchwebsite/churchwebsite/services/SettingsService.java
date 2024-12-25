@@ -22,4 +22,5 @@ public class SettingsService {
     public void deleteById(int blogId) {
         settingsRepository.deleteById(blogId);
     }
+
 }

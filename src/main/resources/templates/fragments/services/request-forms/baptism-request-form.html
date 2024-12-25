@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Baptism Form</title>
+</head>
+<body>
+    <div th:fragment="baptism-request-form">
+        <div class="card">
+            <div class="card-body shadow-sm p-4">
+                <form th:action="@{/church-services/baptism/form/process}" th:object="${baptism}" method="POST">
+                    <div class="mb-3">
+                        <h3>Fill this form to request for baptism service</h3>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6 col-12">
+                            <label for="childFatherFullname" class="form-label">Child Father Full-Name</label>
+                            <input th:field="*{childFatherFullname}" type="text" class="form-control" id="childFatherFullname">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="childMotherFullname" class="form-label">Child Mother Full-Name</label>
+                            <input th:field="*{childMotherFullname}" type="text" class="form-control" id="childMotherFullname">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="childFullname" class="form-label">Child Full-Name</label>
+                            <input th:field="*{childFullname}" type="text" class="form-control" id="childFullname">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="childGodParentFullname" class="form-label">Child's God Father/Mother Name</label>
+                            <input th:field="*{childGodParentFullname}" type="text" class="form-control" id="childGodParentFullname">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="childDob" class="form-label">Child Birth Date</label>
+                            <input th:field="*{childDob}" type="date" class="form-control" id="childDob">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="email" class="form-label">Email</label>
+                            <input th:field="*{email}" type="text" class="form-control" id="email">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input th:field="*{phoneNumber}" type="text" class="form-control" id="phoneNumber">
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <label for="baptismRequestType" class="form-label">Request Type</label>
+                            <select id="baptismRequestType" th:field="*{requiredService}" class="form-select">
+                                <option th:each="status : ${baptismRequestType}" th:value="${status}" th:text="${status.displayName}"></option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea th:field="*{message}" class="form-control" id="message" rows="4"></textarea>
+                        </div>
+                        <div>
+                            <h3 class="my-3">Child Address</h3>
+                            <div th:replace="~{dashboard/dash-fragments/address-form::address-form}"></div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="success-button">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Church Contact Detail</title>
+</head>
+<body>
+  <div th:fragment="church-contact-detail">
+    <h1>Church Contact Details</h1>
+
+    <table class="table table-bordered mt-4">
+      <tbody>
+      <tr>
+        <th>ID</th>
+        <td th:text="${contact.contactId}"></td>
+      </tr>
+      <tr>
+        <th>Full Name</th>
+        <td th:text="${contact.contactFullName}"></td>
+      </tr>
+      <tr>
+        <th>Phone</th>
+        <td th:text="${contact.contactPhone}"></td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td th:text="${contact.contactEmail}"></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="my-3">
+      <h4>Description</h4>
+      <div th:utext="${contact.contactDescription}"></div>
+    </div>
+
+    <a th:href="@{/dashboard/church-contacts}" class="btn btn-secondary">Back to List</a>
+    <a th:href="@{/dashboard/church-contacts/edit/{id}(id=${contact.contactId})}" class="btn btn-warning">Edit</a>
+    <a th:href="@{/dashboard/church-contacts/delete/{id}(id=${contact.contactId})}" class="btn btn-danger"
+       onclick="return confirm('Are you sure you want to delete this contact?');">Delete</a>
+  </div>
+</body>
+</html>

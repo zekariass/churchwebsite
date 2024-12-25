@@ -6,10 +6,10 @@
 </head>
 <body>
     <div th:fragment="banner">
-        <div id="carouselExampleIndicators" class="carousel slide " data-bs-ride="carousel">
+        <div th:if="${churchDetail != null and churchDetail?.banners.size() > 0}" id="carouselExampleIndicators" class="carousel slide " data-bs-ride="carousel">
             <!-- Indicators -->
             <div class="carousel-indicators">
-                <div th:each="_, stat : ${churchDetail.banners}">
+                <div th:each="_, stat : ${churchDetail?.banners}">
                     <button type="button"
                             data-bs-target="#carouselExampleIndicators"
                             data-bs-slide-to="${stat.index}"
@@ -23,13 +23,13 @@
             <!-- Carousel Items -->
             <div class="carousel-inner">
                 <div th:if="${churchDetail != null}">
-                    <div th:each="banner, stat : ${churchDetail.banners}">
+                    <div th:each="banner, stat : ${churchDetail?.banners}">
                         <div class="carousel-item"
-                             th:style="|background-image: url('${banner.churchBanner}');|"
+                             th:style="|background-image: url('${banner?.churchBanner}');|"
                              th:classappend="${stat.index == 0} ? 'active' : ''">
                             <div class="carousel-caption d-none d-md-block">
-                                <h1>[[${churchDetail.church.churchName}]]</h1>
-                                <p class="h5">[[${churchDetail.address.city}]], [[${churchDetail.address.country}]]</p>
+                                <h1>[[${churchDetail?.church?.churchName}]]</h1>
+                                <p class="h5">[[${churchDetail?.address?.city}]], [[${churchDetail?.address?.country}]]</p>
                             </div>
                         </div>
                     </div>
@@ -39,12 +39,16 @@
 
             <!-- Controls -->
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <div class="bg-dark d-flex justify-content-center align-items-center" style="width: 50px; height: 50px; border-radius: 50%;">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </div>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <div class="bg-dark d-flex justify-content-center align-items-center" style="width: 50px; height: 50px; border-radius: 50%;">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </div>
             </button>
         </div>
     </div>

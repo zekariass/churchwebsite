@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>News Form</title>
+  <link type="text/css" rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+<div th:fragment="member-form" class="container card">
+
+
+  <style>
+    table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+      }
+      th, td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+      }
+      input, select {
+          width: 100%;
+          padding: 5px;
+          box-sizing: border-box;
+      }
+      button {
+          padding: 8px 16px;
+          margin-top: 10px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          cursor: pointer;
+      }
+      button:hover {
+          background-color: #45a049;
+      }
+  </style>
+  <div class="card-body">
+    <form  th:action="${'/dashboard/members/form/process'}" th:object="${member}" method="POST">
+      <div class="mb-3">
+        <h3>Register as a member</h3>
+      </div>
+      <input name="byAdmin" value="false" type="hidden">
+      <input th:field="*{memberId}" type="hidden" id="memberId">
+      <div class="row g-3 ">
+        <div class="col-md-6 col-12">
+          <label for="firstName" class="form-label">Member First Name</label>
+          <input th:field="*{firstName}" type="text" class="form-control width-md-75" id="firstName">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="lastName" class="form-label">Member Last Name</label>
+          <input th:field="*{lastName}" type="text" class="form-control width-md-75" id="lastName">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="baptismalName" class="form-label">Member Baptismal Name</label>
+          <input th:field="*{baptismalName}" type="text" class="form-control width-md-75" id="baptismalName">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="fatherConfessorName" class="form-label">Father Confessor Name</label>
+          <input th:field="*{fatherConfessorName}" type="text" class="form-control width-md-75" id="fatherConfessorName">
+        </div>
+
+
+        <div class="col-md-6 col-12">
+          <label for="email" class="form-label">Email</label>
+          <input th:field="*{email}" type="text" class="form-control width-md-75" id="email">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input th:field="*{phoneNumber}" type="text" class="form-control width-md-75" id="phoneNumber">
+        </div>
+
+        <div class="col-md-6 col-12">
+          <label for="gender" class="form-label">Gender</label>
+          <select th:field="*{gender}" class="form-select width-md-75" id="gender">
+            <option th:each="gen: ${genders}" th:value="${gen}" th:text="${gen.displayName}">
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div th:if="${member.memberId > 0}" class="col-md-6 col-12">
+        <label for="isActive" class="form-label">Is Active</label>
+        <input th:field="*{active}" th:value="${member.active}" type="checkbox" class="form-check-input" id="isActive">
+      </div>
+
+      <div>
+        <h4 class="my-3">Spouse Information</h4>
+        <div class="row g-3 ">
+          <input th:field="*{spouse.spouseId}" type="hidden">
+          <div class="col-md-6 col-12">
+            <label for="sfirstName" class="form-label">Member First Name</label>
+            <input th:field="*{spouse.firstName}" type="text" class="form-control width-md-75" id="sfirstName">
+          </div>
+          <div class="col-md-6 col-12">
+            <label for="slastName" class="form-label">Member Last Name</label>
+            <input th:field="*{spouse.lastName}" type="text" class="form-control width-md-75" id="slastName">
+          </div>
+          <div class="col-md-6 col-12">
+            <label for="sbaptismalName" class="form-label">Member Baptismal Name</label>
+            <input th:field="*{spouse.baptismalName}" type="text" class="form-control width-md-75" id="sbaptismalName">
+          </div>
+
+          <div class="col-md-6 col-12">
+            <label for="semail" class="form-label">Email</label>
+            <input th:field="*{spouse.email}" type="text" class="form-control width-md-75" id="semail">
+          </div>
+          <div class="col-md-6 col-12">
+            <label for="sphoneNumber" class="form-label">Phone Number</label>
+            <input th:field="*{spouse.phoneNumber}" type="text" class="form-control width-md-75" id="sphoneNumber">
+          </div>
+
+
+
+
+
+          <div class="card p-3" style="background-color: #89CFF0 !important;">
+            <h4 class="card-header">
+              Family Members
+            </h4>
+            <div class="card-body">
+              <table id="familyTable">
+                <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Baptismal Name</th>
+                  <th>Relationship to Member</th>
+                  <th>Gender</th>
+                  <th>Age</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Initial row with input fields -->
+                <tr>
+                  <td><input type="text" th:field="*{memberDependents[0].firstName}" placeholder="First Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[0].lastName}" placeholder="Last Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[0].baptismalName}" placeholder="Baptismal Name"></td>
+                  <td>
+                    <select th:field="*{memberDependents[0].relationshipToMember}" class="relationshipDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render relationship options in the HTML -->
+                      <th:block th:each="relationshipType : ${relationshipTypes}">
+                        <option th:value="${relationshipType}" th:text="${relationshipType}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td>
+                    <select th:field="*{memberDependents[0].gender}" class="genderDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render gender options in the HTML -->
+                      <th:block th:each="gender : ${genders}">
+                        <option th:value="${gender}" th:text="${gender}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td><input type="number" th:field="*{memberDependents[0].age}" placeholder="Age"></td>
+                </tr>
+
+                <tr>
+                  <td><input type="text" th:field="*{memberDependents[1].firstName}" placeholder="First Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[1].lastName}" placeholder="Last Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[1].baptismalName}" placeholder="Baptismal Name"></td>
+                  <td>
+                    <select th:field="*{memberDependents[1].relationshipToMember}" class="relationshipDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render relationship options in the HTML -->
+                      <th:block th:each="relationshipType : ${relationshipTypes}">
+                        <option th:value="${relationshipType}" th:text="${relationshipType.displayName}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td>
+                    <select th:field="*{memberDependents[1].gender}" class="genderDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render gender options in the HTML -->
+                      <th:block th:each="gender : ${genders}">
+                        <option th:value="${gender}" th:text="${gender}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td><input type="number" th:field="*{memberDependents[1].age}" placeholder="Age"></td>
+                </tr>
+
+                <tr>
+                  <td><input type="text" th:field="*{memberDependents[2].firstName}" placeholder="First Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[2].lastName}" placeholder="Last Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[2].baptismalName}" placeholder="Baptismal Name"></td>
+                  <td>
+                    <select th:field="*{memberDependents[2].relationshipToMember}" class="relationshipDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render relationship options in the HTML -->
+                      <th:block th:each="relationshipType : ${relationshipTypes}">
+                        <option th:value="${relationshipType}" th:text="${relationshipType}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td>
+                    <select th:field="*{memberDependents[2].gender}" class="genderDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render gender options in the HTML -->
+                      <th:block th:each="gender : ${genders}">
+                        <option th:value="${gender}" th:text="${gender}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td><input type="number" th:field="*{memberDependents[2].age}" placeholder="Age"></td>
+                </tr>
+
+                <tr>
+                  <td><input type="text" th:field="*{memberDependents[3].firstName}" placeholder="First Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[3].lastName}" placeholder="Last Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[3].baptismalName}" placeholder="Baptismal Name"></td>
+                  <td>
+                    <select th:field="*{memberDependents[3].relationshipToMember}" class="relationshipDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render relationship options in the HTML -->
+                      <th:block th:each="relationshipType : ${relationshipTypes}">
+                        <option th:value="${relationshipType}" th:text="${relationshipType}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td>
+                    <select th:field="*{memberDependents[3].gender}" class="genderDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render gender options in the HTML -->
+                      <th:block th:each="gender : ${genders}">
+                        <option th:value="${gender}" th:text="${gender}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td><input type="number" th:field="*{memberDependents[3].age}" placeholder="Age"></td>
+                </tr>
+
+                <tr>
+                  <td><input type="text" th:field="*{memberDependents[4].firstName}" placeholder="First Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[4].lastName}" placeholder="Last Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[4].baptismalName}" placeholder="Baptismal Name"></td>
+                  <td>
+                    <select th:field="*{memberDependents[4].relationshipToMember}" class="relationshipDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render relationship options in the HTML -->
+                      <th:block th:each="relationshipType : ${relationshipTypes}">
+                        <option th:value="${relationshipType}" th:text="${relationshipType}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td>
+                    <select th:field="*{memberDependents[4].gender}" class="genderDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render gender options in the HTML -->
+                      <th:block th:each="gender : ${genders}">
+                        <option th:value="${gender}" th:text="${gender}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td><input type="number" th:field="*{memberDependents[4].age}" placeholder="Age"></td>
+                </tr>
+
+                <tr>
+                  <td><input type="text" th:field="*{memberDependents[5].firstName}" placeholder="First Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[5].lastName}" placeholder="Last Name"></td>
+                  <td><input type="text" th:field="*{memberDependents[5].baptismalName}" placeholder="Baptismal Name"></td>
+                  <td>
+                    <select th:field="*{memberDependents[5].relationshipToMember}" class="relationshipDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render relationship options in the HTML -->
+                      <th:block th:each="relationshipType : ${relationshipTypes}">
+                        <option th:value="${relationshipType}" th:text="${relationshipType}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td>
+                    <select th:field="*{memberDependents[5].gender}" class="genderDropdown">
+                      <option value="" disabled selected>Select</option>
+                      <!-- Render gender options in the HTML -->
+                      <th:block th:each="gender : ${genders}">
+                        <option th:value="${gender}" th:text="${gender}"></option>
+                      </th:block>
+                    </select>
+                  </td>
+                  <td><input type="number" th:field="*{memberDependents[5].age}" placeholder="Age"></td>
+                </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="my-3">Member Address</h3>
+            <div th:replace="~{dashboard/dash-fragments/address-form::address-form}"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3" id="amountOptions">
+        <label for="membershipAmount" class="form-label">Membership Amount</label>
+        <div class="form-check row" id="membershipAmount">
+          <div th:each="amount : ${membershipAmounts}" class="col-6">
+            <input class="form-check-input amountOptions"
+                   type="radio"
+                   th:field="*{membershipAmount}"
+                   th:value="${amount.membershipAmount}"
+            >
+            <label class="form-check-label"
+                   th:text="${currencyCode + ' ' + amount.membershipAmount}">
+            </label>
+          </div>
+          <div class="form-check my-4">
+            <input class="form-check-input"
+                   type="checkbox"
+                   value="beGenerous"
+                   id="beGenerousCheck">
+            <label class="form-check-label">Be Generous</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-12" id="beGenerousField">
+        <label for="generous" class="form-label">Membership Amount</label>
+        <input th:field="*{membershipAmount}" type="number" class="form-control width-md-75" id="generous">
+      </div>
+
+      <div class="my-3">
+        <label for="memberPaymentMethod"><h4>Choose your payment method</h4></label>
+        <select th:field="*{paymentMethod}" id="memberPaymentMethod" class="form-select w-auto">
+          <option value="" selected>Select</option>
+          <!-- Render gender options in the HTML -->
+          <th:block th:each="ptype : ${paymentMethods}">
+            <option th:value="${ptype}" th:text="${ptype.displayName}"></option>
+          </th:block>
+        </select>
+      </div>
+
+      <div id="directDebitInfo">
+        <h4>Bank Account Information For Direct Debit</h4>
+        <div class="col-md-6 col-12">
+          <label for="sortCode" class="form-label">Sort Code</label>
+          <input th:field="*{directDebitSortCode}" type="text" class="form-control width-md-75" id="sortCode">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="acctNumber" class="form-label">Account Number</label>
+          <input th:field="*{directDebitAccount}" type="text" class="form-control width-md-75" id="acctNumber">
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="success-button">Save</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+          // Set initial display states
+          document.getElementById('beGenerousField').style.display = 'none';
+
+          // Add event listener to the checkbox
+          document.getElementById('beGenerousCheck').addEventListener('change', function() {
+              if (this.checked) {
+                  const radios = document.querySelectorAll('.amountOptions');
+                  radios.forEach(function(radio) {
+                      if(radio.checked){
+                        radio.checked = false;
+                      }
+                      radio.disabled = true; // Disable each radio input
+                   });
+                  document.getElementById('beGenerousField').style.display = 'block'; // Show beGenerousField
+              } else {
+                  const radios = document.querySelectorAll('.amountOptions');
+                  radios.forEach(function(radio) {
+                      radio.disabled = false; // Disable each radio input
+                   });
+                  document.getElementById('beGenerousField').style.display = 'none'; // Hide beGenerousField
+              }
+            });
+
+
+
+          document.getElementById('directDebitInfo').style.display = 'none';
+
+          document.getElementById('memberPaymentMethod').addEventListener('change', function () {
+            // Get the select element
+            const pMethodOptions = document.getElementById('memberPaymentMethod');
+
+            // Get the selected option's text
+            const selectedOption = pMethodOptions.options[pMethodOptions.selectedIndex].text;
+
+            // Check if the selected option contains "paypal" (case-insensitive)
+            if (selectedOption.toLowerCase().includes("debit")) {
+                // Hide the direct debit information
+                document.getElementById('directDebitInfo').style.display = 'block';
+            } else {
+                // Show the direct debit information
+                document.getElementById('directDebitInfo').style.display = 'none';
+            }
+        });
+
+
+  });
+  </script>
+</div>
+<!--  <script th:src="@{/js/custom-jodit.js}"></script>-->
+</body>
+</html>

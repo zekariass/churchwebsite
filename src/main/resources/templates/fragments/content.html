@@ -85,6 +85,35 @@
             <div th:replace="~{fragments/services/service-detail::service-detail}"></div>
         </main>
 
+        <main th:if="${activeContentPage == 'baptism-request-form'}">
+            <div th:replace="~{fragments/services/request-forms/baptism-request-form::baptism-request-form}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'matrimony-request-form'}">
+            <div th:replace="~{fragments/services/request-forms/matrimony-request-form::matrimony-request-form}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'remembrance-request-form'}">
+            <div th:replace="~{fragments/services/request-forms/remembrance-request-form::remembrance-request-form}"></div>
+        </main>
+
+<!--        ============= MEMBERSHIPS =========================== -->
+
+        <main th:if="${activeContentPage == 'member-form'}">
+            <div th:replace="~{fragments/services/request-forms/member-form::member-form}"></div>
+        </main>
+
+
+        <main th:if="${activeContentPage == 'member-form-submitted'}">
+            <div th:replace="~{fragments/services/request-forms/member-form-submitted::member-form-submitted}"></div>
+        </main>
+
+        <!--    ============= CONTACT US =========================== -->
+
+        <main th:if="${activeContentPage == 'contact-us-options'}">
+            <div th:replace="~{fragments/contacts/contact-us-options::contact-us-options}"></div>
+        </main>
+
     </div>
 </body>
 </html>

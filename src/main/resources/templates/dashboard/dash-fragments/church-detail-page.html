@@ -23,7 +23,7 @@
                     </div>
                     <ul class="list-unstyled mb-4">
                         <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i>[[${churchDetail.church.email}]]</a></li>
-                        <li class="mb-3"><a href="#!"><i class="fa-brands fa-whatsapp display-25 me-3 text-secondary"></i>[[${churchDetail.church.whatsApp}]]</a></li>
+                        <li class="mb-3"><a href="#!"><i class="fa-brands fa-whatsapp display-25 me-3 text-secondary"></i>[[${churchDetail?.church?.whatsAppGroup}]]</a></li>
                         <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>
                             [[${churchDetail.address.street}]], [[${churchDetail.address.city}]], [[${churchDetail.address.country}]]
                         </a></li>
@@ -97,94 +97,140 @@
                         <div class="text-start mb-1-6 wow fadeIn">
                             <h2 class="mb-0 text-primary">Contact Details</h2>
                         </div>
-                        <div class="row mt-n4">
+                        <div th:if="${churchDetail?.church?.phoneNumber1 != null and churchDetail?.church?.phoneNumber1 != ''}" class="row mt-n4">
                             <div class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-telegram me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">Telegram</h3>
-                                        <p class="mb-0">[[${churchDetail.church.telegram}]]</p>
+                                        <i class="fa fa-phone fa-2x text-info me-3"></i>
+                                        <p class="mb-0">[[${churchDetail.church.phoneNumber1}]]</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.phoneNumber2 != null and churchDetail?.church?.phoneNumber2 != ''}" class="col-sm-6 col-xl-4 mt-4" >
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-whatsapp me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">WhatsApp</h3>
-                                        <p class="mb-0">[[${churchDetail.church.whatsApp}]]</p>
+                                        <i class="fa fa-phone fa-2x text-info me-3" aria-hidden="true"></i>
+                                        <p class="mb-0">[[${churchDetail.church.phoneNumber2}]]</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.telegramChat != null and churchDetail?.church?.telegramChat != ''}" class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-facebook me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">Facebook</h3>
-                                        <p class="mb-0">[[${churchDetail.church.facebook}]]</p>
+                                        <a th:href="${churchDetail.church.telegramChat}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-telegram me-3 text-info"></i>
+                                            <h3 class="h5 mb-3">Telegram Chat</h3>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div class="col-sm-6 col-xl-4 mt-4" th:if="${churchDetail?.church?.telegramGroup != null and churchDetail?.church?.telegramGroup != ''}">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-youtube me-3 text-secondary"></i>
+                                        <a th:href="${churchDetail.church.telegramGroup}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-telegram me-3 text-info"></i>
+                                            <h3 class="h5 mb-3">Telegram Group</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${churchDetail?.church?.whatsAppChat != null and churchDetail?.church?.whatsAppChat != ''}" class="col-sm-6 col-xl-4 mt-4">
+                                <div class="card text-center border-0 rounded-3">
+                                    <div class="card-body">
+                                        <a th:href="${churchDetail?.church?.whatsAppChat}" class="mb-0" target="_blank">
+                                            <i class="fa-brands fa-2x fa-whatsapp me-3 text-success"></i>
+                                            <h3 class="h5 mb-3">WhatsApp Chat</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${churchDetail?.church?.whatsAppGroup != null and churchDetail?.church?.whatsAppGroup != ''}" class="col-sm-6 col-xl-4 mt-4">
+                                <div class="card text-center border-0 rounded-3">
+                                    <div class="card-body">
+                                        <a class="mb-0" th:href="${churchDetail.church.whatsAppGroup}">
+                                            <i class="fa-brands fa-2x fa-whatsapp me-3 text-secondary text-success"></i>
+                                        <h3 class="h5 mb-3">WhatsApp Group</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${churchDetail?.church?.facebook != null and churchDetail?.church?.facebook != ''}" class="col-sm-6 col-xl-4 mt-4">
+                                <div class="card text-center border-0 rounded-3">
+                                    <div class="card-body">
+                                        <a th:href="${churchDetail.church.facebook}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-facebook me-3 text-info"></i>
+                                            <h3 class="h5 mb-3">Facebook</h3>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div th:if="${churchDetail?.church?.youtube != null and churchDetail?.church?.youtube != ''}" class="col-sm-6 col-xl-4 mt-4">
+                                <div class="card text-center border-0 rounded-3">
+                                    <div class="card-body">
+                                        <a th:href="${churchDetail.church.youtube}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-youtube me-3 text-danger"></i>
+                                        </a>
                                         <h3 class="h5 mb-3">YouTube</h3>
-                                        <p class="mb-0">[[${churchDetail.church.youtube}]]</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.tiktok != null and churchDetail?.church?.tiktok != ''}" class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-tiktok me-3 text-secondary"></i>
+                                        <a th:href="${churchDetail.church.tiktok}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-tiktok me-3" style="color: #00FFFF !important;"></i>
+                                        </a>
                                         <h3 class="h5 mb-3">TikTok</h3>
-                                        <p class="mb-0">[[${churchDetail.church.tiktok}]]</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.xAccount != null and churchDetail?.church?.xAccount != ''}" class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-twitter me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">X (Twitter)</h3>
-                                        <p class="mb-0">[[${churchDetail.church.xAccount}]]</p>
+                                        <a th:href="${churchDetail.church.xAccount}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-twitter me-3 text-info"></i>
+                                            <h5 class="mb-3">X (Twitter)</h5>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.googlePlus != null and churchDetail?.church?.googlePlus != ''}" class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-google-plus me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">Google+</h3>
-                                        <p class="mb-0">[[${churchDetail.church.googlePlus}]]</p>
+                                        <a th:href="${churchDetail.church.googlePlus}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-google-plus me-3 text-danger"></i>
+                                            <h3 class="h5 mb-3">Google+</h3>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.pInterest != null and churchDetail?.church?.pInterest != ''}" class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-pinterest me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">Pinterest</h3>
-                                        <p class="mb-0">[[${churchDetail.church.pInterest}]]</p>
+                                        <a th:href="${churchDetail.church.pInterest}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-pinterest me-3 text-danger"></i>
+                                            <h3 class="h5 mb-3">Pinterest</h3>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.linkedIn != null and churchDetail?.church?.linkedIn != ''}" class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-linkedin me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">LinkedIn</h3>
-                                        <p class="mb-0">[[${churchDetail.church.linkedIn}]]</p>
+                                        <a th:href="${churchDetail.church.linkedIn}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-linkedin me-3 text-info"></i>
+                                            <h3 class="h5 mb-3">LinkedIn</h3>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-xl-4 mt-4">
+                            <div th:if="${churchDetail?.church?.reddit != null and churchDetail?.church?.reddit != ''}" class="col-sm-6 col-xl-4 mt-4">
                                 <div class="card text-center border-0 rounded-3">
                                     <div class="card-body">
-                                        <i class="fa-brands fa-2x fa-reddit me-3 text-secondary"></i>
-                                        <h3 class="h5 mb-3">Reddit</h3>
-                                        <p class="mb-0">[[${churchDetail.church.reddit}]]</p>
+                                        <a th:href="${churchDetail.church.reddit}" class="mb-0">
+                                            <i class="fa-brands fa-2x fa-reddit me-3 text-danger"></i>
+                                            <h3 class="h5 mb-3">Reddit</h3>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

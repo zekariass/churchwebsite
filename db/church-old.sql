@@ -68,41 +68,78 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO user_role (user_role_id, role_id, user_id) VALUES (1, 1, 1);
 
-DROP TABLE IF EXISTS `membership_category`;
-CREATE TABLE `membership_category` (
-    `membership_category_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `membership_name` VARCHAR(255) NOT NULL,
-    `membership_description` TEXT DEFAULT NULL,
-    `membership_amount` DECIMAL(15, 2) DEFAULT 0.0
+DROP TABLE IF EXISTS `membership_amount`;
+CREATE TABLE `membership_amount` (
+    `membership_amount_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `membership_amount` DECIMAL(15, 2) DEFAULT 0.0,
+    `membership_amount_description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `membership`;
-CREATE TABLE `membership` (
-    `membership_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `membership_date` DATETIME NOT NULL,
-    `contact_email` VARCHAR(255) DEFAULT NULL,
-    `contact_phone` VARCHAR(20) DEFAULT NULL,
-    `spouse_email` VARCHAR(255) DEFAULT NULL,
-    `spouse_phone` VARCHAR(50) DEFAULT NULL,
-    `spiritual_father_name` VARCHAR(255) DEFAULT NULL,
-    `spiritual_name` VARCHAR(255) DEFAULT NULL,
-    `spouse_spiritual_name` VARCHAR(255) DEFAULT NULL,
+-- DROP TABLE IF EXISTS `member`;
+DROP TABLE IF EXISTS `member_spouse`;
+CREATE TABLE `member_spouse`(
+	`spouse_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `first_name` VARCHAR(50) NOT NULL,
+    `last_name` VARCHAR(50) NOT NULL,
+    `baptismal_name` VARCHAR(100) DEFAULT NULL,
+    `email` VARCHAR(255) DEFAULT NULL,
+    `phone_number` VARCHAR(50) DEFAULT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- DROP TABLE IF EXISTS `member_dependent`;
+DROP TABLE IF EXISTS `member`;
+CREATE TABLE `member` (
+    `member_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `first_name` VARCHAR(50) NOT NULL,
+    `last_name` VARCHAR(50) NOT NULL,
+    `baptismal_name` VARCHAR(100) DEFAULT NULL,
+    `father_confessor_name` VARCHAR(255) DEFAULT NULL,
+    `spouse_id` INT DEFAULT NULL,
+    `email` VARCHAR(255) DEFAULT NULL,
+    `phone_number` VARCHAR(20) DEFAULT NULL,
+    `gender` VARCHAR(10) DEFAULT "MALE",
     `is_active` BOOLEAN DEFAULT TRUE,
-    `membership_category_id` INT NOT NULL,
+    `membership_date` DATE NOT NULL,
+    `membership_amount` DECIMAL NOT NULL,
+	`payment_method` VARCHAR(30) NOT NULL,
+    `direct_debit_account`  VARCHAR(30)  DEFAULT NULL,
+    `direct_debit_sort_code`  VARCHAR(30)  DEFAULT NULL,
     `user_id` INT DEFAULT NULL,
-    `spouse_user_id` INT DEFAULT NULL,
     `address_id` INT DEFAULT NULL,
-    FOREIGN KEY (`membership_category_id`) REFERENCES `membership_category`(`membership_category_id`),
+    FOREIGN KEY (`spouse_id`) REFERENCES `member_spouse`(`spouse_id`),
     FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
-    FOREIGN KEY (`spouse_user_id`) REFERENCES `user`(`user_id`),
     FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE `notification`(
+	`notification_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `notification_subject` VARCHAR(255) NOT NULL,
+    `notification_message` TEXT NOT NULL,
+    `notification_sent_time` DATETIME NOT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `member_dependent`;
+CREATE TABLE `member_dependent`(
+	`dependent_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `first_name` VARCHAR(50) NOT NULL,
+    `last_name` VARCHAR(50) NOT NULL,
+    `baptismal_name` VARCHAR(100) NOT NULL,
+    `relationship_to_member` VARCHAR(30) DEFAULT NULL,
+    `gender` VARCHAR(10) DEFAULT NULL,
+    `age` INT DEFAULT 1,
+    `member_id` INT NOT NULL,
+    FOREIGN KEY(`member_id`) REFERENCES `member`(`member_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 DROP TABLE IF EXISTS `blog_category`;
 CREATE TABLE `blog_category` (
     `blog_category_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `blog_category_name` VARCHAR(255) NOT NULL UNIQUE,
-    `blog_category_description` TEXT DEFAULT NULL
+    `blog_category_description` TEXT DEFAULT NULL,
+    `spouse_spiritual_name` VARCHAR(255) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `blog`;
@@ -169,7 +206,7 @@ INSERT INTO album(album_id, album_name, album_description, is_archived) VALUES (
 INSERT INTO album(album_id, album_name, album_description, is_archived) VALUES (3, 'Information', 'Files for Information', false);
 INSERT INTO album(album_id, album_name, album_description, is_archived) VALUES (4, 'General', 'General files', false);
 								
-DROP TABLE IF EXISTS `media`;
+-- DROP TABLE IF EXISTS `media`;
 DROP TABLE IF EXISTS `image`;
 CREATE TABLE `image` (
     `image_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -266,7 +303,7 @@ CREATE TABLE `landing_content` (
 DROP TABLE IF EXISTS `payment_method`;
 CREATE TABLE `payment_method` (
     `payment_method_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `payment_method_name` VARCHAR(255) NOT NULL,
+    `payment_method_name` VARCHAR(255) NOT NULL UNIQUE,
     `payment_method_description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -307,8 +344,8 @@ CREATE TABLE `donation` (
     FOREIGN KEY (`donation_payment_method_id`) REFERENCES `payment_method`(`payment_method_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `organisation_contact`;
-CREATE TABLE `organisation_contact` (
+DROP TABLE IF EXISTS `church_contact`;
+CREATE TABLE `church_contact` (
     `contact_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `contact_full_name` VARCHAR(255) DEFAULT NULL,
     `contact_phone` VARCHAR(50) DEFAULT NULL,
@@ -316,59 +353,73 @@ CREATE TABLE `organisation_contact` (
     `contact_description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `message`;
-CREATE TABLE `message` (
-    `message_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+DROP TABLE IF EXISTS `email_subscription`;
+CREATE TABLE `email_subscription` (
+    `subscription_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `email` VARCHAR(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+DROP TABLE IF EXISTS `contact_us`;
+CREATE TABLE `contact_us` (
+    `contact_us_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `first_name` VARCHAR(255) NOT NULL,
     `last_name` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) DEFAULT NULL,
+    `phone_number` VARCHAR(20) DEFAULT NULL,
     `message` TEXT NOT NULL,
     `message_time` DATETIME DEFAULT NULL,
     `user_id` INT DEFAULT NULL,
+    `is_read` BOOLEAN DEFAULT false,
+    `read_time` DATETIME DEFAULT NULL,
     FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `organisation`;
-CREATE TABLE `organisation` (
-    `organisation_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `organisation_name` VARCHAR(255) NOT NULL,
-    `organisation_description` TEXT DEFAULT NULL,
-    `organisation_logo` VARCHAR(255) DEFAULT NULL,
-    `whatsApp` VARCHAR(100) DEFAULT NULL,
-	`telegram` VARCHAR(100) DEFAULT NULL,
+DROP TABLE IF EXISTS `church`;
+CREATE TABLE `church` (
+    `church_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `church_name` VARCHAR(255) NOT NULL,
+    `church_description` TEXT DEFAULT NULL,
+    `church_logo` VARCHAR(255) DEFAULT NULL,
+    `phone_number1` VARCHAR(20) DEFAULT NULL,
+    `phone_number2` VARCHAR(20) DEFAULT NULL,
+    `whats_app_chat` VARCHAR(100) DEFAULT NULL,
+    `whats_app_group` VARCHAR(100) DEFAULT NULL,
+	`telegram_chat` VARCHAR(100) DEFAULT NULL,
+    `telegram_group` VARCHAR(100) DEFAULT NULL,
     `youtube` VARCHAR(255) DEFAULT NULL,
     `facebook` VARCHAR(255) DEFAULT NULL,
     `tiktok` VARCHAR(100) DEFAULT NULL,
-    `xAccount` VARCHAR(100) DEFAULT NULL,
-    `googlePlus` VARCHAR(100) DEFAULT NULL,
-    `pInterest` VARCHAR(100) DEFAULT NULL,
-    `linkedIn` VARCHAR(100) DEFAULT NULL,
+    `x_account` VARCHAR(100) DEFAULT NULL,
+    `google_plus` VARCHAR(100) DEFAULT NULL,
+    `p_interest` VARCHAR(100) DEFAULT NULL,
+    `linked_in` VARCHAR(100) DEFAULT NULL,
     `reddit` VARCHAR(100) DEFAULT NULL,
     `email` VARCHAR(100) DEFAULT NULL,
     `address_id` INT NOT NULL,
     FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `organisation_banner`;
-CREATE TABLE `organisation_banner` (
-	`organisation_banner_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `organisation_banner` VARCHAR(255) NOT NULL,
-    `organisation_id` INT NOT NULL,
-    FOREIGN KEY (`organisation_id`) REFERENCES `organisation`(`organisation_id`) ON DELETE CASCADE ON UPDATE CASCADE
+DROP TABLE IF EXISTS `church_banner`;
+CREATE TABLE `church_banner` (
+	`church_banner_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `church_banner` VARCHAR(255) NOT NULL,
+    `church_id` INT NOT NULL,
+    FOREIGN KEY (`church_id`) REFERENCES `church`(`church_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `organisation_staff`;
-CREATE TABLE `organisation_staff` (
-    `organisation_staff_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `organisation_staff_title` VARCHAR(255) NOT NULL,
-    `organisation_staff_description` TEXT DEFAULT NULL,
-    `organisation_id` INT NOT NULL,
+DROP TABLE IF EXISTS `church_staff`;
+CREATE TABLE `church_staff` (
+    `church_staff_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `church_staff_title` VARCHAR(255) NOT NULL,
+    `church_staff_description` TEXT DEFAULT NULL,
+    `church_id` INT NOT NULL,
     `user_id` INT DEFAULT NULL,
-    FOREIGN KEY (`organisation_id`) REFERENCES `organisation`(`organisation_id`),
+    FOREIGN KEY (`church_id`) REFERENCES `church`(`church_id`),
     FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `service_type`;
+-- DROP TABLE IF EXISTS `service_type`;
 DROP TABLE IF EXISTS `service`;
 CREATE TABLE `service` (
     `service_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -387,6 +438,8 @@ CREATE TABLE `settings`(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (1, 'DEFAULT_PAGE_SIZE', 'The number of items listed in a page', 8, null);
+INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (2, 'LOCALE_LANGUAGE_CODE', 'Local language code', 0, 'en');
+INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (3, 'LOCALE_COUNTRY_CODE', 'Local country code', 0, 'GB');
 
 DROP TABLE IF EXISTS `baptisim`;
 CREATE TABLE `baptisim`(

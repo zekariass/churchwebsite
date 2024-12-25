@@ -12,3 +12,81 @@
 .success-button:hover {
     background-color: #218838; /* Darker green on hover */
 }
+
+.info-button {
+    background-color: #467fd0; /* Success green color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for a nice shape */
+    border: none; /* Remove default border */
+    border-radius: 10px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.secondary-button {
+    background-color: #d9e2ef; /* Success green color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for a nice shape */
+    border: none; /* Remove default border */
+    border-radius: 10px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.warning-button {
+    background-color: #ffc107; /* Success green color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for a nice shape */
+    border: none; /* Remove default border */
+    border-radius: 10px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.danger-button {
+    background-color: #df4759; /* Success green color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for a nice shape */
+    border: none; /* Remove default border */
+    border-radius: 10px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.dark-button {
+    background-color: #161c2d; /* Success green color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for a nice shape */
+    border: none; /* Remove default border */
+    border-radius: 10px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.primary-button {
+    background-color: #7c69ef; /* Success green color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for a nice shape */
+    border: none; /* Remove default border */
+    border-radius: 10px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.primary-button {
+    background-color: #f1f4f8; /* Success green color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for a nice shape */
+    border: none; /* Remove default border */
+    border-radius: 10px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+

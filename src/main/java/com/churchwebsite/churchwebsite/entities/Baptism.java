@@ -1,12 +1,15 @@
 package com.churchwebsite.churchwebsite.entities;
 
+import com.churchwebsite.churchwebsite.enums.BaptismRequestType;
+import com.churchwebsite.churchwebsite.enums.ServiceStatus;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
-@Entity(name = "baptism")
+@Entity
+@Table(name = "baptism")
 @EntityListeners(AuditingEntityListener.class)
 public class Baptism {
     @Id
@@ -24,10 +27,11 @@ public class Baptism {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    private String requiredService;
+    @Enumerated(EnumType.STRING)
+    private BaptismRequestType requiredService;
 
     @Enumerated(EnumType.STRING)
-    private String serviceStatus;
+    private ServiceStatus serviceStatus;
 
     @LastModifiedDate
     private LocalDate requestDate;
@@ -35,7 +39,7 @@ public class Baptism {
 
     public Baptism() {}
 
-    public Baptism(String childFatherFullname, String childMotherFullname, String childFullname, String child_godParentFullname, LocalDate childDob, String email, String phoneNumber, Address address, String requiredService, String serviceStatus, LocalDate requestDate, String message) {
+    public Baptism(String childFatherFullname, String childMotherFullname, String childFullname, String child_godParentFullname, LocalDate childDob, String email, String phoneNumber, Address address, BaptismRequestType requiredService, ServiceStatus serviceStatus, LocalDate requestDate, String message) {
         this.childFatherFullname = childFatherFullname;
         this.childMotherFullname = childMotherFullname;
         this.childFullname = childFullname;
@@ -122,19 +126,19 @@ public class Baptism {
         this.address = address;
     }
 
-    public String getRequiredService() {
+    public BaptismRequestType getRequiredService() {
         return requiredService;
     }
 
-    public void setRequiredService(String requiredService) {
+    public void setRequiredService(BaptismRequestType requiredService) {
         this.requiredService = requiredService;
     }
 
-    public String getServiceStatus() {
+    public ServiceStatus getServiceStatus() {
         return serviceStatus;
     }
 
-    public void setServiceStatus(String serviceStatus) {
+    public void setServiceStatus(ServiceStatus serviceStatus) {
         this.serviceStatus = serviceStatus;
     }
 
@@ -152,6 +156,22 @@ public class Baptism {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getChildGodParentFullname() {
+        return childGodParentFullname;
+    }
+
+    public void setChildGodParentFullname(String childGodParentFullname) {
+        this.childGodParentFullname = childGodParentFullname;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

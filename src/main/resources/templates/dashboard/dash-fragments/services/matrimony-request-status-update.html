@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrimony Request Status Update</title>
+</head>
+<body>
+<div th:fragment="matrimony-request-status-update">
+    <form th:action="@{/dashboard/services/matrimony/update-status/form/process}" th:object="${matrimony}" method="POST">
+        <input th:field="*{requestId}" type="hidden">
+        <div class="col-md-6 col-12">
+            <label for="matrimonyRequestType" class="form-label">Request Status</label>
+            <select id="matrimonyRequestType" th:field="*{service_status}" class="form-select">
+                <option th:each="status : ${matrimonyRequestStatus}" th:value="${status}" th:text="${status.displayName}"></option>
+            </select>
+        </div>
+        <div class="mt-3">
+            <button type="submit" class="success-button">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

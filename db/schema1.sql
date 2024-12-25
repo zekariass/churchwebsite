@@ -93,17 +93,17 @@ CREATE TABLE `attachment_type` (
 --
 -- Table structure for table `baptisim`
 --
-
-DROP TABLE IF EXISTS `baptisim`;
+USE church_website;
+DROP TABLE IF EXISTS `baptism`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `baptisim` (
+CREATE TABLE `baptism` (
   `request_id` int NOT NULL AUTO_INCREMENT,
   `child_father_fullname` varchar(100) NOT NULL,
   `child_mother_fullname` varchar(100) NOT NULL,
   `child_fullname` varchar(100) NOT NULL,
   `child_god_parent_fullname` varchar(100) NOT NULL,
-  `child_dob` datetime DEFAULT NULL,
+  `child_dob` DATE DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `phone_number` varchar(20) NOT NULL,
   `address_id` int NOT NULL,
@@ -112,10 +112,6 @@ CREATE TABLE `baptisim` (
   `request_date` date DEFAULT NULL,
   `message` text,
   PRIMARY KEY (`request_id`),
-  UNIQUE KEY `child_father_fullname` (`child_father_fullname`),
-  UNIQUE KEY `child_mother_fullname` (`child_mother_fullname`),
-  UNIQUE KEY `child_fullname` (`child_fullname`),
-  UNIQUE KEY `child_god_parent_fullname` (`child_god_parent_fullname`),
   KEY `address_id` (`address_id`),
   CONSTRAINT `baptisim_ibfk_1` FOREIGN KEY (`address_id`) REFERENCES `address` (`address_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

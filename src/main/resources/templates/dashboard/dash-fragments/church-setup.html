@@ -37,12 +37,30 @@
                         </div>
                         <div class="row">
                             <div class="mb-3 col-md-6 col-sm-12">
-                                <label for="whatsapp" class="form-label">Whats App Number</label>
-                                <input th:field="*{church.whatsApp}" type="text" class="form-control" id="whatsapp">
+                                <label for="phoneNumber1" class="form-label">Phone Number 1</label>
+                                <input th:field="*{church.phoneNumber1}" type="text" class="form-control" id="phoneNumber1">
+                            </div>
+
+                            <div class="mb-3 col-md-6 col-sm-12">
+                                <label for="phoneNumber2" class="form-label">Phone Number 2</label>
+                                <input th:field="*{church.phoneNumber2}" type="text" class="form-control" id="phoneNumber2">
+                            </div>
+
+                            <div class="mb-3 col-md-6 col-sm-12">
+                                <label for="whatsapp1" class="form-label">WhatsApp Chat Number</label>
+                                <input th:field="*{church.whatsAppChat}" type="text" class="form-control" id="whatsapp1">
+                            </div>
+                            <div class="mb-3 col-md-6 col-sm-12">
+                                <label for="whatsapp2" class="form-label">WhatsApp Group Link </label>
+                                <input th:field="*{church.whatsAppGroup}" type="text" class="form-control" id="whatsapp2">
                             </div>
                             <div class="mb-3 mb-3 col-md-6 col-sm-12">
-                                <label for="telegram" class="form-label">Telegram</label>
-                                <input th:field="*{church.telegram}" type="text" class="form-control" id="telegram">
+                                <label for="telegram1" class="form-label">Telegram Chat Number</label>
+                                <input th:field="*{church.telegramChat}" type="text" class="form-control" id="telegram1">
+                            </div>
+                            <div class="mb-3 mb-3 col-md-6 col-sm-12">
+                                <label for="telegram2" class="form-label">Telegram Group Link</label>
+                                <input th:field="*{church.telegramGroup}" type="text" class="form-control" id="telegram2">
                             </div>
                             <div class="mb-3 mb-3 col-md-6 col-sm-12">
                                 <label for="youtube" class="form-label">Youtube URL</label>
@@ -91,7 +109,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    <button type="submit" class="success-button mt-3">Submit</button>
                 </form>
             </div>
         </div>

@@ -95,7 +95,7 @@
             <a class="navbar-brand" th:href="@{/}">
               <img th:src="${churchDetail?.church?.churchLogo}"
                    class="logo" style="border: 1px solid white !important;"
-                   th:alt="${churchDetail?.church?.churchLogo}">
+                   alt="LOGO HERE">
             </a>
           </div>
 
@@ -106,19 +106,33 @@
               <div  class="nav-item">
                 <a th:href="@{/dashboard/home}"
                    sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')"
-                   class="navbar-brand pe-3 fw-bold fs-5 text-white dashboard">
+                   class="navbar-brand fw-bold fs-6 text-white dashboard">
                   Dashboard
                 </a>
               </div>
 
-              <!-- Login link -->
-              <div sec:authorize="isAnonymous()" class="nav-item d-flex align-items-center pe-3 auth">
-                <a class="nav-link fw-bold fs-5 text-white" th:href="@{/users/login}">Login</a>
-                <span class="mx-1 text-white">/</span>
-                <a class="nav-link fw-bold text-white fs-5" th:href="@{/users/register}">Register</a>
+              <div  class="nav-item d-none d-md-block">
+                <a th:href="@{/members/form}"
+                   class="navbar-brand fw-bold fs-6 text-white dashboard">
+                  Membership
+                </a>
               </div>
-              <div sec:authorize="isAuthenticated()" class="nav-item pe-3 logout">
-                <a class="nav-link fw-bold text-white fs-5" th:href="@{/users/logout}">Logout</a>
+
+              <div  class="nav-item d-none d-md-block">
+                <a th:href="@{/contactUs}"
+                   class="navbar-brand fw-bold fs-6 text-white dashboard">
+                  Contact Us
+                </a>
+              </div>
+
+              <!-- Login link -->
+              <div sec:authorize="isAnonymous()" class="nav-item d-flex align-items-center auth me-3">
+                <a class="nav-link fw-bold fs-6 text-white" th:href="@{/users/login}">Login</a>
+                <span class="mx-1 text-white">/</span>
+                <a class="nav-link fw-bold text-white fs-6" th:href="@{/users/register}">Register</a>
+              </div>
+              <div sec:authorize="isAuthenticated()" class="nav-item logout me-3">
+                <a class="nav-link fw-bold text-white fs-6" th:href="@{/users/logout}">Logout</a>
               </div>
               <select class="form-select top-menu me-3" onchange="toMenuChange()">
                 <option>-----</option>
@@ -137,14 +151,15 @@
 
         </div>
         <!-- Collapsible content -->
-        <div class="collapse navbar-collapse w-100 mt-4 rounded-pill" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse w-100 mt-4 rounded-md-pill ps-3 round-pill" id="navbarSupportedContent" >
           <ul class="navbar-nav ms-auto">
+            <li class="d-block d-md-none nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/church-services}">Membership</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/church-services}">Services</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Donation</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/news}">News</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/media-center/options}">Media Center</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/events}">Events</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/blogs}">Blogs</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Donation</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">School</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">Shop</a></li>
           </ul>

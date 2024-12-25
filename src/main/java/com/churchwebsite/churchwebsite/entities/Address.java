@@ -95,6 +95,38 @@ public class Address {
         this.postCode = postCode;
     }
 
+
+    public String getFullAddress() {
+        StringBuilder address = new StringBuilder();
+
+        if (street != null && !street.isEmpty()) {
+            address.append(street);
+        }
+        if (buildingNo != null && !buildingNo.isEmpty()) {
+            address.append(", ").append(buildingNo);
+        }
+        if (houseNo != null && !houseNo.isEmpty()) {
+            address.append(", ").append(houseNo);
+        }
+        if (city != null && !city.isEmpty()) {
+            address.append(", ").append(city);
+        }
+        if (state != null && !state.isEmpty()) {
+            address.append(", ").append(state);
+        }
+        if (country != null && !country.isEmpty()) {
+            address.append(", ").append(country);
+        }
+        if (postCode != null && !postCode.isEmpty()) {
+            address.append(", ").append(postCode);
+        }
+
+        // Trim leading/trailing commas or spaces
+        return address.toString().replaceAll("^,\\s*", "").replaceAll("\\s*,\\s*$", "");
+    }
+
+
+
     @Override
     public String toString() {
         return "Address{" +

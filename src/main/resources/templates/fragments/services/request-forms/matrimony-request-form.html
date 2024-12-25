@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Holy Matrimony Form</title>
+</head>
+<body>
+<div th:fragment="matrimony-request-form">
+    <div class="card">
+        <div class="card-body shadow-sm p-4">
+            <form th:action="@{/church-services/matrimony/form/process}" th:object="${matrimony}" method="POST">
+                <div class="mb-3">
+                    <h3>Fill this form to request for marriage service in the church</h3>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6 col-12">
+                        <label for="groomFullname" class="form-label">Groom Full Name</label>
+                        <input th:field="*{groomFullname}" type="text" class="form-control" id="groomFullname">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label for="brideFullname" class="form-label">Bride Full Name</label>
+                        <input th:field="*{brideFullname}" type="text" class="form-control" id="brideFullname">
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <label for="spiritualFatherFullname" class="form-label">Spiritual Father Full Name</label>
+                        <input th:field="*{spiritualFatherFullname}" type="text" class="form-control" id="spiritualFatherFullname">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label for="matrimonyDate" class="form-label">Marriage Date</label>
+                        <input th:field="*{matrimonyDate}" type="date" class="form-control" id="matrimonyDate">
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <label for="email" class="form-label">Email</label>
+                        <input th:field="*{email}" type="text" class="form-control" id="email">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <input th:field="*{phoneNumber}" type="text" class="form-control" id="phoneNumber">
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <label for="requiredService" class="form-label">Request Type</label>
+                        <select id="requiredService" th:field="*{requiredService}" class="form-select">
+                            <option th:each="status : ${matrimonyRequestType}" th:value="${status}" th:text="${status.displayName}"></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea th:field="*{message}" class="form-control" id="message" rows="4"></textarea>
+                    </div>
+                    <div>
+                        <h3 class="my-3">Bride/Groom Address</h3>
+                        <div th:replace="~{dashboard/dash-fragments/address-form::address-form}"></div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="success-button">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

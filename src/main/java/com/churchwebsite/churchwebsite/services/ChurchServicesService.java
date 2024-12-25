@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+//Services given by the church such as Liturgy, Baptism, etc
+
 @Service
 public class ChurchServicesService {
     private final ChurchServicesRepository churchServicesRepository;

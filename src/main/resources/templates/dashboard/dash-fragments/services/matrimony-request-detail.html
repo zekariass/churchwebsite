@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Matrimony Request Detail</title>
+</head>
+<body>
+<div th:fragment="matrimony-request-detail" class="container">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="mb-3 d-flex justify-content-md-end justify-content-center">
+        <button class="success-button" th:onclick="|window.location='@{/dashboard/services/matrimony/update-status/form/{id}(id=${matrimony.requestId})}'|">Change Status</button>
+      </div>
+      <div class="ps-lg-1-6 ps-xl-5">
+
+        <div class="mb-3 wow fadeIn">
+          <div class="mb-5 wow fadeIn">
+            <div class="row mt-n4">
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Groom Full Name</h3>
+                    <p class="mb-0">[[${matrimony.groomFullname}]]</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Bride Full Name</h3>
+                    <p class="mb-0">[[${matrimony.brideFullname}]]</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Spiritual Father Full Name</h3>
+                    <p class="mb-0">[[${matrimony.spiritualFatherFullname}]]</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Matrimony Date</h3>
+                    <p class="mb-0">[[${matrimony.matrimonyDate}]]</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Email</h3>
+                    <p class="mb-0">[[${matrimony.email}]]</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Phone Number</h3>
+                    <p class="mb-0">[[${matrimony.phoneNumber}]]</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Required Service</h3>
+                    <p class="mb-0">[[${matrimony?.requiredService?.displayName}]]</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Service Status</h3>
+                    <p class="mb-0">[[${matrimony?.service_status?.displayName}]]</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-xl-4 mt-3">
+                <div class="card text-center border-0 rounded-3">
+                  <div class="card-body border border-info">
+                    <h3 class="h5 mb-3">Request Date</h3>
+                    <p class="mb-0">[[${matrimony.requestDate}]]</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-5 wow fadeIn">
+                <div class="text-start mb-1-6 wow fadeIn">
+                  <h2 class="h1 mb-0 text-primary">Message</h2>
+                </div>
+                <p>[[${matrimony.message}]]</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3 wow fadeIn">
+          <div class="text-start mb-1-6 wow fadeIn mb-3">
+            <h2 class="h1 mb-0 text-primary">Address</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-2">
+              <h5>Street: </h5>
+              <p class="text-muted">[[${matrimony.address.street}]]</p>
+            </div>
+            <div class="col-md-4 col-sm-2">
+              <h5>Room Number : </h5>
+              <p class="text-muted">[[${matrimony.address.houseNo}]]</p>
+            </div>
+            <div class="col-md-4 col-sm-2">
+              <h5>Building Number: </h5>
+              <p class="text-muted">[[${matrimony.address.buildingNo}]]</p>
+            </div>
+            <div class="col-md-4 col-sm-2">
+              <h5>City: </h5>
+              <p class="text-muted">[[${matrimony.address.city}]]</p>
+            </div>
+            <div class="col-md-4 col-sm-2">
+              <h5>Country: </h5>
+              <p class="text-muted">[[${matrimony.address.country}]]</p>
+            </div>
+            <div class="col-md-4 col-sm-2">
+              <h5>Post Code: </h5>
+              <p class="text-muted">[[${matrimony.address.postCode}]]</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -91,14 +91,6 @@ public class BlogController {
                                  HttpServletRequest request,
                                     Model model){
 
-//        Settings settings = settingsService.findBySettingName("DEFAULT_PAGE_SIZE");
-
-//        if(settings != null){
-//            pageSize = settings.getSettingValueInt();
-//        }else{
-//            pageSize = defaultPageSize;
-//        }
-
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
         Page<Blog> pagedBlog = blogService.findAll(page, pageSize, blogCatId);

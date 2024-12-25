@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members List</title>
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+</head>
+<body>
+    <div th:fragment="members-list">
+        <div class="container my-5">
+            <h4 class="m-3 text-center text-md-start">Members List</h4>
+            <div class="table-responsive mb-4">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Baptismal Name</th>
+                        <th>Father Confessor Name</th>
+                        <th>Is married</th>
+                        <th>Gender</th>
+                        <th>Membership Date</th>
+                        <th>Membership Amount</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Iterate through the attachments list -->
+                    <tr th:each="member, iterStat : ${members}" class="shadow mb-2" role="button" th:onclick="|window.location='@{/dashboard/members/detail/{id}(id=${member.memberId})}'|">
+                        <!--                    <td th:text="${iterStat.index + 1}"></td> &lt;!&ndash; Row number &ndash;&gt;-->
+                        <td>[[${member.memberId}]]</td> <!-- Row number -->
+                        <td>[[${member.baptismalName}]]</td>
+                        <td>[[${member.fatherConfessorName}]]</td>
+                        <td th:text="${member.spouse != null ? 'Yes': 'No'}"></td>
+                        <td>[[${member.gender}]]</td>
+                        <td>[[${member.membershipDate}]]</td>
+                        <td>[[${member.membershipAmount}]]</td>
+                        <td>
+                            <a th:href="@{/dashboard/members/detail/{id}(id=${member.memberId})}">Detail</a>
+                            <span class="text-dark">/</span>
+                            <a th:href="@{/dashboard/members/edit/{id}(id=${member.memberId})}" >Edit</a>
+                            <span class="text-dark">/</span>
+                            <a th:href="@{/dashboard/members/delete/{id}(id=${member.memberId})}" >Delete</a>
+                        </td>
+                    </tr>
+                    <!-- Show a message if there are no attachments -->
+                    <tr th:if="${members.size() == 0}">
+                        <td colspan="4" class="text-center text-muted">No requests found.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+              <div th:replace="~{fragments/pagination::pagination}"></div>
+              <script th:src="@{/js/media.js}"></script>
+            <div>
+                <button class="success-button" th:onclick="|window.location='@{/dashboard/members/form}'|">Add Member</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+</body>
+</html>

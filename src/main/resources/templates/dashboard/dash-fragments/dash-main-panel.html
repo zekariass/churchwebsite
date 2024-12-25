@@ -144,28 +144,24 @@
 
          <!-- ============== MEMBERSHIP =============== -->
 
-          <main th:if="${activeDashPage == 'memberships-category-form'}">
-            <div th:replace="~{dashboard/dash-fragments/membership/membership-category-form::memberships-category-form}"></div>
+          <main th:if="${activeDashPage == 'membership-amount-form'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-amount-form::membership-amount-form}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'memberships-category-list'}">
-            <div th:replace="~{dashboard/dash-fragments/membership/membership-category-list::memberships-category-list}"></div>
+          <main th:if="${activeDashPage == 'membership-amounts-list'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/membership-amounts-list::membership-amounts-list}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'memberships-category-detail'}">
-            <div th:replace="~{dashboard/dash-fragments/membership/membership-category-detail::memberships-category-detail}"></div>
+          <main th:if="${activeDashPage == 'member-form'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/member-form::member-form}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'membership-form'}">
-            <div th:replace="~{dashboard/dash-fragments/membership/membership-form::membership-form}"></div>
+          <main th:if="${activeDashPage == 'members-list'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/members-list::members-list}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'membership-list'}">
-            <div th:replace="~{dashboard/dash-fragments/membership/membership-list::membership-list}"></div>
-          </main>
-
-          <main th:if="${activeDashPage == 'membership-detail'}">
-            <div th:replace="~{dashboard/dash-fragments/membership/membership-detail::membership-detail}"></div>
+          <main th:if="${activeDashPage == 'member-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/membership/member-detail::member-detail}"></div>
           </main>
 
           <!-- ============== SERVICE ==================== -->
@@ -180,6 +176,75 @@
           <main th:if="${activeDashPage == 'service-detail'}">
             <div th:replace="~{dashboard/dash-fragments/services/service-detail::service-detail}"></div>
           </main>
+
+          <main th:if="${activeDashPage == 'baptism-requests-list'}">
+            <div th:replace="~{dashboard/dash-fragments/services/baptism-requests-list::baptism-requests-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'baptism-request-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/services/baptism-request-detail::baptism-request-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'baptism-request-status-update'}">
+            <div th:replace="~{dashboard/dash-fragments/services/baptism-request-status-update::baptism-request-status-update}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'matrimony-requests-list'}">
+            <div th:replace="~{dashboard/dash-fragments/services/matrimony-requests-list::matrimony-requests-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'matrimony-request-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/services/matrimony-request-detail::matrimony-request-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'matrimony-request-status-update'}">
+            <div th:replace="~{dashboard/dash-fragments/services/matrimony-request-status-update::matrimony-request-status-update}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'remembrance-requests-list'}">
+            <div th:replace="~{dashboard/dash-fragments/services/remembrance-requests-list::remembrance-requests-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'remembrance-request-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/services/remembrance-request-detail::remembrance-request-detail}"></div>
+          </main>
+
+<!--          ========== PAYMENT METHOD ==============================-->
+          <main th:if="${activeDashPage == 'payment-method-form'}">
+            <div th:replace="~{dashboard/dash-fragments/payments/payment-method-form::payment-method-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'payment-methods-list'}">
+            <div th:replace="~{dashboard/dash-fragments/payments/payment-methods-list::payment-methods-list}"></div>
+          </main>
+
+
+          <!--   ========== CHURCH CONTACTS ==============================-->
+          <main th:if="${activeDashPage == 'church-contact-form'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/church-contact-form::church-contact-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'church-contact-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/church-contact-detail::church-contact-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'church-contacts-list'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/church-contacts-list::church-contacts-list}"></div>
+          </main>
+
+          <!--   ========== NOTIFICATION ==============================-->
+          <main th:if="${activeDashPage == 'notification-form'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/notification-form::notification-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'notification-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/notification-detail::notification-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'notifications-list'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/notifications-list::notifications-list}"></div>
+          </main>
+
         </div>
       </div>
 

@@ -7,6 +7,8 @@ import com.churchwebsite.churchwebsite.repositories.UserProfileRepository;
 import com.churchwebsite.churchwebsite.repositories.UserRepository;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,17 @@ public class UserService {
 
 
     public CustomUserDetails getCurrentUser(){
-        return (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Check if the user is authenticated and not anonymous
+        if (authentication != null
+                && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken)) {
+            return (CustomUserDetails) authentication.getPrincipal();
+        }
+
+        // Return null or throw an exception if the user is anonymous or not authenticated
+        return null;
     }
 
     public Optional<User> getUserById(Integer userId) {

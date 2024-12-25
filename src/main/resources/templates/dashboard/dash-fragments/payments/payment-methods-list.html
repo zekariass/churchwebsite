@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attachments List</title>
+  <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+</head>
+<body th:fragment="payment-methods-list">
+<div class="container my-5">
+  <h4 class="m-3 text-center text-md-start">Payment Methods List</h4>
+  <div class="table-responsive mb-4">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th>Payment Method ID</th>
+        <th>Payment Method Name</th>
+        <th>Payment Method Description</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Iterate through the attachments list -->
+      <tr th:each="paymentMethod, iterStat : ${paymentMethods}" class="shadow mb-2" role="button">
+        <!--                    <td th:text="${iterStat.index + 1}"></td> &lt;!&ndash; Row number &ndash;&gt;-->
+        <td th:text="${iterStat.index + 1}"></td> <!-- Row number -->
+        <td>[[${paymentMethod.paymentMethodName}]]</td>
+        <td>[[${paymentMethod.paymentMethodDescription}]]</td>
+        <td>
+          <a th:href="@{/dashboard/payment-methods/update/{id}(id=${paymentMethod.paymentMethodId})}" class="btn btn-sm btn-success me-2 mb-2">Edit</a>
+        </td>
+      </tr>
+      <!-- Show a message if there are no attachments -->
+      <tr th:if="${paymentMethods.size() == 0}">
+        <td colspan="4" class="text-center text-muted">No requests found.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+<!--  <div th:replace="~{fragments/pagination::pagination}"></div>-->
+<!--  <script th:src="@{/js/media.js}"></script>-->
+</div>
+
+<!-- Include Bootstrap JS -->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+</body>
+</html>

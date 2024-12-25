@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+</head>
+<body>
+  <div th:fragment="contact-us-options">
+    <div class="row">
+      <div class="col-md-6 pt-3">
+        <div class="mb-4">
+          <div th:replace="~{fragments/contacts/church-map-view::church-map-view}"></div>
+        </div>
+        <div th:if="${churchContacts.size() > 0}">
+          <div th:replace="~{fragments/contacts/church-contacts-list::church-contacts-list}"></div>
+        </div>
+      </div>
+      <div class="col-md-6 p-3">
+          <div class="">
+            <div th:replace="~{fragments/contacts/contact-us-form::contact-us-form}"></div>
+          </div>
+      </div>
+    </div>
+    <div class="container shadow-sm pt-5">
+        <div class="">
+          <div th:replace="~{fragments/contacts/church-social-links::church-social-links}"></div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

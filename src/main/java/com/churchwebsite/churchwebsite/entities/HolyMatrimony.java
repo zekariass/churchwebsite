@@ -8,7 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
-@Entity(name = "holy_matrimony")
+@Entity
+@Table(name = "holy_matrimony")
 @EntityListeners(AuditingEntityListener.class)
 public class HolyMatrimony {
 

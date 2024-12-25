@@ -4,7 +4,7 @@
 </head>
 <body>
 <!-- Sidebar -->
-<div th:fragment="dash-sidebar">
+<div th:fragment="dash-sidebar" class="dash-header">
   <div class="sidebar" data-background-color="blue">
     <div class="sidebar-logo">
       <!-- Logo Header -->
@@ -50,7 +50,7 @@
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#church">
               <i class="fas fa-building"></i>
-              <p>Organization</p>
+              <p>Church</p>
               <span class="caret"></span>
             </a>
             <div class="collapse" id="church">
@@ -62,7 +62,24 @@
                 </li>
                 <li>
                   <a th:href="@{/dashboard/church/detail}">
-                    <span class="sub-item">View</span>
+                    <span class="sub-item">Church Data</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/notifications}">
+                    <span class="sub-item">Notifications</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a th:href="@{/dashboard/messages}">
+                    <span class="sub-item">Messages</span>
+                  </a>
+                </li>
+
+                <li>
+                  <a th:href="@{/dashboard/church-contacts}">
+                    <span class="sub-item">Church Contacts</span>
                   </a>
                 </li>
               </ul>
@@ -85,6 +102,21 @@
                 <li>
                   <a th:href="@{/dashboard/services}">
                     <span class="sub-item">Services</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/services/baptism/requests}">
+                    <span class="sub-item">Baptism Requests</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/services/matrimony/requests}">
+                    <span class="sub-item">Matrimony Requests</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/services/remembrance/requests}">
+                    <span class="sub-item">Remembrance Requests</span>
                   </a>
                 </li>
               </ul>
@@ -235,27 +267,7 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#maps">
-              <i class="fas fa-map-marker-alt"></i>
-              <p>Donations</p>
-              <span class="caret"></span>
-            </a>
-            <div class="collapse" id="maps">
-              <ul class="nav nav-collapse">
-                <li>
-                  <a href="maps/googlemaps.html">
-                    <span class="sub-item">Setup New Donation</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="maps/jsvectormap.html">
-                    <span class="sub-item">Manage</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
+
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#landingContent">
               <i class="fas fa-map-marker-alt"></i>
@@ -301,6 +313,49 @@
             </div>
           </li>
 
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" href="#maps">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>Donations</p>
+              <span class="caret"></span>
+            </a>
+            <div class="collapse" id="maps">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a href="maps/googlemaps.html">
+                    <span class="sub-item">Setup New Donation</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="maps/jsvectormap.html">
+                    <span class="sub-item">Manage</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" href="#pmethods">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>Payments</p>
+              <span class="caret"></span>
+            </a>
+            <div class="collapse" id="pmethods">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a th:href="@{/dashboard/payment-methods}">
+                    <span class="sub-item">Payment Methods</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/dashboard/payment-methods/form}">
+                    <span class="sub-item">New Payment Method</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
 
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#mem">
@@ -311,24 +366,13 @@
             <div class="collapse" id="mem">
               <ul class="nav nav-collapse">
                 <li>
-                  <a th:href="@{/dashboard/memberships/form}">
-                    <span class="sub-item">New Member</span>
+                  <a th:href="@{/dashboard/members}">
+                    <span class="sub-item">Memberships</span>
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{/dashboard/memberships}">
-                    <span class="sub-item">Members List</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a th:href="@{/dashboard/memberships/categories/form}">
-                    <span class="sub-item">New Member Category</span>
-                  </a>
-                </li>
-                <li>
-                  <a th:href="@{/dashboard/memberships/categories}">
-                    <span class="sub-item">Member Category List</span>
+                  <a th:href="@{/dashboard/members/membership-amounts}">
+                    <span class="sub-item">Membership Amounts</span>
                   </a>
                 </li>
               </ul>

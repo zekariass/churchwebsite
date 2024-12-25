@@ -6,7 +6,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 
-@Entity(name = "remembrance_prayer")
+@Entity
+@Table(name = "remembrance_prayer")
 @EntityListeners(AuditingEntityListener.class)
 public class RemembrancePrayer {
     @Id

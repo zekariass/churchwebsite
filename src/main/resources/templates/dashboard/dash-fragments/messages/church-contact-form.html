@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Contact Form</title>
+    <link rel="stylesheet" th:href="@{/css/custom-styles.css}">
+</head>
+<body>
+<div th:fragment="church-contact-form">
+    <div class="container mt-5">
+        <h1 class="mb-4">Create New Contact</h1>
+        <form th:action="@{/dashboard/church-contacts/form/process}" th:object="${contact}" method="post" class="mt-4">
+            <input type="hidden" th:field="*{contactId}">
+
+            <div class="row">
+                <div class="mb-3  col-md-6">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" id="fullName" th:field="*{contactFullName}" class="form-control" required>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" id="phone" th:field="*{contactPhone}" class="form-control" required>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" th:field="*{contactEmail}" class="form-control" required>
+                </div>
+
+            </div>
+            <div class="my-3 width-md-75">
+                <label for="tiny" class="h3 form-label mb-3">Contact Description</label>
+                <textarea id="tiny" th:field="*{contactDescription}"></textarea>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a th:href="@{/dashboard/church-contacts}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+    <script th:src="@{/js/custom-jodit.js}"></script>
+</div>
+</body>
+</html>

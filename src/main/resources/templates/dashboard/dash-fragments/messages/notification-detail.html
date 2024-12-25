@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification Detail</title>
+</head>
+<body>
+<div th:fragment="notification-detail">
+    <div class="container mt-5">
+        <h1 class="mb-4">Notification Details</h1>
+        <p><strong>ID:</strong> <span th:text="${notification.notificationId}"></span></p>
+        <p><strong>Subject:</strong> <span th:text="${notification.notificationSubject}"></span></p>
+        <p><strong>Message:</strong> <span th:utext="${notification.notificationMessage}"></span></p>
+        <p><strong>Sent Time:</strong> <span th:text="${notification.notificationSentTime.format(@dateTimeFormatter)}"></span></p>
+        <form th:action="@{/dashboard/notifications/resend/{id}(id=${notification.notificationId})}" method="post">
+            <div class="d-flex flex-row">
+                <button type="submit" class="success-button me-3">Resend</button>
+                <a th:href="@{/dashboard/notifications}" class="secondary-button">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

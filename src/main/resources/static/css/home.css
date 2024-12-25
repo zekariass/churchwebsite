@@ -343,3 +343,15 @@ body{
     background-color: rgb(0, 150, 255) !important;
 }
 /* ===================================================== */
+
+.round-pill {
+  display: inline-block; /* For inline elements like buttons or spans */
+  padding: 10px 20px;    /* Adjust padding for desired size */
+  border-radius: 50px;   /* Large enough to make the ends fully rounded */
+  background-color: #007bff; /* Example background color */
+  color: white;          /* Text color */
+  font-size: 16px;       /* Adjust as needed */
+  text-align: center;    /* Center the text */
+  border: none;          /* Remove default border */
+  cursor: pointer;       /* Pointer cursor for buttons or interactive elements */
+}

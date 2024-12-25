@@ -7,6 +7,7 @@
 <body>
     <div th:fragment="address-form">
             <div class="row g-3">
+                <input th:field="*{address.addressId}" type="hidden" class="form-control">
                 <div class="col-md-6 col-12">
                     <label for="street" class="form-label">Street</label>
                     <input th:field="*{address.street}" type="text" class="form-control" id="street" placeholder="1234 Main St">

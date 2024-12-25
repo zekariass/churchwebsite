@@ -42,3 +42,29 @@ table, th, td {
 .error{
     color: red;
 }
+
+@media print{
+    .dash-header{
+        display: none !important;
+    }
+
+    .dash-sidebar{
+            display: none !important;
+        }
+
+    .dash-footer{
+        display: none !important
+    }
+
+    .wrapper{
+        margin: 0 !important;
+        pading: 0 !important;
+    }
+
+    .main-panel{
+            margin: 0 !important;
+            pading: 0 !important;
+        }
+
+
+}

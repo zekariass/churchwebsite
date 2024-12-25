@@ -21,23 +21,23 @@ public class Church {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @Column(name = "whatsapp")
-    private String whatsApp;
-    private String telegram;
+    private String phoneNumber1;
+    private String phoneNumber2;
+
+    private String whatsAppChat;
+    private String whatsAppGroup;
+    private String telegramChat;
+    private String telegramGroup;
     private String youtube;
     private String facebook;
     private String tiktok;
 
-    @Column(name = "xaccount")
     private String xAccount;
 
-    @Column(name = "googleplus")
     private String googlePlus;
 
-    @Column(name = "pinterest")
     private String pInterest;
 
-    @Column(name = "linkedin")
     private String linkedIn;
     private String reddit;
     private String email;
@@ -48,15 +48,21 @@ public class Church {
     public Church() {
     }
 
-    public Church(String churchName, String churchDescription, String whatsApp, String telegram, String youtube, String xAccount, String facebook, String tiktok, String googlePlus, String pInterest, String linkedIn, String reddit, String email) {
+    public Church(String churchName, String churchDescription, String churchLogo, Address address, String phoneNumber1, String phoneNumber2, String whatsAppChat, String whatsAppGroup, String telegramChat, String telegramGroup, String youtube, String facebook, String tiktok, String xAccount, String googlePlus, String pInterest, String linkedIn, String reddit, String email) {
         this.churchName = churchName;
         this.churchDescription = churchDescription;
-        this.whatsApp = whatsApp;
-        this.telegram = telegram;
+        this.churchLogo = churchLogo;
+        this.address = address;
+        this.phoneNumber1 = phoneNumber1;
+        this.phoneNumber2 = phoneNumber2;
+        this.whatsAppChat = whatsAppChat;
+        this.whatsAppGroup = whatsAppGroup;
+        this.telegramChat = telegramChat;
+        this.telegramGroup = telegramGroup;
         this.youtube = youtube;
-        this.xAccount = xAccount;
         this.facebook = facebook;
         this.tiktok = tiktok;
+        this.xAccount = xAccount;
         this.googlePlus = googlePlus;
         this.pInterest = pInterest;
         this.linkedIn = linkedIn;
@@ -104,21 +110,6 @@ public class Church {
         this.address = address;
     }
 
-    public String getWhatsApp() {
-        return whatsApp;
-    }
-
-    public void setWhatsApp(String whatsApp) {
-        this.whatsApp = whatsApp;
-    }
-
-    public String getTelegram() {
-        return telegram;
-    }
-
-    public void setTelegram(String telegram) {
-        this.telegram = telegram;
-    }
 
     public String getYoutube() {
         return youtube;
@@ -200,25 +191,77 @@ public class Church {
         this.banners = banners;
     }
 
+    public String getPhoneNumber1() {
+        return phoneNumber1;
+    }
+
+    public void setPhoneNumber1(String phoneNumber1) {
+        this.phoneNumber1 = phoneNumber1;
+    }
+
+    public String getPhoneNumber2() {
+        return phoneNumber2;
+    }
+
+    public void setPhoneNumber2(String phoneNumber2) {
+        this.phoneNumber2 = phoneNumber2;
+    }
+
+    public String getWhatsAppChat() {
+        return whatsAppChat;
+    }
+
+    public void setWhatsAppChat(String whatsAppChat) {
+        this.whatsAppChat = whatsAppChat;
+    }
+
+    public String getWhatsAppGroup() {
+        return whatsAppGroup;
+    }
+
+    public void setWhatsAppGroup(String whatsAppGroup) {
+        this.whatsAppGroup = whatsAppGroup;
+    }
+
+    public String getTelegramChat() {
+        return telegramChat;
+    }
+
+    public void setTelegramChat(String telegramChat) {
+        this.telegramChat = telegramChat;
+    }
+
+    public String getTelegramGroup() {
+        return telegramGroup;
+    }
+
+    public void setTelegramGroup(String telegramGroup) {
+        this.telegramGroup = telegramGroup;
+    }
+
     @Override
     public String toString() {
         return "Church{" +
-                "churchId=" + churchId +
-                ", churchName='" + churchName + '\'' +
-                ", churchDescription='" + churchDescription + '\'' +
-                ", churchLogo='" + churchLogo + '\'' +
-                ", address=" + address +
-                ", whatsApp='" + whatsApp + '\'' +
-                ", telegram='" + telegram + '\'' +
-                ", youtube='" + youtube + '\'' +
-                ", facebook='" + facebook + '\'' +
-                ", tiktok='" + tiktok + '\'' +
-                ", xAccount='" + xAccount + '\'' +
-                ", googlePlus='" + googlePlus + '\'' +
-                ", pInterest='" + pInterest + '\'' +
-                ", linkedIn='" + linkedIn + '\'' +
+                "email='" + email + '\'' +
                 ", reddit='" + reddit + '\'' +
-                ", email='" + email + '\'' +
+                ", linkedIn='" + linkedIn + '\'' +
+                ", pInterest='" + pInterest + '\'' +
+                ", googlePlus='" + googlePlus + '\'' +
+                ", xAccount='" + xAccount + '\'' +
+                ", tiktok='" + tiktok + '\'' +
+                ", facebook='" + facebook + '\'' +
+                ", youtube='" + youtube + '\'' +
+                ", telegramGroup='" + telegramGroup + '\'' +
+                ", telegramChat='" + telegramChat + '\'' +
+                ", whatsAppGroup='" + whatsAppGroup + '\'' +
+                ", whatsAppChat='" + whatsAppChat + '\'' +
+                ", phoneNumber2='" + phoneNumber2 + '\'' +
+                ", phoneNumber1='" + phoneNumber1 + '\'' +
+                ", address=" + address +
+                ", churchLogo='" + churchLogo + '\'' +
+                ", churchDescription='" + churchDescription + '\'' +
+                ", churchName='" + churchName + '\'' +
+                ", churchId=" + churchId +
                 '}';
     }
 }
