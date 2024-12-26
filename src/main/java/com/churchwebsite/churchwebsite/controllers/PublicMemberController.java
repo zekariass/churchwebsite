@@ -29,7 +29,7 @@ public class PublicMemberController {
     private final MembershipAmountService membershipAmountService;
     private final SettingsService settingsService;
     private final UserService userService;
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
 
     private final String PUBLIC_CONTENT = "layouts/base";
 
@@ -38,12 +38,12 @@ public class PublicMemberController {
                                   MembershipAmountService membershipAmountService,
                                   SettingsService settingsService,
                                   UserService userService,
-                                  ChurchDetailDTO churchDetailDTO) {
+                                  ChurchDetailService churchDetailService) {
         this.memberService = memberService;
         this.membershipAmountService = membershipAmountService;
         this.settingsService = settingsService;
         this.userService = userService;
-        this.churchDetail = churchDetailDTO;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/form")
@@ -68,7 +68,7 @@ public class PublicMemberController {
         model.addAttribute("currencyCode", currency.getCurrencyCode());
         model.addAttribute("membershipAmounts", membershipAmounts);
         model.addAttribute("paymentMethods", MembershipPaymentMethod.values());
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }

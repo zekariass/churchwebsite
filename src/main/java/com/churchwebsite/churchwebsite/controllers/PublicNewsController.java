@@ -22,7 +22,7 @@ import java.util.List;
 public class PublicNewsController {
     private final NewsService newsService;
     private final PaginationService paginationService;
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
 
 
     private String PUBLIC_CONTENT = "layouts/base";
@@ -34,7 +34,7 @@ public class PublicNewsController {
         this.newsService = newsService;
         this.paginationService = paginationService;
 
-        churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService;
 
     }
 
@@ -53,7 +53,7 @@ public class PublicNewsController {
 
         model.addAttribute("newsList", newsList);
         model.addAttribute("activeContentPage", "news-list");
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         model.addAttribute("currentPage", pagedNews.getNumber()+1);
         model.addAttribute("totalItems", pagedNews.getTotalElements());
@@ -75,7 +75,7 @@ public class PublicNewsController {
 
         model.addAttribute("activeContentPage", "news-detail");
         model.addAttribute("news", news);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }

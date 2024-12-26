@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/media-center")
 public class PublicMediaCenterController {
 
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
     private final String PUBLIC_CONTENT = "layouts/base";
     private final PaginationService paginationService;
     private final AttachmentService attachmentService;
@@ -43,7 +43,7 @@ public class PublicMediaCenterController {
                                        VideoService videoService,
                                        AttachmentTypeService attachmentTypeService,
                                        AttachmentService attachmentService){
-        this.churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService;
         this.imageService = imageService;
         this.paginationService = paginationService;
         this.albumService = albumService;
@@ -56,7 +56,7 @@ public class PublicMediaCenterController {
     @GetMapping("/options")
     public String showMediaOption(Model model){
         model.addAttribute("activeContentPage", "media-center-options");
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }
@@ -77,7 +77,7 @@ public class PublicMediaCenterController {
         Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, Sort.by(Sort.Order.desc("creationTime")));
         List<Album> albums = pagedAlbums.getContent();
 
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService);
 
         model.addAttribute("activeContentPage", "albums-list");
         model.addAttribute("currentPage", pagedAlbums.getNumber() + 1);
@@ -191,7 +191,7 @@ public class PublicMediaCenterController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("images", images);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("sortBy", sortBy);
 
         Album album = albumService.getAlbumById(albumId);
@@ -222,7 +222,7 @@ public class PublicMediaCenterController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("videos", videoList);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
 
         return PUBLIC_CONTENT;
@@ -251,7 +251,7 @@ public class PublicMediaCenterController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("activeContentPage", "attachments-list");
         model.addAttribute("attachments", attachments);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("sortBy", sortBy);
 
         return PUBLIC_CONTENT;

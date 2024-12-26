@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/events")
 public class PublicEventController {
 
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
     private final PaginationService paginationService;
 
     private final String PUBLIC_CONTENT = "layouts/base";
@@ -32,7 +32,7 @@ public class PublicEventController {
                                  ChurchDetailService churchDetailService) {
         this.eventService = eventService;
         this.paginationService = paginationService;
-        churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService;
         ;
     }
 
@@ -54,7 +54,7 @@ public class PublicEventController {
         model.addAttribute("totalItems", pagedEvents.getTotalElements());
         model.addAttribute("totalPages", pagedEvents.getTotalPages());
         model.addAttribute("pageSize", pageSize);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("currentUrl", request.getRequestURL());
 
         return PUBLIC_CONTENT;
@@ -67,7 +67,7 @@ public class PublicEventController {
         Event event = eventService.findById(eventId);
         model.addAttribute("activeContentPage", "event-detail");
         model.addAttribute("event", event);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }

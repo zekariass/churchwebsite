@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RemembrancePrayerController {
 
     private final String PUBLIC_CONTENT = "layouts/base";
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
 
     private final RemembrancePrayerService remembrancePrayerService;
 
@@ -26,7 +26,7 @@ public class RemembrancePrayerController {
     public RemembrancePrayerController(RemembrancePrayerService remembrancePrayerService,
                                    ChurchDetailService churchDetailService) {
         this.remembrancePrayerService = remembrancePrayerService;
-        this.churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/form")
@@ -35,7 +35,7 @@ public class RemembrancePrayerController {
         model.addAttribute("remembrance", new RemembrancePrayer());
         model.addAttribute("address", new Address());
         model.addAttribute("activeContentPage", "remembrance-request-form");
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         return PUBLIC_CONTENT;
     }
 

@@ -57,7 +57,13 @@ public class AuthSecurityConfig {
             "/members",
             "/members/**",
             "/contactUs",
-            "/contactUs/**,"
+            "/contactUs/**",
+            "/donate",
+            "/donate/**",
+            "/donation",
+            "/donation/**",
+            "/donation-success",
+            "/donation-cancel"
 
     };
     @Bean

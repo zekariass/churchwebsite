@@ -22,7 +22,7 @@ public class PublicBlogController {
     private final BlogService blogService;
     private final BlogCategoryService blogCategoryService;
     private final PaginationService paginationService;
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
 
     @Value("${settings.default.page.size:10}")
     private int defaultPageSize;
@@ -38,7 +38,7 @@ public class PublicBlogController {
         this.blogService = blogService;
         this.blogCategoryService = blogCategoryService;
         this.paginationService = paginationService;
-        churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService;
 
     }
 
@@ -64,7 +64,7 @@ public class PublicBlogController {
         model.addAttribute("totalPages", pagedBlog.getTotalPages());
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("blogCatId", blogCatId);
 
         return PUBLIC_CONTENT;
@@ -77,7 +77,7 @@ public class PublicBlogController {
         Blog blog = blogService.findById(blogId);
         model.addAttribute("activeContentPage", "blog-detail");
         model.addAttribute("blog", blog);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService);
 
 
         return PUBLIC_CONTENT;

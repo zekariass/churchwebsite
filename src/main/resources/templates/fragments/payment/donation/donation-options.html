@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="donation-options">
+        <div class="bg-warning p-3 w-auto rounded">
+            <h5>እግዚአብሔር በደስታ የሚሰጠውን ይወዳልና እያንዳንዱ በልቡ እንዳሰበ ይስጥ፥ በኀዘን ወይም በግድ አይደለም። (2ኛ ወደ ቆሮንቶስ ሰዎች 9:7)</h5>
+            <h5>Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver. (2 Corinthians 9:7)</h5>
+        </div>
+        <div class="my-4">
+            <h6>Help our church [[${churchDetail?.church?.churchName}]] today. Choose the how you want to donate from the following options.</h6>
+        </div>
+
+        <div class="shadow col-md-6 p-4 rounded-3">
+            <div>
+                <h5>Choose the amount you want to donate</h5>
+                <form th:action="@{/donation/process}" method="post">
+                    <div class="mb-3" id="amountOptions">
+                        <div class="bg-info p-3 rounded-3" id="donationAmount">
+                            <div class="d-flex flex-column flex-md-row ">
+                                <div class="me-4">
+                                    <input class="form-check-input amountOptions"
+                                           type="radio"
+                                           name="donationAmount"
+                                           value=20>
+                                    <label class="form-check-label">
+                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]20
+                                    </label>
+                                </div>
+                                <div class="me-4">
+                                    <input class="form-check-input amountOptions"
+                                           type="radio"
+                                           name="donationAmount"
+                                           value=30>
+                                    <label class="form-check-label">
+                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]30
+                                    </label>
+                                </div>
+                                <div class="me-4">
+                                    <input class="form-check-input amountOptions"
+                                           type="radio"
+                                           name="donationAmount"
+                                           value=40>
+                                    <label class="form-check-label">
+                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]40
+                                    </label>
+                                </div>
+                                <div class="me-4">
+                                    <input class="form-check-input amountOptions"
+                                           type="radio"
+                                           name="donationAmount"
+                                           value=50>
+                                    <label class="form-check-label">
+                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]50
+                                    </label>
+                                </div>
+                                <div class="me-4">
+                                    <input class="form-check-input amountOptions"
+                                           type="radio"
+                                           name="donationAmount"
+                                           value=100>
+                                    <label class="form-check-label">
+                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]100
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="my-4">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       value="beGenerous"
+                                       id="beGenerousCheck">
+                                <label class="form-check-label fw-bold">Custom Amount</label>
+                            </div>
+
+                            <div class="col-md-4 col-12 mb-4" id="beGenerousField">
+                                <label for="generous" class="form-label">Membership Amount</label>
+                                <input name="donationAmount" type="number" class="form-control width-md-75" id="generous">
+                            </div>
+
+<!--                            <div>-->
+<!--                                <div class="container">-->
+<!--                                <h4 class="my-3">Enter Your Information</h4>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <input type="text"-->
+<!--                                               name="*{firstName}"-->
+<!--                                               class="form-control form-control-lg"-->
+<!--                                               id="firstName"-->
+<!--                                               placeholder="Enter your first name"-->
+<!--                                               required>-->
+<!--                                        <div class="invalid-feedback">-->
+<!--                                            Please provide your first name.-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+<!--                                    &lt;!&ndash; Last Name &ndash;&gt;-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <input type="text"-->
+<!--                                               name="*{lastName}"-->
+<!--                                               class="form-control form-control-lg"-->
+<!--                                               id="lastName"-->
+<!--                                               placeholder="Enter your last name"-->
+<!--                                               required>-->
+<!--                                        <div class="invalid-feedback">-->
+<!--                                            Please provide your last name.-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+<!--                                    &lt;!&ndash; Email &ndash;&gt;-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <input type="email"-->
+<!--                                               name="*{email}"-->
+<!--                                               class="form-control form-control-lg"-->
+<!--                                               id="email"-->
+<!--                                               placeholder="Enter your email address"-->
+<!--                                               required>-->
+<!--                                        <div class="invalid-feedback">-->
+<!--                                            Please provide a valid email address.-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+<!--                                    &lt;!&ndash; Phone Number &ndash;&gt;-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <input type="tel"-->
+<!--                                               name="*{phoneNumber}"-->
+<!--                                               class="form-control form-control-lg"-->
+<!--                                               id="phoneNumber"-->
+<!--                                               placeholder="Enter your phone number">-->
+<!--                                        <div class="invalid-feedback">-->
+<!--                                            Please provide a valid phone number.-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+
+                    <button type="submit" class="success-button">Donate</button>
+
+                </form>
+            </div>
+
+<!--            <div class=" d-flex flex-md-row flex-column my-5">-->
+<!--                <div class="justify-content-center me-4 mb-4" role="button" id="paypal">-->
+<!--                    <div class="d-flex justify-content-center w-auto">-->
+<!--                        <i class="fa-brands fa-paypal text-info fa-3x"></i>-->
+<!--                    </div>-->
+<!--                    <div class="d-flex justify-content-center">-->
+<!--                        <h5>Paypal</h5>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="justify-content-center me-4 mb-4" role="button" id="creditCard" th:onclick="|window.location='@{/checkout}'|">-->
+<!--                    <div class="d-flex justify-content-center w-auto">-->
+<!--                        <i class="fa-solid fa-credit-card text-danger fa-3x"></i>-->
+<!--                    </div>-->
+<!--                    <div class="d-flex justify-content-center">-->
+<!--                        <h5>Credit Card</h5>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="justify-content-center me-4 mb-4" role="button" id="check">-->
+<!--                    <div class="d-flex justify-content-center w-auto">-->
+<!--                        <i class="fas fa-money-check-alt text-secondary fa-3x"></i>-->
+<!--                    </div>-->
+<!--                    <div class="d-flex justify-content-center">-->
+<!--                        <h5>Check</h5>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="justify-content-center me-4 mb-4" role="button" id="directDebit">-->
+<!--                    <div class="d-flex justify-content-center w-auto">-->
+<!--                        <img class="" th:src="@{/media/209453_debit_direct_icon.svg}" style="width: 3em;" alt="">-->
+<!--                    </div>-->
+<!--                    <div class="d-flex justify-content-center">-->
+<!--                        <h5>Direct Debit</h5>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              // Set initial display states
+              document.getElementById('beGenerousField').style.display = 'none';
+
+              // Add event listener to the checkbox
+              document.getElementById('beGenerousCheck').addEventListener('change', function() {
+                  if (this.checked) {
+                      const radios = document.querySelectorAll('.amountOptions');
+                      radios.forEach(function(radio) {
+                          if(radio.checked){
+                            radio.checked = false;
+                          }
+                          radio.disabled = true; // Disable each radio input
+                       });
+                      document.getElementById('beGenerousField').style.display = 'block'; // Show beGenerousField
+                  } else {
+                      const radios = document.querySelectorAll('.amountOptions');
+                      radios.forEach(function(radio) {
+                          radio.disabled = false; // Disable each radio input
+                       });
+                      document.getElementById('beGenerousField').style.display = 'none'; // Hide beGenerousField
+                  }
+            });
+
+            });
+        </script>
+    </div>
+</body>
+</html>

@@ -114,6 +114,24 @@
             <div th:replace="~{fragments/contacts/contact-us-options::contact-us-options}"></div>
         </main>
 
+        <!--    ============= DONATION  ============================= -->
+
+        <main th:if="${activeContentPage == 'donation-options'}">
+            <div th:replace="~{fragments/payment/donation/donation-options::donation-options}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'donation-checkout-request-result'}">
+            <div th:replace="~{fragments/payment/donation/donation-checkout-request-result::donation-checkout-request-result}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'donation-success'}">
+            <div th:replace="~{fragments/payment/donation/donation-success::donation-success}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'donation-cancel'}">
+            <div th:replace="~{fragments/payment/donation/donation-cancel::donation-cancel}"></div>
+        </main>
+
     </div>
 </body>
 </html>

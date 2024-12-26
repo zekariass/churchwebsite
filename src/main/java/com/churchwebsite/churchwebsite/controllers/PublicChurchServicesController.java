@@ -19,7 +19,7 @@ import java.util.List;
 public class PublicChurchServicesController {
     private final ChurchServicesService churchServicesService;
     private final PaginationService paginationService;
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
 
     private final String PUBLIC_CONTENT = "layouts/base";
 
@@ -29,7 +29,7 @@ public class PublicChurchServicesController {
                                           PaginationService paginationService) {
         this.churchServicesService = churchServicesService;
         this.paginationService = paginationService;
-        this.churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
@@ -53,7 +53,7 @@ public class PublicChurchServicesController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }
@@ -66,7 +66,7 @@ public class PublicChurchServicesController {
 
         model.addAttribute("churchService", churchService);
         model.addAttribute("activeContentPage", "service-detail");
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         return PUBLIC_CONTENT;
     }
 }

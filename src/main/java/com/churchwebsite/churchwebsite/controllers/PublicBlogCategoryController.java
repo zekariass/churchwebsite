@@ -21,7 +21,7 @@ public class PublicBlogCategoryController {
 
     private final BlogCategoryService blogCategoryService;
     private final PaginationService paginationService;
-    private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
 
     private final String PUBLIC_CONTENT = "layouts/base";
 
@@ -34,7 +34,7 @@ public class PublicBlogCategoryController {
                                         PaginationService paginationService) {
         this.blogCategoryService = blogCategoryService;
         this.paginationService = paginationService;
-        this.churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
@@ -55,7 +55,7 @@ public class PublicBlogCategoryController {
         model.addAttribute("totalPages", pagedBlogCategories.getTotalPages());
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }
@@ -67,7 +67,7 @@ public class PublicBlogCategoryController {
         BlogCategory blogCategory = blogCategoryService.findById(catId);
         model.addAttribute("activeContentPage", "blog-category-detail");
         model.addAttribute("blogCategory", blogCategory);
-        model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }
