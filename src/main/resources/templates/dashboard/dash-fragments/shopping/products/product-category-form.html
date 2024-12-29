@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Category Form</title>
+</head>
+<body>
+    <div th:fragment="product-category-form">
+         <div class="container mt-5">
+            <div class="shadow p-4">
+                <h1 class="text-center">Add / Edit Product Category</h1>
+                <form th:action="@{/dashboard/products/categories/form/process}" th:object="${category}" method="post" class="mt-4 width-md-50">
+                    <input type="hidden" th:field="*{productCategoryId}">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Category Name</label>
+                        <input type="text" id="name" th:field="*{name}" class="form-control form-control-lg" placeholder="Enter category name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parentCategory" class="form-label">Parent Category</label>
+                        <select th:field="*{parentCategory}" class="form-control form-control-lg" id="parentCategory">
+                            <option th:value="${null}" selected>Select Category (optional)</option>
+                            <option th:if="${cat.productCategoryId != category.productCategoryId}" th:each="cat: ${categories}" th:value="${cat.productCategoryId}" th:text="${cat.name}"></option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-start">
+                        <button type="submit" class="success-button me-3">Save</button>
+                        <a th:href="@{/dashboard/products/categories}" class="secondary-button">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

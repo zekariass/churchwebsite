@@ -6,6 +6,7 @@ import com.churchwebsite.churchwebsite.enums.MembershipPaymentMethod;
 import com.churchwebsite.churchwebsite.enums.Relationship;
 import com.churchwebsite.churchwebsite.services.*;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
+import com.churchwebsite.churchwebsite.utils.LocaleUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ public class MemberController {
     private final PaginationService paginationService;
     private final SettingsService settingsService;
     private final UserService userService;
+    private final LocaleUtil localeUtil;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
@@ -34,12 +36,14 @@ public class MemberController {
                             MembershipAmountService membershipAmountService,
                             PaginationService paginationService,
                             SettingsService settingsService,
-                            UserService userService) {
+                            UserService userService,
+                            LocaleUtil localeUtil) {
         this.memberService = memberService;
         this.membershipAmountService = membershipAmountService;
         this.paginationService = paginationService;
         this.settingsService = settingsService;
         this.userService = userService;
+        this.localeUtil = localeUtil;
     }
 
     @GetMapping("/form")
@@ -128,20 +132,20 @@ public class MemberController {
 
         List<MembershipAmount> membershipAmounts = membershipAmountService.findAll();
 
-        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-
-        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-
-        Locale locale = new Locale(localLanguageCode, localCountryCode);
-
-        Currency currency = Currency.getInstance(locale);
+//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
+//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
+//
+//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
+//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
+//
+//        Locale locale = new Locale(localLanguageCode, localCountryCode);
+//
+//        Currency currency = Currency.getInstance(locale);
 
         model.addAttribute("activeDashPage", "member-form");
         model.addAttribute("member", member);
         model.addAttribute("genders", Gender.values());
-        model.addAttribute("currencyCode", currency.getCurrencyCode());
+        model.addAttribute("currencyCode", localeUtil.getCurrency().getCurrencyCode());
         model.addAttribute("membershipAmounts", membershipAmounts);
 
         return DASHBOARD_MAIN_PANEL;
@@ -154,20 +158,20 @@ public class MemberController {
         Member member = memberService.findById(memberId);
 //        System.out.println("===============================>>>>>: "+ member);
 
-        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-
-        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-
-        Locale locale = new Locale(localLanguageCode, localCountryCode);
-
-        Currency currency = Currency.getInstance(locale);
+//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
+//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
+//
+//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
+//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
+//
+//        Locale locale = new Locale(localLanguageCode, localCountryCode);
+//
+//        Currency currency = Currency.getInstance(locale);
 
         model.addAttribute("activeDashPage", "member-detail");
         model.addAttribute("member", member);
         model.addAttribute("genders", Gender.values());
-        model.addAttribute("currencyCode", currency.getCurrencyCode());
+        model.addAttribute("currencyCode", localeUtil.getCurrency().getCurrencyCode());
 
         return DASHBOARD_MAIN_PANEL;
     }

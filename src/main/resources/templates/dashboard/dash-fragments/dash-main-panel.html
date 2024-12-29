@@ -245,6 +245,44 @@
             <div th:replace="~{dashboard/dash-fragments/messages/notifications-list::notifications-list}"></div>
           </main>
 
+
+          <!--   ========== PRODUCT INVENTORY ==============================-->
+          <main th:if="${activeDashPage == 'product-category-form'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-category-form::product-category-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'product-category-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-category-detail::product-category-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'product-categories-list'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-categories-list::product-categories-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'product-form'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-form::product-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'product-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-detail::product-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'products-list'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/products-list::products-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'product-image-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-image-detail::product-image-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'product-images-list'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-images-list::product-images-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'product-image-form'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/products/product-image-form::product-image-form}"></div>
+          </main>
+
         </div>
       </div>
 

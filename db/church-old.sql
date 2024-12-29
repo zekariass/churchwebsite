@@ -440,6 +440,7 @@ CREATE TABLE `settings`(
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (1, 'DEFAULT_PAGE_SIZE', 'The number of items listed in a page', 8, null);
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (2, 'LOCALE_LANGUAGE_CODE', 'Local language code', 0, 'en');
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (3, 'LOCALE_COUNTRY_CODE', 'Local country code', 0, 'GB');
+INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char) VALUES (3, 'CART_COOKIE_LIFETIME', 'Lifetime of cookie', 7*24*60*60, 'GB'); -- 7 days
 
 DROP TABLE IF EXISTS `baptisim`;
 CREATE TABLE `baptisim`(
@@ -486,3 +487,138 @@ CREATE TABLE `remembrance_prayer`(
     `request_date` DATETIME DEFAULT NULL,
     `message` TEXT DEFAULT NULL
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- ============ GATEWAY MANAGEMENT TABLE ================
+DROP TABLE IF EXISTS `payment_gateway`;
+CREATE TABLE `payment_gateway` (
+    `payment_gateway_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `gateway_name` VARCHAR(255) NOT NULL,
+    `api_key` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =============== SHOPPING TABLES ======================
+
+DROP TABLE IF EXISTS `product_category`;
+CREATE TABLE `product_category` (
+    `product_category_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `parent_category` INT DEFAULT NULL,
+    FOREIGN KEY (`parent_category`) REFERENCES `product_category`(`product_category_id`)
+);
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+    `product_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `description` TEXT,
+    `price` DECIMAL(10, 2) NOT NULL,
+    `stock_quantity` INT NOT NULL,
+    `delivery_type` ENUM('COLLECT', 'SHIPPING', 'SHIPPING_OR_COLLECT') DEFAULT 'COLLECT',
+    `category_id` INT,
+    `version` BIGINT UNSIGNED,
+    FOREIGN KEY (`category_id`) REFERENCES `product_category`(`product_category_id`)
+);
+
+DROP TABLE IF EXISTS `product_image`;
+CREATE TABLE `product_image` (
+    `product_image_id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    `product_id` INT NOT NULL,
+    `image_url` TEXT NOT NULL,
+    `image_type` ENUM('THUMBNAIL', 'GALLERY') DEFAULT 'GALLERY',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS `inventory`;
+CREATE TABLE `inventory` (
+    `inventory_id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    `product_id` INT NOT NULL,
+    `stock_quantity` INT NOT NULL,
+    `last_updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
+    `cart_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL UNIQUE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `last_updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS `cart_item`;
+CREATE TABLE `cart_item` (
+    `cart_item_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `cart_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `quantity` INT NOT NULL,
+    CONSTRAINT `unique_cart_product` UNIQUE (`product_id`, `cart_id`),
+    FOREIGN KEY (`cart_id`) REFERENCES `cart`(`cart_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS `product_order`;
+CREATE TABLE `product_order` (
+    `product_order_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,
+    `total_price` DECIMAL(10, 2) NOT NULL,
+    `shipping_price` DECIMAL(10, 2) DEFAULT NULL,
+    `total_quantity` INT NOT NULL,
+    `status` ENUM('PENDING', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
+);
+
+DROP TABLE IF EXISTS `order_item`;
+CREATE TABLE `order_item` (
+    `order_item_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `order_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `quantity` INT NOT NULL,
+    `price` DECIMAL(10, 2) NOT NULL,
+    `total_price` DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (`order_id`) REFERENCES `product_order`(`product_order_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`)
+);
+
+DROP TABLE IF EXISTS `order_payment`;
+CREATE TABLE `order_payment` (
+    `order_payment_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `order_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `amount` DECIMAL(10, 2) NOT NULL,
+    `payment_method` VARCHAR(255) NOT NULL,
+    `status` ENUM('PENDING', 'COMPLETED', 'FAILED') DEFAULT 'PENDING',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`order_id`) REFERENCES `product_order`(`product_order_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
+);
+
+DROP TABLE IF EXISTS `shipping`;
+CREATE TABLE `shipping` (
+    `shipping_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `order_item_id` INT NOT NULL, -- shipping must be per item (not per order) as different items may be shipped in different date/time
+    `address_id` INT NOT NULL,
+    `delivery_date` DATE DEFAULT NULL,
+    `status` ENUM('PENDING', 'SHIPPED', 'COLLECTED', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING',
+    `shipped_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `delivered_at` TIMESTAMP DEFAULT NULL,
+    FOREIGN KEY (`order_item_id`) REFERENCES `order_item`(`order_item_id`),
+    FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
+);
+
+DROP TABLE IF EXISTS `product_review`;
+CREATE TABLE `product_review` (
+    `product_review_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `rating` INT CHECK (`rating` BETWEEN 1 AND 5),
+    `comment` TEXT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`)
+);
+
+

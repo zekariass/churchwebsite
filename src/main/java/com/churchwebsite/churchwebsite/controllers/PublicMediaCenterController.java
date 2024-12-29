@@ -1,7 +1,9 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
-import com.churchwebsite.churchwebsite.entities.*;
+import com.churchwebsite.churchwebsite.entities.Album;
+import com.churchwebsite.churchwebsite.entities.Attachment;
+import com.churchwebsite.churchwebsite.entities.Image;
+import com.churchwebsite.churchwebsite.entities.Video;
 import com.churchwebsite.churchwebsite.services.*;
 import com.churchwebsite.churchwebsite.utils.LocalFileStorageManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -27,12 +33,14 @@ import java.util.List;
 public class PublicMediaCenterController {
 
     private final ChurchDetailService churchDetailService;
-    private final String PUBLIC_CONTENT = "layouts/base";
     private final PaginationService paginationService;
     private final AttachmentService attachmentService;
     private final AlbumService albumService;
     private final VideoService videoService;
     private final AttachmentTypeService attachmentTypeService;
+
+    private final String PUBLIC_CONTENT = "layouts/base";
+
 
     private final ImageService imageService;
 

@@ -48,10 +48,10 @@ public class NewsController {
 
     @GetMapping("")
     public String showNewsList(Model model,
-                                      @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                      @RequestParam(value = "size", required = false) Integer pageSize,
-                                      @RequestParam(value = "sortBy", defaultValue = "newsPostTime") String sortBy,
-                                      HttpServletRequest request){
+                              @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                              @RequestParam(value = "size", required = false) Integer pageSize,
+                              @RequestParam(value = "sortBy", defaultValue = "newsPostTime") String sortBy,
+                              HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 

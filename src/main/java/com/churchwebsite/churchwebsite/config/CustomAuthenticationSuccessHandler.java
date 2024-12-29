@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,6 +16,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+        SavedRequest savedRequest = (SavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
@@ -32,7 +36,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         );
 
         if(hasMemberRole || hasAdminRole || hasClergyRole){
-            response.sendRedirect("/");
+//            response.sendRedirect("/");
+            // If there's a saved request, redirect to the original URL
+            if (savedRequest != null && !savedRequest.getRedirectUrl().contains("/user/login")) {
+                response.sendRedirect(savedRequest.getRedirectUrl());
+            } else {
+                // Otherwise, redirect to the default home page
+                response.sendRedirect("/");
+            }
         }
 
     }

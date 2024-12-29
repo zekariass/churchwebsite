@@ -33,7 +33,6 @@ public class MembershipAmountController {
     public String processMembershipCategoryForm(@ModelAttribute MembershipAmount membershipAmount,
                                                 Model model){
 
-        System.out.println("===================>>>: "+ membershipAmount);
         MembershipAmount savedMembershipAmount = membershipAmountService.save(membershipAmount);
 
         return "redirect:/dashboard/members/membership-amounts";

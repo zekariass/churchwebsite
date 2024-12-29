@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <div th:fragment="shopping-cart-counter">
+        <div class="d-flex justify-content-end mb-5 bg-info py-4 pe-3 rounded-3">
+            <a th:href="@{/shopping/cart/detail}" class="text-decoration-none text-dark">
+                <div class="d-flex justify-content-center align-items-center" style="position: relative;">
+                    <span class="text-white fw-bold fs-5" style="position: relative; top: 0; right: 12px; z-index: 100;">
+<!--                        [[${cartItems?.size()}]]-->
+                        [[${totalCartItems}]]
+                    </span>
+                    <div class="d-flex justify-content-end align-items-center" style="position: absolute; right: 0; top: 2px">
+                        <i class="fas fa-3x fa-shopping-cart"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

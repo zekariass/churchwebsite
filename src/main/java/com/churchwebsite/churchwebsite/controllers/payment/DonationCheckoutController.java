@@ -5,14 +5,15 @@ import com.churchwebsite.churchwebsite.dtos.StripeResponse;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.SettingsService;
 import com.churchwebsite.churchwebsite.services.payment.StripeService;
+import com.churchwebsite.churchwebsite.utils.LocaleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.Currency;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/donation")
@@ -22,34 +23,36 @@ public class DonationCheckoutController {
     private final String PUBLIC_CONTENT = "layouts/base";
     private final ChurchDetailService churchDetailService;
     private final SettingsService settingsService;
+    private final LocaleUtil localeUtil;
 
     @Autowired
     public DonationCheckoutController(StripeService stripeService,
                                       ChurchDetailService churchDetailService,
-                                      SettingsService settingsService) {
+                                      SettingsService settingsService, LocaleUtil localeUtil) {
         this.stripeService = stripeService;
         this.churchDetailService = churchDetailService;
         this.settingsService = settingsService;
+        this.localeUtil = localeUtil;
     }
 
     @GetMapping("/options")
     public String showDonationOptions(Model model){
 
-        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-
-        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-
-        Locale locale = new Locale(localLanguageCode, localCountryCode);
-
-        Currency currency = Currency.getInstance(locale);
+//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
+//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
+//
+//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
+//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
+//
+//        Locale locale = new Locale(localLanguageCode, localCountryCode);
+//
+//        Currency currency = Currency.getInstance(locale);
 
         model.addAttribute("activeContentPage", "donation-options");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("productRequest", new ProductRequest());
-        model.addAttribute("currencyCode", currency.getSymbol());
-        model.addAttribute("currencySymbol", currency.getSymbol());
+        model.addAttribute("currencyCode", localeUtil.getCurrency().getSymbol());
+        model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
 
         return PUBLIC_CONTENT;
     }
@@ -57,19 +60,19 @@ public class DonationCheckoutController {
     @PostMapping("/process")
     public RedirectView checkout(@RequestParam("donationAmount") double donationAmount, Model model) {
 
-        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-
-        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-
-        Locale locale = new Locale(localLanguageCode, localCountryCode);
-
-        Currency currency = Currency.getInstance(locale);
+//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
+//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
+//
+//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
+//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
+//
+//        Locale locale = new Locale(localLanguageCode, localCountryCode);
+//
+//        Currency currency = Currency.getInstance(locale);
 
         long actualDonationAmount = (long) donationAmount * 100;
 
-        ProductRequest productRequest = new ProductRequest(actualDonationAmount, 1L, "Church Donation", currency.getCurrencyCode());
+        ProductRequest productRequest = new ProductRequest(actualDonationAmount, 1L, "Church Donation", localeUtil.getCurrency().getCurrencyCode());
 
         // Call service to process checkout
         StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);

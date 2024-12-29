@@ -25,7 +25,7 @@
 }
 
 .secondary-button {
-    background-color: #d9e2ef; /* Success green color */
+    background-color: #9FA6B2; /* Success green color */
     color: white; /* Text color */
     padding: 10px 20px; /* Padding for a nice shape */
     border: none; /* Remove default border */
@@ -44,6 +44,10 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+}
+
+.warning-button:hover {
+    background-color: #ffc407; /* Success green color */
 }
 
 .danger-button {
@@ -69,7 +73,7 @@
 }
 
 .primary-button {
-    background-color: #7c69ef; /* Success green color */
+    background-color: #3B71CA; /* Success green color */
     color: white; /* Text color */
     padding: 10px 20px; /* Padding for a nice shape */
     border: none; /* Remove default border */
@@ -79,14 +83,6 @@
     transition: background-color 0.3s; /* Smooth transition */
 }
 
-.primary-button {
-    background-color: #f1f4f8; /* Success green color */
-    color: white; /* Text color */
-    padding: 10px 20px; /* Padding for a nice shape */
-    border: none; /* Remove default border */
-    border-radius: 10px; /* Rounded edges */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition */
+[class$="-button"]:hover {
+    color: brown !important;
 }
-

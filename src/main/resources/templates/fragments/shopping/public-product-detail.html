@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Product Details</title>
+</head>
+<body>
+  <div th:fragment="public-product-detail">
+    <div th:replace="~{fragments/shopping/shopping-cart-counter::shopping-cart-counter}"></div>
+    <div class="container">
+      <div class="row">
+        <!-- Product Images -->
+        <div class="col-md-6 mb-4">
+          <img th:if="${galleryImages.size() > 0}" th:src="${galleryImages.size()>0 ? galleryImages.get(0).imageUrl : ''}" alt="Product" class="img-fluid rounded mb-3 product-image" id="mainImage" >
+          <img th:unless="${galleryImages.size() > 0}" src="https://fakeimg.pl/1080x800" alt="Placeholder Image" width="1080">
+          <div class="d-flex justify-content-center overflow-auto">
+            <img th:each="image, indexes: ${galleryImages}" th:src="${image.imageUrl}" alt="Thumbnail 1"  class="thumbnail rounded me-1" th:classappend="${indexes.index == 0? 'active': ''}" onclick="changeImage(event, this.src)">
+          </div>
+        </div>
+        <!-- Product Details -->
+        <div class="col-md-6">
+          <h2 class="mb-3">[[${product.name}]]</h2>
+          <p class="text-muted mb-4">Product ID: [[${product.productId}]]</p>
+          <div class="mb-3">
+            <span class="h4 me-2">[[${currencySymbol}]] [[${product.price}]]</span>
+          </div>
+
+          <p class="mb-4" th:utext="${product.description}"></p>
+
+          <form th:action="@{/shopping/cart/add}" method="POST">
+            <div class="mb-4">
+              <label for="quantity" class="form-label">Quantity:</label>
+              <input type="number" class="form-control" name="quantity"  id="quantity" value="1" min="1" th:max="${product?.stockQuantity}" style="width: 80px;" th:disabled="${productCartItem?.quantity >= product?.stockQuantity}">
+            </div>
+            <input type="hidden" name="productId" th:value="${product.productId}">
+            <button class="success-button mb-3 me-2" type="submit" th:disabled="${productCartItem?.quantity >= product?.stockQuantity}">
+              <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+            </button>
+            <p th:text="${productCartItem?.quantity >= product?.stockQuantity? 'Maximum quantity added to cart':''}" class="text-danger"></p>
+          </form>
+          <div class="mt-4">
+            <h5>Delivery Type:</h5>
+            <ul>
+              <li>[[${product?.deliveryType?.displayName}]]</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function changeImage(event, src) {
+              document.getElementById('mainImage').src = src;
+              document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
+              event.target.classList.add('active');
+          }
+    </script>
+
+  </div>
+</body>
+</html>

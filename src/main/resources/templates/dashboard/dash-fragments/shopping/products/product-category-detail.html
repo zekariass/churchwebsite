@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Product Category Details</title>
+</head>
+<body>
+  <div th:fragment="product-category-detail">
+    <div class="container mt-5">
+      <h1 class="text-center">Product Category Details</h1>
+      <div class="card mt-4 rounded-3">
+        <div class="card-header bg-primary text-white">
+          <h2 th:text="${category.name}"></h2>
+        </div>
+        <div class="card-body">
+          <p><strong>Category ID:</strong> <span th:text="${category.productCategoryId}"></span></p>
+          <p><strong>Parent Category:</strong> <span th:text="${category.parentCategory != null ? category.parentCategory : 'None'}"></span></p>
+        </div>
+        <div class="card-footer d-flex flex-row">
+          <a th:href="@{/dashboard/products/categories/edit/{id}(id=${category.productCategoryId})}" class="success-button me-3">Edit</a>
+          <a th:href="@{/dashboard/product/categories}" class="secondary-button">Back to List</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

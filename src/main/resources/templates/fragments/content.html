@@ -132,6 +132,21 @@
             <div th:replace="~{fragments/payment/donation/donation-cancel::donation-cancel}"></div>
         </main>
 
+        <!--    ============= SHOPPING  ============================= -->
+
+        <main th:if="${activeContentPage == 'public-products-list'}">
+            <div th:replace="~{fragments/shopping/public-products-list::public-products-list}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'public-product-detail'}">
+            <div th:replace="~{fragments/shopping/public-product-detail::public-product-detail}"></div>
+        </main>
+
+
+        <main th:if="${activeContentPage == 'shopping-cart-detail'}">
+            <div th:replace="~{fragments/shopping/shopping-cart-detail::shopping-cart-detail}"></div>
+        </main>
+
     </div>
 </body>
 </html>

@@ -57,8 +57,6 @@ public class UserController {
 
     @PostMapping("/processUserRegistration")
     public String processUserRegistration(@ModelAttribute User user, @ModelAttribute UserProfile userProfile, Model model){
-        System.out.println("==========================>: "+ user);
-        System.out.println("==========================>: "+ userProfile);
 
         userService.addNewUserWithProfile(user, userProfile);
         return "redirect:/users/login";
