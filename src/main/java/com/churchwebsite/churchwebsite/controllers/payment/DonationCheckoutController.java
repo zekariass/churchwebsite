@@ -75,7 +75,9 @@ public class DonationCheckoutController {
         ProductRequest productRequest = new ProductRequest(actualDonationAmount, 1L, "Church Donation", localeUtil.getCurrency().getCurrencyCode());
 
         // Call service to process checkout
-        StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest);
+        StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest,
+                "http://localhost:9090/donation/donation-success",
+                "http://localhost:9090/donation/donation-cancel");
 
         // Add the response to the model
         model.addAttribute("stripeResponse", stripeResponse);

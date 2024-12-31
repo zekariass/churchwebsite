@@ -10,8 +10,12 @@ import java.util.Locale;
 @Component
 public class LocaleUtil {
 
+    private final SettingsService settingsService;
+
     @Autowired
-    private SettingsService settingsService;
+    public LocaleUtil(SettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
 
     public Currency getCurrency(){
         String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();

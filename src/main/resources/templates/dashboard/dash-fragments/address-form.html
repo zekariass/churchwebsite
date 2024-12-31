@@ -10,7 +10,7 @@
                 <input th:field="*{address.addressId}" type="hidden" class="form-control">
                 <div class="col-md-6 col-12">
                     <label for="street" class="form-label">Street</label>
-                    <input th:field="*{address.street}" type="text" class="form-control" id="street" placeholder="1234 Main St">
+                    <input th:field="*{address.street}" type="text" class="form-control" id="street" placeholder="1234 Main St" required>
                 </div>
                 <div class="col-md-6 col-12">
                     <label for="bldgno" class="form-label">Building No.</label>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-6 col-12">
                     <label for="city" class="form-label">City</label>
-                    <input th:field="*{address.city}" type="text" class="form-control" id="city">
+                    <input th:field="*{address.city}" type="text" class="form-control" id="city" required>
                 </div>
                 <div class="col-md-6 col-12">
                     <label for="state" class="form-label">State</label>
@@ -30,11 +30,11 @@
                 </div>
                 <div class="col-md-6 col-12">
                     <label for="country" class="form-label">Country</label>
-                    <input th:field="*{address.country}" type="text" class="form-control" id="country">
+                    <input th:field="*{address.country}" type="text" class="form-control" id="country" required>
                 </div>
                 <div class="col-md-6 col-12">
                     <label for="postcode" class="form-label">Post Code</label>
-                    <input th:field="*{address.postCode}" type="text" class="form-control" id="postcode">
+                    <input th:field="*{address.postCode}" type="text" class="form-control" id="postcode" required>
                 </div>
             </div>
     </div>

@@ -1,5 +1,6 @@
 package com.churchwebsite.churchwebsite.entities.shopping;
 
+import com.churchwebsite.churchwebsite.enums.DeliveryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private ProductOrder order;
+    private Orders order;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
@@ -34,4 +35,8 @@ public class OrderItem {
 
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "delivery_type")
+    private DeliveryType deliveryType;
 }

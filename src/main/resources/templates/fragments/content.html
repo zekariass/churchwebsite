@@ -142,9 +142,20 @@
             <div th:replace="~{fragments/shopping/public-product-detail::public-product-detail}"></div>
         </main>
 
-
         <main th:if="${activeContentPage == 'shopping-cart-detail'}">
             <div th:replace="~{fragments/shopping/shopping-cart-detail::shopping-cart-detail}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'checkout-page'}">
+            <div th:replace="~{fragments/shopping/checkout-page::checkout-page}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'checkout-success'}">
+            <div th:replace="~{fragments/shopping/checkout-success::checkout-success}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'checkout-cancel'}">
+            <div th:replace="~{fragments/shopping/checkout-cancel::checkout-cancel}"></div>
         </main>
 
     </div>

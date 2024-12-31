@@ -79,7 +79,6 @@ public class CartService {
 
             // Check if the cartItem is already present in db. If so, simply update the quantity
             CartItem dbCartItem = cartItemService.findByCartAndProduct(cart, newItem.getProduct());
-
             if(dbCartItem != null){
                 dbCartItem.setQuantity(dbCartItem.getQuantity() + newItem.getQuantity());
             }else{
@@ -158,14 +157,17 @@ public class CartService {
                 // Merge cookie items into the database
                 for (CartItem item : cookieCart) {
                     item.setCart(cart);
-                    CartItem savedItem = cartItemRepository.findByCartAndProduct(cart, item.getProduct());
-                    if (savedItem != null) {
-                        savedItem.setQuantity(savedItem.getQuantity() + item.getQuantity());
+                    CartItem dbCartItem = cartItemRepository.findByCartAndProduct(cart, item.getProduct());
+                    if (dbCartItem != null) {
+                        dbCartItem.setQuantity(
+                                dbCartItem.getQuantity() + item.getQuantity() < dbCartItem.getProduct().getStockQuantity()
+                                ? dbCartItem.getQuantity() + item.getQuantity()
+                                        : dbCartItem.getProduct().getStockQuantity());
                     }else {
-                        savedItem = item;
+                        dbCartItem = item;
                     }
 
-                    cartItemRepository.save(savedItem);
+                    cartItemRepository.save(dbCartItem);
 
                 }
 

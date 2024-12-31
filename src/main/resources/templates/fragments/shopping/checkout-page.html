@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout Page</title>
+</head>
+    <body>
+        <div th:fragment="checkout-page">
+            <div class="text-end mb-4">
+                <a th:href="@{/shopping/products}" role="button" class="text-success text-decoration text-decoration-none mx-3">
+                    <i class="fa-solid fa-arrow-left"></i> Back to list
+                </a>
+
+                <a th:href="@{/shopping/cart/detail}" role="button" class="text-success text-decoration text-decoration-none">
+                    <i class="fa-solid fa-arrow-left"></i> Back to cart detail
+                </a>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div th:replace="~{/fragments/shopping/shopping-cart-summary::shopping-cart-summary}"></div>
+                        </div>
+                        <div class="col-md-6 my-3">
+                            <div> <h5>Shipping Address: </h5></div>
+                            <h6><span class="fst-italic text-primary">[[${fullShippingAddress}]]</span> </h6>
+
+                            <form th:action="@{/shopping/cart/confirmAndPay}" method="POST">
+                                <div class="my-3 d-flex justify-content-center">
+                                    <input type="hidden" name="street" th:value="${shippingAddress.street}">
+                                    <input type="hidden" name="buildingNo" th:value="${shippingAddress.buildingNo}">
+                                    <input type="hidden" name="houseNo" th:value="${shippingAddress.houseNo}">
+                                    <input type="hidden" name="city" th:value="${shippingAddress.city}">
+                                    <input type="hidden" name="state" th:value="${shippingAddress.state}">
+                                    <input type="hidden" name="country" th:value="${shippingAddress.country}">
+                                    <input type="hidden" name="postCode" th:value="${shippingAddress.postCode}">
+
+                                    <input type="hidden" name="cartTotalPrice" th:value="${cartTotalPrice}">
+                                    <input type="hidden" name="totalTax" th:value="${totalTax}">
+                                    <input type="hidden" name="shippingPrice" th:value="${shippingPrice}">
+                                    <button type="submit" class="warning-button text-center my-3 fw-bold text-decoration text-decoration-none"><h5>Confirm and Pay</h5></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

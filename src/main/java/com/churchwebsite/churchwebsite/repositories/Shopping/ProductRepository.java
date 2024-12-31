@@ -1,11 +1,32 @@
 package com.churchwebsite.churchwebsite.repositories.Shopping;
 
-import com.churchwebsite.churchwebsite.entities.shopping.*;
+import com.churchwebsite.churchwebsite.entities.shopping.Product;
+import com.churchwebsite.churchwebsite.entities.shopping.ProductCategory;
+import com.churchwebsite.churchwebsite.enums.ProductDeliveryType;
+import com.churchwebsite.churchwebsite.enums.ProductListingStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    // Custom query methods (if needed) can be added here
+    @Query("SELECT p FROM Product p " +
+            "WHERE ((LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "        OR LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
+            "       AND p.listingStatus = :listingStatus " +
+            "       AND p.deliveryType LIKE CONCAT('%', :deliveryType, '%'))")
+    Page<Product> findAllListedProductsBySearchParams(@Param("keyword") String keyword,
+                                                      @Param("listingStatus") ProductListingStatus listingStatus,
+                                                      @Param("deliveryType") ProductDeliveryType deliveryType,
+                                                      Pageable pageable);
+
+    Page<Product> findByListingStatus(ProductListingStatus productListingStatus, Pageable pageable);
+
+    Page<Product> findByCategory(ProductCategory category, Pageable pageable);
+
+    Page<Product> findByCategoryAndListingStatus(ProductCategory productCategory, Pageable pageable, ProductListingStatus productListingStatus);
 }
 

@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.entities.shopping;
 
 import com.churchwebsite.churchwebsite.enums.ImageType;
 import com.churchwebsite.churchwebsite.enums.ProductDeliveryType;
+import com.churchwebsite.churchwebsite.enums.ProductListingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,7 +34,7 @@ public class Product {
     private Integer stockQuantity;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "delivery_type", columnDefinition = "ENUM('COLLECT', 'SHIP', 'SHIP_AND_COLLECT')")
+    @Column(name = "delivery_type", columnDefinition = "ENUM('COLLECT', 'DELIVERY', 'DELIVERY_AND_COLLECT')")
     private ProductDeliveryType deliveryType = ProductDeliveryType.COLLECT;
 
     @ManyToOne
@@ -43,6 +44,12 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ProductImage> images;
+
+    @Enumerated(EnumType.STRING)
+    private ProductListingStatus listingStatus;
+
+    @Column(name = "weight_in_kg")
+    private double weightInKg;
 
     @Version
     private Long version;

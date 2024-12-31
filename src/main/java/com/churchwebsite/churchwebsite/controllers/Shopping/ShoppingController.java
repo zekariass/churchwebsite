@@ -1,10 +1,12 @@
 package com.churchwebsite.churchwebsite.controllers.Shopping;
 
 
+import com.churchwebsite.churchwebsite.dtos.ShoppingSearchDTO;
 import com.churchwebsite.churchwebsite.entities.shopping.CartItem;
 import com.churchwebsite.churchwebsite.entities.shopping.Product;
 import com.churchwebsite.churchwebsite.enums.ProductDeliveryType;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
+import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.UserService;
 import com.churchwebsite.churchwebsite.services.shopping.CartItemService;
 import com.churchwebsite.churchwebsite.services.shopping.CartService;
@@ -13,12 +15,12 @@ import com.churchwebsite.churchwebsite.services.shopping.ProductService;
 import com.churchwebsite.churchwebsite.utils.LocaleUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,17 +33,19 @@ public class ShoppingController {
     private final ChurchDetailService churchDetailService;
     private final LocaleUtil localeUtil;
     private final UserService userService;
+    private final PaginationService paginationService;
 
     private final String PUBLIC_CONTENT = "layouts/base";
     private final CartService cartService;
     private final CartItemService cartItemService;
 
-    public ShoppingController(ProductService productService, ProductCategoryService productCategoryService, ChurchDetailService churchDetailService, LocaleUtil localeUtil, UserService userService, CartService cartService, CartItemService cartItemService) {
+    public ShoppingController(ProductService productService, ProductCategoryService productCategoryService, ChurchDetailService churchDetailService, LocaleUtil localeUtil, UserService userService, PaginationService paginationService, CartService cartService, CartItemService cartItemService) {
         this.productService = productService;
         this.productCategoryService = productCategoryService;
         this.churchDetailService = churchDetailService;
         this.localeUtil = localeUtil;
         this.userService = userService;
+        this.paginationService = paginationService;
         this.cartService = cartService;
         this.cartItemService = cartItemService;
     }
@@ -50,17 +54,49 @@ public class ShoppingController {
      * Displays the shopping list of products.
      */
     @GetMapping("/products")
-    public String shoppingList(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String shoppingList(@ModelAttribute ShoppingSearchDTO shoppingSearchDto,
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "size", required = false) Integer pageSize,
+                               @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+                               @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                               Model model,
+                               HttpServletRequest request,
+                               HttpServletResponse response) {
+
+        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
+
+        Page<Product> pagedProducts;
+        List<Product> products = new ArrayList<>();
+
+        if(shoppingSearchDto.getKeyword() == null && shoppingSearchDto.getDeliveryType() == null && (categoryId == null || categoryId <= 0)){
+            pagedProducts = productService.getAllListedProducts(page, pageSize, sortBy);
+        }else if(categoryId != null && categoryId > 0){
+            pagedProducts = productService.findByCategory(categoryId, page, pageSize, sortBy);
+        }else{
+            pagedProducts = productService.searchByKeywordDeliveryType(shoppingSearchDto.getKeyword(), shoppingSearchDto.getDeliveryType(), page, pageSize, sortBy);
+        }
+
+        products = pagedProducts.getContent();
+
 
         List<CartItem> cartItems = cartService.getCart(request, response);
 
-        List<Product> products = productService.getAllProducts();
+
         model.addAttribute("products", products);
         model.addAttribute("productCategories", productCategoryService.getAllCategories());
         model.addAttribute("deliveryTypes", ProductDeliveryType.values());
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("activeContentPage", "public-products-list");
+        model.addAttribute("shoppingSearchDto", new ShoppingSearchDTO());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
+        model.addAttribute("currentPage", pagedProducts.getNumber()+1);
+        model.addAttribute("totalItems", pagedProducts.getTotalElements());
+        model.addAttribute("totalPages", pagedProducts.getTotalPages());
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("currentUrl", request.getRequestURL());
+        model.addAttribute("sortBy", sortBy);
 
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("productCartItemMap", cartItems.stream()
@@ -81,12 +117,15 @@ public class ShoppingController {
      */
     @GetMapping("/products/detail/{id}")
     public String productDetails(@PathVariable("id") int productId,
+                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                 @RequestParam(value = "size", required = false) Integer pageSize,
+                                 @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
                                  HttpServletRequest request,
                                  HttpServletResponse response,
                                  Model model) {
 
         List<CartItem> cartItems = cartService.getCart(request, response);
-        CartItem productCartItem = null;
+        CartItem productCartItem = new CartItem();
         for(CartItem item: cartItems){
             if(productId == item.getProduct().getProductId()){
                 productCartItem = item;
@@ -112,13 +151,12 @@ public class ShoppingController {
     }
 
     /**
-     * Adds a product to the cart.
+     * Filter a product to the by product category.
      */
-    @GetMapping("/add-to-cart/{id}")
-    public String addToCart(@PathVariable("id") int productId) {
-        // Logic for adding the product to the cart goes here
-        // Example: cartService.addToCart(userId, productId);
-        return "redirect:/products/shopping-list"; // Redirect back to the shopping list
+    @GetMapping("/products/filter-by-category/{categoryId}")
+    public String filterByCategory(@PathVariable("categoryId") Integer categoryId) {
+
+        return "redirect:/shopping/products";
     }
 
 }

@@ -28,9 +28,19 @@
                         <input type="number" id="stock" th:field="*{stockQuantity}" class="form-control" placeholder="Enter stock quantity" required>
                     </div>
                     <div class="mb-3">
+                        <label for="weight" class="form-label">Product weight in KG</label>
+                        <input type="number" id="weight" th:field="*{weightInKg}" class="form-control" placeholder="Enter stock quantity" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="deliveryType" class="form-label">Delivery Type</label>
                         <select id="deliveryType" th:field="*{deliveryType}" class="form-select">
                             <option th:each="type: ${deliveryTypes}" th:text="${type.displayName}" th:value="${type}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="listingStatus" class="form-label">Listing Type</label>
+                        <select id="listingStatus" th:field="*{deliveryType}" class="form-select">
+                            <option th:each="status: ${listingStatuses}" th:text="${status.displayName}" th:value="${status}"></option>
                         </select>
                     </div>
                     <div class="mb-3">

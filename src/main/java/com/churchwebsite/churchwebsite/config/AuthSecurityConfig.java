@@ -75,6 +75,7 @@ public class AuthSecurityConfig {
 
         httpSecurity.authorizeHttpRequests(
                 auth -> {
+                    auth.requestMatchers("/shopping/cart/checkout").authenticated();
                     auth.requestMatchers(publicUrls).permitAll();
                     auth.anyRequest().authenticated();
                 }

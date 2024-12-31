@@ -26,7 +26,7 @@ public class OrderPayment {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private ProductOrder order;
+    private Orders order;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -39,8 +39,14 @@ public class OrderPayment {
     private String paymentMethod;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", columnDefinition = "ENUM('PENDING', 'COMPLETED', 'FAILED')")
+    @Column(name = "status")
     private PaymentStatus status = PaymentStatus.PENDING;
+
+    @Column(name = "session_url")
+    private String sessionUrl;
+
+    @Column(name = "session_id")
+    private String sessionId;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)

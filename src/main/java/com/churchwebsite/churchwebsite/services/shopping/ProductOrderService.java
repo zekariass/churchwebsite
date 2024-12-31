@@ -1,6 +1,6 @@
 package com.churchwebsite.churchwebsite.services.shopping;
 
-import com.churchwebsite.churchwebsite.entities.shopping.ProductOrder;
+import com.churchwebsite.churchwebsite.entities.shopping.Orders;
 import com.churchwebsite.churchwebsite.repositories.Shopping.ProductOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,19 +14,19 @@ public class ProductOrderService {
     @Autowired
     private ProductOrderRepository productOrderRepository;
 
-    public List<ProductOrder> getAllOrders() {
+    public List<Orders> getAllOrders() {
         return productOrderRepository.findAll();
     }
 
-    public Optional<ProductOrder> getOrderById(Integer id) {
+    public Optional<Orders> getOrderById(Integer id) {
         return productOrderRepository.findById(id);
     }
 
-    public ProductOrder saveOrder(ProductOrder productOrder) {
-        return productOrderRepository.save(productOrder);
+    public Orders saveOrder(Orders orders) {
+        return productOrderRepository.save(orders);
     }
 
-    public ProductOrder updateOrder(Integer id, ProductOrder updatedOrder) {
+    public Orders updateOrder(Integer id, Orders updatedOrder) {
         return productOrderRepository.findById(id)
                 .map(existingOrder -> {
                     existingOrder.setUser(updatedOrder.getUser());

@@ -13,14 +13,16 @@ public class Settings {
     private String settingDescription;
     private int settingValueInt;
     private String settingValueChar;
+    private double settingValueDouble;
 
     public Settings() {}
 
-    public Settings(String settingName, String settingDescription, int settingValueInt, String settingValueChar) {
+    public Settings(String settingName, String settingDescription, int settingValueInt, String settingValueChar, double settingValueDouble) {
         this.settingName = settingName;
         this.settingDescription = settingDescription;
         this.settingValueInt = settingValueInt;
         this.settingValueChar = settingValueChar;
+        this.settingValueDouble = settingValueDouble;
     }
 
     public int getSettingId() {
@@ -63,6 +65,14 @@ public class Settings {
         this.settingValueChar = settingValueChar;
     }
 
+    public double getSettingValueDouble() {
+        return settingValueDouble;
+    }
+
+    public void setSettingValueDouble(double settingValueDouble) {
+        this.settingValueDouble = settingValueDouble;
+    }
+
     @Override
     public String toString() {
         return "Settings{" +
@@ -71,6 +81,7 @@ public class Settings {
                 ", settingDescription='" + settingDescription + '\'' +
                 ", settingValueInt='" + settingValueInt + '\'' +
                 ", settingValueChar='" + settingValueChar + '\'' +
+                ", settingValueChar='" + settingValueDouble + '\'' +
                 '}';
     }
 }

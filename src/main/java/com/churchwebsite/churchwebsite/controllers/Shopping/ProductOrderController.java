@@ -1,6 +1,6 @@
 package com.churchwebsite.churchwebsite.controllers.Shopping;
 
-import com.churchwebsite.churchwebsite.entities.shopping.ProductOrder;
+import com.churchwebsite.churchwebsite.entities.shopping.Orders;
 import com.churchwebsite.churchwebsite.services.shopping.ProductOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class ProductOrderController {
 
     @GetMapping
     public String getAllOrders(Model model) {
-        List<ProductOrder> orders = productOrderService.getAllOrders();
+        List<Orders> orders = productOrderService.getAllOrders();
         model.addAttribute("orders", orders);
         return "order/list";
     }
@@ -30,13 +30,13 @@ public class ProductOrderController {
     }
 
     @PostMapping
-    public String createOrder(@ModelAttribute ProductOrder productOrder) {
-        productOrderService.saveOrder(productOrder);
+    public String createOrder(@ModelAttribute Orders orders) {
+        productOrderService.saveOrder(orders);
         return "redirect:/orders";
     }
 
     @PutMapping("/{id}")
-    public String updateOrder(@PathVariable Integer id, @ModelAttribute ProductOrder updatedOrder) {
+    public String updateOrder(@PathVariable Integer id, @ModelAttribute Orders updatedOrder) {
         productOrderService.updateOrder(id, updatedOrder);
         return "redirect:/orders";
     }

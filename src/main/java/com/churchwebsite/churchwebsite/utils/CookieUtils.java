@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.utils;
 
 import com.churchwebsite.churchwebsite.dtos.CartItemDTO;
+import com.churchwebsite.churchwebsite.entities.shopping.Product;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 public class CookieUtils {
 
@@ -29,7 +31,8 @@ public class CookieUtils {
                     try {
                         String decodedJson = new String(Base64.getDecoder().decode(cookie.getValue()));
 
-                        return objectMapper.readValue(decodedJson, new TypeReference<List<CartItemDTO>>() {});
+                        return objectMapper.readValue(decodedJson, new TypeReference<List<CartItemDTO>>() {
+                        });
                     } catch (Exception e) {
                         // Log the error and return an empty cart
                         System.err.println("Error reading cart from cookies: " + e.getMessage());
@@ -74,5 +77,54 @@ public class CookieUtils {
         cookie.setSecure(true);  // Requires HTTPS
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+    }
+
+
+    public static void incrementCartItemQuantity( Product product, HttpServletRequest request, HttpServletResponse response, Integer cookieLifeTime) {
+        if (request.getCookies() != null) {
+            List<CartItemDTO> cartItemDTOs = getCartFromCookies(request);
+            for (CartItemDTO dto : cartItemDTOs) {
+                // If it finds the cartItem with cartItemId in cookie and if the quantity is less than the product stockQuantity, increment it
+                if (Objects.equals(dto.getProductId(), product.getProductId()) && dto.getQuantity() < product.getStockQuantity()) {
+                    dto.setQuantity(dto.getQuantity() + 1);
+                    break;
+                }
+            }
+
+            saveCartToCookies(cartItemDTOs, cookieLifeTime, response);
+        }
+    }
+
+    public static void decrementCartItemQuantity(Product product, HttpServletRequest request, HttpServletResponse response, Integer cookieLifeTime) {
+        if (request.getCookies() != null) {
+            List<CartItemDTO> cartItemDTOs = getCartFromCookies(request);
+            for (CartItemDTO dto : cartItemDTOs) {
+                // If the cartItem is found in cookie, and its quantity is greater than one, decrement it
+                if (Objects.equals(product.getProductId(), dto.getProductId()) && dto.getQuantity() > 1) {
+                    dto.setQuantity(dto.getQuantity()  - 1);
+                    break;
+                }
+            }
+
+            saveCartToCookies(cartItemDTOs, cookieLifeTime, response);
+        }
+
+    }
+
+    public static void deleteCartItemFromCookie(Product product, HttpServletRequest request, HttpServletResponse response, Integer cookieLifeTime) {
+        if (request.getCookies() != null) {
+            List<CartItemDTO> cartItemDTOs = getCartFromCookies(request);
+            for (CartItemDTO dto : cartItemDTOs) {
+                // If the cartItem is found in cookie, and its quantity is greater than one, decrement it
+                if (Objects.equals(dto.getProductId(), product.getProductId())) {
+                    cartItemDTOs.remove(dto);
+                    break;
+                }
+
+            }
+
+            saveCartToCookies(cartItemDTOs, cookieLifeTime, response);
+        }
+
     }
 }

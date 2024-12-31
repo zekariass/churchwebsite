@@ -19,6 +19,7 @@
                     <th>Price</th>
                     <th>Stock</th>
                     <th>Delivery Type</th>
+                    <th>Listing Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -28,7 +29,8 @@
                     <td th:text="${product.name}"></td>
                     <td th:text="${currencySymbol +''+ product.price}"></td>
                     <td th:text="${product.stockQuantity}"></td>
-                    <td th:text="${product.deliveryType.displayName}"></td>
+                    <td th:text="${product.deliveryType?.displayName}"></td>
+                    <td th:text="${product.listingStatus?.displayName}"></td>
                     <td>
                         <a th:href="@{/dashboard/products/detail/{id}(id=${product.productId})}" class="primary-button btn-sm">View</a>
                         <a th:href="@{/dashboard/products/edit/{id}(id=${product.productId})}" class="warning-button btn-sm">Edit</a>

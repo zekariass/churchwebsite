@@ -7,6 +7,12 @@
   <div th:fragment="public-product-detail">
     <div th:replace="~{fragments/shopping/shopping-cart-counter::shopping-cart-counter}"></div>
     <div class="container">
+      <!-- Continue Shopping -->
+      <div class="text-end mb-4">
+        <a th:href="@{/shopping/products}" role="button" class="success-button text-decoration text-decoration-none">
+          <i class="fa-solid fa-arrow-left"></i> Back to list
+        </a>
+      </div>
       <div class="row">
         <!-- Product Images -->
         <div class="col-md-6 mb-4">
@@ -29,7 +35,7 @@
           <form th:action="@{/shopping/cart/add}" method="POST">
             <div class="mb-4">
               <label for="quantity" class="form-label">Quantity:</label>
-              <input type="number" class="form-control" name="quantity"  id="quantity" value="1" min="1" th:max="${product?.stockQuantity}" style="width: 80px;" th:disabled="${productCartItem?.quantity >= product?.stockQuantity}">
+              <input type="number" class="form-control" name="quantity"  id="quantity" value="1" min="1" th:max="${productCartItem.quantity != null ? product?.stockQuantity - productCartItem.quantity: product?.stockQuantity}" style="width: 80px;" th:disabled="${productCartItem?.quantity >= product?.stockQuantity}">
             </div>
             <input type="hidden" name="productId" th:value="${product.productId}">
             <button class="success-button mb-3 me-2" type="submit" th:disabled="${productCartItem?.quantity >= product?.stockQuantity}">
@@ -38,23 +44,14 @@
             <p th:text="${productCartItem?.quantity >= product?.stockQuantity? 'Maximum quantity added to cart':''}" class="text-danger"></p>
           </form>
           <div class="mt-4">
-            <h5>Delivery Type:</h5>
             <ul>
-              <li>[[${product?.deliveryType?.displayName}]]</li>
+              <li><span class="fw-bold">Quantity:</span> [[${productCartItem?.quantity}]]</li>
+              <li><span class="fw-bold">Delivery Type:</span> [[${product?.deliveryType?.displayName}]]</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-
-    <script>
-      function changeImage(event, src) {
-              document.getElementById('mainImage').src = src;
-              document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
-              event.target.classList.add('active');
-          }
-    </script>
-
   </div>
 </body>
 </html>

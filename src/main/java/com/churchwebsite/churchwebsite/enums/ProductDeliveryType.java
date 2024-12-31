@@ -4,8 +4,8 @@ package com.churchwebsite.churchwebsite.enums;
 //@AllArgsConstructor
 public enum ProductDeliveryType {
     COLLECT("Collect"),
-    SHIPPING("Shipping"),
-    SHIPPING_OR_COLLECT("Shipping and Collect");
+    DELIVERY("Delivery"),
+    DELIVERY_OR_COLLECT("Delivery and Collect");
 
     private final String displayName;
 

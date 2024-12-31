@@ -3,6 +3,7 @@ package com.churchwebsite.churchwebsite.controllers.Shopping;
 import com.churchwebsite.churchwebsite.entities.shopping.Product;
 import com.churchwebsite.churchwebsite.entities.shopping.ProductCategory;
 import com.churchwebsite.churchwebsite.enums.ProductDeliveryType;
+import com.churchwebsite.churchwebsite.enums.ProductListingStatus;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.shopping.ProductCategoryService;
 import com.churchwebsite.churchwebsite.services.shopping.ProductService;
@@ -79,6 +80,7 @@ public class ProductController {
         model.addAttribute("categories", categories);
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("deliveryTypes", ProductDeliveryType.values());
+        model.addAttribute("listingStatuses", ProductListingStatus.values());
         model.addAttribute("activeDashPage", "product-form");
 
         return DASHBOARD_MAIN_PANEL;
@@ -99,6 +101,7 @@ public class ProductController {
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("categories", categories);
         model.addAttribute("deliveryTypes", ProductDeliveryType.values());
+        model.addAttribute("listingStatuses", ProductListingStatus.values());
         model.addAttribute("activeDashPage", "product-form");
 
         return DASHBOARD_MAIN_PANEL;

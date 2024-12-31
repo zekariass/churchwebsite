@@ -15,7 +15,9 @@ public class StripeService {
     @Value("${STRIPE_SECRET_KEY}")
     private String secretKey;
 
-        public StripeResponse checkoutProducts(ProductRequest productRequest) {
+        public StripeResponse checkoutProducts(ProductRequest productRequest,
+                                               String successUrl,
+                                               String cancelUrl) {
             // Set your secret key. Remember to switch to your live secret key in production!
             Stripe.apiKey = secretKey;
 
@@ -45,8 +47,8 @@ public class StripeService {
             SessionCreateParams params =
                     SessionCreateParams.builder()
                             .setMode(SessionCreateParams.Mode.PAYMENT)
-                            .setSuccessUrl("http://localhost:9090/donation/donation-success")
-                            .setCancelUrl("http://localhost:9090/donation/donation-cancel")
+                            .setSuccessUrl(successUrl)
+                            .setCancelUrl(cancelUrl)
                             .addLineItem(lineItem)
                             .build();
 

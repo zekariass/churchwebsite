@@ -5,118 +5,170 @@
     <title>Shopping Cart Detail</title>
 </head>
 <body>
-  <div th:fragment="shopping-cart-detail">
+<div th:fragment="shopping-cart-detail">
     <div class="container">
-      <h1 class="mb-5">Your Shopping Cart</h1>
-      <div class="row">
-        <div class="col-lg-8">
-          <!-- Cart Items -->
-          <div class="card mb-4">
-            <div class="card-body">
-              <div th:if="${cartItems.size() > 0}">
-                <div th:each="cartItem, stat: ${cartItems}" class="row cart-item mb-3">
-                  <div class="col-md-3">
-                    <!--                  <img src="https://via.placeholder.com/100" alt="Product 1" class="img-fluid rounded">-->
-                    <img th:if="${cartItem.product.getThumbnailImages().size() > 0}" th:src="${cartItem.product.getThumbnailImages().get(0).imageUrl}" alt="" role="button" style="width: 100px; height: 100px" th:onclick="|window.location='@{/shopping/products/detail/{id}(id=${cartItem.product.productId})}'|" class="rounded-3"/>
-                    <img th:if="${cartItem.product.getThumbnailImages().size() == 0 and cartItem.product.getGalleryImages().size() > 0}" th:src="${cartItem.product.getGalleryImages().get(0).imageUrl}" alt="" role="button" style="width: 100px; height: 100px" th:onclick="|window.location='@{/shopping/products/detail/{id}(id=${cartItem.product.productId})}'|" class="rounded-3"/>
-                    <img th:if="${cartItem.product.getThumbnailImages().size() == 0 and cartItem.product.getGalleryImages().size() == 0}" src="https://fakeimg.pl/300x220" alt="Placeholder Image" style="width: 100px; height: 100px" class="rounded-3">
-                  </div>
-                  <div class="col-md-5">
-                    <h5 class="card-title">[[${cartItem.product.name}]]</h5>
-                    <p class="text-muted">[[${cartItem.product.category.name}]]</p>
-                    <p class="text-info">[[${cartItem.product.deliveryType.displayName}]]</p>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="input-group">
-                      <button th:if="${cartItem.quantity > 1}" class="btn btn-outline-secondary btn-sm" type="button">-</button>
-                      <button th:if="${cartItem.quantity < 2}" class="btn btn-outline-secondary btn-sm" type="button"><i class="fa-solid fa-trash text-danger"></i></button>
-                      <input style="max-width:100px" type="text" class="form-control form-control-sm text-center quantity-input" th:value="${cartItem.quantity}">
-                      <button class="btn btn-outline-secondary btn-sm" type="button">+</button>
+        <!-- Check for Cart Items -->
+        <div th:if="${cartItems.size() > 0}">
+            <h1 class="mb-5">Your Shopping Cart</h1>
+            <!-- Continue Shopping -->
+            <div class="mb-4 text-center">
+                <a th:href="@{/shopping/products}" role="button" class="text-success text-decoration text-decoration-none">
+                    <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+                </a>
+            </div>
+            <div class="row">
+                <!-- Left Column: Cart Items -->
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <!-- Loop Through Cart Items -->
+                            <div th:each="cartItem, stat : ${cartItems}" class="row cart-item mb-3">
+                                <!-- Product Image -->
+                                <div class="col-md-3">
+                                    <img th:if="${cartItem.product?.getThumbnailImages()?.size() > 0}"
+                                         th:src="${cartItem.product?.getThumbnailImages().get(0)?.imageUrl}"
+                                         alt="Product Thumbnail" role="button"
+                                         style="width: 100px; height: 100px"
+                                         th:onclick="|window.location='@{/shopping/products/detail/{id}(id=${cartItem.product.productId})}'|"
+                                         class="rounded-3" />
+                                    <img th:if="${cartItem.product?.getThumbnailImages()?.size() == 0 and cartItem.product?.getGalleryImages()?.size() > 0}"
+                                         th:src="${cartItem.product?.getGalleryImages().get(0).imageUrl}"
+                                         alt="Product Gallery" role="button"
+                                         style="width: 100px; height: 100px"
+                                         th:onclick="|window.location='@{/shopping/products/detail/{id}(id=${cartItem.product.productId})}'|"
+                                         class="rounded-3" />
+                                    <img th:if="${cartItem.product?.getThumbnailImages()?.size() == 0 and cartItem.product?.getGalleryImages()?.size() == 0}"
+                                         src="https://fakeimg.pl/300x220"
+                                         alt="Placeholder Image"
+                                         style="width: 100px; height: 100px"
+                                         class="rounded-3" />
+                                </div>
+                                <!-- Product Details -->
+                                <div class="col-md-5">
+                                    <h5 class="card-title">[[${cartItem.product?.name}]]</h5>
+                                    <p class="text-muted">[[${cartItem.product?.category?.name}]]</p>
+                                    <p class="text-info">[[${cartItem.product?.deliveryType?.displayName}]]</p>
+                                    <p class="text-success">Selected: [[${cartItem.deliveryType?.displayName}]]</p>
+                                </div>
+                                <!-- Quantity Controls -->
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <form th:action="@{/shopping/cart/items/{id}/decrement(id=${cartItem.cartItemId})}" method="POST">
+                                            <input type="hidden" name="productId" th:value="${cartItem.product?.productId}">
+                                            <button th:if="${cartItem.quantity > 1}" class="btn btn-outline-secondary btn-sm" type="submit">-</button>
+                                        </form>
+                                        <form th:action="@{/shopping/cart/items/{id}/delete(id=${cartItem.cartItemId})}" method="GET">
+                                            <input type="hidden" name="productId" th:value="${cartItem.product?.productId}">
+                                            <button th:if="${cartItem.quantity < 2}" class="btn btn-light btn-sm border border-2" type="submit">
+                                                <i class="fa-solid fa-trash text-danger"></i>
+                                            </button>
+                                        </form>
+                                        <label>
+                                            <input style="max-width:100px" type="text" class="form-control form-control-sm text-center quantity-input" th:value="${cartItem.quantity}">
+                                        </label>
+                                        <form th:action="@{/shopping/cart/items/{id}/increment(id=${cartItem.cartItemId})}" method="POST">
+                                            <input type="hidden" name="productId" th:value="${cartItem.product?.productId}">
+                                            <button class="btn btn-outline-secondary btn-sm" type="submit" th:disabled="${cartItem.quantity >= cartItem?.product?.stockQuantity}">+</button>
+                                        </form>
+                                    </div>
+                                    <div class="my-2" th:if="${cartItem.product?.deliveryType == deliveryOrCollect}">
+                                        <form th:action="@{/shopping/cart/items/{id}/update-delivery(id=${cartItem.cartItemId})}" method="POST" id="deliveryForm">
+                                            <select name="deliveryType" class="form-select" id="deliverySelect">
+                                                <option value="">Select delivery type</option>
+                                                <option th:each="deliveryType: ${deliveryTypes}" th:value="${deliveryType}" th:text="${deliveryType.displayName}"></option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <p th:if="${cartItem.quantity >= cartItem?.product?.stockQuantity}" class="text-center text-danger small fst-italic">Maximum quantity reached</p>
+                                </div>
+
+                                <!-- Price and Delete -->
+                                <div class="col-md-2 text-end">
+                                    <p class="fw-bold">[[${currencySymbol}]][[${cartItem.quantity * cartItem.product?.price}]]</p>
+                                    <form th:action="@{/shopping/cart/items/{id}/delete(id=${cartItem.cartItemId})}" method="GET">
+                                        <input type="hidden" name="productId" th:value="${cartItem.product?.productId}">
+                                        <button class="btn btn-light" >
+                                            <i class="fa-solid fa-trash text-danger"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div th:if="${stat?.index != cartItems.size() - 1}">
+                                    <hr>
+                                </div>
+                            </div>
+                            <!-- Divider Between Items -->
+
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-md-2 text-end">
-                    <p class="fw-bold">$99.99</p>
-                    <button class="btn btn-light">
-                      <i class="fa-solid fa-trash text-danger"></i>
-                    </button>
-                  </div>
+                    <!-- Continue Shopping -->
+                    <div class="text-start mb-4">
+                        <a th:href="@{/shopping/products}" role="button" class="success-button text-decoration text-decoration-none">
+                            <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+                        </a>
+                    </div>
                 </div>
-                <div th:if="${stat != null and stat?.index != cartItem?.size()-1}">
-                  <hr>
+                <!-- Right Column: Summary -->
+                <div class="col-lg-4">
+                    <div th:replace="~{/fragments/shopping/shopping-cart-summary::shopping-cart-summary}"></div>
+
+                    <div class="card my-3">
+                       <div class="card-body">
+                           <form th:action="@{/shopping/cart/checkout}" th:object="${checkoutDto}" method="GET">
+<!--                               <input type="hidden" name="cartItems" th:value="${cartItems}">-->
+                               <input type="hidden" name="totalPrice" th:value="${cartTotalPrice}">
+                               <input type="hidden" name="totalTax" th:value="${totalTax}">
+                               <h4>Shipping Address</h4>
+                               <div th:replace="~{/dashboard/dash-fragments/address-form::address-form}"></div>
+                                <div class="text-start text-md-center mt-3">
+                                    <button type="submit" class="success-button w-100 text-decoration text-decoration-none">
+                                        Proceed to checkout
+                                    </button>
+                                </div>
+                           </form>
+                       </div>
+                    </div>
+
+                    <!-- Promo Code -->
+<!--                    <div class="card mt-4">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title mb-3">Apply Promo Code</h5>-->
+<!--                            <div class="input-group mb-3">-->
+<!--                                <input type="text" class="form-control" placeholder="Enter promo code">-->
+<!--                                <button class="btn btn-outline-secondary" type="button">Apply</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
-              </div>
-              <div th:unless="${cartItems.size() > 0}">
-                <h4 class="text-success">Your shopping cart is empty!</h4>
-              </div>
-<!--              <div class="row cart-item">-->
-<!--                <div class="col-md-3">-->
-<!--                  <img src="https://via.placeholder.com/100" alt="Product 2" class="img-fluid rounded">-->
-<!--                </div>-->
-<!--                <div class="col-md-5">-->
-<!--                  <h5 class="card-title">Product 2</h5>-->
-<!--                  <p class="text-muted">Category: Clothing</p>-->
-<!--                </div>-->
-<!--                <div class="col-md-2">-->
-<!--                  <div class="input-group">-->
-<!--                    <button class="btn btn-outline-secondary btn-sm" type="button">-</button>-->
-<!--                    <input style="max-width:100px" type="text" class="form-control form-control-sm text-center quantity-input" value="2">-->
-<!--                    <button class="btn btn-outline-secondary btn-sm" type="button">+</button>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="col-md-2 text-end">-->
-<!--                  <p class="fw-bold">$49.99</p>-->
-<!--                  <button class="btn btn-sm btn-outline-danger">-->
-<!--                    <i class="bi bi-trash"></i>-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--              </div>-->
             </div>
-          </div>
-          <!-- Continue Shopping Button -->
-          <div class="text-start mb-4">
-            <a th:href="@{/shopping/products}" role="button" class="warning-button text-decoration text-decoration-none">
-              <i class="fa-solid fa-arrow-left"></i> Continue Shopping
-            </a>
-          </div>
         </div>
-        <div class="col-lg-4">
-          <!-- Cart Summary -->
-          <div class="card cart-summary">
-            <div class="card-body">
-              <h5 class="card-title mb-4">Order Summary</h5>
-              <div class="d-flex justify-content-between mb-3">
-                <span>Subtotal</span>
-                <span>$199.97</span>
-              </div>
-              <div class="d-flex justify-content-between mb-3">
-                <span>Shipping</span>
-                <span>$10.00</span>
-              </div>
-              <div class="d-flex justify-content-between mb-3">
-                <span>Tax</span>
-                <span>$20.00</span>
-              </div>
-              <hr>
-              <div class="d-flex justify-content-between mb-4">
-                <strong>Total</strong>
-                <strong>$229.97</strong>
-              </div>
-              <button class="btn btn-primary w-100">Proceed to Checkout</button>
-            </div>
-          </div>
-          <!-- Promo Code -->
-          <div class="card mt-4">
-            <div class="card-body">
-              <h5 class="card-title mb-3">Apply Promo Code</h5>
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Enter promo code">
-                <button class="btn btn-outline-secondary" type="button">Apply</button>
-              </div>
-            </div>
-          </div>
+        <!-- Empty Cart Message -->
+        <div th:unless="${cartItems.size() > 0}">
+            <h4 class="text-success">Your shopping cart is empty!</h4>
         </div>
-      </div>
     </div>
-  </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the current path matches the specific URL to exclude
+            const excludedPath = "/shopping/cart/items";
+            const currentPath = window.location.pathname;
+
+            if (currentPath.includes(excludedPath)) {
+                // Replace the current state in the history
+                history.replaceState(null, "", "/shopping/products");
+            }
+
+            // Form submit for delivery type
+
+            const deliverySelect = document.getElementById("deliverySelect");
+            const deliveryForm = document.getElementById("deliveryForm");
+
+            deliverySelect.addEventListener('change', function(event) {
+                deliveryForm.submit();
+
+            });
+        });
+    </script>
+</div>
 </body>
 </html>
