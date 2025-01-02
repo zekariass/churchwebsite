@@ -441,7 +441,7 @@ CREATE TABLE `settings`(
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (1, 'DEFAULT_PAGE_SIZE', 'The number of items listed in a page', 8, null, 0.0);
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (2, 'LOCALE_LANGUAGE_CODE', 'Local language code', 0, 'en', 0.0);
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (3, 'LOCALE_COUNTRY_CODE', 'Local country code', 0, 'GB', 0.0);
-INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (4, 'CART_COOKIE_LIFETIME', 'Lifetime of cookie', 7*24*60*60, 'GB', 0.0); -- 7 days
+INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (4, 'CART_COOKIE_LIFETIME', 'Lifetime of cookie', 7*24*60*60, null, 0.0); -- 7 days
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (5, 'TAX_RATE_FIXED', 'Fixed tax rate', 0, null, 0.0);
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (6, 'TAX_RATE_PERCENT', 'Tax rate in percent', 0, null, 0.0);
 
@@ -566,18 +566,34 @@ CREATE TABLE `cart_item` (
     FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`) ON DELETE CASCADE
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+USE church_website;
+DROP TABLE IF EXISTS `shipping`;
+CREATE TABLE `shipping` (
+    `shipping_id` INT AUTO_INCREMENT PRIMARY KEY,
+   -- `order_id` INT NOT NULL, -- shipping must be per item (not per order) as different items may be shipped in different date/time
+    `address_id` INT NOT NULL,
+    `status` ENUM('PENDING', 'SHIPPED', 'COLLECTED', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING',
+	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `shipped_at` TIMESTAMP,
+    `delivered_at` TIMESTAMP DEFAULT NULL,
+    FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
     `order_id` INT AUTO_INCREMENT PRIMARY KEY,
     `user_id` INT NOT NULL,
     `total_price` DECIMAL(10, 2) DEFAULT 0.0,
+    `shipping_id` INT,
     `shipping_price` DECIMAL(10, 2) DEFAULT 0.0,
     `tax` DECIMAL(10, 2) DEFAULT 0.0,
     `total_quantity` INT DEFAULT 0,
     -- `delivery_mode` ENUM('DELIVERY', 'COLLECTION') DEFAULT 'COLLECTION',
-    `status` ENUM('PENDING', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING',
+    `status` ENUM('SUBMITTED', 'COMPLETED', 'CANCELLED') DEFAULT 'SUBMITTED',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
+    FOREIGN KEY (`shipping_id`) REFERENCES `shipping`(`shipping_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `order_item`;
@@ -589,7 +605,7 @@ CREATE TABLE `order_item` (
     `price` DECIMAL(10, 2) NOT NULL,
     `total_price` DECIMAL(10, 2) NOT NULL,
     `delivery_type` ENUM('DELIVERY', 'COLLECTION') DEFAULT 'COLLECTION',
-    `status` ENUM('PENDING', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING',
+    `status` ENUM('SUBMITTED', 'COMPLETED', 'CANCELLED') DEFAULT 'SUBMITTED',
     FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`) ON DELETE CASCADE,
     FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -607,19 +623,6 @@ CREATE TABLE `order_payment` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`),
     FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-DROP TABLE IF EXISTS `shipping`;
-CREATE TABLE `shipping` (
-    `shipping_id` INT AUTO_INCREMENT PRIMARY KEY,
-    `order_id` INT NOT NULL, -- shipping must be per item (not per order) as different items may be shipped in different date/time
-    `address_id` INT NOT NULL,
-    `delivery_date` DATE DEFAULT NULL,
-    `status` ENUM('PENDING', 'SHIPPED', 'COLLECTED', 'COMPLETED', 'CANCELLED') DEFAULT 'PENDING',
-    `shipped_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `delivered_at` TIMESTAMP DEFAULT NULL,
-    FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`),
-    FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `product_review`;
@@ -644,3 +647,28 @@ CREATE TABLE `shipping_plan`(
 
 INSERT INTO shipping_plan(shipping_plan_id, plan_name, base_price, per_mile_price, per_kg_price) VALUES (1, 'DOMESTIC_PLAN', 0.0, 0.0, 0.0);
 INSERT INTO shipping_plan(shipping_plan_id, plan_name, base_price, per_mile_price, per_kg_price) VALUES (2, 'INTERNATIONAL_PLAN', 0.0, 0.0, 0.0);
+
+-- =================================================================
+
+DROP TABLE IF EXISTS `announcement`;
+CREATE TABLE `announcement`(
+	`id`  INT AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(255) NOT NULL,
+    `content` MEDIUMTEXT NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `last_modified_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `is_archived` BOOLEAN DEFAULT false,
+    `is_active` BOOLEAN DEFAULT true,
+    `is_featured` BOOLEAN DEFAULT false
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `about_us`;
+CREATE TABLE `about_us`(
+	`id`  INT AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(255) NOT NULL,
+    `content` LONGTEXT NOT NULL,
+    `include_title_in_public_view` BOOLEAN DEFAULT true,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `last_modified_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+

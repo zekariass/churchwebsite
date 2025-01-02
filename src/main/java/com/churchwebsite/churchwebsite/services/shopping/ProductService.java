@@ -80,6 +80,7 @@ public class ProductService {
                                                      Integer page,
                                                      Integer pageSize,
                                                      String sortBy) {
+        // If sortBy is empty set 'name' as default sorting column
         if(sortBy.isEmpty()){
             sortBy = "name";
         }
@@ -95,7 +96,7 @@ public class ProductService {
         }else if (deliveryType.equals(ProductDeliveryType.COLLECT)){
             return productRepository.findAllListedProductsBySearchParams(keyword, ProductListingStatus.LISTED, ProductDeliveryType.COLLECT, pageable);
         }else if(deliveryType.equals(ProductDeliveryType.DELIVERY_OR_COLLECT)) {
-            return productRepository.findByListingStatus(ProductListingStatus.LISTED, pageable);
+            return productRepository.findByListingStatusAndStockQuantityGreaterThan(ProductListingStatus.LISTED, 0, pageable);
         }else{
             return Page.empty();
         }
@@ -107,14 +108,9 @@ public class ProductService {
             sortBy = "name";
         }
 
-//        Pageable pageable;
-//        if(sortBy.equals("name")){
-//            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
-//        }else{
-
         Pageable pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
 
-        return productRepository.findByListingStatus(ProductListingStatus.LISTED, pageable);
+        return productRepository.findByListingStatusAndStockQuantityGreaterThan(ProductListingStatus.LISTED, 0, pageable);
     }
 
     public Page<Product> findByCategory(Integer categoryId, int page, Integer pageSize, String sortBy) {
@@ -128,7 +124,7 @@ public class ProductService {
         Optional<ProductCategory> productCategory = productCategoryRepository.findById(categoryId);
 
         if(productCategory.isPresent()){
-            return productRepository.findByCategoryAndListingStatus(productCategory.get(), pageable, ProductListingStatus.LISTED);
+            return productRepository.findByCategoryAndListingStatusAndStockQuantityGreaterThan(productCategory.get(), ProductListingStatus.LISTED, 0, pageable);
         }
 
 

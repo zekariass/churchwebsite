@@ -283,6 +283,79 @@
             <div th:replace="~{dashboard/dash-fragments/shopping/products/product-image-form::product-image-form}"></div>
           </main>
 
+          <!--   ========== ORDERS ==============================-->
+          <main th:if="${activeDashPage == 'order-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-detail::order-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'orders-list'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/orders-list::orders-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'order-item-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-items/order-item-detail::order-item-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'order-edit-form'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-edit-form::order-edit-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'order-item-edit-form'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-items/order-item-edit-form::order-item-edit-form}"></div>
+          </main>
+
+          <!--   ========== SHIPMENTS ==============================-->
+          <main th:if="${activeDashPage == 'shipping-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/shipping/shipping-detail::shipping-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'shippings-list'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/shipping/shippings-list::shippings-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'shipping-edit-form'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/shipping/shipping-edit-form::shipping-edit-form}"></div>
+          </main>
+
+          <!--   ========== ORDER PAYMENTS ==============================-->
+          <main th:if="${activeDashPage == 'order-payment-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-payments/order-payment-detail::order-payment-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'order-payments-list'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-payments/order-payments-list::order-payments-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'order-payment-edit-form'}">
+            <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-payments/order-payment-edit-form::order-payment-edit-form}"></div>
+          </main>
+
+          <!--   ========== ANNOUNCEMENT ==============================-->
+          <main th:if="${activeDashPage == 'announcement-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/announcements/announcement-detail::announcement-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'announcement-form'}">
+            <div th:replace="~{dashboard/dash-fragments/announcements/announcement-form::announcement-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'announcements-list'}">
+            <div th:replace="~{dashboard/dash-fragments/announcements/announcements-list::announcements-list}"></div>
+          </main>
+
+          <!--   ========== ABOUT US ==============================-->
+          <main th:if="${activeDashPage == 'about-us-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/about-us/about-us-detail::about-us-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'about-us-form'}">
+            <div th:replace="~{dashboard/dash-fragments/about-us/about-us-form::about-us-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'about-us-list'}">
+            <div th:replace="~{dashboard/dash-fragments/about-us/about-us-list::about-us-list}"></div>
+          </main>
+
         </div>
       </div>
 

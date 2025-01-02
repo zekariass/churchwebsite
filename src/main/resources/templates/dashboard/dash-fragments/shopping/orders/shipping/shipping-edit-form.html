@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Shipping</title>
+</head>
+<body>
+<div th:fragment="shipping-edit-form">
+    <div class="container mt-5">
+        <h2 class="mb-4">Edit Shipping</h2>
+        <form th:action="@{/dashboard/orders/shippings/edit/form/process}" th:object="${shipping}" method="post">
+            <label for="shippingId" class="form-label">Shipping ID</label>
+            <input type="text" id="shippingId" th:field="*{shippingId}" class="form-control" readonly>
+
+            <label for="shippedAd" class="form-label">Address ID</label>
+            <input th:field="*{address.addressId}" class="form-control"  id="shippedAd" readonly>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" class="form-select" th:field="*{status}">
+                    <option th:each="status : ${shippingStatuses}"
+                            th:value="${status}"
+                            th:text="${status.displayName}">
+                    </option>
+                </select>
+            </div>
+<!--            <div class="mb-3">-->
+<!--                <label for="shippedAt" class="form-label">Shipped At</label>-->
+<!--                <input type="datetime-local" id="shippedAt" class="form-control" th:field="*{shippedAt}">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="deliveredAt" class="form-label">Delivered At</label>-->
+<!--                <input type="datetime-local" id="deliveredAt" class="form-control" th:field="*{deliveredAt}">-->
+<!--            </div>-->
+            <button type="submit" class="warning-button">Update</button>
+            <a th:href="@{/dashboard/orders/shippings}" class="secondary-button">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

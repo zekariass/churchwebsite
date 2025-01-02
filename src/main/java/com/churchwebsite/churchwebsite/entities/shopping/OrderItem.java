@@ -1,12 +1,11 @@
 package com.churchwebsite.churchwebsite.entities.shopping;
 
 import com.churchwebsite.churchwebsite.enums.DeliveryType;
+import com.churchwebsite.churchwebsite.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_item")
@@ -31,10 +30,13 @@ public class OrderItem {
     private Integer quantity;
 
     @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    private Double price;
 
     @Column(name = "total_price", nullable = false)
-    private BigDecimal totalPrice;
+    private Double totalPrice;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "delivery_type")

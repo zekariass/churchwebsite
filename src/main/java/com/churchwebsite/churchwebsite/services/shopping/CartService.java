@@ -201,4 +201,8 @@ public class CartService {
         }
 
     }
+
+    public void deleteById(Integer cartId) {
+        cartRepository.deleteById(cartId);
+    }
 }

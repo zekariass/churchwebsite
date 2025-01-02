@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shipping List</title>
+    <!-- Include Bootstrap CSS -->
+</head>
+<body>
+<div th:fragment="shippings-list">
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Shipping List</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Order ID</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Shipped At</th>
+                    <th>Delivered At</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="shipping : ${shippings}"
+                    role="button"
+                    class="align-middle"
+                    th:onclick="|window.location='@{/dashboard/orders/shippings/detail/{id}(id=${shipping?.shippingId})}'|">
+                    <td th:text="${shipping.shippingId}"></td>
+                    <td>
+                        <a th:href="@{'/dashboard/orders?shippingId='+${shipping?.shippingId}}" class="text-decoration-none text-primary">
+                            Orders
+                        </a>
+                    </td>
+                    <td th:text="${shipping?.address?.fullAddress}"></td>
+                    <td th:class="${shipping?.status.displayName == 'Cancelled' ? 'text-danger fw-bold' :
+                                      (shipping?.status.displayName == 'Pending' ? 'text-warning fw-bold' :
+                                      (shipping?.status.displayName == 'Shipped' ? 'text-info fw-bold' :
+                                      'text-success fw-bold'))}"
+                        th:text="${shipping?.status.displayName}">
+                    </td>
+                    <td th:text="${shipping?.shippedAt?.format(@dateTimeFormatter)}"></td>
+                    <td th:text="${shipping?.deliveredAt?.format(@dateTimeFormatter)}"></td>
+                    <td>
+                        <div class="d-flex">
+                            <a th:href="@{/dashboard/orders/shippings/edit/form/{id}(id=${shipping?.shippingId})}"
+                               class="btn btn-warning btn-sm me-2">Edit</a>
+                            <a th:href="@{/dashboard/orders/shippings/detail/{id}(id=${shipping?.shippingId})}"
+                               class="btn btn-success btn-sm">View</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
+</div>
+<!-- Include Bootstrap JS -->
+</body>
+</html>

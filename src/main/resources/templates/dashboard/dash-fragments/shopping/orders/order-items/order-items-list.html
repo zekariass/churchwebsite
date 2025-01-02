@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Items</title>
+</head>
+<body>
+    <div th:fragment="order-items-list">
+        <div class="container mt-4">
+            <h4 class="mb-4">Items In The Order</h4>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order ID</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Delivery Type</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="orderItem : ${order.items}" role="button" th:onclick="|window.location='@{'/dashboard/orders/items/detail/' + ${orderItem.orderItemId}}'|">
+                    <td th:text="${orderItem.orderItemId}"></td>
+                    <td th:text="${orderItem.order.orderId}"></td>
+                    <td th:text="${orderItem.product.name}"></td>
+                    <td th:text="${orderItem.quantity}"></td>
+                    <td th:text="${orderItem.price}"></td>
+                    <td th:text="${orderItem.totalPrice}"></td>
+                    <td th:text="${orderItem.status}"></td>
+                    <td th:text="${orderItem.deliveryType}"></td>
+                    <td>
+                        <a th:href="@{'/dashboard/orders/items/detail/' + ${orderItem.orderItemId}}" class="success-button btn-sm">Detail</a>
+                        <a th:href="@{'/dashboard/orders/items/edit/form/' + ${orderItem.orderItemId}}" class="warning-button btn-sm">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

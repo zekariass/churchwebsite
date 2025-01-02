@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit About Us</title>
+</head>
+<body>
+  <div th:fragment="about-us-form">
+    <div class="container mt-5">
+      <h1>Edit About Us</h1>
+      <form th:action="@{/dashboard/aboutUs/form/process}" th:object="${aboutUs}" method="POST" class="mt-4">
+        <input th:field="*{id}" class="form-control" type="hidden">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input th:field="*{title}" class="form-control" id="title" rows="10" required>
+        </div>
+        <div class="col-12">
+          <label for="tiny" class="form-label">Content</label>
+          <textarea id="tiny" th:field="*{content}" class="form-control width-md-50" rows="4"></textarea>
+        </div>
+        <div class="my-3">
+          <label for="includeTitleInPublicView" class="form-label">Include Title In Public View</label>
+          <input th:field="*{includeTitleInPublicView}" class="form-check-input" id="includeTitleInPublicView" type="checkbox"></input>
+        </div>
+        <div class="text-start">
+          <button type="submit" class="success-button">Save</button>
+          <a href="/dashboard/aboutUs/list" class="secondary-button">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

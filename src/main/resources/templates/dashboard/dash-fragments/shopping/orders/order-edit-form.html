@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Order</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div th:fragment="order-edit-form">
+        <div class="container mt-4">
+            <h1 class="mb-4">Update Order</h1>
+
+            <form th:action="@{/dashboard/orders/edit/form/process}" th:object="${order}" method="post">
+                <!-- Order ID (Read-Only) -->
+                <div class="mb-3">
+                    <label for="orderId" class="form-label">Order ID</label>
+                    <input type="text" id="orderId" class="form-control" th:field="*{orderId}" readonly>
+                </div>
+
+                <!-- User Name (Read-Only) -->
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Username: </label>
+                    <input type="hidden" id="userName" class="form-control" th:field="*{user.userId}" th:text="*{user.username}" readonly>
+                </div>
+
+                <!-- Total Price -->
+                <div class="mb-3">
+                    <label for="totalPrice" class="form-label">Total Price</label>
+                    <input type="number" step="0.01" id="totalPrice" class="form-control" th:field="*{totalPrice}" readonly>
+                </div>
+
+                <!-- Shipping Price -->
+                <div class="mb-3">
+                    <label for="shippingPrice" class="form-label">Shipping Price</label>
+                    <input type="number" step="0.01" id="shippingPrice" class="form-control" th:field="*{shippingPrice}" readonly>
+                </div>
+
+                <!-- Tax -->
+                <div class="mb-3">
+                    <label for="tax" class="form-label">Tax</label>
+                    <input type="number" step="0.01" id="tax" class="form-control" th:field="*{tax}" readonly>
+                </div>
+
+                <!-- Total Quantity -->
+                <div class="mb-3">
+                    <label for="totalQuantity" class="form-label">Total Quantity</label>
+                    <input type="number" id="totalQuantity" class="form-control" th:field="*{totalQuantity}" readonly>
+                </div>
+
+                <!-- Order Status -->
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select id="status" class="form-select" th:field="*{status}" required aria-describedby="statusNote">
+                        <option th:each="orStatus: ${orderStatuses}" th:value="${orStatus}" th:text="${orStatus.displayName}"></option>
+                    </select>
+                    <div id="statusNote" class="text-muted">Warning: When you change the status for this order, all the items in this order will be updated to the same status.</div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-3">
+                    <button type="submit" class="warning-button">Update Order</button>
+                    <a href="/dashboard/orders" class="danger-button">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

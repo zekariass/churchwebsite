@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>About Us</title>
+</head>
+<body>
+  <div th:fragment="about-us-list">
+    <div class="container mt-5">
+      <h1>About Us Records</h1>
+      <div class="table-responsive mt-4">
+        <table class="table table-bordered table-striped">
+          <thead class="">
+          <tr>
+            <th>ID</th>
+            <th>Content Title</th>
+            <th>Content Preview</th>
+            <th>Created At</th>
+            <th>Last Modified At</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="aboutUs : ${aboutUsList}" role="button" th:onclick="|window.location='@{/dashboard/aboutUs/detail/{id}(id=${aboutUs.id})}'|">
+            <td th:text="${aboutUs.id}"></td>
+            <td th:text="${aboutUs.title}"></td>
+            <td>
+              <span th:utext="${#strings.abbreviate(aboutUs.content, 50)}"></span>
+            </td>
+            <td th:text="${aboutUs.createdAt.format(@dateTimeFormatter)}"></td>
+            <td th:text="${aboutUs.lastModifiedAt.format(@dateTimeFormatter)}"></td>
+            <td>
+              <div class="d-flex flex-row">
+                <a th:href="@{/dashboard/aboutUs/detail/{id}(id=${aboutUs.id})}" class="success-button btn-sm me-2">View</a>
+                <a th:href="@{/dashboard/aboutUs/edit/{id}(id=${aboutUs.id})}" class="warning-button btn-sm">Edit</a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-start mt-3">
+        <a href="/dashboard/aboutUs/form" class="btn btn-success">Add New About Us</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

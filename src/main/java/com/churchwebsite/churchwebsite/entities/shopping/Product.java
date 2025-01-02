@@ -4,9 +4,11 @@ import com.churchwebsite.churchwebsite.enums.ImageType;
 import com.churchwebsite.churchwebsite.enums.ProductDeliveryType;
 import com.churchwebsite.churchwebsite.enums.ProductListingStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class Product {
     private String description;
 
     @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    private double price;
 
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;

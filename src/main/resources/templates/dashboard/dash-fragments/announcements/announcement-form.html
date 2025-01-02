@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create/Edit Announcement</title>
+</head>
+<body>
+    <div th:fragment="announcement-form">
+        <div class="container mt-5">
+            <h1 th:text="${announcement.id == null ? 'Create Announcement' : 'Edit Announcement'}"></h1>
+            <form th:action="@{/dashboard/announcements/form/process}" th:object="${announcement}" method="post" class="mt-4">
+                <input type="hidden" th:field="*{id}">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" th:field="*{title}" class="form-control" id="title" required>
+                </div>
+                <div class="col-12">
+                    <label for="tiny" class="form-label">Content</label>
+                    <textarea id="tiny" th:field="*{content}" class="form-control width-md-50" rows="4"></textarea>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="m-3">
+                        <input type="checkbox" th:field="*{featured}" class="form-check-input" id="isFeatured">
+                        <label for="isFeatured" class="form-label">Featured</label>
+                    </div>
+                    <div th:if="${announcement.id > 0}" class="m-3">
+                        <input type="checkbox" th:field="*{archived}" class="form-check-input" id="isArchived">
+                        <label for="isArchived" class="form-label">Archived</label>
+                    </div>
+                    <div th:if="${announcement.id > 0}" class="m-3">
+                        <input type="checkbox" th:field="*{active}" class="form-check-input" id="isActive">
+                        <label for="isActive" class="form-label">Active</label>
+                    </div>
+                </div>
+                <button type="submit" class="success-button">Save</button>
+                <a href="/dashboard/announcements" class="secondary-button">Cancel</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

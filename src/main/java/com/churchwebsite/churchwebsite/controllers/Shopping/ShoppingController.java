@@ -20,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,10 +62,11 @@ public class ShoppingController {
                                HttpServletRequest request,
                                HttpServletResponse response) {
 
+        // Pet the page size
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
         Page<Product> pagedProducts;
-        List<Product> products = new ArrayList<>();
+        List<Product> products;
 
         if(shoppingSearchDto.getKeyword() == null && shoppingSearchDto.getDeliveryType() == null && (categoryId == null || categoryId <= 0)){
             pagedProducts = productService.getAllListedProducts(page, pageSize, sortBy);

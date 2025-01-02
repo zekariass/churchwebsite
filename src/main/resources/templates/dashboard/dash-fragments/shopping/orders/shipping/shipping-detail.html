@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shipping Details</title>
+</head>
+<body>
+    <div th:fragment="shipping-detail">
+        <div class="container mt-5">
+            <h2 class="mb-4">Shipping Details</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p><strong>Shipping ID:</strong> <span th:text="${shipping.shippingId}"></span></p>
+                    <p><strong>Address:</strong> <span th:text="${shipping.address?.fullAddress}"></span></p>
+                    <p><strong>Status:</strong> <span th:text="${shipping.status}"></span></p>
+                    <p><strong>Shipped At:</strong> <span th:text="${shipping.shippedAt?.format(@dateTimeFormatter)}"></span></p>
+                    <p><strong>Delivered At:</strong> <span th:text="${shipping.deliveredAt?.format(@dateTimeFormatter)}"></span></p>
+                </div>
+            </div>
+            <a th:href="@{/dashboard/orders/shippings}" class="success-button">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

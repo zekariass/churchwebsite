@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Orders List</title>
+</head>
+<body>
+  <div th:fragment="orders-list">
+    <div class="container mt-4">
+      <h1 class="mb-4">Orders</h1>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="bg-dark">
+          <tr>
+            <th>Order Id</th>
+            <th>User</th>
+            <th>Total Price</th>
+            <th>Shipping ID</th>
+            <th>Shipping Price</th>
+            <th>Tax</th>
+            <th>Total Quantity</th>
+            <th>Status</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="order : ${orders}" role="button" th:onclick="|window.location='@{'/dashboard/orders/detail/' + ${order.orderId}}'|">
+            <td th:text="${order.orderId}"></td>
+            <td th:text="${order.user?.username}"></td>
+            <td th:text="${currencySymbol+''+order.totalPrice}"></td>
+            <td><a th:href="@{'/dashboard/orders/shippings/detail/'+${order.shipping?.shippingId}}" th:text="${order.shipping?.shippingId}"></a></td>
+            <td th:text="${currencySymbol+''+order.shippingPrice}"></td>
+            <td th:text="${currencySymbol+''+order.tax}"></td>
+            <td th:text="${order.totalQuantity}"></td>
+            <td th:text="${order.status.displayName}" th:class="${order.status.displayName == 'Submitted'? 'text-info fw-bold':
+                                                                  order.status.displayName == 'Cancelled'? 'text-danger fw-bold':
+                                                                  'text-success fw-bold'}"></td>
+            <td th:text="${order.createdAt.format(@dateTimeFormatter)}"></td>
+            <td>
+              <div class="d-flex flex-row">
+                <a th:href="@{'/dashboard/orders/detail/' + ${order.orderId}}" class="info-button btn-sm me-2">View</a>
+                <a th:href="@{'/dashboard/orders/edit/form/' + ${order.orderId}}" class="warning-button btn-sm">Edit</a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
+  </div>
+</body>
+</html>

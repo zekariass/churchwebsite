@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Payments</title>
+</head>
+<body>
+    <div th:fragment="single-order-payment">
+        <h1>Order Payments</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Order</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${order.payment.orderPaymentId}"></td>
+                <td th:text="${order.payment.order?.orderId}"></td>
+                <td th:text="${order.payment.user?.username}"></td>
+                <td th:text="${order.payment.amount}"></td>
+                <td th:text="${order.payment.paymentMethod}"></td>
+                <td th:text="${order.payment.status}"></td>
+                <td th:text="${order.payment.createdAt.format(@dateTimeFormatter)}"></td>
+                <td>
+                    <a th:href="@{/dashboard/orders/payments/detail/{id}(id=${payment.orderPaymentId})}">View</a> |
+                    <a th:href="@{/dashboard/orders/payments/edit/{id}(id=${payment.orderPaymentId})}">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

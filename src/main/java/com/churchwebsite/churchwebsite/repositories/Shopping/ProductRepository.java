@@ -17,16 +17,25 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "WHERE ((LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "        OR LOWER(p.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) " +
             "       AND p.listingStatus = :listingStatus " +
-            "       AND p.deliveryType LIKE CONCAT('%', :deliveryType, '%'))")
+            "       AND p.deliveryType LIKE CONCAT('%', :deliveryType, '%') " +
+            "       AND p.stockQuantity > 0)")
     Page<Product> findAllListedProductsBySearchParams(@Param("keyword") String keyword,
                                                       @Param("listingStatus") ProductListingStatus listingStatus,
                                                       @Param("deliveryType") ProductDeliveryType deliveryType,
                                                       Pageable pageable);
 
-    Page<Product> findByListingStatus(ProductListingStatus productListingStatus, Pageable pageable);
+
+    Page<Product> findByListingStatusAndStockQuantityGreaterThan(
+            ProductListingStatus productListingStatus,
+            int quantity,
+            Pageable pageable);
 
     Page<Product> findByCategory(ProductCategory category, Pageable pageable);
 
-    Page<Product> findByCategoryAndListingStatus(ProductCategory productCategory, Pageable pageable, ProductListingStatus productListingStatus);
+    Page<Product> findByCategoryAndListingStatusAndStockQuantityGreaterThan(
+            ProductCategory productCategory,
+            ProductListingStatus productListingStatus,
+            int quantity,
+            Pageable pageable);
 }
 

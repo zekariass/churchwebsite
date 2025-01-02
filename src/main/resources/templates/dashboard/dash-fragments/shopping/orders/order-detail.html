@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Details</title>
+</head>
+<body>
+    <div th:fragment="order-detail">
+        <div class="container mt-4">
+            <h1 class="mb-4">Order Details</h1>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Order ID: <span th:text="${order.orderId}"></span></h5>
+                    <p class="card-text"><strong>User:</strong> <span th:text="${order.user.username}"></span></p>
+                    <p class="card-text"><strong>Total Price:</strong> [[${currencySymbol}]]<span th:text="${order.totalPrice}"></span></p>
+                    <p class="card-text"><strong>Shipping Price:</strong> [[${currencySymbol}]] <span th:text="${order.shippingPrice}"></span></p>
+                    <p class="card-text"><strong>Tax:</strong> [[${currencySymbol}]] <span th:text="${order.tax}"></span></p>
+                    <p class="card-text"><strong>Total Items:</strong> <span th:text="${order.totalQuantity}"></span></p>
+                    <p class="card-text"><strong>Status:</strong> <span th:text="${order.status}"></span></p>
+                    <p class="card-text"><strong>Created At:</strong> <span th:text="${order.createdAt.format(@dateTimeFormatter)}"></span></p>
+                </div>
+            </div>
+            <div class="my-3">
+                <div th:replace="~{dashboard/dash-fragments/shopping/orders/order-items/order-items-list::order-items-list}"></div>
+            </div>
+            <div class="my-3">
+                <div th:replace="~{dashboard/dash-fragments/shopping/orders/shipping/single-order-shipping::single-order-shipping}"></div>
+            </div>
+            <div class="mx-3">
+                <a th:href="@{/dashboard/orders}" class="success-button">Back to Orders</a>
+                <a th:href="@{'/dashboard/orders/edit/form/'+ ${order.orderId}}" class="warning-button">Update</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

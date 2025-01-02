@@ -2,44 +2,41 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>News List</title>
-
+    <title>Event List</title>
 </head>
 <body>
-    <div th:fragment="events-list">
-        <div class="container">
-            <ul class="timeline">
-                <li th:each="event: ${events}" class="ps-3">
-                    <!-- begin timeline-time -->
-                    <div class="timeline-time pe-3 bg-white py-3 shadow-sm" >
-                        <div class="d-flex justify-content-end"><h6 class="date">[[${event.getEventDateTime().format(@dateTimeFormatter)}]]</h6></div>
-<!--                        <div class="d-flex justify-content-end"><h6 class="date">Time: [[${event.eventTime}]]</h6></div>-->
-                    </div>
-                    <!-- end timeline-time -->
-                    <!-- begin timeline-icon -->
-                    <div class="timeline-icon" >
-                        <a href="javascript:;">&nbsp;</a>
-                    </div>
-                    <!-- end timeline-icon -->
-                    <!-- begin timeline-body -->
-                    <div class="timeline-body shadow-sm"
-                         role="button"
-                         th:onclick="|window.location='@{/events/detail/{id}(id=${event.eventId})}'|">
-                        <div class="timeline-content">
-                            <h6>
-                                [[${event.eventTitle}]]
-                            </h6>
-                            <div class="timeline-time-inline bg-secondary p-2">
-                                <!--                                Date: <span class="date">[[${event.eventDate}]]</span>-->
-                                <!--                                Time: <span class="date">[[${event.eventTime}]]</span>-->
-                                <div class="d-flex justify-content-end"><h6 class="date text-white">[[${event.getEventDateTime().format(@dateTimeFormatter)}]]</h6></div>
+<div th:fragment="events-list">
+
+    <div class="row d-flex justify-content-center mt-70 mb-70">
+        <div class="col-md-6">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Events</h5>
+                    <div th:each="event: ${events}" class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+
+                        <div class="vertical-timeline-item vertical-timeline-element">
+                            <div>
+                                <span class="vertical-timeline-element-icon bounce-in">
+                                    <i class="badge badge-dot badge-dot-xl badge-success"></i>
+                                </span>
+                                <div class="vertical-timeline-element-content bounce-in">
+                                    <h4 class="timeline-title">[[${event.eventTitle}]]</h4>
+                                    <h6 class="text-muted">Happening at [[${event.address.street}]], [[${event.address.city}]], [[${event.address.country}]] <a href="javascript:void(0);" data-abc="true">[[${event.eventTime}]]</a></h6>
+                                    <span class="vertical-timeline-element-date">[[${event.eventDate}]]</span>
+                                </div>
+                                <div class="vertical-timeline-element-content bounce-in">
+                                    <a class="text-success" th:href="@{/events/detail/{id}(id=${event.eventId})}"><h6>More Detail</h6></a>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                    <!-- end timeline-body -->
-                </li>
-            </ul>
-        </div>
+                </div>
+            </div>
+        </div> </div>
+    <div class="my-3">
+        <div th:replace="~{fragments/pagination::pagination}"></div>
     </div>
+</div>
 </body>
 </html>

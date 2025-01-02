@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Payments</title>
+    <!-- Include Bootstrap CSS -->
+</head>
+<body>
+    <div th:fragment="order-payments-list" class="container mt-5">
+        <h1 class="text-center mb-4">Order Payments</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Order</th>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="payment : ${orderPayments}" class="align-middle" role="button" th:onclick="|window.location='@{/dashboard/orders/payments/detail/{id}(id=${payment.orderPaymentId})}'|">
+                    <td th:text="${payment.orderPaymentId}"></td>
+                    <td><a th:href="@{'/dashboard/orders/detail/'+${payment.order?.orderId}}"> [[${payment.order?.orderId}]]</a></td>
+                    <td th:text="${payment.user?.username}"></td>
+                    <td th:text="${payment.amount}"></td>
+                    <td th:text="${payment.paymentMethod}"></td>
+                    <td th:class="${payment.status.displayName == 'Failed' ? 'text-danger fw-bold' :
+                                  (payment.status.displayName == 'Pending' ? 'text-info fw-bold' :
+                                  'text-success fw-bold')}" th:text="${payment.status.displayName}">
+                    </td>
+
+                    <td th:text="${payment.createdAt.format(@dateTimeFormatter)}"></td>
+                    <td>
+                        <div class="d-flex">
+                            <a th:href="@{/dashboard/orders/payments/detail/{id}(id=${payment.orderPaymentId})}"
+                               class="btn btn-success btn-sm me-2">View</a>
+                            <a th:href="@{/dashboard/orders/payments/edit/form/{id}(id=${payment.orderPaymentId})}"
+                               class="btn btn-warning btn-sm">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
+<!-- Include Bootstrap JS -->
+</body>
+</html>

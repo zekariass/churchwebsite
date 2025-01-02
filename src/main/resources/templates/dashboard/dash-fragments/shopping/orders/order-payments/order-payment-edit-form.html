@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Order Payment</title>
+    <!-- Include Bootstrap CSS -->
+</head>
+<body>
+<div th:fragment="order-payment-edit-form" class="container mt-5">
+    <h1 class="text-center mb-4">Edit Order Payment</h1>
+    <form th:action="@{/dashboard/orders/payments/edit/form/process}" th:object="${orderPayment}" method="post" class="needs-validation">
+        <input type="hidden" th:field="*{orderPaymentId}" />
+
+        <div class="mb-3">
+            <label for="orderId" class="form-label">Order ID:</label>
+            <input type="text" id="orderId" class="form-control" th:field="*{order.orderId}" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="username" class="form-label">User:</label>
+            <input type="text" id="username" class="form-control" th:field="*{user.userId}" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount:</label>
+            <input type="number" id="amount" class="form-control" th:field="*{amount}" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="paymentMethod" class="form-label">Payment Method:</label>
+            <input type="text" id="paymentMethod" class="form-control" th:field="*{paymentMethod}" readonly />
+        </div>
+
+        <input type="hidden" th:field="*{sessionUrl}" />
+
+        <div class="mb-3">
+            <label for="sessionId" class="form-label">Session ID:</label>
+            <input type="text" id="sessionId" class="form-control" th:field="*{sessionId}" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="createdAt" class="form-label">Created At:</label>
+            <input type="text" id="createdAt" class="form-control" th:field="*{createdAt}" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label for="status" class="form-label">Status:</label>
+            <select id="status" class="form-select" th:field="*{status}">
+                <option th:each="status : ${paymentStatuses}"
+                        th:value="${status}"
+                        th:text="${status.displayName}">
+                </option>
+            </select>
+        </div>
+
+        <div class="d-flex flex-row">
+            <button type="submit" class="warning-button me-2">Save</button>
+            <a th:href="@{/dashboard/orders/payments}" class="primary-button">Cancel</a>
+        </div>
+    </form>
+</div>
+<!-- Include Bootstrap JS -->
+</body>
+</html>

@@ -41,5 +41,9 @@ public class OrderItemService {
     public void deleteOrderItem(Integer id) {
         orderItemRepository.deleteById(id);
     }
+
+    public void saveOrderItems(List<OrderItem> orderItems) {
+        orderItemRepository.saveAll(orderItems);
+    }
 }
 

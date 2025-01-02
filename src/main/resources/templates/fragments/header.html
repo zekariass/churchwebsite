@@ -106,29 +106,42 @@
               <div  class="nav-item">
                 <a th:href="@{/dashboard/home}"
                    sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')"
-                   class="navbar-brand fw-bold fs-6 text-white dashboard">
-                  Dashboard
+                   class="fw-bold fs-6 text-white dashboard text-decoration text-decoration-none">
+                  Dashboard <span class="text-brown d-none d-md-inline">/ </span><span class="mx-2 d-inline d-md-none"> </span>
                 </a>
               </div>
 
               <div  class="nav-item d-none d-md-block">
                 <a th:href="@{/members/form}"
-                   class="navbar-brand fw-bold fs-6 text-white dashboard">
-                  Membership
+                   class="fw-bold fs-6 text-white dashboard text-decoration text-decoration-none">
+                  Membership <span class="text-brown">/ </span>
                 </a>
               </div>
 
               <div  class="nav-item d-none d-md-block">
                 <a th:href="@{/contactUs}"
-                   class="navbar-brand fw-bold fs-6 text-white dashboard">
-                  Contact Us
+                   class="fw-bold fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">
+                  Contact Us <span class="text-brown">/ </span>
+                </a>
+              </div>
+              <div  class="nav-item d-none d-md-block">
+                <a th:href="@{/aboutUs}"
+                   class="fw-bold fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">
+                  About Us <span class="text-brown">/ </span>
+                </a>
+              </div>
+
+              <div  class="nav-item d-none d-md-block">
+                <a th:href="@{/theClergy}"
+                   class="fw-bold fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">
+                  The Clergy <span class="text-brown">/ </span>
                 </a>
               </div>
 
               <!-- Login link -->
               <div sec:authorize="isAnonymous()" class="nav-item d-flex align-items-center auth me-3">
                 <a class="nav-link fw-bold fs-6 text-white" th:href="@{/users/login}">Login</a>
-                <span class="mx-1 text-white">/</span>
+                <span class="mx-1 text-brown">/</span>
                 <a class="nav-link fw-bold text-white fs-6" th:href="@{/users/register}">Register</a>
               </div>
               <div sec:authorize="isAuthenticated()" class="nav-item logout me-3">
@@ -155,6 +168,7 @@
           <ul class="navbar-nav ms-auto">
             <li class="d-block d-md-none nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/church-services}">Membership</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/church-services}">Services</a></li>
+            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/announcements}">Announcements</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/news}">News</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/media-center/options}">Media Center</a></li>
             <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/events}">Events</a></li>

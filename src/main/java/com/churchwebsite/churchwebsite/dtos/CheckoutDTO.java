@@ -16,6 +16,6 @@ public class CheckoutDTO {
     private double totalPrice;
     private double shippingPrice;
     private double totalTax;
-
     private List<CartItem> cartItems;
+    private int cartId;
 }

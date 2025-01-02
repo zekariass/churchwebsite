@@ -12,7 +12,7 @@ public class ShoppingUtils {
     public static double getCartSubtotal(List<CartItem> cartItems){
         double totalPrice = 0.0;
         for(CartItem cartItem: cartItems){
-            totalPrice += cartItem.getQuantity() * cartItem.getProduct().getPrice().doubleValue();
+            totalPrice += cartItem.getQuantity() * cartItem.getProduct().getPrice();
         }
 
         return totalPrice;

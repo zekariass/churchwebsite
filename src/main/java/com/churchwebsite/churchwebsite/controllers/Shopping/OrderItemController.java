@@ -1,49 +1,52 @@
 package com.churchwebsite.churchwebsite.controllers.Shopping;
 
 import com.churchwebsite.churchwebsite.entities.shopping.OrderItem;
+import com.churchwebsite.churchwebsite.enums.OrderStatus;
 import com.churchwebsite.churchwebsite.services.shopping.OrderItemService;
+import com.churchwebsite.churchwebsite.utils.LocaleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/order-items")
+@RequestMapping("/dashboard/orders/items")
 public class OrderItemController {
 
-    @Autowired
-    private OrderItemService orderItemService;
+    private final OrderItemService orderItemService;
+    private final LocaleUtil localeUtil;
 
-    @GetMapping
-    public String getAllOrderItems(Model model) {
-        List<OrderItem> orderItems = orderItemService.getAllOrderItems();
-        model.addAttribute("orderItems", orderItems);
-        return "order-item/list";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+
+    @Autowired
+    public OrderItemController(OrderItemService orderItemService, LocaleUtil localeUtil) {
+        this.orderItemService = orderItemService;
+        this.localeUtil = localeUtil;
     }
 
-    @GetMapping("/{id}")
+
+    @GetMapping("/detail/{id}")
     public String getOrderItemById(@PathVariable Integer id, Model model) {
         model.addAttribute("orderItem", orderItemService.getOrderItemById(id).orElse(null));
-        return "order-item/detail";
+        model.addAttribute("activeDashPage", "order-item-detail");
+        model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
+        return DASHBOARD_MAIN_PANEL;
     }
 
-    @PostMapping
-    public String createOrderItem(@ModelAttribute OrderItem orderItem) {
-        orderItemService.saveOrderItem(orderItem);
-        return "redirect:/order-items";
+    @GetMapping("/edit/form/{id}")
+    public String orderItemForm(@PathVariable Integer id,
+                                Model model) {
+        model.addAttribute("orderItem", orderItemService.getOrderItemById(id).orElse(null));
+        model.addAttribute("orderStatuses", OrderStatus.values());
+        model.addAttribute("activeDashPage", "order-item-edit-form");
+        return DASHBOARD_MAIN_PANEL;
     }
 
-    @PutMapping("/{id}")
-    public String updateOrderItem(@PathVariable Integer id, @ModelAttribute OrderItem updatedOrderItem) {
-        orderItemService.updateOrderItem(id, updatedOrderItem);
-        return "redirect:/order-items";
+    @PostMapping("/edit/form/process")
+    public String updateOrderItem(@ModelAttribute OrderItem updatedOrderItem,
+                                  Model model) {
+        OrderItem orderItem = orderItemService.saveOrderItem(updatedOrderItem);
+        return "redirect:/dashboard/orders/items/detail/"+orderItem.getOrderItemId();
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteOrderItem(@PathVariable Integer id) {
-        orderItemService.deleteOrderItem(id);
-        return "redirect:/order-items";
-    }
 }

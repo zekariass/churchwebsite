@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Order Item</title>
+</head>
+<body>
+    <div th:fragment="order-item-edit-form">
+        <div class="container mt-4">
+            <h1 class="mb-4">Edit Order Item</h1>
+
+            <form th:action="@{/dashboard/orders/items/edit/form/process}" th:object="${orderItem}" method="post">
+                <!-- Order Selection -->
+                <input th:field="*{orderItemId}" type="hidden">
+                <div class="mb-3">
+                    <label for="order" class="form-label">Order Id</label>
+                    <input th:field="*{order.orderId}" id="order" type="text" class="form-control" readonly>
+                </div>
+
+                <!-- Product Selection -->
+                <div class="mb-3">
+                    <label for="product" class="form-label"> Product: </label><span class="mx-3">[[${orderItem.product.name}]]</span>
+                    <input th:field="*{product}" type="hidden" class="form-control" id="product" readonly>
+                </div>
+
+                <!-- Quantity -->
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" id="quantity" class="form-control" th:field="*{quantity}" readonly>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" step="0.01" id="price" class="form-control" th:field="*{price}" readonly>
+                </div>
+
+                <!-- Total Price -->
+                <div class="mb-3">
+                    <label for="totalPrice" class="form-label">Total Price</label>
+                    <input type="number" step="0.01" id="totalPrice" class="form-control" th:field="*{totalPrice}" readonly>
+                </div>
+
+                <!-- Delivery Type -->
+                <div class="mb-3">
+                    <label for="deliveryType" class="form-label">Delivery Type</label>
+                    <input type="text" th:field="*{deliveryType}" id="deliveryType" class="form-control" readonly>
+                </div>
+
+                <!-- Delivery Type -->
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select id="status" class="form-select" th:field="*{status}" required>
+                        <option th:each="status : ${orderStatuses}" th:value="${status}" th:text="${status.displayName}"></option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="warning-button">Update</button>
+                <a th:href="@{'/dashboard/orders/items/detail/'+${orderItem.orderItemId}}" class="success-button">Cancel</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

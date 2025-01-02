@@ -3,6 +3,10 @@ package com.churchwebsite.churchwebsite.services.shopping;
 import com.churchwebsite.churchwebsite.entities.shopping.OrderPayment;
 import com.churchwebsite.churchwebsite.repositories.Shopping.OrderPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +20,11 @@ public class OrderPaymentService {
 
     public List<OrderPayment> getAllPayments() {
         return orderPaymentRepository.findAll();
+    }
+
+    public Page<OrderPayment> getAllPayments(Integer page, Integer pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.by(sortBy)));
+        return orderPaymentRepository.findAll(pageable);
     }
 
     public Optional<OrderPayment> getPaymentById(Integer id) {

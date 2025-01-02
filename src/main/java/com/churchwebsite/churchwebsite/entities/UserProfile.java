@@ -28,6 +28,9 @@ public class UserProfile {
     @OneToOne(mappedBy = "userProfile")
     private User user;
 
+    @Transient
+    private String fullName;
+
     public UserProfile() {
     }
 
@@ -132,6 +135,10 @@ public class UserProfile {
         this.user = user;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public String toString() {
         return "UserProfile{" +
@@ -147,4 +154,6 @@ public class UserProfile {
                 ", description='" + description + '\'' +
                 '}';
     }
+
+
 }
