@@ -27,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/media-center")
@@ -74,6 +75,7 @@ public class PublicMediaCenterController {
     public String showAlbumList(Model model,
                                 @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                                 @RequestParam(value = "size", required = false) Integer pageSize,
+                                @RequestParam(value = "sortBy", required = false, defaultValue = "creationTime") String sortBy,
                                 AttachmentService attachmentService,
                                 AttachmentTypeService attachmentTypeService,
                                 HttpServletRequest request){
@@ -82,10 +84,10 @@ public class PublicMediaCenterController {
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, Sort.by(Sort.Order.desc("creationTime")));
+        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, sortBy);
         List<Album> albums = pagedAlbums.getContent();
 
-        model.addAttribute("churchDetail", churchDetailService);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         model.addAttribute("activeContentPage", "albums-list");
         model.addAttribute("currentPage", pagedAlbums.getNumber() + 1);
@@ -98,86 +100,6 @@ public class PublicMediaCenterController {
 
         return PUBLIC_CONTENT;
     }
-
-//    @GetMapping("/videos")
-//    public String showVideosList(Model model,
-//                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-//                                 @RequestParam(value = "size", required = false) Integer pageSize,
-//                                 @RequestParam(value = "sortBy", defaultValue = "uploadTime") String sortBy,
-//                                 HttpServletRequest request){
-////
-////        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
-////
-////        Page<Image> pagedVideoList = imageService.getVideoList(page, pageSize, sortBy);
-////        List<Image> videoList = pagedVideoList.getContent();
-////
-////        model.addAttribute("activeContentPage", "videos-list");
-////        model.addAttribute("churchDetail", churchDetail);
-////
-////        model.addAttribute("videos", videoList);
-////
-////        model.addAttribute("currentPage", pagedVideoList.getNumber()+1);
-////        model.addAttribute("totalItems", pagedVideoList.getTotalElements());
-////        model.addAttribute("totalPages", pagedVideoList.getTotalPages());
-//        model.addAttribute("pageSize", pageSize);
-//        model.addAttribute("currentUrl", request.getRequestURL());
-//        model.addAttribute("sortBy", sortBy);
-//
-//        return PUBLIC_CONTENT;
-//    }
-
-//    @GetMapping("/albums")
-//    public String showImagesList(Model model,
-//                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-//                                 @RequestParam(value = "size", required = false) Integer pageSize,
-//                                 @RequestParam(value = "sortBy", defaultValue = "uploadTime") String sortBy,
-//                                 HttpServletRequest request){
-//
-//        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
-//
-//        Page<Image> pagedImageMediaList = imageService.getImagesAlbums(page, pageSize, sortBy);
-//        List<Image> imageMediaAlbumList = pagedImageMediaList.getContent();
-//
-//        model.addAttribute("activeContentPage", "images-list");
-//        model.addAttribute("churchDetail", churchDetail);
-//
-//        model.addAttribute("albumsList", imageMediaAlbumList);
-//
-//        model.addAttribute("currentPage", pagedImageMediaList.getNumber()+1);
-//        model.addAttribute("totalItems", pagedImageMediaList.getTotalElements());
-//        model.addAttribute("totalPages", pagedImageMediaList.getTotalPages());
-//        model.addAttribute("pageSize", pageSize);
-//        model.addAttribute("currentUrl", request.getRequestURL());
-//        model.addAttribute("sortBy", sortBy);
-//
-//        return PUBLIC_CONTENT;
-//    }
-
-//    @GetMapping("/files")
-//    public String showFilesList(Model model,
-//                                @RequestParam(value = "page", defaultValue = "1") int page,
-//                                @RequestParam(value = "size", required = false) Integer pageSize,
-//                                @RequestParam(value = "sortBy", defaultValue = "", required = false) String sortBy,
-//                                HttpServletRequest request){
-//
-//            pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
-//
-//            Page<Attachment> pagedAttachments = attachmentService.findAll(page, pageSize, sortBy);
-//
-//            List<Attachment> attachments = pagedAttachments.getContent();
-//
-//            model.addAttribute("currentPage", pagedAttachments.getNumber()+1);
-//            model.addAttribute("totalItems", pagedAttachments.getTotalElements());
-//            model.addAttribute("totalPages", pagedAttachments.getTotalPages());
-//            model.addAttribute("pageSize", pageSize);
-//            model.addAttribute("currentUrl", request.getRequestURL());
-//            model.addAttribute("activeContentPage", "files-list");
-//            model.addAttribute("attachments", attachments);
-//            model.addAttribute("churchDetail", churchDetail);
-//            model.addAttribute("sortBy", sortBy);
-//
-//            return PUBLIC_CONTENT;
-//    }
 
     @GetMapping("/albums/{id}/images")
     public String showAlbumDetail(@PathVariable(value = "id", required = false) int albumId,
@@ -203,11 +125,8 @@ public class PublicMediaCenterController {
         model.addAttribute("sortBy", sortBy);
 
         Album album = albumService.getAlbumById(albumId);
-//        String baseMediaPath = File.separator + Paths.get("media/centre") + File.separator;
-//
         model.addAttribute("album", album);
         model.addAttribute("activeContentPage", "album-detail");
-//        model.addAttribute("baseMediaPath", baseMediaPath);
 
         return PUBLIC_CONTENT;
     }
@@ -231,7 +150,6 @@ public class PublicMediaCenterController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("videos", videoList);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
 
         return PUBLIC_CONTENT;
     }
@@ -282,7 +200,7 @@ public class PublicMediaCenterController {
             }
 
             // Encode the file name for Unicode compatibility
-            String encodedFileName = URLEncoder.encode(resource.getFilename(), StandardCharsets.UTF_8.toString())
+            String encodedFileName = URLEncoder.encode(Objects.requireNonNull(resource.getFilename()), StandardCharsets.UTF_8)
                     .replace("+", "%20"); // Optional: replace '+' with '%20' for spaces
 
             return ResponseEntity.ok()

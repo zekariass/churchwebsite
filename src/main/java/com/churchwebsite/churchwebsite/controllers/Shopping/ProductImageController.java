@@ -3,7 +3,7 @@ package com.churchwebsite.churchwebsite.controllers.Shopping;
 import com.churchwebsite.churchwebsite.entities.shopping.Product;
 import com.churchwebsite.churchwebsite.entities.shopping.ProductImage;
 import com.churchwebsite.churchwebsite.enums.ImageType;
-import com.churchwebsite.churchwebsite.services.PaginationService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.shopping.ProductImageService;
 import com.churchwebsite.churchwebsite.services.shopping.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,24 +21,21 @@ public class ProductImageController {
 
 
     private final ProductService productService;
-    private final PaginationService paginationService;
     private final ProductImageService productImageService;
+    private  final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public ProductImageController(ProductService productService, PaginationService paginationService, ProductImageService productImageService) {
+    public ProductImageController(ProductService productService, ProductImageService productImageService, ChurchDetailService churchDetailService) {
         this.productService = productService;
-        this.paginationService = paginationService;
         this.productImageService = productImageService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/{prodId}")
     public String getProductForImages(Model model,
                                @PathVariable("prodId") Integer prodId,
-//                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-//                               @RequestParam(value = "size", required = false) Integer pageSize,
-//                               @RequestParam(value = "sortBy", defaultValue = "createdAt") String sortBy,
                                HttpServletRequest request){
 
 
@@ -48,6 +45,7 @@ public class ProductImageController {
         model.addAttribute("product", product);
         model.addAttribute("images", product.getImages());
         model.addAttribute("imageTypes", ImageType.values());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -57,6 +55,7 @@ public class ProductImageController {
     public String getImageById(@PathVariable Integer id, Model model) {
         model.addAttribute("image", productImageService.getImageById(id).orElse(null));
         model.addAttribute("activeDashPage", "product-image-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -67,6 +66,7 @@ public class ProductImageController {
         model.addAttribute("productId", productId);
         model.addAttribute("activeDashPage", "product-image-form");
         model.addAttribute("imageTypes", ImageType.values());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -80,12 +80,6 @@ public class ProductImageController {
 
         return "redirect:/dashboard/products/detail/"+productId;
     }
-
-//    @PutMapping("/edit/{id}")
-//    public String updateImage(@PathVariable Integer id, @ModelAttribute ProductImage updatedImage) {
-//        productImageService.updateImage(id, updatedImage);
-//        return "redirect:/product-images";
-//    }
 
     @GetMapping("/delete/{id}")
     public String deleteImage(@PathVariable Integer id) {

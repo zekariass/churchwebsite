@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Blogs-list</title>
-</head>
-<body th:fragment="blogs-list">
-    <div class="d-flex justify-content-end mx-3"> <a th:href="@{/dashboard/blogs/form}"><h6 class="text-decoration-underline">Add New Blog</h6></a> </div>
-    <h3 class="m-3 text-center text-md-start">Blogs</h3>
+
+<!--<h3 class="m-3 text-center text-md-start">Blogs</h3>
     <div>
         <select id="blogCategoryId" class="form-select mb-4 w-auto" onchange="onBlogCategorySelect()">
             <option th:value="0">-- Select Blog Category --</option>
@@ -35,9 +28,106 @@
                 </div>
             </div>
     </ul>
-    <!-- Show a message if there are no blogs -->
     <div th:if="${blogs.size() == 0}">
         <h4 colspan="4" class="text-center text-muted">No Blogs found.</h4>
+    </div>
+    <div>
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
+    <script>
+        function onBlogCategorySelect(){
+
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+            const blogCatSel = document.querySelector("#blogCategoryId").value;
+
+            if(params.has("page")){
+                const page = params.get("page");
+                const size = params.get("size");
+                window.location.href = window.location.origin + '/blogs?blogCatId='+blogCatSel+'&page='+page+'&size='+size;
+            }else{
+                window.location.href = window.location.origin + '/dashboard/blogs?blogCatId='+blogCatSel;
+            }
+        }
+    </script> -->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs-list</title>
+</head>
+<body th:fragment="blogs-list">
+    <div class="d-flex justify-content-end mx-3"> <a th:href="@{/dashboard/blogs/form}"><h6 class="text-decoration-underline">Add New Blog</h6></a> </div>
+
+
+
+
+
+    <h1 class="text-center mb-4">Blog Listing</h1>
+
+    <!-- Sort Blogs -->
+    <div class="d-flex justify-content-end mb-3">
+        <select id="blogCategoryId" class="form-select mb-4 w-auto" onchange="onBlogCategorySelect()">
+            <option th:value="0">Select Blog Category</option>
+            <option th:each="blogCategory: ${blogCategories}"
+                    th:value="${blogCategory.blogCategoryId}"
+                    th:text="${blogCategory.blogCategoryName}"
+                    th:selected="${blogCatId != null and blogCatId == blogCategory.blogCategoryId}"></option>
+        </select>
+    </div>
+
+    <!-- Blog Table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Created Time</th>
+                <th>Active</th>
+                <th>Archived</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="blog, iterStat : ${blogs}">
+                <tr th:onclick="|window.location='@{/dashboard/blogs/detail/{id}(id=${blog.blogId})}'|" role="button">
+                    <td th:text="${blog.blogId}">1</td>
+                    <td th:text="${blog.blogTitle}">Blog Title</td>
+                    <td th:text="${blog.blogCategory?.blogCategoryName}">Category</td>
+                    <td th:text="${blog.userId?.username}">Author</td>
+                    <td th:text="${blog.blogTime.format(@dateTimeFormatter)}">Creation Time</td>
+                    <td th:classappend="${blog.active} ? 'status-active' : 'status-inactive'"
+                        th:text="${blog.active} ? 'Yes' : 'No'"
+                        th:class="${blog.active} ? 'text-success fw-bold' : 'text-danger fw-bold'">
+                        Active Status
+                    </td>
+                    <td th:classappend="${blog.archived} ? 'status-active' : 'status-inactive'"
+                        th:text="${blog.archived} ? 'Yes' : 'No'"
+                        th:class="${blog.archived} ? 'text-warning fw-bold' : 'text-info fw-bold'">
+                        Archived Status
+                    </td>
+                    <td>
+                        <div class="d-flex flex-row">
+                            <a th:href="@{/dashboard/blogs/detail/{id}(id=${blog.blogId})}" class="button-sm success-button me-1">
+                                View
+                            </a>
+                            <a th:href="@{/dashboard/blogs/edit/{id}(id=${blog.blogId})}" class="button-sm warning-button me-1">
+                                Edit
+                            </a>
+                            <a th:href="@{/dashboard/blogs/delete/{id}(id=${blog.blogId})}" class="button-sm danger-button me-1">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
     </div>
     <div>
         <div th:replace="~{fragments/pagination::pagination}"></div>

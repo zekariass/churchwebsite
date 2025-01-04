@@ -10,11 +10,20 @@
 <body>
     <main th:fragment="landing-page">
         <div>
-            <p th:if="${param.logout}">You successfully logged out!</p>
+            <h5 th:if="${param.logout}" class="p-3 text-center text-success">You are logged out!</h5>
+            <h5 th:if="${param.subscribed}" class="p-3 text-center text-success">You Email is added to our email list!</h5>
+            <div class="nav-item mb-3 d-flex align-items-center justify-content-center d-md-none">
+                    <form class="search-form" method="POST" action="#">
+                        <div class="d-flex flex-row">
+                            <input type="text" name="query" placeholder="Subscribe to email list" aria-placeholder="Subscribe to email list" class="form-control me-2">
+                            <button type="submit" title="Search" class="btn btn-info btn-sm">Subscribe</button>
+                        </div>
+                    </form>
+            </div>
             <div class="row">
                 <div class="col-12 col-md-10">
                     <div th:each="landingContent: ${landingContentList}">
-                        <div class="shadow-sm mb-3 p-5 rounded">
+                        <div class="shadow-sm mb-3 p-md-5 rounded">
                             <p class="mb-1" th:utext="${landingContent.content}"></p>
                         </div>
                     </div>

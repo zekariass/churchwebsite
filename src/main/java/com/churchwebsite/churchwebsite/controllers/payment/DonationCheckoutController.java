@@ -38,16 +38,6 @@ public class DonationCheckoutController {
     @GetMapping("/options")
     public String showDonationOptions(Model model){
 
-//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-//
-//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-//
-//        Locale locale = new Locale(localLanguageCode, localCountryCode);
-//
-//        Currency currency = Currency.getInstance(locale);
-
         model.addAttribute("activeContentPage", "donation-options");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("productRequest", new ProductRequest());
@@ -59,16 +49,6 @@ public class DonationCheckoutController {
 
     @PostMapping("/process")
     public RedirectView checkout(@RequestParam("donationAmount") double donationAmount, Model model) {
-
-//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-//
-//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-//
-//        Locale locale = new Locale(localLanguageCode, localCountryCode);
-//
-//        Currency currency = Currency.getInstance(locale);
 
         long actualDonationAmount = (long) donationAmount * 100;
 
@@ -95,6 +75,7 @@ public class DonationCheckoutController {
     public String showDonationSuccess(Model model){
 
         model.addAttribute("activeContentPage", "donation-success");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }
@@ -103,6 +84,7 @@ public class DonationCheckoutController {
     @GetMapping("/donation-cancel")
     public String showDonationCancellation(Model model){
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("activeContentPage", "donation-cancel");
 
         return PUBLIC_CONTENT;

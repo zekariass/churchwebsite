@@ -14,7 +14,7 @@
 }
 
 .info-button {
-    background-color: #467fd0; /* Success green color */
+    background-color: #00FFFF; /* Success green color */
     color: white; /* Text color */
     padding: 10px 20px; /* Padding for a nice shape */
     border: none; /* Remove default border */
@@ -89,4 +89,41 @@
 
 .text-brown{
     color: brown;
+}
+
+
+.button-sm {
+    padding: 4px 8px; /* Adjust padding for smaller size */
+    font-size: 0.875rem; /* Smaller font size */
+    line-height: 1.5;
+    border-radius: 4px; /* Adjust border-radius if needed */
+    color: #fff; /* Text color */
+    border: 1px solid #007bff; /* Border color */
+    text-decoration: none; /* Remove underline for links */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.button-sm:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+    text-decoration: none; /* Keep links unstyled */
+}
+
+.bg-smoke{
+    background-color: #F5F5F5 !important;
+}
+
+.bg-snow{
+    background-color: #F5FEFD !important;
+}
+
+.bg-cream{
+    background-color: #FFFDD0 !important;
+}
+
+.bg-beige{
+    background-color: #F5F5DC !important;
+}
+
+.bg-snowdrift{
+    background-color: #F8FBF8 !important;
 }

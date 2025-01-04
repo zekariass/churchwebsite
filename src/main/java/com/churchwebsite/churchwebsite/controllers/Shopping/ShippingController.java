@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers.Shopping;
 
 import com.churchwebsite.churchwebsite.entities.shopping.Shipping;
 import com.churchwebsite.churchwebsite.enums.ShippingStatus;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.shopping.ShippingService;
 import com.churchwebsite.churchwebsite.utils.LocaleUtil;
@@ -21,14 +22,16 @@ public class ShippingController {
     private final ShippingService shippingService;
     private final PaginationService paginationService;
     private final LocaleUtil localeUtil;
+    private  final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public ShippingController(ShippingService shippingService, PaginationService paginationService, LocaleUtil localeUtil) {
+    public ShippingController(ShippingService shippingService, PaginationService paginationService, LocaleUtil localeUtil, ChurchDetailService churchDetailService) {
         this.shippingService = shippingService;
         this.paginationService = paginationService;
         this.localeUtil = localeUtil;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
@@ -54,6 +57,7 @@ public class ShippingController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -63,6 +67,8 @@ public class ShippingController {
         model.addAttribute("activeDashPage", "shipping-detail");
         model.addAttribute("shippingStatuses", ShippingStatus.values());
         model.addAttribute("shipping", shippingService.getShipmentById(id).orElse(null));
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -71,6 +77,8 @@ public class ShippingController {
         model.addAttribute("shipping", shippingService.getShipmentById(shippingId));
         model.addAttribute("activeDashPage", "shipping-edit-form");
         model.addAttribute("shippingStatuses", ShippingStatus.values());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 

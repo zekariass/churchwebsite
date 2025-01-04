@@ -28,6 +28,7 @@ public class MemberController {
     private final SettingsService settingsService;
     private final UserService userService;
     private final LocaleUtil localeUtil;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
@@ -37,13 +38,14 @@ public class MemberController {
                             PaginationService paginationService,
                             SettingsService settingsService,
                             UserService userService,
-                            LocaleUtil localeUtil) {
+                            LocaleUtil localeUtil, ChurchDetailService churchDetailService) {
         this.memberService = memberService;
         this.membershipAmountService = membershipAmountService;
         this.paginationService = paginationService;
         this.settingsService = settingsService;
         this.userService = userService;
         this.localeUtil = localeUtil;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/form")
@@ -68,6 +70,7 @@ public class MemberController {
         model.addAttribute("paymentMethods", MembershipPaymentMethod.values());
         model.addAttribute("currencyCode", currency.getCurrencyCode());
         model.addAttribute("membershipAmounts", membershipAmounts);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -93,6 +96,7 @@ public class MemberController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -132,21 +136,12 @@ public class MemberController {
 
         List<MembershipAmount> membershipAmounts = membershipAmountService.findAll();
 
-//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-//
-//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-//
-//        Locale locale = new Locale(localLanguageCode, localCountryCode);
-//
-//        Currency currency = Currency.getInstance(locale);
-
         model.addAttribute("activeDashPage", "member-form");
         model.addAttribute("member", member);
         model.addAttribute("genders", Gender.values());
         model.addAttribute("currencyCode", localeUtil.getCurrency().getCurrencyCode());
         model.addAttribute("membershipAmounts", membershipAmounts);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -156,22 +151,12 @@ public class MemberController {
                                    Model model){
 
         Member member = memberService.findById(memberId);
-//        System.out.println("===============================>>>>>: "+ member);
-
-//        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-//        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-//
-//        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-//        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-//
-//        Locale locale = new Locale(localLanguageCode, localCountryCode);
-//
-//        Currency currency = Currency.getInstance(locale);
 
         model.addAttribute("activeDashPage", "member-detail");
         model.addAttribute("member", member);
         model.addAttribute("genders", Gender.values());
         model.addAttribute("currencyCode", localeUtil.getCurrency().getCurrencyCode());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }

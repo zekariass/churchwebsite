@@ -2,7 +2,6 @@ package com.churchwebsite.churchwebsite.services;
 
 import com.churchwebsite.churchwebsite.entities.Blog;
 import com.churchwebsite.churchwebsite.entities.BlogCategory;
-import com.churchwebsite.churchwebsite.repositories.BlogCategoryRepository;
 import com.churchwebsite.churchwebsite.repositories.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +35,23 @@ public class BlogService {
             return blogRepository.findByBlogCategory(pageable, blogCategory);
         }else{
             return blogRepository.findAll(pageable);
+        }
+
+    }
+
+    public Page<Blog> findBlogsByArchive(int page, int pageSize, int blogCategoryId, boolean archived) {
+        Pageable pageable = PageRequest.of(page-1, pageSize);
+
+        BlogCategory blogCategory = null;
+
+        if(blogCategoryId != 0){
+            blogCategory = blogCategoryService.findById(blogCategoryId);
+        }
+
+        if(blogCategory != null){
+            return blogRepository.findByBlogCategoryAndArchived(pageable, blogCategory, archived);
+        }else{
+            return blogRepository.findAllByArchived(archived, pageable);
         }
 
     }

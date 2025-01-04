@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmailSubscriptionService {
@@ -19,5 +20,12 @@ public class EmailSubscriptionService {
 
     public List<EmailSubscription> findAll() {
         return subscriptionRepository.findAll();
+    }
+
+    public void saveSubscription(EmailSubscription emailSubscription) {
+        Optional<EmailSubscription> subscription = Optional.ofNullable(subscriptionRepository.findByEmail(emailSubscription.getEmail()));
+        if(subscription.isEmpty()){
+            subscriptionRepository.save(emailSubscription);
+        }
     }
 }

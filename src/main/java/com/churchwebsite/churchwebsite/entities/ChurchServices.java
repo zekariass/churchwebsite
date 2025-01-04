@@ -11,8 +11,17 @@ public class ChurchServices {
     private int serviceId;
     private String serviceName;
     private String serviceDescription;
-//    private String serviceDisplayImage;
-//    private String serviceDemoVideo;
+
+    @Transient
+    private String excerpt;
+
+    public String getExcerpt() {
+        return excerpt;
+    }
+
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
+    }
 
     public ChurchServices() {}
 

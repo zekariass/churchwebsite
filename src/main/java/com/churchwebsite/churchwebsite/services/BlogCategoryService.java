@@ -2,7 +2,6 @@ package com.churchwebsite.churchwebsite.services;
 
 import com.churchwebsite.churchwebsite.entities.BlogCategory;
 import com.churchwebsite.churchwebsite.repositories.BlogCategoryRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,4 +45,5 @@ public class BlogCategoryService {
     public void deleteById(int blogCatId) {
         blogCategoryRepository.deleteById(blogCatId);
     }
+
 }

@@ -21,8 +21,14 @@ public class AlbumService {
         this.albumRepository = albumRepository;
     }
 
-    public Page<Album> getAlbumList(int page, int pageSize, Sort sort){
-        Pageable pageable = PageRequest.of(page-1, pageSize, sort);
+    public Page<Album> getAlbumList(int page, int pageSize, String sortBy){
+
+        Pageable pageable;
+        if(sortBy.equals("creationTime")){
+            pageable = PageRequest.of(Math.max(page - 1, 0), pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else {
+            pageable = PageRequest.of(Math.max(page - 1, 0), pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        }
         return albumRepository.findAll(pageable);
     }
 

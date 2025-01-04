@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/dashboard/notifications")
@@ -25,6 +23,7 @@ public class NotificationController {
     private final EmailService emailService;
     private final PaginationService paginationService;
     private final EmailSubscriptionService emailSubscriptionService;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
@@ -33,12 +32,13 @@ public class NotificationController {
                                   MemberService memberService,
                                   EmailService emailService,
                                   PaginationService paginationService,
-                                  EmailSubscriptionService emailSubscriptionService) {
+                                  EmailSubscriptionService emailSubscriptionService, ChurchDetailService churchDetailService) {
         this.notificationService = notificationService;
         this.memberService = memberService;
         this.emailService = emailService;
         this.paginationService = paginationService;
         this.emailSubscriptionService = emailSubscriptionService;
+        this.churchDetailService = churchDetailService;
     }
 
     // List all notifications
@@ -61,6 +61,7 @@ public class NotificationController {
         model.addAttribute("totalPages", pagedNotifications.getTotalPages());
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -71,6 +72,7 @@ public class NotificationController {
 
         model.addAttribute("notification", new Notification());
         model.addAttribute("activeDashPage", "notification-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -82,8 +84,11 @@ public class NotificationController {
         List<Member> members = memberService.findAll();
         List<EmailSubscription> emailSubscriptions = emailSubscriptionService.findAll();
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
+
         try {
-            sendEmailNotification(notification, members, emailSubscriptions);
+            notificationService.sendEmailNotification(notification, members, emailSubscriptions);
         }catch (MessagingException me){
             model.addAttribute("activeDashPage", "notification-form");
             model.addAttribute("error", me.getMessage());
@@ -93,30 +98,7 @@ public class NotificationController {
         // Save the notification
         notificationService.save(notification);
 
-        return "redirect:/dashboard/notifications";
-    }
-
-    private void sendEmailNotification(Notification notification, List<Member> members, List<EmailSubscription> emailSubscriptions) throws MessagingException {
-        Set<String> emails = new LinkedHashSet<>();
-
-        // Get all emails from registered members
-        for(Member member: members){
-            emails.add(member.getEmail());
-        }
-
-        // Get all emails in the email_subscription table
-        for(EmailSubscription subscription: emailSubscriptions){
-            emails.add(subscription.getEmail());
-        }
-
-        // Send email notifications
-        for (String email : emails) {
-            emailService.sendEmail(
-                    email,
-                    notification.getNotificationSubject(),
-                    notification.getNotificationMessage()
-            );
-        }
+        return "redirect:/dashboard/notifications?resent";
     }
 
     // View details of a notification
@@ -126,6 +108,7 @@ public class NotificationController {
         Notification notification = notificationService.findById(id);
         model.addAttribute("notification", notification);
         model.addAttribute("activeDashPage", "notification-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -134,39 +117,26 @@ public class NotificationController {
     // Resend a notification
     @PostMapping("/{id}/resend")
     public String resendNotification(@PathVariable("id") int id, Model model) {
+
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         Notification notification = notificationService.findById(id);
         List<Member> members = memberService.findAll();
         List<EmailSubscription> emailSubscriptions = emailSubscriptionService.findAll();
 
         try {
-            sendEmailNotification(notification, members, emailSubscriptions);
+            notificationService.sendEmailNotification(notification, members, emailSubscriptions);
         }catch (MessagingException me){
             model.addAttribute("activeDashPage", "notification-form");
             model.addAttribute("error", me.getMessage());
             return DASHBOARD_MAIN_PANEL;
         }
 
-        return "redirect:/dashboard/notifications";
+        return "redirect:/dashboard/notifications?resent";
     }
 
-
-//    // Edit a notification
-//    @GetMapping("/edit/{id}")
-//    public String editNotificationForm(@PathVariable("id") int id, Model model) {
-//        Notification notification = notificationService.findById(id);
-//        model.addAttribute("notification", notification);
-//        return "notifications/form";
-//    }
-
-//    @PostMapping("/{id}")
-//    public String updateNotification(@PathVariable("id") int id, @ModelAttribute Notification notification) {
-//        notification.setNotificationId(id);
-//        notificationService.save(notification);
-//        return "redirect:/dashboard/notifications";
-//    }
-
     // Delete a notification
-    @PostMapping("/delete/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteNotification(@PathVariable("id") int id) {
         notificationService.deleteById(id);
         return "redirect:/dashboard/notifications";

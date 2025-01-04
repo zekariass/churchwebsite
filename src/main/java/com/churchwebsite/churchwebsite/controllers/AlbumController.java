@@ -1,14 +1,13 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.Album;
-import com.churchwebsite.churchwebsite.entities.Image;
 import com.churchwebsite.churchwebsite.services.AlbumService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,26 +26,30 @@ public class AlbumController {
 
     private final AlbumService albumService;
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
+
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public AlbumController(AlbumService albumService, PaginationService paginationService) {
+    public AlbumController(AlbumService albumService, PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.albumService = albumService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
     public String showAlbumList(Model model,
                                 @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                                 @RequestParam(value = "size", required = false) Integer pageSize,
+                                @RequestParam(value = "sortBy", required = false, defaultValue = "creationTime") String sortBy,
                                 HttpServletRequest request){
 
         String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, Sort.by(Sort.Order.desc("creationTime")));
+        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, sortBy);
         List<Album> albums = pagedAlbums.getContent();
 
         model.addAttribute("activeDashPage", "albums-list");
@@ -57,6 +60,8 @@ public class AlbumController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("albums", albums);
         model.addAttribute("baseImagePath", baseImagePath);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -66,6 +71,7 @@ public class AlbumController {
 
         model.addAttribute("album", new Album());
         model.addAttribute("activeDashPage", "album-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -77,8 +83,10 @@ public class AlbumController {
 
         model.addAttribute("album", new Album());
         model.addAttribute("activeDashPage", "album-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
-        return DASHBOARD_MAIN_PANEL;
+
+        return "redirect:/images/albums";
     }
 
     @GetMapping("/detail/{id}")
@@ -90,6 +98,8 @@ public class AlbumController {
         model.addAttribute("album", album);
         model.addAttribute("activeDashPage", "album-detail");
         model.addAttribute("baseImagePath", baseImagePath);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }

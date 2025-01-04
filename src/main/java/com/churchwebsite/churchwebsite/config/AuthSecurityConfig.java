@@ -65,7 +65,11 @@ public class AuthSecurityConfig {
             "/donation-success",
             "/donation-cancel",
             "/shopping/products/**",
-            "/shopping/cart/**"
+            "/shopping/cart/**",
+            "/aboutUs",
+            "/announcements",
+            "/announcements/detail",
+            "/subscription/email/subscribe"
 
     };
     @Bean

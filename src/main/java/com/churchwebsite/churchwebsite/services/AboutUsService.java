@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +45,10 @@ public class AboutUsService {
 
     public void deleteAboutUs(Integer id) {
         aboutUsRepository.deleteById(id);
+    }
+
+    public List<AboutUs> getAllAboutUs() {
+
+        return aboutUsRepository.findAll();
     }
 }

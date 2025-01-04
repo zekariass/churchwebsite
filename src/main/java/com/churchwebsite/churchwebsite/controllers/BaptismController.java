@@ -21,14 +21,16 @@ public class BaptismController {
 
     private final String PUBLIC_CONTENT = "layouts/base";
     private final ChurchDetailDTO churchDetail;
+    private final ChurchDetailService churchDetailService;
 
     private final BaptismService baptismService;
 
     @Autowired
     public BaptismController(BaptismService baptismService,
-                             ChurchDetailService churchDetailService) {
+                             ChurchDetailService churchDetailService, ChurchDetailService churchDetailService1) {
         this.baptismService = baptismService;
         this.churchDetail = churchDetailService.getChurchDetail();
+        this.churchDetailService = churchDetailService1;
     }
 
     @GetMapping("/form")

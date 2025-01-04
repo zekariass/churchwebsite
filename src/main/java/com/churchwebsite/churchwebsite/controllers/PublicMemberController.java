@@ -1,6 +1,5 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
 import com.churchwebsite.churchwebsite.entities.Member;
 import com.churchwebsite.churchwebsite.entities.MemberDependent;
 import com.churchwebsite.churchwebsite.entities.MembershipAmount;
@@ -9,14 +8,11 @@ import com.churchwebsite.churchwebsite.enums.MembershipPaymentMethod;
 import com.churchwebsite.churchwebsite.enums.Relationship;
 import com.churchwebsite.churchwebsite.services.*;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -102,6 +98,7 @@ public class PublicMemberController {
     public String memberFormSubmitted(Model model){
 
         model.addAttribute("activeContentPage", "member-form-submitted");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return PUBLIC_CONTENT;
     }

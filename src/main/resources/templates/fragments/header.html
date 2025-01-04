@@ -6,19 +6,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
   <header class="main-header mb-3" >
     <style>
       .carousel-item {
-        height: 60vh;
+        height: 70vh;
 <!--        min-height: 500px;
         background-size: cover;
         background-position: center;
-<!--        position: relative;-->
-        top: 0px;
+        position: relative;
+<!--        top: 10vh;-->
       }
 
       .navbar {
@@ -27,7 +26,7 @@
         left: 0;
         width: 100%;
         z-index: 100; /* Make sure it is above the carousel */
-        background-color: rgba(0, 128, 128, 0.5);
+        background-color: rgba(0, 128, 128, 0.75);
         alpha: 50%;
       }
 
@@ -83,6 +82,13 @@
             }
       }
 
+      .breadcrumb-item + .breadcrumb-item::before {
+              content: ">" !important;
+              margin: 0 3px !important;
+              color: white !important;
+              font-size: 1rem;
+            }
+
     </style>
 
     <!-- Navbar -->
@@ -93,89 +99,187 @@
           <!-- Logo on the left -->
           <div class="col-auto">
             <a class="navbar-brand" th:href="@{/}">
-              <img th:src="${churchDetail?.church?.churchLogo}"
-                   class="logo" style="border: 1px solid white !important;"
-                   alt="LOGO HERE">
+              <img th:src="${churchDetail?.church?.churchLogo}" class="logo" style="border: 1px solid white !important;" alt="LOGO HERE">
             </a>
           </div>
 
           <!-- Right-side content (Dashboard, Login, Toggler button) -->
-          <div class="col d-flex justify-content-end align-items-center">
+<!--          <div class="col d-flex justify-content-end align-items-center">-->
+<!--            <div class="d-flex">-->
+<!--              <div class="nav-item d-none d-md-inline">-->
+<!--                <div class="search-bar">-->
+<!--                  <form class="search-form d-flex align-items-center me-5" method="POST" action="#">-->
+<!--                    <input type="text" name="query" placeholder="Subscribe to email list" aria-placeholder="Subscribe to email list" class="form-control me-2">-->
+<!--                    <button type="submit" title="Search" class="btn btn-info btn-sm">Subscribe</button>-->
+<!--                  </form>-->
+<!--                </div>&lt;!&ndash; End Search Bar &ndash;&gt;-->
+<!--              </div>-->
+
+<!--              &lt;!&ndash; Dashboard link &ndash;&gt;-->
+<!--              <div  class="nav-item">-->
+<!--                <a th:href="@{/dashboard/home}"-->
+<!--                   sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')"-->
+<!--                   class="fw-bold fs-md-5 fs-6 text-white dashboard text-decoration text-decoration-none">-->
+<!--                  Dashboard <span class="text-brown d-none d-md-inline">/ </span><span class="mx-2 d-inline d-md-none"> </span>-->
+<!--                </a>-->
+<!--              </div>-->
+
+<!--              <div  class="nav-item d-none d-md-block">-->
+<!--                <a th:href="@{/members/form}"-->
+<!--                   class="fw-bold fs-md-5 fs-6 text-white dashboard text-decoration text-decoration-none">-->
+<!--                  Membership <span class="text-brown">/ </span>-->
+<!--                </a>-->
+<!--              </div>-->
+
+<!--              <div  class="nav-item d-none d-md-block">-->
+<!--                <a th:href="@{/contactUs}"-->
+<!--                   class="fw-bold fs-md-5 fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">-->
+<!--                  Contact Us <span class="text-brown">/ </span>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--              <div  class="nav-item d-none d-md-block">-->
+<!--                <a th:href="@{/aboutUs}"-->
+<!--                   class="fw-bold fs-md-5 fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">-->
+<!--                  About Us <span class="text-brown">/ </span>-->
+<!--                </a>-->
+<!--              </div>-->
+
+<!--              <div  class="nav-item d-none d-md-block">-->
+<!--                <a th:href="@{/theClergy}"-->
+<!--                   class="fw-bold fs-md-5 fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">-->
+<!--                  The Clergy <span class="text-brown">/ </span>-->
+<!--                </a>-->
+<!--              </div>-->
+
+<!--              &lt;!&ndash; Login link &ndash;&gt;-->
+<!--              <div sec:authorize="isAnonymous()" class="nav-item d-flex align-items-center auth me-3">-->
+<!--                <a class="nav-link fw-bold fs-md-5 fs-6 text-white" th:href="@{/users/login}">Login</a>-->
+<!--                <span class="mx-1 text-brown">/</span>-->
+<!--                <a class="nav-link fw-bold text-white fs-md-5 fs-6" th:href="@{/users/register}">Register</a>-->
+<!--              </div>-->
+<!--              <div sec:authorize="isAuthenticated()" class="nav-item logout me-3">-->
+<!--                <a class="nav-link fw-bold text-white fs-md-5 fs-6" th:href="@{/users/logout}">Logout</a>-->
+<!--              </div>-->
+<!--              <select class="form-select top-menu me-3" onchange="toMenuChange()">-->
+<!--                <option>-&#45;&#45;&#45;&#45;</option>-->
+<!--                <option sec:authorize="isAuthenticated()" value="dashboard">Dashboard</option>-->
+<!--                <option sec:authorize="isAuthenticated()" value="logout">Logout</option>-->
+<!--                <option sec:authorize="isAnonymous()" value="login">Login</option>-->
+<!--                <option sec:authorize="isAnonymous()" value="register">Register</option>-->
+<!--              </select>-->
+
+<!--              &lt;!&ndash; Toggler button &ndash;&gt;-->
+<!--              <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <div class="col d-flex justify-content-end">
             <div class="d-flex">
-              <!-- Dashboard link -->
-              <div  class="nav-item">
-                <a th:href="@{/dashboard/home}"
-                   sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')"
-                   class="fw-bold fs-6 text-white dashboard text-decoration text-decoration-none">
-                  Dashboard <span class="text-brown d-none d-md-inline">/ </span><span class="mx-2 d-inline d-md-none"> </span>
-                </a>
+              <!-- Search Bar -->
+              <div class="breadcrumb-item d-none d-md-inline">
+                <div class="search-bar">
+                  <form class="search-form d-flex align-items-center pe-5" method="POST" th:action="@{/subscription/email/subscribe}">
+                    <input type="text" name="email" placeholder="Subscribe to email list" aria-placeholder="Subscribe to email list" class="form-control me-2">
+                    <button type="submit" title="Search" class="btn btn-info btn-sm">Subscribe</button>
+                  </form>
+                </div><!-- End Search Bar -->
               </div>
 
-              <div  class="nav-item d-none d-md-block">
-                <a th:href="@{/members/form}"
-                   class="fw-bold fs-6 text-white dashboard text-decoration text-decoration-none">
-                  Membership <span class="text-brown">/ </span>
-                </a>
-              </div>
+              <!-- Breadcrumb -->
 
-              <div  class="nav-item d-none d-md-block">
-                <a th:href="@{/contactUs}"
-                   class="fw-bold fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">
-                  Contact Us <span class="text-brown">/ </span>
-                </a>
-              </div>
-              <div  class="nav-item d-none d-md-block">
-                <a th:href="@{/aboutUs}"
-                   class="fw-bold fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">
-                  About Us <span class="text-brown">/ </span>
-                </a>
-              </div>
+              <ol class="breadcrumb mb-0 flex-grow-1 text-end">
+                <!-- Dashboard link -->
+                <li class="breadcrumb-item d-none d-md-block">
+                  <a th:href="@{/dashboard/home}" sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')" class="fw-bold fs-md-5 fs-6 text-white">
+                    Dashboard
+                  </a>
+                </li>
 
-              <div  class="nav-item d-none d-md-block">
-                <a th:href="@{/theClergy}"
-                   class="fw-bold fs-6 text-white dashboard mx-1 text-decoration text-decoration-none">
-                  The Clergy <span class="text-brown">/ </span>
-                </a>
-              </div>
+                <!-- Membership link -->
+                <li class="breadcrumb-item d-none d-md-inline">
+                  <a th:href="@{/members/form}" class="fw-bold fs-md-5 fs-6 text-white">
+                    Membership
+                  </a>
+                </li>
 
-              <!-- Login link -->
-              <div sec:authorize="isAnonymous()" class="nav-item d-flex align-items-center auth me-3">
-                <a class="nav-link fw-bold fs-6 text-white" th:href="@{/users/login}">Login</a>
-                <span class="mx-1 text-brown">/</span>
-                <a class="nav-link fw-bold text-white fs-6" th:href="@{/users/register}">Register</a>
-              </div>
-              <div sec:authorize="isAuthenticated()" class="nav-item logout me-3">
-                <a class="nav-link fw-bold text-white fs-6" th:href="@{/users/logout}">Logout</a>
-              </div>
-              <select class="form-select top-menu me-3" onchange="toMenuChange()">
-                <option>-----</option>
-                <option sec:authorize="isAuthenticated()" value="dashboard">Dashboard</option>
-                <option sec:authorize="isAuthenticated()" value="logout">Logout</option>
-                <option sec:authorize="isAnonymous()" value="login">Login</option>
-                <option sec:authorize="isAnonymous()" value="register">Register</option>
-              </select>
+                <!-- Contact Us link -->
+                <li class="breadcrumb-item d-none d-md-inline">
+                  <a th:href="@{/contactUs}" class="fw-bold fs-md-5 fs-6 text-white">
+                    Contact Us
+                  </a>
+                </li>
 
-              <!-- Toggler button -->
+                <!-- About Us link -->
+                <li class="breadcrumb-item d-none d-md-inline">
+                  <a th:href="@{/aboutUs}" class="fw-bold fs-md-5 fs-6 text-white">
+                    About Us
+                  </a>
+                </li>
+
+                <!-- The Clergy link -->
+                <li class="breadcrumb-item d-none d-md-inline">
+                  <a th:href="@{/theClergy}" class="fw-bold fs-md-5 fs-6 text-white">
+                    The Clergy
+                  </a>
+                </li>
+
+                <!-- Authentication Links (Login/Register/Logout) -->
+                <li sec:authorize="isAnonymous()" class="breadcrumb-item">
+                  <a th:href="@{/users/login}" class="fw-bold fs-md-5 fs-6 text-white">
+                    Login
+                  </a>
+                </li>
+                <li sec:authorize="isAnonymous()" class="breadcrumb-item">
+                  <a th:href="@{/users/register}" class="fw-bold fs-md-5 fs-6 text-white">
+                    Register
+                  </a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="breadcrumb-item d-none d-md-block">
+                  <a th:href="@{/users/logout}" class="fw-bold fs-md-5 fs-6 text-white">
+                    Logout
+                  </a>
+                </li>
+                <!-- Dropdown Menu -->
+
+              </ol>
+
+              <!-- Toggler button for mobile -->
               <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
             </div>
           </div>
 
+
         </div>
         <!-- Collapsible content -->
-        <div class="collapse navbar-collapse w-100 mt-4 rounded-md-pill ps-3 round-pill" id="navbarSupportedContent" >
+        <div class="collapse navbar-collapse w-100 mt-4 rounded-md-pill ps-3 round-pill" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto">
-            <li class="d-block d-md-none nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/church-services}">Membership</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/church-services}">Services</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/announcements}">Announcements</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/news}">News</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/media-center/options}">Media Center</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/events}">Events</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/blogs}">Blogs</a></li>
+            <li class="d-block d-md-none nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/church-services}">Membership</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3 d-md-none d-block">
+              <a th:href="@{/dashboard/home}" sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')" class="nav-link">
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/church-services}">Services</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/announcements}">Announcements</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/news}">News</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/media-center/options}">Media Center</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/events}">Events</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/blogs}">Blogs</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/shopping/products}">Shop</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/contactUs}">Contact Us</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/aboutUs}">About Us</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/theClergy}">The Clergy</a></li>
             <li class="nav-item fs-4 fw-bold pe-3"><a class="nav-link" th:href="@{/donation/options}" style="color: aqua !important;">Donate</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" href="#">School</a></li>
-            <li class="nav-item fs-5 pe-3"><a class="nav-link" th:href="@{/shopping/products}">Shop</a></li>
+            <li sec:authorize="isAuthenticated()" class="nav-item fs-md-5 fs-6 pe-3 d-md-none d-block">
+              <a th:href="@{/users/logout}" class="nav-link">
+                Logout
+              </a>
+            </li>
+
           </ul>
         </div>
       </div>
@@ -204,7 +308,6 @@
 
 
 <!-- Bootstrap Bundle with Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

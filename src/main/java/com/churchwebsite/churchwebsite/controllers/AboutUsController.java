@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.AboutUs;
 import com.churchwebsite.churchwebsite.services.AboutUsService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,16 @@ public class AboutUsController {
 
     private final AboutUsService aboutUsService;
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
+
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public AboutUsController(AboutUsService aboutUsService, PaginationService paginationService) {
+    public AboutUsController(AboutUsService aboutUsService, PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.aboutUsService = aboutUsService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/list")
@@ -49,6 +53,9 @@ public class AboutUsController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -58,6 +65,7 @@ public class AboutUsController {
 
         AboutUs aboutUs = aboutUsService.getAboutUsById(id);
         model.addAttribute("aboutUs", aboutUs);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -66,6 +74,8 @@ public class AboutUsController {
     public String showAboutUsForm(Model model) {
         model.addAttribute("activeDashPage", "about-us-form");
         model.addAttribute("aboutUs", new AboutUs());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -74,6 +84,8 @@ public class AboutUsController {
     public String showAboutUsFormForUpdate(@PathVariable("id") int anId, Model model) {
         model.addAttribute("activeDashPage", "about-us-form");
         model.addAttribute("aboutUs", aboutUsService.getAboutUsById(anId));
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }

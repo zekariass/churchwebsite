@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -33,7 +33,6 @@
                 </div>
             </div>
     </ul>
-    <!-- Show a message if there are no blogs -->
     <div th:if="${blogs.size() == 0}">
         <h4 colspan="4" class="text-center text-muted">No Blogs found.</h4>
     </div>
@@ -56,5 +55,108 @@
             }
         }
     </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog List</title>
+
+</head>
+<body th:fragment="blogs-list">
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Blog List</h1>
+
+    <!-- Sort Blogs -->
+    <div class="d-flex justify-content-end mb-3">
+        <select id="blogCategoryId" class="form-select mb-4 w-auto" onchange="onBlogCategorySelect()">
+            <option th:value="0">Select Blog Category</option>
+            <option th:each="blogCategory: ${blogCategories}"
+                    th:value="${blogCategory.blogCategoryId}"
+                    th:text="${blogCategory.blogCategoryName}"
+                    th:selected="${blogCatId != null and blogCatId == blogCategory.blogCategoryId}"></option>
+        </select>
+    </div>
+
+    <!-- Blog List -->
+    <div class="row">
+        <th:block th:each="blog : ${blogs}">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <!-- Blog Title -->
+                        <h5 class="card-title mb-3" th:text="${blog.blogTitle}">Blog Title</h5>
+
+                        <!-- Blog Excerpt -->
+                        <p class="card-text" th:text="${blog.excerpt} + '...'">
+                            Blog excerpt will go here.
+                        </p>
+
+                        <!-- Blog Details -->
+                        <p class="small text-muted mb-2">
+                            <span th:text="|Category: ${blog.blogCategory.blogCategoryName}|">Category</span>
+                            <br>
+                            <span th:text="|By: ${blog.userId.username}|">Author</span>
+                            <br>
+                            <span th:text="|Created: ${blog.blogTime.format(@dateTimeFormatter)}|">Time</span>
+                        </p>
+                    </div>
+
+                    <!-- Blog Footer -->
+                    <div class="card-footer text-center">
+                        <a th:href="@{/blogs/detail/{id}(id=${blog.blogId})}" class="button-sm success-button">
+                            Read More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <div th:if="${blogs.size() == 0}">
+        <h4 colspan="4" class="text-center text-muted">No Blogs found.</h4>
+    </div>
+    <div>
+        <div th:replace="~{fragments/pagination::pagination}"></div>
+    </div>
+    <script>
+        function onBlogCategorySelect(){
+
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+            const blogCatSel = document.querySelector("#blogCategoryId").value;
+
+            if(params.has("page") && params.has("archived")){
+                const archived = params.get("archived")
+                const page = params.get("page");
+                const size = params.get("size");
+                window.location.href = window.location.origin + '/blogs?blogCatId='+blogCatSel+'&page='+page+'&size='+size+'&archived='+archived;
+            }else if(params.has("page")){
+                const page = params.get("page");
+                const size = params.get("size");
+                window.location.href = window.location.origin + '/blogs?blogCatId='+blogCatSel+'&page='+page+'&size='+size;
+            }else if(params.has("archived")){
+                const archived = params.get("archived")
+                const page = params.get("page");
+                const size = params.get("size");
+                window.location.href = window.location.origin + '/blogs?blogCatId='+blogCatSel+'&archived='+archived;
+            }else{
+                window.location.href = window.location.origin + '/blogs?blogCatId='+blogCatSel;
+            }
+        }
+    </script>
+    <!-- Pagination -->
+</div>
+
 </body>
 </html>

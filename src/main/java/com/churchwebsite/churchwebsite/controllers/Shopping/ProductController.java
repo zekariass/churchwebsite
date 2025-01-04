@@ -4,6 +4,7 @@ import com.churchwebsite.churchwebsite.entities.shopping.Product;
 import com.churchwebsite.churchwebsite.entities.shopping.ProductCategory;
 import com.churchwebsite.churchwebsite.enums.ProductDeliveryType;
 import com.churchwebsite.churchwebsite.enums.ProductListingStatus;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.shopping.ProductCategoryService;
 import com.churchwebsite.churchwebsite.services.shopping.ProductService;
@@ -24,17 +25,19 @@ public class ProductController {
     private final PaginationService paginationService;
     private final ProductCategoryService productCategoryService;
     private final LocaleUtil localeUtil;
+    private  final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     public ProductController(ProductService productService,
                              ProductCategoryService productCategoryService,
                              PaginationService paginationService,
-                             LocaleUtil localeUtil) {
+                             LocaleUtil localeUtil, ChurchDetailService churchDetailService) {
         this.productService = productService;
         this.productCategoryService = productCategoryService;
         this.paginationService = paginationService;
         this.localeUtil = localeUtil;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping
@@ -59,6 +62,7 @@ public class ProductController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -67,6 +71,7 @@ public class ProductController {
     public String getProductById(@PathVariable Integer id, Model model) {
         model.addAttribute("product", productService.getProductById(id).orElse(null));
         model.addAttribute("activeDashPage", "product-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -82,6 +87,7 @@ public class ProductController {
         model.addAttribute("deliveryTypes", ProductDeliveryType.values());
         model.addAttribute("listingStatuses", ProductListingStatus.values());
         model.addAttribute("activeDashPage", "product-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -103,6 +109,7 @@ public class ProductController {
         model.addAttribute("deliveryTypes", ProductDeliveryType.values());
         model.addAttribute("listingStatuses", ProductListingStatus.values());
         model.addAttribute("activeDashPage", "product-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }

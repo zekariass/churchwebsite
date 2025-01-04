@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.News;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.NewsService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,13 +18,15 @@ import java.util.List;
 public class NewsController {
 
     private final NewsService newsService;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
     private final PaginationService paginationService;
 
     @Autowired
-    public NewsController(NewsService newsService, PaginationService paginationService) {
+    public NewsController(NewsService newsService, ChurchDetailService churchDetailService, PaginationService paginationService) {
         this.newsService = newsService;
+        this.churchDetailService = churchDetailService;
         this.paginationService = paginationService;
     }
 
@@ -31,6 +34,7 @@ public class NewsController {
     public String showNewsForm(Model model){
         model.addAttribute("activeDashPage", "news-form");
         model.addAttribute("news", new News());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -67,6 +71,8 @@ public class NewsController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -80,6 +86,8 @@ public class NewsController {
 
         model.addAttribute("activeDashPage", "news-detail");
         model.addAttribute("news", news);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -92,6 +100,8 @@ public class NewsController {
 
         model.addAttribute("activeDashPage", "news-form");
         model.addAttribute("news", news);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 

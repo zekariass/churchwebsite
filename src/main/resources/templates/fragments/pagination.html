@@ -1,68 +1,211 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div th:fragment="pagination">-->
+
+<!--        <nav aria-label="Pagination" th:if="${totalPages > 1}">-->
+<!--            <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                    <ul class="pagination justify-content-center">-->
+<!--                        <li class="page-item col" th:classappend="${currentPage == 1} ? 'disabled'">-->
+<!--                            <a th:replace="~{fragments/paging :: paging(${currentUrl}, 1, '<<', 'First Page')}"></a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item col font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">-->
+<!--                            <a th:replace="~{fragments/paging :: paging(${currentUrl}, ${currentPage - 1}, 'Prev', 'Previous Page')}"></a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item col disabled" th:if="${currentPage - 2 > 1}">-->
+<!--                            <a class="page-link" href="#">...</a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item col" th:classappend="${page == currentPage} ? 'active'"-->
+<!--                            th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">-->
+<!--                            <a th:replace="~{fragments/paging :: paging(${currentUrl}, ${page}, ${page}, 'Page ' + ${page})}"></a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item col disabled" th:if="${currentPage + 2 < totalPages}">-->
+<!--                            <a class="page-link" href="#">...</a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item col font-weight-bold"-->
+<!--                            th:classappend="${currentPage == totalPages} ? 'disabled': ''"-->
+<!--                            aria-disabled="${currentPage == totalPages}">-->
+<!--                            <a th:replace="~{fragments/paging :: paging(${currentUrl}, ${currentPage + 1}, 'Next', 'Next Page')}"></a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item col"-->
+<!--                            th:classappend="${currentPage == totalPages} ? 'disabled': ''"-->
+<!--                            aria-disabled="${currentPage == totalPages}">-->
+<!--                            <a th:replace="~{fragments/paging :: paging(${currentUrl}, ${totalPages}, '>>', 'Last Page')}"></a>-->
+<!--                        </li>-->
+
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="col">-->
+
+<!--&lt;!&ndash;                    <span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        Number of items&ndash;&gt;-->
+<!--&lt;!&ndash;                        <select id="items-per-page" class="form-select w-25" th:onchange="updateListing()">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">2</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">4</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">6</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">8</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">10</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">12</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">14</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">16</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">18</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <option value="2">20</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </span>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </nav>-->
+<!--&lt;!&ndash;        <script>&ndash;&gt;-->
+<!--&lt;!&ndash;            function updateListing(){&ndash;&gt;-->
+<!--&lt;!&ndash;                const itemsDrop = document.querySelector("#items-per-page");&ndash;&gt;-->
+<!--&lt;!&ndash;                let currentUrl = new URL(window.location.href);&ndash;&gt;-->
+<!--&lt;!&ndash;                currentUrl.searchParams.set("size", itemsDrop.value);&ndash;&gt;-->
+<!--&lt;!&ndash;                window.location.href = currentUrl.toString();&ndash;&gt;-->
+<!--&lt;!&ndash;            }&ndash;&gt;-->
+
+<!--&lt;!&ndash;        </script>&ndash;&gt;-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div th:fragment="pagination">
+<div th:fragment="pagination">
+    <nav aria-label="Pagination" th:if="${totalPages > 1}">
+        <div class="">
+            <ul class="pagination justify-content-center">
+                <div class="d-flex flex-row">
+                    <!-- First Page Button -->
+                    <li class="page-item col" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <button class="btn shadow-lg bg-snow button-sm" id="firstPageBtn">
+                            <i class="fa-solid fa-angles-left"></i>
+                        </button>
+                    </li>
 
-        <nav aria-label="Pagination" th:if="${totalPages > 0}">
-            <div class="row">
-                <div class="col-12">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                            <a th:replace="fragments/paging :: paging(${currentUrl}, 1, '<<', 'First Page')"></a>
+                    <!-- Previous Page Button -->
+                    <li class="page-item col font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                        <button class="btn shadow-lg bg-snow button-sm" id="prevPageBtn">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+                    </li>
+
+                    <!-- Page Buttons for Total Pages <= 3 -->
+                    <th:block th:if="${totalPages <= 3}">
+                        <li class="page-item col" th:each="page : ${#numbers.sequence(1, totalPages)}">
+                            <button class="btn shadow-lg bg-snow button-sm"
+                                    th:text="${page}"
+                                    th:data-page="${page}"
+                                    th:classappend="${page == currentPage} ? 'active' : ''"></button>
                         </li>
-                        <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
-                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${currentPage - 1}, 'Prev', 'Previous Page')"></a>
-                        </li>
-                        <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
-                            <a class="page-link" href="#">...</a>
-                        </li>
-                        <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                    </th:block>
+
+                    <!-- Page Buttons for Total Pages > 3 -->
+                    <th:block th:if="${totalPages > 3}">
+<!--                        <li class="page-item col">-->
+<!--                            <button class="btn shadow-lg bg-snow button-sm"-->
+<!--                                    th:text="1"-->
+<!--                                    th:data-page="1"-->
+<!--                                    th:classappend="${currentPage == 1} ? 'active' : ''"></button>-->
+<!--                        </li>-->
+                        <li class="page-item col"
                             th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
-                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${page}, ${page}, 'Page ' + ${page})"></a>
+                            <button class="btn shadow-lg bg-snow button-sm"
+                                    th:text="${page}"
+                                    th:data-page="${page}"
+                                    th:classappend="${page == currentPage} ? 'active' : ''"></button>
                         </li>
-                        <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
-                            <a class="page-link" href="#">...</a>
-                        </li>
-                        <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${currentPage + 1},'Next', 'Next Page')"></a>
-                        </li>
-                        <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                            <a th:replace="fragments/paging :: paging(${currentUrl}, ${totalPages}, '>>', 'Last Page')"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col">
+<!--                        <li class="page-item col">-->
+<!--                            <button class="btn shadow-lg bg-snow button-sm"-->
+<!--                                    th:text="${totalPages}"-->
+<!--                                    th:data-page="${totalPages}"-->
+<!--                                    th:classappend="${currentPage == totalPages} ? 'active' : ''"></button>-->
+<!--                        </li>-->
+                    </th:block>
 
-<!--                    <span>-->
-<!--                        Number of items-->
-<!--                        <select id="items-per-page" class="form-select w-25" th:onchange="updateListing()">-->
-<!--                            <option value="2">2</option>-->
-<!--                            <option value="2">4</option>-->
-<!--                            <option value="2">6</option>-->
-<!--                            <option value="2">8</option>-->
-<!--                            <option value="2">10</option>-->
-<!--                            <option value="2">12</option>-->
-<!--                            <option value="2">14</option>-->
-<!--                            <option value="2">16</option>-->
-<!--                            <option value="2">18</option>-->
-<!--                            <option value="2">20</option>-->
-<!--                        </select>-->
-<!--                    </span>-->
-                </div>
-            </div>
-        </nav>
-<!--        <script>-->
-<!--            function updateListing(){-->
-<!--                const itemsDrop = document.querySelector("#items-per-page");-->
-<!--                let currentUrl = new URL(window.location.href);-->
-<!--                currentUrl.searchParams.set("size", itemsDrop.value);-->
-<!--                window.location.href = currentUrl.toString();-->
-<!--            }-->
+                    <!-- Next Page Button -->
+                    <li class="page-item col font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <button class="btn shadow-lg bg-snow button-sm" id="nextPageBtn">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                    </li>
 
-<!--        </script>-->
-    </div>
+                    <!-- Last Page Button -->
+                    <li class="page-item col" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <button class="btn shadow-lg bg-snow button-sm" id="lastPageBtn"><i class="fa-solid fa-angles-right"></i></button>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- JavaScript -->
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const pageSize = /*[[${pageSize ?: 10}]]*/; // Fallback to 10 if pageSize is null
+            const currentPage = /*[[${currentPage}]]*/;
+            const totalPages = /*[[${totalPages}]]*/;
+
+            const buttons = document.querySelectorAll(".pagination button");
+            buttons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const page = this.getAttribute("data-page");
+                    if (page) {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set("page", page);
+                        url.searchParams.set("size", pageSize);
+                        window.location.href = url.toString();
+                    }
+                });
+            });
+
+            // First Page
+            document.getElementById("firstPageBtn")?.addEventListener("click", function () {
+                const url = new URL(window.location.href);
+                url.searchParams.set("page", 1);
+                url.searchParams.set("size", pageSize);
+                window.location.href = url.toString();
+            });
+
+            // Previous Page
+            document.getElementById("prevPageBtn")?.addEventListener("click", function () {
+                if (currentPage > 1) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("page", currentPage - 1);
+                    url.searchParams.set("size", pageSize);
+                    window.location.href = url.toString();
+                }
+            });
+
+            // Next Page
+            document.getElementById("nextPageBtn")?.addEventListener("click", function () {
+                if (currentPage < totalPages) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("page", currentPage + 1);
+                    url.searchParams.set("size", pageSize);
+                    window.location.href = url.toString();
+                }
+            });
+
+            // Last Page
+            document.getElementById("lastPageBtn")?.addEventListener("click", function () {
+                const url = new URL(window.location.href);
+                url.searchParams.set("page", totalPages);
+                url.searchParams.set("size", pageSize);
+                window.location.href = url.toString();
+            });
+        });
+    </script>
+</div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.Announcement;
 import com.churchwebsite.churchwebsite.services.AnnouncementService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,18 @@ public class AnnouncementController {
 
     private final AnnouncementService announcementService;
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public AnnouncementController(AnnouncementService announcementService, PaginationService paginationService) {
+    public AnnouncementController(AnnouncementService announcementService, PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.announcementService = announcementService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
-    @GetMapping
+    @GetMapping("")
     public String getAllAnnouncements(Model model,
                                       @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                       @RequestParam(value = "size", required = false) Integer pageSize,
@@ -49,6 +52,8 @@ public class AnnouncementController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -57,6 +62,7 @@ public class AnnouncementController {
     public String getAnnouncementById(@PathVariable Integer id, Model model) {
         model.addAttribute("activeDashPage", "announcement-detail");
         model.addAttribute("announcement", announcementService.getAnnouncementById(id).orElse(new Announcement()));
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -65,6 +71,7 @@ public class AnnouncementController {
     public String showAnnouncementForm(Model model) {
         model.addAttribute("activeDashPage", "announcement-form");
         model.addAttribute("announcement", new Announcement());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -73,6 +80,7 @@ public class AnnouncementController {
     public String showAnnouncementFormForUpdate(@PathVariable("id") int anId, Model model) {
         model.addAttribute("activeDashPage", "announcement-form");
         model.addAttribute("announcement", announcementService.getAnnouncementById(anId).orElse(new Announcement()));
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }

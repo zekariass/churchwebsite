@@ -75,6 +75,7 @@ public class CartController {
         List<CartItem> cartItems = cartService.getCart(request, response);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         return "cart"; // Returns a view named "cart.html"
     }
 
@@ -129,6 +130,8 @@ public class CartController {
         model.addAttribute("deliveryOrCollect", ProductDeliveryType.DELIVERY_OR_COLLECT);
         model.addAttribute("checkoutDto", new CheckoutDTO());
         model.addAttribute("shippingPrice", 0.0);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return PUBLIC_CONTENT;
     }
@@ -310,6 +313,8 @@ public class CartController {
         modelMap.remove("stripeResponse");
 
         model.addAttribute("activeContentPage", "checkout-success");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return PUBLIC_CONTENT;
     }
 
@@ -376,6 +381,7 @@ public class CartController {
     @GetMapping("/checkout-cancel")
     public String showCheckoutCancellation(Model model){
         model.addAttribute("activeContentPage", "checkout-cancel");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         return PUBLIC_CONTENT;
     }
 

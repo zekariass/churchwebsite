@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.PaymentGateway;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaymentGatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,14 @@ import java.util.List;
 @RequestMapping("/payment-gateways")
 public class PaymentGatewayController {
 
+    private final PaymentGatewayService paymentGatewayService;
+    private final ChurchDetailService churchDetailService;
+
     @Autowired
-    private PaymentGatewayService paymentGatewayService;
+    public PaymentGatewayController(PaymentGatewayService paymentGatewayService, ChurchDetailService churchDetailService) {
+        this.paymentGatewayService = paymentGatewayService;
+        this.churchDetailService = churchDetailService;
+    }
 
     @GetMapping
     public String getAllPaymentGateways(Model model) {

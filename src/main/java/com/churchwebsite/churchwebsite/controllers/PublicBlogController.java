@@ -1,18 +1,22 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
-import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Blog;
 import com.churchwebsite.churchwebsite.entities.BlogCategory;
-import com.churchwebsite.churchwebsite.services.*;
-import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
+import com.churchwebsite.churchwebsite.services.BlogCategoryService;
+import com.churchwebsite.churchwebsite.services.BlogService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
+import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -46,13 +50,19 @@ public class PublicBlogController {
     public String showBlogsList( @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                                  @RequestParam(value = "size", required = false) Integer pageSize,
                                  @RequestParam(value = "blogCatId", required = false, defaultValue = "0") Integer blogCatId,
+                                 @RequestParam(value = "archived", required = false, defaultValue = "false") boolean archived,
                                 HttpServletRequest request,
                                 Model model){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Blog> pagedBlog = blogService.findAll(page, pageSize, blogCatId);
+        Page<Blog> pagedBlog = pagedBlog = blogService.findBlogsByArchive(page, pageSize, blogCatId, archived);
         List<Blog> blogs = pagedBlog.getContent();
+
+        blogs.forEach(blog->{
+            String excerpt = generateExcerpt(blog.getBlogText(), 200);
+            blog.setExcerpt(excerpt);
+        });
 
         List<BlogCategory> blogCategories = blogCategoryService.findAll();
 
@@ -70,6 +80,16 @@ public class PublicBlogController {
         return PUBLIC_CONTENT;
     }
 
+    private String generateExcerpt(String blogText, int length) {
+        if(blogText == null || blogText.isEmpty()){
+            return "";
+        }else{
+            String plainText = Jsoup.parse(blogText).text();
+
+            return plainText.length() < length ? plainText : plainText.substring(0, length) + "...";
+        }
+    }
+
     @GetMapping("/detail/{id}")
     public String showBlogCategoryDetail(@PathVariable(value = "id", required = true) Integer blogId,
                                          Model model){
@@ -77,7 +97,7 @@ public class PublicBlogController {
         Blog blog = blogService.findById(blogId);
         model.addAttribute("activeContentPage", "blog-detail");
         model.addAttribute("blog", blog);
-        model.addAttribute("churchDetail", churchDetailService);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
 
         return PUBLIC_CONTENT;

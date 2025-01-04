@@ -11,41 +11,49 @@
       <div class="d-flex justify-content-end mb-3">
         <a href="/dashboard/announcements/form" class="success-button">Create Announcement</a>
       </div>
-      <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Created At</th>
-          <th>Modified At</th>
-          <th>Is Active</th>
-          <th>Is Archived</th>
-          <th>Is Featured</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="announcement : ${announcements}" role="button" th:onclick="|window.location='@{/dashboard/announcements/detail/{id}(id=${announcement.id})}'|">
-          <td th:text="${announcement.id}"></td>
-          <td th:text="${announcement.title}"></td>
-          <td th:text="${announcement.createdAt.format(@dateTimeFormatter)}"></td>
-          <td th:text="${announcement.lastModifiedAt.format(@dateTimeFormatter)}"></td>
-          <td>
-            <span th:text="${announcement?.active ? 'Yes' : 'No'}" th:class="${announcement?.active ? 'text-success' : 'text-danger'}"></span>
-          </td>
-          <td>
-            <span th:text="${announcement?.archived ? 'Yes' : 'No'}"></span>
-          </td>
-          <td>
-            <span th:text="${announcement?.featured ? 'Yes' : 'No'}"></span>
-          </td>
-          <td>
-            <a th:href="@{/dashboard/announcements/detail/{id}(id=${announcement.id})}" class="btn-sm success-button">View</a>
-            <a th:href="@{/dashboard/announcements/edit/{id}(id=${announcement.id})}" class="btn-sm warning-button">Edit</a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Created At</th>
+            <th>Modified At</th>
+            <th>Is Active</th>
+            <th>Is Archived</th>
+            <th>Is Featured</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="announcement : ${announcements}" role="button" th:onclick="|window.location='@{/dashboard/announcements/detail/{id}(id=${announcement.id})}'|">
+            <td th:text="${announcement.id}"></td>
+            <td th:text="${announcement.title}"></td>
+            <td th:text="${announcement.createdAt.format(@dateTimeFormatter)}"></td>
+            <td th:text="${announcement.lastModifiedAt.format(@dateTimeFormatter)}"></td>
+            <td>
+              <span th:text="${announcement?.active ? 'Yes' : 'No'}" th:class="${announcement?.active ? 'text-success' : 'text-danger'}"></span>
+            </td>
+            <td>
+              <span th:text="${announcement?.archived ? 'Yes' : 'No'}"></span>
+            </td>
+            <td>
+              <span th:text="${announcement?.featured ? 'Yes' : 'No'}"></span>
+            </td>
+            <td>
+              <div class="d-flex flex-row">
+                <a th:href="@{/dashboard/announcements/detail/{id}(id=${announcement.id})}" class="btn-sm success-button me-1">View</a>
+                <a th:href="@{/dashboard/announcements/edit/{id}(id=${announcement.id})}" class="btn-sm warning-button me-1">Edit</a>
+                <a th:href="@{/dashboard/announcements/delete/{id}(id=${announcement.id})}" class="btn-sm danger-button">Edit</a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div th:replace="~{fragments/pagination::pagination}"></div>
     </div>
   </div>
 </body>

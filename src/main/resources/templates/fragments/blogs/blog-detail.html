@@ -5,23 +5,25 @@
     <title>Blog Detail</title>
 </head>
 <body>
-    <div th:fragment="blog-detail" class="list-group container">
-        <div class="card">
+    <div th:fragment="blog-detail" class="list-group">
+        <div class="px-5">
             <div class="m-3">
                 <Span class="d-flex justify-content-end">
-                    <a th:href="@{/blogs}" class="mx-1">Back to the list</a>
+                    <a th:href="@{/blogs}" class="mx-1 text-success h5">Blogs</a>
                 </Span>
             </div>
-            <div class="card-header">
-                <div class="d-flex w-100">
-                    <h5 class="mb-1">[[${blog.blogTitle}]]</h5>
-                </div>
-                <p class="text-muted" th:text="${blog.blogTime != null ? blog.blogTime.format(@dateTimeFormatter): ''}"></p>
-            </div>
+           <div class="shadow bg-white p-5">
+               <div class="">
+                   <div class="d-flex w-100">
+                       <h5 class="mb-1 py-5">[[${blog.blogTitle}]]</h5>
+                   </div>
+                   <p class="" th:text="${blog.blogTime != null ? blog.blogTime.format(@dateTimeFormatter): ''}"></p>
+               </div>
 
-            <div class="card-body">
-                <p class="mb-1" th:utext="${blog.blogText}"></p>
-            </div>
+               <div class="">
+                   <p class="mb-1" th:utext="${blog.blogText}"></p>
+               </div>
+           </div>
         </div>
     </div>
 </body>

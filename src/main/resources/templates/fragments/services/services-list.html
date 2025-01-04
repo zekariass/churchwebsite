@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -18,29 +18,103 @@
                   <div class="m-4">
                       <h4 th:if="${churchServices.size() == 0}">No service found!</h4>
                   </div>
-                  <div th:each="service: ${churchServices}" class="py-4 service-list shadow-sm mb-3 rounded-3 border border-info" role="button" style="">
-                      <div class="row">
-                          <div class="col-10" th:onclick="|window.location='@{/church-services/detail/{id}(id=${service.serviceId})}'|">
-                              <h4 href="#" class="list-group-item list-group-item-action px-3 border-1">[[${service.serviceName}]]</h4>
-                          </div>
-                      </div>
+                  <ul>
+                  <div th:each="service: ${churchServices}" class="service-list py-1 mb-3 rounded-3" role="button" style="">
+                          <li>
+                              <a class="text-success" th:href="@{/}">
+                                  <h5 class="col-10" th:onclick="|window.location='@{/church-services/detail/{id}(id=${service.serviceId})}'|">
+                                      <h5  class="list-group-item list-group-item-action px-3 border-1">[[${service.serviceName}]]</h5>
+                                  </h5>
+                              </a>
+                          </li>
                   </div>
+                  </ul>
               </div>
           </div>
           <div class="col-md-3 col-12 card mb-3" style="background-color: #FAF9F6; border-radius: 5px">
               <div class="card-body">
                   <div class="mb-3 p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/baptism/form}'|">
-                      <h5 class="text-info">Baptism Request Form</h5>
+                      <h5 class="text-muted">Baptism Request Form</h5>
                   </div>
                   <div class="mb-3 p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/matrimony/form}'|">
-                      <h5 class="text-info">Holy Matrimony Request Form</h5>
+                      <h5 class="text-muted">Holy Matrimony Request Form</h5>
                   </div>
                   <div class="p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/remembrance/form}'|">
-                      <h5 class="text-info">Remembrance Prayer Request Form</h5>
+                      <h5 class="text-muted">Remembrance Prayer Request Form</h5>
                   </div>
               </div>
           </div>
       </div>
   </div>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Services</title>
+</head>
+<body>
+    <div th:fragment="services-list">
+        <div class="container my-4">
+            <div>
+                <h2 class="text-center">Church Services</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <th:block th:each="service : ${churchServices}">
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body">
+                                        <!-- Blog Title -->
+                                        <h5 class="card-title mb-3 text-success" th:text="${service.serviceName}">Service Name</h5>
+
+                                        <!-- Blog Excerpt -->
+                                        <p class="card-text" th:text="${service.excerpt} + '...'"></p>
+                                    </div>
+
+                                    <!-- Blog Footer -->
+                                    <div class="card-footer text-center">
+                                        <a th:href="@{/church-services/detail/{id}(id=${service.serviceId})}" class="button-sm success-button">
+                                            Read More
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div> <!-- Closed missing row div -->
+                </div>
+                <div class="col-md-4 mb-3" style="background-color: #FAF9F6; border-radius: 5px">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3 p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/baptism/form}'|">
+                                <h5 class="text-muted">Baptism Request Form</h5>
+                            </div>
+                            <div class="mb-3 p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/matrimony/form}'|">
+                                <h5 class="text-muted">Holy Matrimony Request Form</h5>
+                            </div>
+                            <div class="p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/remembrance/form}'|">
+                                <h5 class="text-muted">Remembrance Prayer Request Form</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" th:if="${churchServices.size() == 0}">
+                <div class="col-12 text-center">
+                    <p class="text-muted">No services available.</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div th:replace="~{fragments/pagination::pagination}"></div>
+        </div>
+    </div>
 </body>
 </html>

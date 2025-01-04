@@ -26,11 +26,16 @@
                 <td th:text="${notification.notificationSubject}"></td>
                 <td th:text="${notification.notificationSentTime.format(@dateTimeFormatter)}"></td>
                 <td>
-                    <a th:href="@{/dashboard/notifications/detail/{id}(id=${notification.notificationId})}" class="btn btn-info btn-sm">Detail</a>
-<!--                    <a th:href="@{/dashboard/notifications/{id}/edit(id=${notification.notificationId})}" class="btn btn-warning btn-sm">Edit</a>-->
-                    <form th:action="@{/dashboard/notifications/{id}/delete(id=${notification.notificationId})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+                    <div class="d-flex flex-row">
+                        <a th:href="@{/dashboard/notifications/detail/{id}(id=${notification.notificationId})}" class="btn btn-info btn-sm me-1">Detail</a>
+                        <form th:action="@{/dashboard/notifications/{id}/delete(id=${notification.notificationId})}" class="me-1" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        <form th:action="@{/dashboard/notifications/{id}/resend(id=${notification.notificationId})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Resend</button>
+                        </form>
+                        <p id="resend" class="text-success d-none">Notification resent!</p>
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -39,6 +44,22 @@
     <div class="mt-4">
         <div th:replace="~{fragments/pagination::pagination}"></div>
     </div>
+    <script>
+        const queryParams = new URLSearchParams(window.location.search);
+        if(queryParams.has('resent')){
+            const resendEl = document.getElementById('resend');
+
+            if(resendEl){
+                resendEl.classList.remove("d-none");
+                resendEl.classList.add("d-block");
+
+                setTimeout(()=>{
+                     resendEl.classList.remove("d-block");
+                     resendEl.classList.add("d-none");
+                }, 5000);
+            }
+        }
+    </script>
 </div>
 </body>
 </html>

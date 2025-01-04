@@ -4,6 +4,7 @@ import com.churchwebsite.churchwebsite.entities.*;
 import com.churchwebsite.churchwebsite.enums.ServiceStatus;
 import com.churchwebsite.churchwebsite.services.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,19 +22,23 @@ public class ChurchServicesController {
     private final HolyMatrimonyService holyMatrimonyService;
     private final RemembrancePrayerService remembrancePrayerService;
 
+    private final ChurchDetailService churchDetailService;
+
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+
 
     @Autowired
     public ChurchServicesController(ChurchServicesService churchServicesService,
                                     BaptismService baptismService,
                                     HolyMatrimonyService holyMatrimonyService,
                                     RemembrancePrayerService remembrancePrayerService,
-                                    PaginationService paginationService) {
+                                    PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.churchServicesService = churchServicesService;
         this.paginationService = paginationService;
         this.baptismService = baptismService;
         this.holyMatrimonyService = holyMatrimonyService;
         this.remembrancePrayerService = remembrancePrayerService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/form")
@@ -41,6 +46,7 @@ public class ChurchServicesController {
 
         model.addAttribute("service", new ChurchServices());
         model.addAttribute("activeDashPage", "service-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -53,6 +59,7 @@ public class ChurchServicesController {
 
         model.addAttribute("service", churchService);
         model.addAttribute("activeDashPage", "service-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -79,6 +86,11 @@ public class ChurchServicesController {
         Page<ChurchServices> pagedServices = churchServicesService.findAll(page, pageSize, sortBy);
         List<ChurchServices> churchServices = pagedServices.getContent();
 
+        churchServices.forEach(service -> {
+            String excerpt = generateExcerpt(service.getServiceDescription(), 200);
+            service.setExcerpt(excerpt);
+        });
+
         model.addAttribute("activeDashPage", "services-list");
         model.addAttribute("churchServices", churchServices);
 
@@ -88,8 +100,18 @@ public class ChurchServicesController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
+    }
+
+    private String generateExcerpt(String richText, int length) {
+        if(richText == null || richText.isEmpty()){
+            return "";
+        }else{
+            String plainText = Jsoup.parse(richText).text();
+            return plainText.length() > length ? plainText.substring(0, length) : plainText;
+        }
     }
 
     @GetMapping("/detail/{id}")
@@ -101,6 +123,8 @@ public class ChurchServicesController {
 
         model.addAttribute("churchService", churchService);
         model.addAttribute("activeDashPage", "service-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -137,6 +161,9 @@ public class ChurchServicesController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -148,6 +175,8 @@ public class ChurchServicesController {
 
         model.addAttribute("baptism", baptism);
         model.addAttribute("activeDashPage", "baptism-request-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -159,6 +188,8 @@ public class ChurchServicesController {
         model.addAttribute("baptism", baptism);
         model.addAttribute("baptismRequestStatus", ServiceStatus.values());
         model.addAttribute("activeDashPage", "baptism-request-status-update");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -198,6 +229,8 @@ public class ChurchServicesController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -209,6 +242,8 @@ public class ChurchServicesController {
 
         model.addAttribute("matrimony", matrimony);
         model.addAttribute("activeDashPage", "matrimony-request-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -220,6 +255,8 @@ public class ChurchServicesController {
         model.addAttribute("matrimony", matrimony);
         model.addAttribute("matrimonyRequestStatus", ServiceStatus.values());
         model.addAttribute("activeDashPage", "matrimony-request-status-update");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -259,6 +296,8 @@ public class ChurchServicesController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -270,6 +309,8 @@ public class ChurchServicesController {
 
         model.addAttribute("remembrance", remembrancePrayer);
         model.addAttribute("activeDashPage", "remembrance-request-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 }

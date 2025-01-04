@@ -6,8 +6,11 @@
 </head>
 <body>
 <div th:fragment="blog-form">
-    <div class="row g-3">
-        <div class="col-md-8">
+    <div class="">
+        <div class="text-end">
+            <a th:href="@{/images/form?forAlbumId={id}(id=${album?.albumId})}" class="text-success mb-3"><h6 class="text-end">Create image link for this blog</h6></a>
+        </div>
+        <div class="">
             <form th:action="@{/dashboard/blogs/processBlogForm}" th:object="${blog}" method="POST">
                 <input th:if="${blog.blogId != 0}" type="hidden" th:field="*{blogId}">
                 <div class="my-3">
@@ -38,9 +41,7 @@
                 <input class="success-button" type="submit" value="Save" />
             </form>
         </div>
-        <div class="col-md-4">
-            <button th:onclick="|window.location='@{/medias/form?forAlbumId={id}(id=${album?.albumId})}'|" class="success-button">Upload Media</button>
-        </div>
+
     </div>
     <!-- <script th:src="@{/js/custom-jodit.js}"></script> -->
 </div>

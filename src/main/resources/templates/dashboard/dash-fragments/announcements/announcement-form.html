@@ -5,7 +5,7 @@
 </head>
 <body>
     <div th:fragment="announcement-form">
-        <div class="container mt-5">
+        <div class="container mb-5">
             <h1 th:text="${announcement.id == null ? 'Create Announcement' : 'Edit Announcement'}"></h1>
             <form th:action="@{/dashboard/announcements/form/process}" th:object="${announcement}" method="post" class="mt-4">
                 <input type="hidden" th:field="*{id}">

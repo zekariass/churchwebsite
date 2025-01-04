@@ -3,10 +3,10 @@ package com.churchwebsite.churchwebsite.controllers;
 import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Blog;
 import com.churchwebsite.churchwebsite.entities.BlogCategory;
-import com.churchwebsite.churchwebsite.entities.Settings;
 import com.churchwebsite.churchwebsite.services.*;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,6 +25,7 @@ public class BlogController {
     private final UserService userService;
     private final AlbumService albumService;
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
 
     @Value("${settings.default.page.size:10}")
     private int defaultPageSize;
@@ -37,13 +38,14 @@ public class BlogController {
                           SettingsService settingsService,
                           AlbumService albumService,
                           UserService userService,
-                          PaginationService paginationService) {
+                          PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.blogService = blogService;
         this.blogCategoryService = blogCategoryService;
         this.settingsService = settingsService;
         this.albumService = albumService;
         this.userService = userService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
 
@@ -59,6 +61,7 @@ public class BlogController {
         model.addAttribute("blogCategories", blogCategories);
         model.addAttribute("activeDashPage", "blog-form");
         model.addAttribute("album", album);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -96,6 +99,12 @@ public class BlogController {
         Page<Blog> pagedBlog = blogService.findAll(page, pageSize, blogCatId);
         List<Blog> blogs = pagedBlog.getContent();
 
+        blogs.forEach(blog -> {
+            String excerpt = generateExrept(blog.getBlogText(), 200);
+            System.out.println("======================================>: "+excerpt);
+            blog.setExcerpt(excerpt);
+        });
+
         List<BlogCategory> blogCategories = blogCategoryService.findAll();
 
         model.addAttribute("activeDashPage", "blogs-list");
@@ -108,8 +117,23 @@ public class BlogController {
         model.addAttribute("blogCategories", blogCategories);
         model.addAttribute("blogCatId", blogCatId);
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
+    }
+
+    private String generateExrept(String blogText, int length) {
+        if (blogText == null || blogText.isEmpty()) {
+            return "sample exrept";
+        }
+
+        // Convert HTML to plain text
+        String plainText = Jsoup.parse(blogText).text();
+
+        // Truncate the plain text to the desired length
+        return plainText.length() > length ? plainText.substring(0, length) + "..." : plainText;
+
     }
 
     @GetMapping("/detail/{id}")
@@ -119,6 +143,8 @@ public class BlogController {
         Blog blog = blogService.findById(blogId);
         model.addAttribute("activeDashPage", "blog-detail");
         model.addAttribute("blog", blog);
+
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -136,6 +162,8 @@ public class BlogController {
         model.addAttribute("blog", blog);
         model.addAttribute("blogCategories", blogCategories);
         model.addAttribute("album", album);
+
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
 
         return DASHBOARD_MAIN_PANEL;

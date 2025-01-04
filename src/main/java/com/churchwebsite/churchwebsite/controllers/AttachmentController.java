@@ -4,6 +4,7 @@ import com.churchwebsite.churchwebsite.entities.Attachment;
 import com.churchwebsite.churchwebsite.entities.AttachmentType;
 import com.churchwebsite.churchwebsite.services.AttachmentService;
 import com.churchwebsite.churchwebsite.services.AttachmentTypeService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.utils.LocalFileStorageManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("medias/attachments")
@@ -31,16 +33,18 @@ public class AttachmentController {
     private final AttachmentService attachmentService;
     private final AttachmentTypeService attachmentTypeService;
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
     public AttachmentController(AttachmentService attachmentService,
                                 AttachmentTypeService attachmentTypeService,
-                                PaginationService paginationService) {
+                                PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.attachmentService = attachmentService;
         this.attachmentTypeService = attachmentTypeService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
@@ -64,6 +68,7 @@ public class AttachmentController {
         model.addAttribute("activeDashPage", "attachments-list");
         model.addAttribute("attachments", attachments);
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -80,6 +85,8 @@ public class AttachmentController {
         model.addAttribute("attachment", new Attachment());
         model.addAttribute("attachmentTypes", attachmentTypes);
         model.addAttribute("attachmentNames", attachementNames);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -112,7 +119,7 @@ public class AttachmentController {
             }
 
             // Encode the file name for Unicode compatibility
-            String encodedFileName = URLEncoder.encode(resource.getFilename(), StandardCharsets.UTF_8.toString())
+            String encodedFileName = URLEncoder.encode(Objects.requireNonNull(resource.getFilename()), StandardCharsets.UTF_8)
                     .replace("+", "%20"); // Optional: replace '+' with '%20' for spaces
 
             return ResponseEntity.ok()

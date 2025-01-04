@@ -39,7 +39,7 @@ public class Announcement {
     private boolean archived;
 
     @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT true")
-    private boolean active;
+    private boolean active = true;
 
     @Column(name = "is_featured", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean featured;

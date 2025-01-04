@@ -35,6 +35,9 @@ public class Blog {
     @JoinColumn(name = "user_id")
     private User userId;
 
+    @Transient
+    private String excerpt;
+
 
     public Blog() {}
 
@@ -123,5 +126,13 @@ public class Blog {
                 ", archived=" + archived +
                 ", blogCategory=" + blogCategory +
                 '}';
+    }
+
+    public String getExcerpt() {
+        return excerpt;
+    }
+
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
     }
 }

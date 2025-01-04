@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.Address;
 import com.churchwebsite.churchwebsite.services.AddressService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +15,14 @@ import java.util.Optional;
 public class AddressController {
 
     private final AddressService addressService;
+    private final ChurchDetailService churchDetailService;
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+
 
     @Autowired
-    public AddressController(AddressService addressService) {
+    public AddressController(AddressService addressService, ChurchDetailService churchDetailService) {
         this.addressService = addressService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/update/{id}")
@@ -32,8 +37,9 @@ public class AddressController {
         }
 
         model.addAttribute("activeDashPage", "updateAddress");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
-        return "dashboard/dash-fragments/dash-main-panel";
+        return DASHBOARD_MAIN_PANEL;
     }
 
     @PostMapping("/processAddressUpdate")
@@ -42,8 +48,6 @@ public class AddressController {
                                        @ModelAttribute Address address){
         addressService.save(address);
 
-        System.out.println("=============================>>>>: "+ returnUrl);
-
-        return "redirect:"+(returnUrl != null ? returnUrl : "/dashboard/dash-fragments/dash-main-panel");
+        return "redirect:"+(returnUrl != null ? returnUrl : DASHBOARD_MAIN_PANEL);
     }
 }

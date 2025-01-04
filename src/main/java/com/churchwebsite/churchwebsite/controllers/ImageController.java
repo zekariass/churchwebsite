@@ -3,6 +3,7 @@ package com.churchwebsite.churchwebsite.controllers;
 import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Image;
 import com.churchwebsite.churchwebsite.services.AlbumService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.ImageService;
 import com.churchwebsite.churchwebsite.services.AttachmentTypeService;
 import jakarta.validation.Valid;
@@ -24,15 +25,18 @@ public class ImageController {
     private final ImageService imageService;
     private final AlbumService albumService;
     private final AttachmentTypeService attachmentTypeService;
+    private final ChurchDetailService churchDetailService;
+
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
     public ImageController(ImageService imageService,
                            AlbumService albumService,
-                           AttachmentTypeService attachmentTypeService){
+                           AttachmentTypeService attachmentTypeService, ChurchDetailService churchDetailService){
         this.imageService = imageService;
         this.albumService = albumService;
         this.attachmentTypeService = attachmentTypeService;
+        this.churchDetailService = churchDetailService;
     }
 
 
@@ -44,11 +48,9 @@ public class ImageController {
                                 ){
 
         List<Album> albums = albumService.getAlbumList();
-//        List<AttachmentType> attachmentTypes = attachmentTypeService.getImageTypeList();
 
         model.addAttribute("activeDashPage", "image-form");
         model.addAttribute("albums", albums);
-//        model.addAttribute("attachmentTypes", attachmentTypes);
         model.addAttribute("album", new Album());
         model.addAttribute("image", new Image());
 
@@ -60,17 +62,18 @@ public class ImageController {
         }
 
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
 
         return DASHBOARD_MAIN_PANEL;
     }
 
-    @PostMapping("/form")
+    @PostMapping("/form/process")
     public  String processImageForm(@RequestParam(value = "for", required = false, defaultValue = "general") String purpose,
                                     @Valid @ModelAttribute("image") Image image,
-                                    BindingResult bindingResult,
                                     @RequestParam(value = "imagePaths", required = false) List<MultipartFile> multipartFiles,
                                     @RequestParam(value = "forAlbumId", defaultValue = "0") int forAlbumId,
+                                    BindingResult bindingResult,
                                     Model model){
 
         // Check if new album was to be created and the name is null or empty
@@ -84,22 +87,23 @@ public class ImageController {
         // Check for validation errors
         if(bindingResult.hasErrors()){
             List<Album> albums = albumService.getAlbumList();
-//            List<AttachmentType> attachmentTypes = attachmentTypeService.getImageTypeList();
             model.addAttribute("activeDashPage", "image-form");
             model.addAttribute("albums", albums);
-//            model.addAttribute("attachmentTypes", attachmentTypes);
             model.addAttribute("album", new Album());
             model.addAttribute("forAlbumId", forAlbumId);
             model.addAttribute("image", image);
 
+            model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
+
             return DASHBOARD_MAIN_PANEL;
 
         }else {
-            if (purpose.equals("blog") || purpose.equals("information") || purpose.equals("news")) {
-                model.addAttribute("activeDashPage", "image-links-list");
-            } else {
-                model.addAttribute("activeDashPage", "albums-list");
-            }
+//            if (purpose.equals("blog") || purpose.equals("information") || purpose.equals("news")) {
+//                model.addAttribute("activeDashPage", "image-links-list");
+//            } else {
+//                model.addAttribute("activeDashPage", "albums-list");
+//            }
 
             // Check if existing album is selected or new one is created
             Album savedAlbum;
@@ -131,4 +135,5 @@ public class ImageController {
         }
             return "redirect:/images/albums";
         }
+
 }

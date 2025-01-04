@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.ChurchBanner;
 import com.churchwebsite.churchwebsite.services.ChurchBannerService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,23 +16,26 @@ import java.util.List;
 public class ChurchBannerController {
 
     private final ChurchBannerService churchBannerService;
+    private final ChurchDetailService churchDetailService;
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public ChurchBannerController(ChurchBannerService churchBannerService) {
+    public ChurchBannerController(ChurchBannerService churchBannerService, ChurchDetailService churchDetailService) {
         this.churchBannerService = churchBannerService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/add")
     public String showBannerForm(@RequestParam(value = "churchId", required = false) int orgId,
-//                                 HttpServletRequest request,
                                  Model model){
 
         model.addAttribute("activeDashPage", "churchBanner");
         model.addAttribute("churchBanner", new ChurchBanner());
         model.addAttribute("churchId", orgId);
-//        model.addAttribute("currentUrl", request.getRequestURL());
 
-        return "dashboard/dash-fragments/dash-main-panel";
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
+        return DASHBOARD_MAIN_PANEL;
     }
 
     @PostMapping("/processAddBanner")

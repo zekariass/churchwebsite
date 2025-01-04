@@ -27,6 +27,7 @@ public class AboutUs {
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String content;
 
+
     @Column(name = "include_title_in_public_view")
     private boolean includeTitleInPublicView = true;
 

@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.ChurchContact;
 import com.churchwebsite.churchwebsite.services.ChurchContactService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +16,14 @@ import java.util.List;
 public class ChurchContactController {
 
     private final ChurchContactService contactService;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public ChurchContactController(ChurchContactService contactService) {
+    public ChurchContactController(ChurchContactService contactService, ChurchDetailService churchDetailService) {
         this.contactService = contactService;
+        this.churchDetailService = churchDetailService;
     }
 
     // Display all contacts
@@ -30,6 +33,8 @@ public class ChurchContactController {
         model.addAttribute("contacts", contacts);
         model.addAttribute("activeDashPage", "church-contacts-list");
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -37,8 +42,9 @@ public class ChurchContactController {
     @GetMapping("/form")
     public String showCreateForm(Model model) {
         model.addAttribute("contact", new ChurchContact());
-
         model.addAttribute("activeDashPage", "church-contact-form");
+
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -46,8 +52,6 @@ public class ChurchContactController {
     // Handle form submission for creating a new contact
     @PostMapping("/form/process")
     public String createContact(@ModelAttribute("contact") ChurchContact contact, BindingResult result, Model model) {
-
-
         if (result.hasErrors()) {
 
             model.addAttribute("activeDashPage", "church-contact-form");
@@ -66,6 +70,7 @@ public class ChurchContactController {
         model.addAttribute("contact", contact);
 
         model.addAttribute("activeDashPage", "church-contact-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -77,6 +82,7 @@ public class ChurchContactController {
         model.addAttribute("contact", contact);
 
         model.addAttribute("activeDashPage", "church-contact-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -90,6 +96,8 @@ public class ChurchContactController {
         if (result.hasErrors()) {
 
             model.addAttribute("activeDashPage", "church-contact-form");
+            model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
             return DASHBOARD_MAIN_PANEL;
         }

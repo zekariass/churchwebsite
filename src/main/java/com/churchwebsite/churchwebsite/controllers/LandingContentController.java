@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.LandingContent;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.LandingContentService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,14 +19,16 @@ public class LandingContentController {
 
     private final LandingContentService landingContentService;
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
     public LandingContentController(LandingContentService landingContentService,
-                                    PaginationService paginationService) {
+                                    PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.landingContentService = landingContentService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/form")
@@ -57,6 +60,8 @@ public class LandingContentController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -80,6 +85,8 @@ public class LandingContentController {
 
         model.addAttribute("activeDashPage", "landing-content-detail");
         model.addAttribute("landingContent", landingContent);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -92,6 +99,8 @@ public class LandingContentController {
 
         model.addAttribute("activeDashPage", "landing-content-form");
         model.addAttribute("landingContent", landingContent);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 

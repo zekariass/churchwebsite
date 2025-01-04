@@ -5,7 +5,7 @@
 <body>
   <div th:fragment="main-panel">
     <div class="main-panel">
-      <header th:replace="~{dashboard/dash-fragments/dash-header::dash-header}"></header>
+<!--      <header th:replace="~{dashboard/dash-fragments/dash-header::dash-header}"></header>-->
 
       <div class="container">
         <div class="page-inner">
@@ -83,9 +83,9 @@
             <div th:replace="~{dashboard/dash-fragments/image/album-form::album-form}"></div>
           </main>
 
-          <main th:if="${activeDashPage == 'image-links-list'}">
-            <div th:replace="~{dashboard/dash-fragments/blogs/image-links-list::image-links-list}"></div>
-          </main>
+<!--          <main th:if="${activeDashPage == 'image-links-list'}">-->
+<!--            <div th:replace="~{dashboard/dash-fragments/blogs/image-links-list::image-links-list}"></div>-->
+<!--          </main>-->
 
           <main th:if="${activeDashPage == 'albums-list'}">
             <div th:replace="~{dashboard/dash-fragments/image/albums-list::albums-list}"></div>
@@ -359,7 +359,7 @@
         </div>
       </div>
 
-      <div th:replace="~{dashboard/dash-fragments/dash-footer::dash-footer}"></div>
+<!--      <div th:replace="~{dashboard/dash-fragments/dash-footer::dash-footer}"></div>-->
     </div>
   </div>
 </body>

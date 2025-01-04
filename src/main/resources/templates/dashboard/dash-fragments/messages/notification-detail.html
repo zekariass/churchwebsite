@@ -12,7 +12,7 @@
         <p><strong>Subject:</strong> <span th:text="${notification.notificationSubject}"></span></p>
         <p><strong>Message:</strong> <span th:utext="${notification.notificationMessage}"></span></p>
         <p><strong>Sent Time:</strong> <span th:text="${notification.notificationSentTime.format(@dateTimeFormatter)}"></span></p>
-        <form th:action="@{/dashboard/notifications/resend/{id}(id=${notification.notificationId})}" method="post">
+        <form th:action="@{/dashboard/notifications/{id}/resend(id=${notification.notificationId})}" method="post">
             <div class="d-flex flex-row">
                 <button type="submit" class="success-button me-3">Resend</button>
                 <a th:href="@{/dashboard/notifications}" class="secondary-button">Back</a>

@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers.Shopping;
 
 import com.churchwebsite.churchwebsite.entities.shopping.ProductCategory;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.shopping.ProductCategoryService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,14 +19,17 @@ public class ProductCategoryController {
 
     private final ProductCategoryService productCategoryService;
     private final PaginationService paginationService;
+    private  final ChurchDetailService churchDetailService;
+
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
     public ProductCategoryController(ProductCategoryService productCategoryService,
-                                     PaginationService paginationService) {
+                                     PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.productCategoryService = productCategoryService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
@@ -49,6 +53,7 @@ public class ProductCategoryController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -57,6 +62,7 @@ public class ProductCategoryController {
     public String getCategoryById(@PathVariable Integer id, Model model) {
         model.addAttribute("category", productCategoryService.getCategoryById(id).orElse(null));
         model.addAttribute("activeDashPage", "product-category-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -69,6 +75,8 @@ public class ProductCategoryController {
         model.addAttribute("category", new ProductCategory());
         model.addAttribute("categories", categories);
         model.addAttribute("activeDashPage", "product-category-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -86,6 +94,8 @@ public class ProductCategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("category", productCategoryService.getCategoryById(categoryId).orElse(null));
         model.addAttribute("activeDashPage", "product-category-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 

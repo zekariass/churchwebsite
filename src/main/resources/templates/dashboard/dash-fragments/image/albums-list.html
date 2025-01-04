@@ -11,70 +11,67 @@
           <div class="row">
               <label for="sort-by" class="col">Sort by: </label>
               <select id="sort-by" class="form-select col sort-by" onchange="sortByCriteria(this)" data-navigate-to="/images/albums" style="width:auto;">
-                  <option th:value="albumName">-- Select --</option>
+                  <option th:value="'creationTime'">-- Select --</option>
                   <option th:value="'albumName'"
                           th:selected="${sortBy == 'albumName'}">Album Name</option>
+                  <option th:value="'creationTime'"
+                          th:selected="${sortBy == 'creationTime'}">Creation Time</option>
               </select>
           </div>
       </div>
       <div class="row">
-        <!-- Loop through albums -->
-        <div class="col-md-3 mb-4" th:each="album, albumStat:${albums}">
-          <div th:if="${album.imageList.size() > 0}">
-            <!-- Album Card -->
-            <div class="card shadow-sm" style="height: 500;" role="button" th:onclick="|window.location='@{/images/albums/detail/{id}(id=${album.albumId})}'|">
-              <div class="card-header text-center">
-                <h5 class="card-title" th:if="${album.albumName != null || album.albumName != ''}" th:text="${album.albumName}"></h5>
-                <h5 class="card-title" th:if="${album.albumName == null || album.albumName == ''}">No Album Name</h5>
-              </div>
-              <div class="card-body">
-                <!-- Carousel -->
-                <div th:id="'carousel_' + ${albumStat.index}" class="carousel slide" data-bs-ride="carousel">
-                  <!-- Carousel Indicators -->
-                  <div class="carousel-indicators" th:if="${album.imageList.size() > 1}">
-                    <button type="button"
-                            th:attr="data-bs-target='#carousel_' + ${albumStat.index}"
-                            th:attrappend="data-bs-slide-to=${imageStat.index}"
-                            th:class="${imageStat.index == 0} ? 'active' : 'bg-white'"
-                            th:each="image, imageStat : ${album.imageList}"
-                            style="width: 12px; height: 12px; border-radius: 50%;"
-                            aria-current="true" aria-label="Slide"></button>
-                  </div>
+          <!-- Loop through albums -->
+          <th:block th:each="album, albumStat : ${albums}">
+              <div th:if="${album.imageList.size() > 0}" class="col-sm-6 col-md-4 col-xxl-3 mb-4">
+                  <!-- Album Card -->
+                  <div class="shadow p-3" style="height: 300px;" role="button" th:onclick="|window.location='@{/images/albums/detail/{id}(id=${album.albumId})}'|">
+                      <div>
+                          <!-- Carousel -->
+                          <div th:id="'carousel_' + ${albumStat.index}" class="carousel slide" data-bs-ride="carousel">
+                              <!-- Carousel Indicators -->
+                              <div class="carousel-indicators" th:if="${album.imageList.size() > 1}">
+                                  <button type="button"
+                                          th:attr="data-bs-target='#carousel_' + ${albumStat.index}"
+                                          th:attrappend="data-bs-slide-to=${imageStat.index}"
+                                          th:class="${imageStat.index == 0} ? 'active' : 'bg-white'"
+                                          th:each="image, imageStat : ${album.imageList}"
+                                          style="width: 12px; height: 12px; border-radius: 50%;"
+                                          aria-current="true" aria-label="Slide"></button>
+                              </div>
 
-                  <!-- Carousel Inner -->
-                  <div class="carousel-inner" >
-                    <!-- Loop through image -->
-                    <div th:each="image, imageStat : ${album.imageList}"
-                         th:classappend="${imageStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
-                      <div class="d-flex justify-content-center align-items-center"
-                           style="height: 200px; background-color: f5f5f5;">
-<!--                        <img th:src="${baseImagePath + image.imagePath}" alt="ImagePath" width="100%" height="100%">-->
-                           <img th:src="${image.imagePath}" alt="ImagePath" width="100%" height="100%">
+                              <!-- Carousel Inner -->
+                              <div class="carousel-inner">
+                                  <!-- Loop through images -->
+                                  <div th:each="image, imageStat : ${album.imageList}"
+                                       th:classappend="${imageStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                                      <div class="d-flex justify-content-center align-items-center"
+                                           style="height: 200px; background-color: #f5f5f5;">
+                                          <img th:src="${image.imagePath}" alt="ImagePath" style="height: 100% !important; width: 100% !important;">
+                                      </div>
+                                  </div>
+                              </div>
 
+                              <!-- Carousel Controls -->
+                              <button class="carousel-control-prev" type="button"
+                                      th:attr="data-bs-target='#carousel_' + ${albumStat.index}" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: brown;"></span>
+                                  <span class="visually-hidden">Previous</span>
+                              </button>
+                              <button class="carousel-control-next" type="button"
+                                      th:attr="data-bs-target='#carousel_' + ${albumStat.index}" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: brown;"></span>
+                                  <span class="visually-hidden">Next</span>
+                              </button>
+                          </div>
                       </div>
-                    </div>
+                      <div class="text-center mt-3">
+                          <h5 th:text="${album.albumName != null && album.albumName != '' ? album.albumName : 'No Album Name'}"></h5>
+                      </div>
                   </div>
-
-                  <!-- Carousel Controls -->
-                  <button class="carousel-control-prev" type="button"
-                          th:attr="data-bs-target='#carousel_' + ${albumStat.index}" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon text-success" aria-hidden="true" style="background-color: brown;"></span>
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button"
-                          th:attr="data-bs-target='#carousel_' + ${albumStat.index}" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: brown;"></span>
-                    <span class="visually-hidden">Next</span>
-                  </button>
-                </div>
               </div>
-    <!--          <div class="card-footer text-center">-->
-    <!--            <p th:text="${album.albumDescription}" class="small text-muted"></p>-->
-    <!--          </div>-->
-            </div>
-          </div>
-        </div>
+          </th:block>
       </div>
+
       <div th:replace="~{fragments/pagination::pagination}"></div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

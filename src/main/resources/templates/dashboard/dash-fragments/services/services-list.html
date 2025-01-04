@@ -8,10 +8,10 @@
 <body>
   <div th:fragment="services-list">
 
-      <div class="width-md-75">
+      <div class="">
           <div class="d-flex justify-content-end mx-3">
               <a th:href="@{/dashboard/services/form}" role="button">
-                  <h5>
+                  <h5 class="text-success">
                       Add New Service
                   </h5>
               </a>
@@ -19,18 +19,37 @@
           <div class="m-4">
               <h4 th:if="${churchServices.size() == 0}">No service found!</h4>
           </div>
-           <div th:each="service: ${churchServices}" class="py-4 shadow-sm mb-3 rounded-3 border border-info" role="button">
-               <div class="row">
-                   <div class="col-10" th:onclick="|window.location='@{/dashboard/services/detail/{id}(id=${service.serviceId})}'|">
-                       <h4 href="#" class="list-group-item list-group-item-action px-3 border-1">[[${service.serviceName}]]</h4>
-                   </div>
-                   <div class="col-2 d-flex">
-                       <div class="justify-content-end me-3">
-                        <i class="fa-solid fa-xl fa-trash delete-icon" role="button" style="color: brown;" th:onclick="|window.location='@{/dashboard/services/delete/{id}(id=${service.serviceId})}'|"></i>
-                       </div>
-                   </div>
-               </div>
-           </div>
+
+          <div class="row">
+              <th:block th:each="service : ${churchServices}">
+                  <div class="col-md-4 mb-4">
+                      <div class="card h-100 shadow-sm" th:onclick="|window.location='@{/dashboard/services/detail/{id}(id=${service.serviceId})}'|">
+                          <div class="card-body">
+                              <!-- Blog Title -->
+                              <h5 class="card-title mb-3 text-success" th:text="${service.serviceName}">Service Name</h5>
+
+                              <!-- Blog Excerpt -->
+                              <p class="card-text" th:text="${service.excerpt} + '...'"></p>
+                          </div>
+
+                          <!-- Blog Footer -->
+                          <div class="card-footer text-center">
+                              <div class="d-flex flex-row justify-content-center align-items-center">
+                                  <a th:href="@{/dashboard/services/detail/{id}(id=${service.serviceId})}" class="button-sm success-button me-2">
+                                      Read More
+                                  </a>
+                                  <a class="text-danger" th:href="@{/dashboard/services/delete/{id}(id=${service.serviceId})}">
+                                      <i class="fa-solid fa-xl fa-trash delete-icon" role="button" style="color: brown;"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </th:block>
+          </div>
+      </div>
+      <div>
+          <div th:replace="~{fragments/pagination::pagination}"></div>
       </div>
   </div>
 </body>

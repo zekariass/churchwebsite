@@ -25,6 +25,9 @@ public class ChurchDetailController {
     private final ChurchDetailService churchDetailService;
     private final ChurchService churchService;
 
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+
+
     @Autowired
     public ChurchDetailController(ChurchDetailService churchDetailService,
                                   ChurchService churchService) {
@@ -35,17 +38,9 @@ public class ChurchDetailController {
 
     @GetMapping("/setup")
     public String churchSetupForm(Model model){
-
-        // Get all churchs in database. Actually there should be a single church
-//        List<Church> churchs = churchService.findAll();
-//        if(!churchs.isEmpty()){
-//            // Show church already exist page if there is one by setting the activeDashPage model attribute
-//            model.addAttribute("activeDashPage", "church-exist");
-//        }else{
             model.addAttribute("activeDashPage", "church-setup");
             model.addAttribute("churchDetail", new ChurchDetailDTO(new Church(), new Address()));
-//        }
-        return "dashboard/dash-fragments/dash-main-panel";
+        return DASHBOARD_MAIN_PANEL;
     }
 
 
@@ -74,14 +69,13 @@ public class ChurchDetailController {
             model.addAttribute("activeDashPage", "church-not-exist");
         }else {
             model.addAttribute("activeDashPage", "church-detail");
-//            model.addAttribute("baseBannersPath", baseBannersPath);
             model.addAttribute("churchDetail", orgDetail);
         }
 
         String currentUrl = request.getRequestURI();
         model.addAttribute("currentUrl", currentUrl);
 
-        return "dashboard/dash-fragments/dash-main-panel";
+        return DASHBOARD_MAIN_PANEL;
     }
 
 
@@ -97,7 +91,7 @@ public class ChurchDetailController {
             model.addAttribute("churchDetail", new ChurchDetailDTO(church, church.getAddress()));
         }
 
-        return "dashboard/dash-fragments/dash-main-panel";
+        return DASHBOARD_MAIN_PANEL;
     }
 
     @PostMapping("/processUpdate")

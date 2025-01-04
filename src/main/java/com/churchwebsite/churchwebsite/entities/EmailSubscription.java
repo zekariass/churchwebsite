@@ -2,7 +2,13 @@ package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "email_subscription")
 public class EmailSubscription {
@@ -13,28 +19,6 @@ public class EmailSubscription {
 
     @Email
     private String email;
-
-    public EmailSubscription() {}
-
-    public EmailSubscription(String email) {
-        this.email = email;
-    }
-
-    public int getSubscriptionId() {
-        return subscriptionId;
-    }
-
-    public void setSubscriptionId(int subscriptionId) {
-        this.subscriptionId = subscriptionId;
-    }
-
-    public @Email String getEmail() {
-        return email;
-    }
-
-    public void setEmail(@Email String email) {
-        this.email = email;
-    }
 
     @Override
     public String toString() {

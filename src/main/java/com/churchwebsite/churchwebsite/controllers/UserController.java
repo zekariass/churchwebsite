@@ -3,6 +3,7 @@ package com.churchwebsite.churchwebsite.controllers;
 import com.churchwebsite.churchwebsite.entities.Role;
 import com.churchwebsite.churchwebsite.entities.User;
 import com.churchwebsite.churchwebsite.entities.UserProfile;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.RoleService;
 import com.churchwebsite.churchwebsite.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,23 +26,28 @@ public class UserController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final ChurchDetailService churchDetailService;
 
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService, RoleService roleService, ChurchDetailService churchDetailService) {
         this.userService = userService;
         this.roleService = roleService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/login")
-    public String showLoginForm(){
+    public String showLoginForm(Model model){
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         return "login-form";
     }
 
     @GetMapping("/logout")
-    public String processLogout(HttpServletRequest request, HttpServletResponse response){
+    public String processLogout(HttpServletRequest request, HttpServletResponse response, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null){
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
+
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return "redirect:?logout";
     }
@@ -52,6 +58,7 @@ public class UserController {
         model.addAttribute("roles", roles);
         model.addAttribute("user", new User());
         model.addAttribute("userProfile", new UserProfile());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         return "user-registration-form";
     }
 

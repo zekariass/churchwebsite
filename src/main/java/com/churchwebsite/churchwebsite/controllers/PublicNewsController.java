@@ -1,6 +1,5 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
 import com.churchwebsite.churchwebsite.entities.News;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.NewsService;
@@ -24,8 +23,7 @@ public class PublicNewsController {
     private final PaginationService paginationService;
     private final ChurchDetailService churchDetailService;
 
-
-    private String PUBLIC_CONTENT = "layouts/base";
+    private final String PUBLIC_CONTENT = "layouts/base";
 
     @Autowired
     public PublicNewsController(NewsService newsService,
@@ -33,7 +31,6 @@ public class PublicNewsController {
                                 PaginationService paginationService) {
         this.newsService = newsService;
         this.paginationService = paginationService;
-
         this.churchDetailService = churchDetailService;
 
     }
@@ -61,7 +58,6 @@ public class PublicNewsController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
-
 
         return PUBLIC_CONTENT;
     }

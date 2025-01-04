@@ -1,7 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Video;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.VideoService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -22,12 +20,14 @@ public class VideoController {
     private final VideoService videoService;
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
 
     @Autowired
     public VideoController(VideoService videoService,
-                           PaginationService paginationService) {
+                           PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.videoService = videoService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/form")
@@ -35,6 +35,7 @@ public class VideoController {
 
         model.addAttribute("activeDashPage", "video-form");
         model.addAttribute("video", new Video());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -46,6 +47,7 @@ public class VideoController {
 
         model.addAttribute("activeDashPage", "video-form");
         model.addAttribute("video", new Video());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -58,6 +60,8 @@ public class VideoController {
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         Page<Video> pagesVideoList = videoService.getVideoList(page, pageSize, Sort.by(Sort.Order.desc("uploadTime")));
         List<Video> videoList = pagesVideoList.getContent();
 
@@ -68,6 +72,7 @@ public class VideoController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("videos", videoList);
+
 
         return DASHBOARD_MAIN_PANEL;
     }

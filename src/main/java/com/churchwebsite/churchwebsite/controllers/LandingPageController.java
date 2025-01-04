@@ -1,11 +1,10 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
+import com.churchwebsite.churchwebsite.entities.EmailSubscription;
 import com.churchwebsite.churchwebsite.entities.LandingContent;
-import com.churchwebsite.churchwebsite.entities.News;
-import com.churchwebsite.churchwebsite.services.LandingContentService;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
-import com.churchwebsite.churchwebsite.services.NewsService;
+import com.churchwebsite.churchwebsite.services.LandingContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,8 +34,7 @@ public class LandingPageController {
         model.addAttribute("churchDetail", churchDetail);
         model.addAttribute("landingContentList", landingContentList);
         model.addAttribute("activeContentPage", "landing-page");
-
-
+        model.addAttribute("emailSubscription", new EmailSubscription());
 
         return "layouts/base";
     }

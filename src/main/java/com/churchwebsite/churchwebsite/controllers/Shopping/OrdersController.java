@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers.Shopping;
 
 import com.churchwebsite.churchwebsite.entities.shopping.Orders;
 import com.churchwebsite.churchwebsite.enums.OrderStatus;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.shopping.OrdersService;
 import com.churchwebsite.churchwebsite.utils.LocaleUtil;
@@ -21,14 +22,16 @@ public class OrdersController {
     private final OrdersService ordersService;
     private final PaginationService paginationService;
     private final LocaleUtil localeUtil;
+    private  final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public OrdersController(OrdersService ordersService, PaginationService paginationService, LocaleUtil localeUtil) {
+    public OrdersController(OrdersService ordersService, PaginationService paginationService, LocaleUtil localeUtil, ChurchDetailService churchDetailService) {
         this.ordersService = ordersService;
         this.paginationService = paginationService;
         this.localeUtil = localeUtil;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
@@ -63,6 +66,7 @@ public class OrdersController {
         model.addAttribute("activeDashPage", "orders-list");
         model.addAttribute("orders", orders);
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -73,6 +77,8 @@ public class OrdersController {
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("activeDashPage", "order-detail");
         model.addAttribute("order", ordersService.getOrderById(id).orElse(null));
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -82,6 +88,8 @@ public class OrdersController {
         model.addAttribute("order", ordersService.getOrderById(id).orElse(null));
         model.addAttribute("activeDashPage", "order-edit-form");
         model.addAttribute("orderStatuses", OrderStatus.values());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 

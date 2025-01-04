@@ -9,38 +9,29 @@
 </head>
 <body>
 <div th:fragment="church-detail" class="container">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
-            <div class="card border-0 shadow">
-<!--                <img src="https://www.bootdey.com/img/Content/avatar/avatar6.png" alt="...">-->
-                <img th:src="${churchDetail.church.churchLogo}"  alt="Logo Here">
-<!--                <p th:text="${churchDetail.church.churchLogo}"></p>-->
+            <div class="card border-0 shadow-sm">
+                    <img th:src="${churchDetail.church.churchLogo}"  alt="Logo Here">
 
-                <div class="card-body p-1-9 p-xl-5">
-                    <div class="mb-4">
-                        <h3 class="h4 mb-0" th:text="${churchDetail.church.churchName}"></h3>
-                        <span class="text-primary">Ethiopian Orthodox Church</span>
-                    </div>
-                    <ul class="list-unstyled mb-4">
-                        <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i>[[${churchDetail.church.email}]]</a></li>
-                        <li class="mb-3"><a href="#!"><i class="fa-brands fa-whatsapp display-25 me-3 text-secondary"></i>[[${churchDetail?.church?.whatsAppGroup}]]</a></li>
-                        <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>
-                            [[${churchDetail.address.street}]], [[${churchDetail.address.city}]], [[${churchDetail.address.country}]]
-                        </a></li>
-                    </ul>
-<!--                    <ul class="social-icon-style2 ps-0">-->
-<!--                        <li><a href="#!" class="rounded-3"><i class="fab fa-facebook-f"></i></a></li>-->
-<!--                        <li><a href="#!" class="rounded-3"><i class="fab fa-twitter"></i></a></li>-->
-<!--                        <li><a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a></li>-->
-<!--                        <li><a href="#!" class="rounded-3"><i class="fab fa-linkedin-in"></i></a></li>-->
-<!--                    </ul>-->
-                    <div class="my-3">
-                        <a th:href="@{/dashboard/church/update/{id}(id=${churchDetail.church.churchId})}" class="success-button">
-                            <i class="fa-solid fa-pencil"></i>
-                            <span>Update Organisation</span>
-                        </a>
+                    <div class="card-body p-1-9 p-xl-5">
+                        <div class="mb-4">
+                            <h3 class="h4 mb-0" th:text="${churchDetail.church.churchName}"></h3>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i>[[${churchDetail.church.email}]]</a></li>
+                            <li class="mb-3"><a href="#!"><i class="fa-brands fa-whatsapp display-25 me-3 text-secondary"></i>[[${churchDetail?.church?.whatsAppGroup}]]</a></li>
+                            <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>
+                                [[${churchDetail.address.street}]], [[${churchDetail.address.city}]], [[${churchDetail.address.country}]]
+                            </a></li>
+                        </ul>
+                        <div class="my-3">
+                            <a th:href="@{/dashboard/church/update/{id}(id=${churchDetail.church.churchId})}" class="success-button">
+                                <i class="fa-solid fa-pencil"></i>
+                                <span>Update The Church Data</span>
+                            </a>
 
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -57,31 +48,8 @@
                     <div class="text-start mb-1-6 wow fadeIn">
                         <h2 class="h1 mb-0 text-primary">Address</h2>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-2">
-                            <h5>Street: </h5>
-                            <p class="text-muted">[[${churchDetail.address.street}]]</p>
-                        </div>
-                        <div class="col-md-4 col-sm-2">
-                            <h5>Room Number : </h5>
-                            <p class="text-muted">[[${churchDetail.address.houseNo}]]</p>
-                        </div>
-                        <div class="col-md-4 col-sm-2">
-                            <h5>Building Number: </h5>
-                            <p class="text-muted">[[${churchDetail.address.buildingNo}]]</p>
-                        </div>
-                        <div class="col-md-4 col-sm-2">
-                            <h5>City: </h5>
-                            <p class="text-muted">[[${churchDetail.address.city}]]</p>
-                        </div>
-                        <div class="col-md-4 col-sm-2">
-                            <h5>Country: </h5>
-                            <p class="text-muted">[[${churchDetail.address.country}]]</p>
-                        </div>
-                        <div class="col-md-4 col-sm-2">
-                            <h5>Post Code: </h5>
-                            <p class="text-muted">[[${churchDetail.address.postCode}]]</p>
-                        </div>
+                        <p class="text-muted h6">[[${churchDetail.address.getFullAddress()}]]</p>
+
                     </div>
                     <div class="my-3">
                         <a th:href="@{/address/update/{id}(id=${churchDetail.address.addressId}, returnUrl=${currentUrl})}" class="success-button">
@@ -95,7 +63,7 @@
                 <div class="mb-5 wow fadeIn">
                     <div class="mb-5 wow fadeIn">
                         <div class="text-start mb-1-6 wow fadeIn">
-                            <h2 class="mb-0 text-primary">Contact Details</h2>
+                            <h2 class="mb-0 text-primary ps-4">Contact Details</h2>
                         </div>
                         <div th:if="${churchDetail?.church?.phoneNumber1 != null and churchDetail?.church?.phoneNumber1 != ''}" class="row mt-n4">
                             <div class="col-sm-6 col-xl-4 mt-4">
@@ -242,14 +210,16 @@
                         <h2 class="h1 mb-0 text-primary">Banners</h2>
                     </div>
                     <div class="m-3">
-                        <div th:each="banner: ${churchDetail.banners}" class="row m-3 rounded">
-                            <div class="col-6">
-<!--                                <img th:src="${baseBannersPath + banner.churchBanner}" alt="Church Banner" style="max-width: 300px">-->
-                                <img th:src="${banner.churchBanner}" alt="Organisation Banner" style="max-width: 300px">
-                            </div>
-                            <div class="col-6 d-flex align-items-center">
-                                <a th:href="@{/dashboard/church/banner/delete/{id}(id=${banner.churchBannerId})}"><i class="fa fa-2x fa-trash" aria-hidden="true" style="color: brown"></i></a>
-                            </div>
+                        <div th:each="banner: ${churchDetail.banners}" class=" m-3 rounded">
+                           <div class="row">
+                               <div class="col-9">
+                                   <!--                                <img th:src="${baseBannersPath + banner.churchBanner}" alt="Church Banner" style="max-width: 300px">-->
+                                   <img th:src="${banner.churchBanner}" alt="Organisation Banner" style="max-width: 100% !important;" class="rounded-3">
+                               </div>
+                               <div class="col-3 d-flex align-items-center">
+                                   <a th:href="@{/dashboard/church/banner/delete/{id}(id=${banner.churchBannerId})}"><i class="fa fa-2x fa-trash" aria-hidden="true" style="color: brown"></i></a>
+                               </div>
+                           </div>
                         </div>
                         <div class="my-3">
                             <a th:href="@{/dashboard/church/banner/add(churchId=${churchDetail.church.churchId}, returnUrl=${currentUrl})}" class="success-button">

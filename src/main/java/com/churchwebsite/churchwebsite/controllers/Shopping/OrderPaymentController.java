@@ -2,6 +2,7 @@ package com.churchwebsite.churchwebsite.controllers.Shopping;
 
 import com.churchwebsite.churchwebsite.entities.shopping.OrderPayment;
 import com.churchwebsite.churchwebsite.enums.PaymentStatus;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.services.shopping.OrderPaymentService;
 import com.churchwebsite.churchwebsite.utils.LocaleUtil;
@@ -21,14 +22,16 @@ public class OrderPaymentController {
     private final OrderPaymentService orderPaymentService;
     private final PaginationService paginationService;
     private final LocaleUtil localeUtil;
+    private  final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
     @Autowired
-    public OrderPaymentController(OrderPaymentService orderPaymentService, PaginationService paginationService, LocaleUtil localeUtil) {
+    public OrderPaymentController(OrderPaymentService orderPaymentService, PaginationService paginationService, LocaleUtil localeUtil, ChurchDetailService churchDetailService) {
         this.orderPaymentService = orderPaymentService;
         this.paginationService = paginationService;
         this.localeUtil = localeUtil;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("")
@@ -55,6 +58,7 @@ public class OrderPaymentController {
         model.addAttribute("orderPayments", orderPayments);
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("paymentStatuses", PaymentStatus.values());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -65,6 +69,7 @@ public class OrderPaymentController {
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("paymentStatuses", PaymentStatus.values());
         model.addAttribute("activeDashPage", "order-payment-detail");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -82,6 +87,8 @@ public class OrderPaymentController {
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("paymentStatuses", PaymentStatus.values());
         model.addAttribute("activeDashPage", "order-payment-edit-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 

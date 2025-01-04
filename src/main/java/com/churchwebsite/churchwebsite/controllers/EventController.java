@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.Event;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.EventService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,12 @@ public class EventController {
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
+    private final ChurchDetailService churchDetailService;
     private final EventService eventService;
 
     @Autowired
-    public EventController(EventService eventService) {
+    public EventController(ChurchDetailService churchDetailService, EventService eventService) {
+        this.churchDetailService = churchDetailService;
         this.eventService = eventService;
     }
 
@@ -28,6 +31,7 @@ public class EventController {
     public String showEventsRegistrationForm(Model model){
         model.addAttribute("activeDashPage", "eventRegistrationForm");
         model.addAttribute("event", new Event());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -58,6 +62,8 @@ public class EventController {
         model.addAttribute("pageSize", size);
         model.addAttribute("currentUrl", request.getRequestURL());
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -69,6 +75,8 @@ public class EventController {
         model.addAttribute("activeDashPage", "eventDetail");
         model.addAttribute("event", event);
 
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -79,6 +87,8 @@ public class EventController {
         Event event = eventService.findById(eventId);
         model.addAttribute("activeDashPage", "eventRegistrationForm");
         model.addAttribute("event", event);
+
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }

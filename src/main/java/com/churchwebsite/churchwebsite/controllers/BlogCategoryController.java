@@ -1,10 +1,9 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.BlogCategory;
-import com.churchwebsite.churchwebsite.entities.Settings;
 import com.churchwebsite.churchwebsite.services.BlogCategoryService;
+import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
-import com.churchwebsite.churchwebsite.services.SettingsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +20,7 @@ public class BlogCategoryController {
 
     private final BlogCategoryService blogCategoryService;
     private final PaginationService paginationService;
+    private final ChurchDetailService churchDetailService;
 
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
@@ -28,9 +28,10 @@ public class BlogCategoryController {
     private int defaultPageSize;
 
     @Autowired
-    public BlogCategoryController(BlogCategoryService blogCategoryService, PaginationService paginationService) {
+    public BlogCategoryController(BlogCategoryService blogCategoryService, PaginationService paginationService, ChurchDetailService churchDetailService) {
         this.blogCategoryService = blogCategoryService;
         this.paginationService = paginationService;
+        this.churchDetailService = churchDetailService;
     }
 
     @GetMapping("/addBlogCategoryForm")
@@ -38,6 +39,7 @@ public class BlogCategoryController {
 
         model.addAttribute("blogCategory", new BlogCategory());
         model.addAttribute("activeDashPage", "blog-category-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -65,15 +67,6 @@ public class BlogCategoryController {
                                        @RequestParam(value = "size", required = false) Integer pageSize,
                                        HttpServletRequest request){
 
-        // Setting for default page size
-//        Settings settings = settingsService.findBySettingName("DEFAULT_PAGE_SIZE");
-//
-//        if(settings != null){
-//            pageSize = settings.getSettingValueInt();
-//        }else{
-//            pageSize = defaultPageSize;
-//        }
-
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
 
@@ -87,6 +80,8 @@ public class BlogCategoryController {
         model.addAttribute("totalPages", pagedBlogCategories.getTotalPages());
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -98,6 +93,8 @@ public class BlogCategoryController {
         BlogCategory blogCategory = blogCategoryService.findById(catId);
         model.addAttribute("activeDashPage", "blog-category-detail");
         model.addAttribute("blogCategory", blogCategory);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -109,6 +106,7 @@ public class BlogCategoryController {
         BlogCategory blogCategory = blogCategoryService.findById(catId);
         model.addAttribute("activeDashPage", "blog-category-form");
         model.addAttribute("blogCategory", blogCategory);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -116,8 +114,6 @@ public class BlogCategoryController {
     @GetMapping("/delete/{id}")
     public  String deleteASingleBlog(@PathVariable(value = "id", required = true) int blogCatId){
         blogCategoryService.deleteById(blogCatId);
-
-        System.out.println("blogCatId ==================================>>>>: "+blogCatId);
 
         return "redirect:/dashboard/blogs/categories";
     }

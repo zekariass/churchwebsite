@@ -1,5 +1,5 @@
 .login-container {
-    max-width: 400px; /* Max width for the form */
+    width: 400px; /* Max width for the form */
     margin: auto; /* Center the form horizontally */
     padding: 20px; /* Padding inside the form */
     background-color: #ffffff; /* White background for the form */

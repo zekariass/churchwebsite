@@ -158,6 +158,22 @@
             <div th:replace="~{fragments/shopping/checkout-cancel::checkout-cancel}"></div>
         </main>
 
+        <!--    ============= ABOUT US  ============================= -->
+
+        <main th:if="${activeContentPage == 'about-us'}">
+            <div th:replace="~{fragments/about-us/about-us::about-us}"></div>
+        </main>
+
+        <!--    ============= ANNOUNCEMENTS ============================= -->
+
+        <main th:if="${activeContentPage == 'announcements-list'}">
+            <div th:replace="~{fragments/announcements/announcements-list::announcements-list}"></div>
+        </main>
+
+        <main th:if="${activeContentPage == 'announcement-detail'}">
+            <div th:replace="~{fragments/announcements/announcement-detail::announcement-detail}"></div>
+        </main>
+
     </div>
 </body>
 </html>
