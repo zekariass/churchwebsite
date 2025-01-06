@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -38,20 +37,36 @@ public class ChurchDetailController {
 
     @GetMapping("/setup")
     public String churchSetupForm(Model model){
-            model.addAttribute("activeDashPage", "church-setup");
-            model.addAttribute("churchDetail", new ChurchDetailDTO(new Church(), new Address()));
+
+        ChurchDetailDTO churchDetailDTO = churchDetailService.getChurchDetail() != null
+                ? churchDetailService.getChurchDetail()
+                : new ChurchDetailDTO(new Church(), new Address()) ;
+
+        model.addAttribute("activeDashPage", "church-setup");
+        model.addAttribute("churchDetail", churchDetailDTO);
         return DASHBOARD_MAIN_PANEL;
     }
 
 
-    @PostMapping("/processSetup")
-    public String createOrganisationDetail(@ModelAttribute ChurchDetailDTO churchDetail,
+//    @PostMapping("/processSetup")
+//    public String createOrganisationDetail(@ModelAttribute ChurchDetailDTO churchDetail,
+//                                           @RequestParam("logo") MultipartFile churchLogo,
+//                                           @RequestParam("bannerFiles")List<MultipartFile> churchBanners,
+//                                           Model model){
+//
+//        // Call church detail service
+//        churchDetailService.createChurchDetail(churchDetail, churchLogo, churchBanners);
+//        return "redirect:/dashboard/church/detail";
+//    }
+
+
+    @PostMapping("/setup/process")
+    public String updateOrganisationDetail(@ModelAttribute ChurchDetailDTO churchDetail,
                                            @RequestParam("logo") MultipartFile churchLogo,
-                                           @RequestParam("bannerFiles")List<MultipartFile> churchBanners,
                                            Model model){
 
         // Call church detail service
-        churchDetailService.createChurchDetail(churchDetail, churchLogo, churchBanners);
+        churchDetailService.updateChurchDetail(churchDetail, churchLogo);
         return "redirect:/dashboard/church/detail";
     }
 
@@ -94,15 +109,6 @@ public class ChurchDetailController {
         return DASHBOARD_MAIN_PANEL;
     }
 
-    @PostMapping("/processUpdate")
-    public String updateOrganisationDetail(@ModelAttribute ChurchDetailDTO churchDetail,
-                                           @RequestParam("logo") MultipartFile churchLogo,
-                                           Model model){
-
-        // Call church detail service
-        churchDetailService.updateChurchDetail(churchDetail, churchLogo);
-        return "redirect:/dashboard/church/detail";
-    }
 
 
 }

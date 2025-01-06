@@ -6,19 +6,19 @@
 </head>
     <body>
         <div th:fragment="church-setup">
-            <div th:if="${churchDetail?.church == null}" class="shadow bg-body rounded p-4 org-setup-form">
+            <div th:if="${churchDetail?.church?.churchId == 0}" class="shadow bg-body rounded p-4 org-setup-form">
                 <p class="h3">Register your church here.</p>
                 <p class="h5">You can have only one church at once.</p>
-                <form th:action="@{ ${churchDetail == null} ? '/dashboard/church/processSetup' : '/dashboard/church/processUpdate'}" th:object="${churchDetail}" method="POST" enctype="multipart/form-data">
+                <form th:action="@{/dashboard/church/setup/process}" th:object="${churchDetail}" method="POST" enctype="multipart/form-data">
 
-                    <input th:if="${churchDetail != null}" th:field="*{church.churchId}" type="hidden">
+                    <input th:field="*{church.churchId}" type="hidden">
                     <div class="mb-3">
                         <label for="orgname" class="form-label">church Name</label>
                         <input th:field="*{church.churchName}" type="text" class="form-control" id="orgname">
                     </div>
                     <div class="mb-3">
-                        <label for="orgdesc" class="form-label">Description</label>
-                        <textarea th:field="*{church.churchDescription}" class="form-control" id="orgdesc" rows="3"></textarea>
+                        <label for="tiny" class="form-label">Description</label>
+                        <textarea th:field="*{church.churchDescription}" class="form-control" id="tiny" rows="3"></textarea>
 
                     </div>
                     <div class="mb-3">
@@ -112,7 +112,7 @@
                     <button type="submit" class="success-button mt-3">Submit</button>
                 </form>
             </div>
-            <div th:if="${churchDetail.church != null}">
+            <div th:if="${churchDetail?.church?.churchId != 0}">
                 <h4 class="text-info my-3">Church is already existing!</h4>
                 <a class="text-success" href="/dashboard/church/detail"><h5>See the church detail</h5></a>
             </div>

@@ -92,20 +92,10 @@ public class ChurchDetailService {
         }
         Church church = churches.getFirst();
         church.setChurchLogo(church.getChurchLogo());
-//        church.setChurchLogo(File.separator + Paths.get("media/logo") + File.separator + church.getChurchLogo());
         Address address = church.getAddress();
         List<ChurchBanner> banners = church.getBanners();
 
-        ChurchDetailDTO orgDetail = new ChurchDetailDTO(church, banners, address);
-
-//        List<String> orgBanners = new ArrayList<>();
-//        for(String banner: orgDetail.getChurchBanners()){
-//            orgBanners.add(File.separator + Paths.get("media/banners") + File.separator + banner);
-//        }
-//
-//        orgDetail.setChurchBanners(orgBanners);
-
-        return orgDetail;
+        return new ChurchDetailDTO(church, banners, address);
     }
 
 
@@ -125,7 +115,7 @@ public class ChurchDetailService {
 
         church.setBanners(church.getBanners());
 
-        System.out.println("Church: ===============================>>> "+ church);
+//        System.out.println("Church: ===============================>>> "+ church);
 
         Address churchAddress = orgDetailDTO.getAddress();
         church.setAddress(churchAddress);

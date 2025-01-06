@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -19,11 +20,12 @@ public class UserProfile {
     private String christianName;
     private String gender;
 
+    @PastOrPresent(message = "Date can not be in the future")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dob;
     private String phoneNumber;
     private String profilePhoto;
-    private String description;
+    private String biography;
 
     @OneToOne(mappedBy = "userProfile")
     private User user;
@@ -34,7 +36,7 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(int userProfileId, String firstName, String lastName, String spiritualFatherName, String christianName, String gender, LocalDate dob, String phoneNumber, String profilePhoto, String description) {
+    public UserProfile(int userProfileId, String firstName, String lastName, String spiritualFatherName, String christianName, String gender, LocalDate dob, String phoneNumber, String profilePhoto) {
         this.userProfileId = userProfileId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,7 +46,6 @@ public class UserProfile {
         this.dob = dob;
         this.phoneNumber = phoneNumber;
         this.profilePhoto = profilePhoto;
-        this.description = description;
     }
 
     public int getUserProfileId() {
@@ -119,13 +120,6 @@ public class UserProfile {
         this.profilePhoto = profilePhoto;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public User getUser() {
         return user;
@@ -137,6 +131,18 @@ public class UserProfile {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override
@@ -151,7 +157,6 @@ public class UserProfile {
                 ", dob=" + dob +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", profilePhoto='" + profilePhoto + '\'' +
-                ", description='" + description + '\'' +
                 '}';
     }
 

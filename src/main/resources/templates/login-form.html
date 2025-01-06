@@ -44,12 +44,17 @@
                         <label for="password" class="form-label">Password</label>
                         <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
                     </div>
+                    <div th:if="${param.error}">
+                        <div th:if="${param.error.toString() == 'inactive'}" class="text-danger fw-bold py-2 text-center">Your account is inactive. Please contact support.</div>
+                        <div th:if="${param.error.toString()=='blocked'}" class="text-danger fw-bold py-2 text-center">Your account is blocked. Please contact support.</div>
+                        <div th:if="${param.error.toString() == 'true'}" class="text-danger fw-bold py-2 text-center">Invalid username or password.</div>
+                    </div>
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
                 <div class="mt-3 text-center">
-                    <a href="#">Forgot password?</a>
+                    <a href="/users/password/link/request/form" class="text-danger">Forgot password?</a>
                 </div>
-                <div class="mt-2 text-center">
+                <div class="mt-2 text-center text-success">
                     <p>Don't have an account? <a th:href="@{/users/register}">Sign up</a></p>
                 </div>
             </div>

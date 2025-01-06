@@ -25,7 +25,7 @@ CREATE TABLE `user_profile` (
     `dob` DATE DEFAULT NULL,
     `phone_number` VARCHAR (20) DEFAULT NULL,
     `profile_photo` VARCHAR(255) DEFAULT NULL,
-    `description` MEDIUMTEXT DEFAULT NULL
+    `biography` MEDIUMTEXT DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user`;
@@ -33,6 +33,7 @@ CREATE TABLE `user` (
     `user_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `user_profile_id` INT DEFAULT NULL,
     `username` VARCHAR(50) NOT NULL UNIQUE,
+    `email` VARCHAR(100) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
     `registration_time` DATETIME DEFAULT NULL,
     `is_active` BOOLEAN DEFAULT TRUE,
@@ -40,7 +41,7 @@ CREATE TABLE `user` (
     FOREIGN KEY (`user_profile_id`) REFERENCES `user_profile`(`user_profile_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 -- username: admin -- Password: Admin123 
-INSERT INTO user(user_id, user_profile_id, username, password, registration_time, is_active, is_blocked) VALUES (1, NULL, 'admin', '$2y$10$zwsA0q6vRXXyyPeYZ/6HyOCCt.hpDdJreguANYy2hqZpW2WdAaQia', CURDATE(), 1, 0);
+INSERT INTO user(user_id, user_profile_id, username, email, password, registration_time, is_active, is_blocked) VALUES (1, NULL, 'admin', 'zemaedot3@gmail.com', '$2y$10$ScC6toANF46NaaOlCM2KUuQio9PUKWxfk7itdM2bFLJLOgsQu54K.', CURDATE(), 1, 0);
 
 
 DROP TABLE IF EXISTS `role`;
@@ -444,6 +445,7 @@ INSERT INTO settings(setting_id, setting_name, setting_description, setting_valu
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (4, 'CART_COOKIE_LIFETIME', 'Lifetime of cookie', 7*24*60*60, null, 0.0); -- 7 days
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (5, 'TAX_RATE_FIXED', 'Fixed tax rate', 0, null, 0.0);
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (6, 'TAX_RATE_PERCENT', 'Tax rate in percent', 0, null, 0.0);
+INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (7, 'PASSWORD_RESET_TOKEN_LIFETIME', 'Password reset token expiry life time in minutes', 15, null, 0.0);
 
 DROP TABLE IF EXISTS `baptisim`;
 CREATE TABLE `baptisim`(
@@ -672,3 +674,13 @@ CREATE TABLE `about_us`(
     `last_modified_at` DATETIME DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+DROP TABLE IF EXISTS `password_reset_token`;
+CREATE TABLE `password_reset_token`(
+	`id`  INT AUTO_INCREMENT PRIMARY KEY,
+    `token` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `is_used` BOOLEAN DEFAULT false,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `expire_at` DATETIME NOT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

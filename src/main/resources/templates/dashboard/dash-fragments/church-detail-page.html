@@ -41,7 +41,7 @@
                     <div class="text-start mb-1-6 wow fadeIn">
                         <h2 class="h1 mb-0 text-primary">About Our Church</h2>
                     </div>
-                    <p>[[${churchDetail.church.churchDescription}]]</p>
+                    <p th:utext="${churchDetail?.church?.churchDescription}"></p>
                 </div>
 
                 <div class="mb-5 wow fadeIn">

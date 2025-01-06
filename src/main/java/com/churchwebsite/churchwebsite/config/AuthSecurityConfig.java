@@ -16,12 +16,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class AuthSecurityConfig {
 
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     private final CustomUserDetailService customUserDetailService;
 
 
     @Autowired
-    public AuthSecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, CustomUserDetailService customUserDetailService) {
+    public AuthSecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler, CustomAuthenticationFailureHandler customAuthenticationFailureHandler, CustomUserDetailService customUserDetailService) {
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
         this.customUserDetailService = customUserDetailService;
     }
 
@@ -29,7 +31,13 @@ public class AuthSecurityConfig {
             "/",
             "/global-search/**",
             "/users/register",
-            "/users/processUserRegistration",
+            "/users/login",
+            "/users/password/link/request/form",
+            "/users/password/link/request/**",
+            "/users/password/link/reset/form",
+            "/users/password/link/reset/form/**",
+            "/users/password/link/request/sent",
+            "/users/form/process",
             "/users/register/**",
             "/webjars/**",
             "/resources/**",
@@ -87,6 +95,7 @@ public class AuthSecurityConfig {
 
         httpSecurity.formLogin(form -> form.loginPage("/users/login")
                         .successHandler(customAuthenticationSuccessHandler)
+                        .failureHandler(customAuthenticationFailureHandler)
 //                        .defaultSuccessUrl("/")
                         .permitAll()
                 );
@@ -99,6 +108,11 @@ public class AuthSecurityConfig {
 
         return httpSecurity.build();
     }
+
+//    @Bean
+//    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+//        return new CustomAuthenticationFailureHandler();
+//    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

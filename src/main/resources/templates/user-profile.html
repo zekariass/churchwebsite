@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>User Profile</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+<main id="main" class="main" th:fragment="user-profile">
+
+  <div class="pagetitle">
+    <h1>Profile Page</h1>
+  </div><!-- End Page Title -->
+
+  <section class="section profile">
+
+    <div class="card">
+      <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+        <img th:if="${user.userProfile?.profilePhoto != null}" th:src="${user.userProfile?.profilePhoto}" width="100px" height="100px" alt="Profile" class="rounded-circle">
+        <h6 th:if="${user.userProfile?.profilePhoto == null}" alt="Profile" class="rounded-circle">No Profile Photo</h6>
+        <h2>[[${user.userProfile?.firstName}]] [[${user.userProfile?.lastName}]]</h2>
+      </div>
+    </div>
+
+    <div class="mt-3">
+
+      <div class="card">
+        <div class="card-body pt-3">
+          <!-- Bordered Tabs -->
+          <div th:if="${#fields.hasErrors('userProfile.dob')}" class="text-danger h5">
+            <p th:errors="${userProfile.dob}"></p>
+          </div>
+          <ul class="nav nav-tabs nav-tabs-bordered">
+
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile Detail</button>
+            </li>
+
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+            </li>
+
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-bio">Biography</button>
+            </li>
+
+<!--            <li class="nav-item">-->
+<!--              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>-->
+<!--            </li>-->
+
+          </ul>
+          <div class="tab-content pt-2">
+
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+              <h5 class="card-title">Profile Details</h5>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 text-start">Full Name</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.userProfile?.firstName != null ? user.userProfile.firstName : 'Not Provided'}"></span>
+                  <span th:text="${user.userProfile?.lastName != null ? user.userProfile.lastName : ''}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Baptismal Name</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.userProfile?.christianName != null ? user.userProfile.christianName : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Father Confessor Name</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.userProfile?.spiritualFatherName != null ? user.userProfile.spiritualFatherName : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Gender</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.userProfile?.gender != null ? user.userProfile.gender : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Date of Birth</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.userProfile?.dob != null ? user.userProfile.dob : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Phone Number</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.userProfile?.phoneNumber != null ? user.userProfile.phoneNumber : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Username</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.username != null ? user.username : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Email</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.email != null ? user.email : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Registration Date</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.registrationTime != null ? user.registrationTime.format(@dateTimeFormatter) : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Blocked</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.isBlocked != null ? user.isBlocked : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Active</div>
+                <div class="col-lg-9 col-md-8">
+                  <span th:text="${user.isActive != null ? user.isActive : 'Not Provided'}"></span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+              <div th:replace="~{profile-edit-form::profile-edit-form}">
+
+              </div>
+
+            </div>
+
+            <div class="tab-pane fade px-5 pt-3" id="profile-bio">
+
+              <!-- Settings Form -->
+              <p th:utext="${user.userProfile.biography}"></p>
+
+            </div>
+
+<!--            <div class="tab-pane fade pt-3" id="profile-change-password">-->
+<!--              &lt;!&ndash; Change Password Form &ndash;&gt;-->
+<!--              <div th:replace="~{password-reset-form::password-reset-form}">-->
+
+<!--            </div>-->
+
+          </div><!-- End Bordered Tabs -->
+
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </section>
+
+
+
+  <div class="mt-4 container">
+    <!-- Change Password Form -->
+    <div th:replace="~{password-reset-form::password-reset-form}"></div>
+  </div>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+</main><!-- End #main -->
+
+</body>
+
+</html>

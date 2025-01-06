@@ -80,4 +80,9 @@ public class NotificationService {
             );
         }
     }
+
+    @Async
+    public void sendPasswordResetEmail(String email, String subject, String htmlContent) throws MessagingException{
+        emailService.sendEmail(email, subject, htmlContent);
+    }
 }

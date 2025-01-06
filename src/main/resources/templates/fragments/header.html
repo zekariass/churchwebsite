@@ -218,13 +218,6 @@
                   </a>
                 </li>
 
-                <!-- The Clergy link -->
-                <li class="breadcrumb-item d-none d-md-inline">
-                  <a th:href="@{/theClergy}" class="fw-bold fs-md-5 fs-6 text-white">
-                    The Clergy
-                  </a>
-                </li>
-
                 <!-- Authentication Links (Login/Register/Logout) -->
                 <li sec:authorize="isAnonymous()" class="breadcrumb-item">
                   <a th:href="@{/users/login}" class="fw-bold fs-md-5 fs-6 text-white">
@@ -234,6 +227,11 @@
                 <li sec:authorize="isAnonymous()" class="breadcrumb-item">
                   <a th:href="@{/users/register}" class="fw-bold fs-md-5 fs-6 text-white">
                     Register
+                  </a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="breadcrumb-item d-none d-md-block">
+                  <a th:href="@{/users/profile}" class="fw-bold fs-md-5 fs-6 text-white">
+                    Profile
                   </a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="breadcrumb-item d-none d-md-block">

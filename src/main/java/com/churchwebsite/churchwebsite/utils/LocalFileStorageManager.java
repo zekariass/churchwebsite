@@ -34,20 +34,24 @@ public class LocalFileStorageManager {
 
     public String storeFile(MultipartFile file){
 
-        // Prepare the filename
-        String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        if(file != null) {
+            // Prepare the filename
+            String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
-        // Resolve the filename
-        Path targetLocation = this.resolveFilename(filename);
-        try{
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            String fullPath = targetLocation.toString();
-            String normalizedPath = fullPath.replace("\\", "/");
-            return normalizedPath.split("static")[1];
+            // Resolve the filename
+            Path targetLocation = this.resolveFilename(filename);
+            try {
+                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+                String fullPath = targetLocation.toString();
+                String normalizedPath = fullPath.replace("\\", "/");
+                return normalizedPath.split("static")[1];
 //            return filename;
-        }catch (IOException exc){
-            throw new RuntimeException("Unable to copy the file from filestream.");
+            } catch (IOException exc) {
+                throw new RuntimeException("Unable to copy the file from filestream.");
+            }
         }
+
+        return null;
 
     }
 
