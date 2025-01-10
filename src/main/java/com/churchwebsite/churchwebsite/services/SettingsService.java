@@ -5,6 +5,8 @@ import com.churchwebsite.churchwebsite.repositories.SettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SettingsService {
 
@@ -23,4 +25,7 @@ public class SettingsService {
         settingsRepository.deleteById(blogId);
     }
 
+    public List<Settings> findAll() {
+        return settingsRepository.findAll();
+    }
 }

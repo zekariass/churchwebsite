@@ -126,9 +126,16 @@ public class UserController {
     @GetMapping("/profile")
     public String showUserProfile(Model model){
 
+        User user = userService.getCurrentUser().getUser();
+
         model.addAttribute("activeContentPage", "user-profile");
         model.addAttribute("user", userService.getCurrentUser().getUser());
-        model.addAttribute("userProfile", userService.getCurrentUser().getUser().getUserProfile());
+
+        if(user.getUserProfile() != null){
+            model.addAttribute("userProfile", userService.getCurrentUser().getUser().getUserProfile());
+        }else{
+            model.addAttribute("userProfile", new UserProfile());
+        }
         model.addAttribute("resetPasswordDto", new PasswordResetDTO());
 
         return PUBLIC_CONTENT;

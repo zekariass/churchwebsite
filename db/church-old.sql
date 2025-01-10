@@ -296,9 +296,10 @@ CREATE TABLE `landing_content` (
     `landing_content_title` VARCHAR(255) NOT NULL,
     `content` MEDIUMTEXT DEFAULT NULL,
     `content_creation_time` DATETIME DEFAULT NULL,
-    `is_active` BOOLEAN DEFAULT TRUE,
+    `is_active` BOOLEAN DEFAULT FALSE,
     `is_featured` BOOLEAN DEFAULT FALSE,
-    `is_archived` BOOLEAN DEFAULT FALSE
+    `is_archived` BOOLEAN DEFAULT FALSE,
+    `content_order` INT DEFAULT 0
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `payment_method`;
@@ -446,6 +447,7 @@ INSERT INTO settings(setting_id, setting_name, setting_description, setting_valu
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (5, 'TAX_RATE_FIXED', 'Fixed tax rate', 0, null, 0.0);
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (6, 'TAX_RATE_PERCENT', 'Tax rate in percent', 0, null, 0.0);
 INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (7, 'PASSWORD_RESET_TOKEN_LIFETIME', 'Password reset token expiry life time in minutes', 15, null, 0.0);
+INSERT INTO settings(setting_id, setting_name, setting_description, setting_value_int, setting_value_char, setting_value_double) VALUES (8, 'TINY_MCE_KEY', 'Tiny mce api key', 0, 'kg3ajfr10laxj5741o0yzl05al2f24sd5ois0uw4nvumzt7i', 0.0);
 
 DROP TABLE IF EXISTS `baptisim`;
 CREATE TABLE `baptisim`(
@@ -683,4 +685,16 @@ CREATE TABLE `password_reset_token`(
     `is_used` BOOLEAN DEFAULT false,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `expire_at` DATETIME NOT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `message_reply`;
+CREATE TABLE `message_reply`(
+	`id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `receiver_email` VARCHAR(100) NOT NULL,
+	`contact_us_id` INT NOT NULL,
+    `subject` VARCHAR(255) NOT NULL,
+    `message` TEXT NOT NULL,
+    `is_follow_up` BOOLEAN DEFAULT false,
+    `sent_at` DATETIME NOT NULL,
+    FOREIGN KEY(`contact_us_id`) REFERENCES `contact_us`(`contact_us_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

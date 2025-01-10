@@ -41,7 +41,8 @@ public class LandingContentService {
     }
 
     public List<LandingContent> findAll(){
-        return landingContentRepository.findAll();
+        Sort sort = Sort.by(Sort.Order.asc("contentOrder"));
+        return landingContentRepository.findByActiveAndArchived(sort, true, false);
     }
 
 

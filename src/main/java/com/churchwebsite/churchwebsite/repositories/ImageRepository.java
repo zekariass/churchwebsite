@@ -11,4 +11,5 @@ public interface ImageRepository extends JpaRepository<Image, Integer> {
 
     Page<Image> findByAlbum(Album album, Pageable pageable);
 
+    Page<Image> findByAlbumAndArchived(Album album, Boolean archived, Pageable pageable);
 }

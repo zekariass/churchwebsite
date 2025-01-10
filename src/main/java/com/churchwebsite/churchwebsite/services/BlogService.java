@@ -69,4 +69,20 @@ public class BlogService {
     public void deleteById(int blogId) {
         blogRepository.deleteById(blogId);
     }
+
+    public Page<Blog> findBlogsByArchiveAndActive(int page, Integer pageSize, Integer blogCategoryId, boolean archived, boolean active) {
+        Pageable pageable = PageRequest.of(page-1, pageSize);
+
+        BlogCategory blogCategory = null;
+
+        if(blogCategoryId != 0){
+            blogCategory = blogCategoryService.findById(blogCategoryId);
+        }
+
+        if(blogCategory != null){
+            return blogRepository.findByBlogCategoryAndArchivedAndActive(pageable, blogCategory, archived, active);
+        }else{
+            return blogRepository.findAllByArchivedAndActive(archived, pageable, active);
+        }
+    }
 }

@@ -88,4 +88,20 @@ public class ImageService {
         Album album = albumService.getAlbumById(albumId);
         return imageRepository.findByAlbum(album, pageable);
     }
+
+    public Page<Image> findByAlbumAndArchived(Boolean archived, int page, Integer pageSize, String sortBy, int albumId) {
+        if(sortBy.isEmpty()){
+            sortBy = "uploadTime";
+        }
+
+        Pageable pageable;
+        if(sortBy == "uploadTime"){
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else{
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        }
+
+        Album album = albumService.getAlbumById(albumId);
+        return imageRepository.findByAlbumAndArchived(album, archived, pageable);
+    }
 }

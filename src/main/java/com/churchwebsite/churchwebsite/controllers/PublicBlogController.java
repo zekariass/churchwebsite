@@ -51,12 +51,13 @@ public class PublicBlogController {
                                  @RequestParam(value = "size", required = false) Integer pageSize,
                                  @RequestParam(value = "blogCatId", required = false, defaultValue = "0") Integer blogCatId,
                                  @RequestParam(value = "archived", required = false, defaultValue = "false") boolean archived,
+                                 @RequestParam(value = "active", required = false, defaultValue = "true") boolean active,
                                 HttpServletRequest request,
                                 Model model){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Blog> pagedBlog = pagedBlog = blogService.findBlogsByArchive(page, pageSize, blogCatId, archived);
+        Page<Blog> pagedBlog  = blogService.findBlogsByArchiveAndActive(page, pageSize, blogCatId, archived, active);
         List<Blog> blogs = pagedBlog.getContent();
 
         blogs.forEach(blog->{

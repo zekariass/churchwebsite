@@ -1,10 +1,12 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.entities.*;
+import com.churchwebsite.churchwebsite.entities.Baptism;
+import com.churchwebsite.churchwebsite.entities.ChurchServices;
+import com.churchwebsite.churchwebsite.entities.HolyMatrimony;
+import com.churchwebsite.churchwebsite.entities.RemembrancePrayer;
 import com.churchwebsite.churchwebsite.enums.ServiceStatus;
 import com.churchwebsite.churchwebsite.services.*;
 import jakarta.servlet.http.HttpServletRequest;
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -86,10 +88,10 @@ public class ChurchServicesController {
         Page<ChurchServices> pagedServices = churchServicesService.findAll(page, pageSize, sortBy);
         List<ChurchServices> churchServices = pagedServices.getContent();
 
-        churchServices.forEach(service -> {
-            String excerpt = generateExcerpt(service.getServiceDescription(), 200);
-            service.setExcerpt(excerpt);
-        });
+//        churchServices.forEach(service -> {
+//            String excerpt = generateExcerpt(service.getServiceDescription(), 200);
+//            service.setExcerpt(excerpt);
+//        });
 
         model.addAttribute("activeDashPage", "services-list");
         model.addAttribute("churchServices", churchServices);
@@ -104,15 +106,15 @@ public class ChurchServicesController {
 
         return DASHBOARD_MAIN_PANEL;
     }
-
-    private String generateExcerpt(String richText, int length) {
-        if(richText == null || richText.isEmpty()){
-            return "";
-        }else{
-            String plainText = Jsoup.parse(richText).text();
-            return plainText.length() > length ? plainText.substring(0, length) : plainText;
-        }
-    }
+//
+//    private String generateExcerpt(String richText, int length) {
+//        if(richText == null || richText.isEmpty()){
+//            return "";
+//        }else{
+//            String plainText = Jsoup.parse(richText).text();
+//            return plainText.length() > length ? plainText.substring(0, length) : plainText;
+//        }
+//    }
 
     @GetMapping("/detail/{id}")
     public String showServicesDetail(Model model,

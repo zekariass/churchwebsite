@@ -46,4 +46,26 @@ public class NewsService {
     public void deleteById(int newsId) {
         newsRepository.deleteById(newsId);
     }
+
+    public Page<News> findByArchivedAndActiveAndFeatured(int page, Integer pageSize, String sortBy, Boolean archived, Boolean active, Boolean featured) {
+        Pageable pageable;
+        if(sortBy.equals("newsPostTime")){
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else{
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        }
+
+        return newsRepository.findByArchivedAndActiveAndFeatured(archived, active, featured, pageable);
+    }
+
+    public Page<News> findByArchivedAndActive(int page, Integer pageSize, String sortBy, Boolean archived, Boolean active) {
+        Pageable pageable;
+        if(sortBy.equals("newsPostTime")){
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else{
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        }
+
+        return newsRepository.findByArchivedAndActive(archived, active, pageable);
+    }
 }

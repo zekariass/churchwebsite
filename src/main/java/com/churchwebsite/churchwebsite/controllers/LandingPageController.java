@@ -1,6 +1,5 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
 import com.churchwebsite.churchwebsite.entities.EmailSubscription;
 import com.churchwebsite.churchwebsite.entities.LandingContent;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
@@ -27,11 +26,11 @@ public class LandingPageController {
 
     @GetMapping("/")
     public String landingPage(Model model){
-        ChurchDetailDTO churchDetail = churchDetailService.getChurchDetail();
+//        ChurchDetailDTO churchDetail = churchDetailService.getChurchDetail();
 
         List<LandingContent> landingContentList = landingContentService.findAll();
 
-        model.addAttribute("churchDetail", churchDetail);
+//        model.addAttribute("churchDetail", churchDetail);
         model.addAttribute("landingContentList", landingContentList);
         model.addAttribute("activeContentPage", "landing-page");
         model.addAttribute("emailSubscription", new EmailSubscription());

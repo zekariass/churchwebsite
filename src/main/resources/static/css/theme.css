@@ -127,3 +127,11 @@
 .bg-snowdrift{
     background-color: #F8FBF8 !important;
 }
+
+.row-hover:hover{
+    background-color: #F5FEFD !important;
+}
+
+.navbar, .sidebar{
+    background-color: rgba(0, 128, 128, 0.75) !important;
+}

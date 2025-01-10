@@ -71,7 +71,7 @@ public class LandingContentController {
                                   Model model){
 
         landingContent.setArchived(false);
-        landingContent.setActive(true);
+        landingContent.setActive(false);
         LandingContent savedInfo = landingContentService.save(landingContent);
 
         return "redirect:/dashboard/landing-contents";

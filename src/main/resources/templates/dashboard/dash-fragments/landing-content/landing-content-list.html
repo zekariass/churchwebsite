@@ -7,30 +7,32 @@
 <body th:fragment="landing-content-list">
 <div class="d-flex justify-content-end mx-3">
     <a th:href="@{/dashboard/landing-contents/form}">
-        <h6 class="text-decoration-underline">
+        <h6 class="text-decoration-underline text-success fw-bold">
             Create New Content
         </h6>
     </a>
 </div>
 <h3 class="m-3 text-center text-md-start">Landing Content List</h3>
-<ul class="list-group list-group-light row">
-    <div th:each="landingContent: ${landingContentList}" class="col-md-6 col-12">
-        <div class="card" role="button">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-10" th:onclick="|window.location='@{/dashboard/landing-contents/detail/{id}(id=${landingContent.landingContentId})}'|">
-                        <li class="d-flex justify-content-between align-items-center">
-                            <h4>[[${landingContent.landingContentTitle}]]</h4>
-                        </li>
-                        <p class="muted badge badge-secondary rounded-pill" th:text="${landingContent.contentCreationTime != null ? landingContent.contentCreationTime.format(@dateTimeFormatter) : ''}"></p>
+<ul class="row g-4">
+    <th:block th:each="landingContent: ${landingContentList}">
+        <div class="col-md-6 mb-3 px-3" role="button">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div th:onclick="|window.location='@{/dashboard/landing-contents/detail/{id}(id=${landingContent.landingContentId})}'|">
+                        <h4>[[${landingContent.landingContentTitle}]]</h4>
+                        <p class="" th:text="${landingContent.excerpt}"></p>
+                        <p class="text-muted" th:text="${landingContent.contentCreationTime?.format(@dateTimeFormatter)}"></p>
+                        <p class="text-muted">Active: [[${landingContent.active}]]</p>
+                        <p class="text-muted">Display Order: [[${landingContent.contentOrder}]]</p>
                     </div>
-                    <div class="col-2 d-flex justify-content-end" >
-                        <i class="fa-solid fa-lg fa-trash delete-icon" style="color: brown;" th:onclick="|window.location='@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}'|"></i>
+                    <div class="d-flex justify-content-end" >
+                        <i class="fa-solid fa-lg fa-trash delete-icon me-2" style="color: brown;" th:onclick="|window.location='@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}'|"></i>
+                        <i class="fa-solid fa-lg fas fa-edit text-info" th:onclick="|window.location='@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}'|"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </th:block>
 </ul>
 <!-- Show a message if there are no blogs -->
 <div th:if="${landingContentList.size() == 0}">

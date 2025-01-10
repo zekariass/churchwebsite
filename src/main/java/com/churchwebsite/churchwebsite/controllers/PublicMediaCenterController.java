@@ -106,12 +106,18 @@ public class PublicMediaCenterController {
                                   @RequestParam(value = "page", defaultValue = "1") int page,
                                   @RequestParam(value = "size", required = false) Integer pageSize,
                                   @RequestParam(value = "sortBy", defaultValue = "", required = false) String sortBy,
+                                  @RequestParam(value = "archived", required = false) Boolean archived,
                                   Model model,
                                   HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Image> pagedAlbumImages = imageService.findByAlbum(page, pageSize, sortBy, albumId);
+        Page<Image> pagedAlbumImages;
+        if(archived == null){
+            pagedAlbumImages = imageService.findByAlbum(page, pageSize, sortBy, albumId);
+        }else{
+            pagedAlbumImages = imageService.findByAlbumAndArchived(archived, page, pageSize, sortBy, albumId);
+        }
 
         List<Image> images = pagedAlbumImages.getContent();
 
@@ -135,11 +141,19 @@ public class PublicMediaCenterController {
     public String showVideoList(Model model,
                                 @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                                 @RequestParam(value = "size", required = false) Integer pageSize,
+                                @RequestParam(value = "archived", required = false) Boolean archived,
                                 HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Video> pagesVideoList = videoService.getVideoList(page, pageSize, Sort.by(Sort.Order.desc("uploadTime")));
+        Page<Video> pagesVideoList;
+
+        if(archived == null){
+            pagesVideoList = videoService.getVideoList(page, pageSize, Sort.by(Sort.Order.desc("uploadTime")));
+        }else{
+            pagesVideoList = videoService.findByArchived(archived, page, pageSize, Sort.by(Sort.Order.desc("uploadTime")));
+        }
+
         List<Video> videoList = pagesVideoList.getContent();
 
         model.addAttribute("activeContentPage", "videos-list");
@@ -162,11 +176,18 @@ public class PublicMediaCenterController {
                                      @RequestParam(value = "page", defaultValue = "1") int page,
                                      @RequestParam(value = "size", required = false) Integer pageSize,
                                      @RequestParam(value = "sortBy", defaultValue = "", required = false) String sortBy,
+                                     @RequestParam(value = "archived", required = false) Boolean archived,
                                      HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Attachment> pagedAttachments = attachmentService.findAll(page, pageSize, sortBy);
+        Page<Attachment> pagedAttachments;
+
+        if(archived == null){
+            pagedAttachments = attachmentService.findAll(page, pageSize, sortBy);
+        }else{
+            pagedAttachments = attachmentService.findByArchived(archived, page, pageSize, sortBy);
+        }
 
         List<Attachment> attachments = pagedAttachments.getContent();
 

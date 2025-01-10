@@ -12,10 +12,24 @@
           <main th:if="${activeDashPage == 'dash-landing'}">
             <div th:replace="~{dashboard/dash-fragments/dash-landing::dash-landing}"></div>
           </main>
-<!--          <main th:if="${activeDashPage == 'dash-landing'}" th:replace="~{dashboard/dash-fragments/dash-landing::dash-landing}"></main>-->
-          <main th:if="${activeDashPage == 'messages'}">
-            <div th:replace="~{dashboard/dash-fragments/messages::messages}"></div>
+          <!-- ============================ MESSAGES (CONTACT US) ============================= -->
+          <main th:if="${activeDashPage == 'contact-us-messages-list'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/contact-us-messages-list::contact-us-messages-list}"></div>
           </main>
+
+          <main th:if="${activeDashPage == 'contact-us-message-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/contact-us-message-detail::contact-us-message-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'contact-us-message-reply-form'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/contact-us-message-reply-form::contact-us-message-reply-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'contact-us-message-reply-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/messages/contact-us-message-reply-detail::contact-us-message-reply-detail}"></div>
+          </main>
+
+          <!-- ========================================================================-->
           <main th:if="${activeDashPage == 'events'}">
             <div th:replace="~{dashboard/dash-fragments/events::events}"></div>
           </main>
@@ -354,6 +368,12 @@
 
           <main th:if="${activeDashPage == 'about-us-list'}">
             <div th:replace="~{dashboard/dash-fragments/about-us/about-us-list::about-us-list}"></div>
+          </main>
+
+          <!--    ============= USER ============================= -->
+
+          <main th:if="${activeDashPage == 'user-profile'}">
+            <div th:replace="~{user-profile::user-profile}"></div>
           </main>
 
         </div>

@@ -19,7 +19,7 @@
 
 <body>
 
-<main id="main" class="main" th:fragment="user-profile">
+<main id="" class="main container" th:fragment="user-profile">
 
   <div class="pagetitle">
     <h1>Profile Page</h1>
@@ -159,7 +159,7 @@
             <div class="tab-pane fade px-5 pt-3" id="profile-bio">
 
               <!-- Settings Form -->
-              <p th:utext="${user.userProfile.biography}"></p>
+              <p th:utext="${user?.userProfile?.biography}"></p>
 
             </div>
 

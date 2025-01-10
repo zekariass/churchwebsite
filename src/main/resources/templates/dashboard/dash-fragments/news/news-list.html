@@ -7,31 +7,37 @@
 <body th:fragment="news-list">
     <div class="d-flex justify-content-end mx-3">
         <a th:href="@{/dashboard/news/form}">
-            <h6 class="text-decoration-underline">
+            <h6 class="text-decoration-underline text-success">
                 Post New News
             </h6>
         </a>
     </div>
     <h3 class="m-3 text-center text-md-start">News List</h3>
-    <ul class="list-group list-group-light row">
-        <div th:each="news: ${newsList}" class="col-md-6 col-12">
-            <div class="card" role="button">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-10" th:onclick="|window.location='@{/dashboard/news/detail/{id}(id=${news.newsId})}'|">
-                            <li class="d-flex justify-content-between align-items-center">
-                                <h4>[[${news.newsTitle}]]</h4>
-                            </li>
-                            <p class="muted badge badge-secondary rounded-pill" th:text="${news.newsPostTime != null ? news.newsPostTime.format(@dateTimeFormatter) : ''}"></p>
+
+    <div class="row">
+        <th:block th:each="news: ${newsList}">
+            <div class="col-md-6 mb-3 px-3">
+                <div class="card h-100">
+                    <div class="card-body" role="button" th:onclick="|window.location='@{/dashboard/news/detail/{id}(id=${news.newsId})}'|">
+                        <h5 class="card-title" th:text="${news.newsTitle}"></h5>
+                        <p class="card-text text-muted" th:text="${news.newsPostTime.format(@dateTimeFormatter)}"></p>
+                        <p class="card-text" th:text="${news.excerpt}"></p>
+                    </div>
+                    <a class="text-success text-center mt-4" th:href="@{/dashboard/news/detail/{id}(id=${news.newsId})}">
+                        <h6>More Detail</h6>
+                    </a>
+                    <div class="d-flex flex-row justify-content-end">
+                        <div class="d-flex  me-3 mb-3"  th:onclick="|window.location='@{/dashboard/news/delete/{id}(id=${news.newsId})}'|">
+                            <i class="fa-solid fa-lg fa-trash delete-icon" role="button" style="color: brown;"></i>
                         </div>
-                        <div class="col-2 d-flex justify-content-end"  th:onclick="|window.location='@{/dashboard/news/delete/{id}(id=${news.newsId})}'|">
-                            <i class="fa-solid fa-lg fa-trash delete-icon" style="color: brown;"></i>
+                        <div class="d-flex me-3 mb-3"  th:onclick="|window.location='@{/dashboard/news/edit/{id}(id=${news.newsId})}'|">
+                            <i class="fas fa-solid fa-lg fa-edit text-primary" role="button"></i>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </ul>
+        </th:block>
+    </div>
     <!-- Show a message if there are no blogs -->
     <div th:if="${newsList.size() == 0}">
         <h4 colspan="4" class="text-center text-muted">No News Found.</h4>

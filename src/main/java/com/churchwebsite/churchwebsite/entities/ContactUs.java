@@ -1,10 +1,13 @@
 package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "contact_us")
@@ -13,14 +16,23 @@ public class ContactUs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String contactUsId;
+    private int contactUsId;
+
+    @NotEmpty(message = "Firstname cannot be empty.")
     private String firstName;
+
+    @NotEmpty(message = "Lastname cannot be empty.")
     private String lastName;
 
     @Column(unique = true)
+    @Email(message = "Invalid email.")
+    @NotEmpty(message = "Email can not be empty.")
     private String email;
 
+    @NotEmpty(message = "Phone number cannot be empty.")
     private String phoneNumber;
+
+    @NotEmpty(message = "Message cannot be empty.")
     private String message;
 
     @CreatedDate
@@ -36,6 +48,9 @@ public class ContactUs {
 
     private LocalDateTime readTime;
 
+    @OneToMany(mappedBy = "contactUsMessage", cascade = CascadeType.ALL)
+    private List<MessageReply> replies;
+
     public ContactUs() {}
 
     public ContactUs(String firstName, String lastName, String email, String phoneNumber, String message, LocalDateTime messageTime) {
@@ -47,11 +62,11 @@ public class ContactUs {
         this.messageTime = messageTime;
     }
 
-    public String getContactUsId() {
+    public int getContactUsId() {
         return contactUsId;
     }
 
-    public void setContactUsId(String contactUsId) {
+    public void setContactUsId(int contactUsId) {
         this.contactUsId = contactUsId;
     }
 
@@ -111,7 +126,7 @@ public class ContactUs {
         this.user = user;
     }
 
-    public boolean isRead() {
+    public boolean getRead() {
         return read;
     }
 
@@ -125,6 +140,18 @@ public class ContactUs {
 
     public void setReadTime(LocalDateTime readTime) {
         this.readTime = readTime;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public List<MessageReply> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<MessageReply> replies) {
+        this.replies = replies;
     }
 
     @Override

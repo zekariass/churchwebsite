@@ -32,9 +32,9 @@
                     <td th:text="${product.deliveryType?.displayName}"></td>
                     <td th:text="${product.listingStatus?.displayName}"></td>
                     <td>
-                        <a th:href="@{/dashboard/products/detail/{id}(id=${product.productId})}" class="primary-button btn-sm">View</a>
-                        <a th:href="@{/dashboard/products/edit/{id}(id=${product.productId})}" class="warning-button btn-sm">Edit</a>
-                        <a th:href="@{/dashboard/products/delete/{id}(id=${product.productId})}" class="danger-button btn-sm">delete</a>
+                        <a th:href="@{/dashboard/products/detail/{id}(id=${product.productId})}" class="primary-button button-sm">View</a>
+                        <a th:href="@{/dashboard/products/edit/{id}(id=${product.productId})}" class="warning-button button-sm">Edit</a>
+                        <a th:href="@{/dashboard/products/delete/{id}(id=${product.productId})}" class="danger-button button-sm">delete</a>
                     </td>
                 </tr>
                 </tbody>

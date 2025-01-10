@@ -5,8 +5,16 @@
     <title>Dash Landing</title>
 </head>
 <body>
-  <div th:fragment="dash-landing">
-    <h1>Dash Landing....</h1>
-  </div>
+<div th:fragment="dash-landing" class="d-flex flex-column justify-content-center">
+    <!-- Centered Image -->
+    <div class="text-center">
+        <img th:src="${churchDetail?.church?.churchLogo}" width="300" height="300">
+    </div>
+    <!-- Centered Heading -->
+    <div class="text-center">
+        <h1>[[${churchDetail?.church?.churchName}]]</h1>
+    </div>
+</div>
+
 </body>
 </html>

@@ -9,11 +9,11 @@
   <div class="card">
     <div class="m-3">
                 <Span class="d-flex justify-content-end">
-                    <a th:href="@{/dashboard/landing-contents/edit/{id}(id=${landingContent.landingContentId})}" class="me-1">Edit</a>
+                    <a th:href="@{/dashboard/landing-contents/edit/{id}(id=${landingContent.landingContentId})}" class="text-success fw-bold me-1">Edit</a>
                     |
-                    <a th:href="@{/dashboard/landing-contents}" class="mx-1">Back to the list</a>
+                    <a th:href="@{/dashboard/landing-contents}" class="text-success fw-bold mx-1">Back to the list</a>
                     |
-                    <a th:href="@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}" class="mx-1">Delete</a>
+                    <a th:href="@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}" class="text-success fw-bold mx-1">Delete</a>
                 </Span>
     </div>
     <div class="card-header">
@@ -21,7 +21,7 @@
         <h5 class="mb-1">[[${landingContent.landingContentTitle}]]</h5>
       </div>
       <p class="text-muted" th:text="${landingContent.contentCreationTime != null ? landingContent.contentCreationTime.format(@dateTimeFormatter): ''}"></p>
-      by <span th:text="${#authentication.principal.user.userProfile !=null ? #authentication.principal.user.userProfile.firstName: #authentication.principal.username}"></span>
+        <p class="mb-1" >Order: [[${landingContent.contentOrder}]]</p>
     </div>
 
     <div class="card-body">

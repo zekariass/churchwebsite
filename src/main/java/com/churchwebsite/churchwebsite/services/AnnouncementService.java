@@ -46,4 +46,32 @@ public class AnnouncementService {
         }
         return announcementRepository.findAll(pageable);
     }
+
+    public Page<Announcement> findByArchivedAndActiveAndFeatured(int page, Integer pageSize, String sortBy, Boolean archived, Boolean active, Boolean featured) {
+        if(sortBy.isEmpty()){
+            sortBy = "createdAt";
+        }
+        Pageable pageable;
+        if(sortBy.equals("createdAt") || sortBy.equals("lastModifiedAt")){
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else{
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        }
+
+        return announcementRepository.findByArchivedAndActiveAndFeatured(archived, active, featured, pageable);
+    }
+
+    public Page<Announcement> findByArchivedAndActive(int page, Integer pageSize, String sortBy, Boolean archived, Boolean active) {
+        if(sortBy.isEmpty()){
+            sortBy = "createdAt";
+        }
+        Pageable pageable;
+        if(sortBy.equals("createdAt") || sortBy.equals("lastModifiedAt")){
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else{
+            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        }
+
+        return announcementRepository.findByArchivedAndActive(archived, active, pageable);
+    }
 }

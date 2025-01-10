@@ -62,7 +62,7 @@
 <body>
     <div th:fragment="services-list">
         <div class="container my-4">
-            <div>
+            <div class="mb-5">
                 <h2 class="text-center">Church Services</h2>
             </div>
             <div class="row">
@@ -70,7 +70,7 @@
                     <div class="row">
                         <th:block th:each="service : ${churchServices}">
                             <div class="col-md-6 mb-4">
-                                <div class="card h-100 shadow-sm">
+                                <div class="card h-100">
                                     <div class="card-body">
                                         <!-- Blog Title -->
                                         <h5 class="card-title mb-3 text-success" th:text="${service.serviceName}">Service Name</h5>
@@ -93,14 +93,14 @@
                 <div class="col-md-4 mb-3" style="background-color: #FAF9F6; border-radius: 5px">
                     <div class="card">
                         <div class="card-body">
-                            <div class="mb-3 p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/baptism/form}'|">
-                                <h5 class="text-muted">Baptism Request Form</h5>
+                            <div class="mb-3 p-3 shadow-sm text-success" role="button" th:onclick="|window.location='@{/church-services/baptism/form}'|">
+                                <h6 class="">Baptism Request Form</h6>
                             </div>
-                            <div class="mb-3 p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/matrimony/form}'|">
-                                <h5 class="text-muted">Holy Matrimony Request Form</h5>
+                            <div class="mb-3 p-3 shadow-sm text-success" role="button" th:onclick="|window.location='@{/church-services/matrimony/form}'|">
+                                <h6 class="">Holy Matrimony Request Form</h6>
                             </div>
-                            <div class="p-3 shadow-sm" role="button" th:onclick="|window.location='@{/church-services/remembrance/form}'|">
-                                <h5 class="text-muted">Remembrance Prayer Request Form</h5>
+                            <div class="p-3 shadow-sm text-success" role="button" th:onclick="|window.location='@{/church-services/remembrance/form}'|">
+                                <h6 class="">Remembrance Prayer Request Form</h6>
                             </div>
                         </div>
                     </div>

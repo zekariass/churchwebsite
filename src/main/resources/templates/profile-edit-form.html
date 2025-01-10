@@ -9,7 +9,7 @@
     <script src="https://cdn.tiny.cloud/1/tx94asea6cunx78nxu2dgapd5tjf41gmf59qtn6ftmhzraop/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
     <!-- Profile Edit Form -->
-    <form th:action="@{/users/profile/edit/process}" th:object="${userProfile}" method="POST" enctype="multipart/form-data">
+    <form th:action="@{${controller == 'dashboard'} ? '/dashboard/users/profile/edit/process' : '/users/profile/edit/process'}" th:object="${userProfile}" method="POST" enctype="multipart/form-data">
       <div class="form-group mt-5 bg-smoke p-5 rounded-3" id="profileForm">
         <input type="hidden" th:field="*{userProfileId}">
         <div class="mb-3">

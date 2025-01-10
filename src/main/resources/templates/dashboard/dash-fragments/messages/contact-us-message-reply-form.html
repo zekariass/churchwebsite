@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:fragment="contact-us-message-reply-form" class="container mt-5">
+    <h2 class="mb-4" th:text="${messageReply.id == null} ? 'Create Email' : 'Edit Email'"></h2>
+    <form th:action="@{/dashboard/messages/replies/form/{id}(id=${contactUs.contactUsId})}" th:object="${messageReply}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="mb-3">
+            <label for="receiverEmail" class="form-label">Receiver Email</label>
+            <input type="email" class="form-control" id="receiverEmail" th:field="*{receiverEmail}">
+            <div th:if="${#fields.hasErrors('receiverEmail')}">
+                <p th:errors="*{receiverEmail}" class="fw-bold text-danger"></p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="subject" th:field="*{subject}">
+            <div th:if="${#fields.hasErrors('subject')}">
+                <p th:errors="${messageReply.subject}" class="fw-bold text-danger"></p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="tiny" class="form-label">Message</label>
+            <textarea class="form-control" id="tiny" rows="4" th:field="*{message}"></textarea>
+            <div th:if="${#fields.hasErrors('message')}">
+                <p th:errors="${messageReply.message}" class="fw-bold text-danger"></p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <input type="checkbox" th:field="*{followUp}" class="form-check-input" id="isFollowUp">
+            <label for="isFollowUp" class="form-label">It is a follow up</label>
+        </div>
+
+        <div class="">
+            <a th:href="@{/dashboard/messages}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-success">Save and Send</button>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -36,28 +36,35 @@ public class PublicNewsController {
     }
 
     @GetMapping("")
-    public String showNewsPublic(Model model,
-                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                 @RequestParam(value = "size", required = false) Integer pageSize,
-                                 @RequestParam(value = "sortBy", defaultValue = "newsPostTime") String sortBy,
-                                 HttpServletRequest request){
-
+    public String showNewsList(Model model,
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "size", required = false) Integer pageSize,
+                               @RequestParam(value = "sortBy", defaultValue = "newsPostTime") String sortBy,
+                               @RequestParam(value = "archived", defaultValue = "false") Boolean archived,
+                               @RequestParam(value = "active", defaultValue = "true") Boolean active,
+                               @RequestParam(value = "featured", required = false) Boolean featured,
+                               HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<News> pagedNews = newsService.findAll(page, pageSize, sortBy);
+        Page<News> pagedNews;
+        if(featured != null){
+            pagedNews = newsService.findByArchivedAndActiveAndFeatured(page, pageSize, sortBy, archived, active, featured);
+        }else{
+            pagedNews = newsService.findByArchivedAndActive(page, pageSize, sortBy, archived, active);
+        }
         List<News> newsList = pagedNews.getContent();
 
-        model.addAttribute("newsList", newsList);
         model.addAttribute("activeContentPage", "news-list");
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("newsList", newsList);
         model.addAttribute("currentPage", pagedNews.getNumber()+1);
         model.addAttribute("totalItems", pagedNews.getTotalElements());
         model.addAttribute("totalPages", pagedNews.getTotalPages());
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+
 
         return PUBLIC_CONTENT;
     }

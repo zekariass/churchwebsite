@@ -1,5 +1,6 @@
 package com.churchwebsite.churchwebsite.entities;
 
+import com.churchwebsite.churchwebsite.utils.MiscUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,5 +44,12 @@ public class Announcement {
 
     @Column(name = "is_featured", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean featured;
+
+    @Transient
+    private String excerpt;
+
+    public String getExcerpt() {
+        return MiscUtils.generateExcerpt(content, 200);
+    }
 }
 

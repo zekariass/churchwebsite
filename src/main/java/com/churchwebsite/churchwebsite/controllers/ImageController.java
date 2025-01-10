@@ -99,11 +99,6 @@ public class ImageController {
             return DASHBOARD_MAIN_PANEL;
 
         }else {
-//            if (purpose.equals("blog") || purpose.equals("information") || purpose.equals("news")) {
-//                model.addAttribute("activeDashPage", "image-links-list");
-//            } else {
-//                model.addAttribute("activeDashPage", "albums-list");
-//            }
 
             // Check if existing album is selected or new one is created
             Album savedAlbum;

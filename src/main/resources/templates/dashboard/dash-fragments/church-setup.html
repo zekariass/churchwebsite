@@ -6,7 +6,7 @@
 </head>
     <body>
         <div th:fragment="church-setup">
-            <div th:if="${churchDetail?.church?.churchId == 0}" class="shadow bg-body rounded p-4 org-setup-form">
+            <div class="shadow bg-body rounded p-4 org-setup-form">
                 <p class="h3">Register your church here.</p>
                 <p class="h5">You can have only one church at once.</p>
                 <form th:action="@{/dashboard/church/setup/process}" th:object="${churchDetail}" method="POST" enctype="multipart/form-data">
@@ -112,10 +112,10 @@
                     <button type="submit" class="success-button mt-3">Submit</button>
                 </form>
             </div>
-            <div th:if="${churchDetail?.church?.churchId != 0}">
-                <h4 class="text-info my-3">Church is already existing!</h4>
-                <a class="text-success" href="/dashboard/church/detail"><h5>See the church detail</h5></a>
-            </div>
+<!--            <div th:if="${churchDetail?.church?.churchId != 0}">-->
+<!--                <h4 class="text-info my-3">Church is already existing!</h4>-->
+<!--                <a class="text-success" href="/dashboard/church/detail"><h5>See the church detail</h5></a>-->
+<!--            </div>-->
         </div>
     </body>
 </html>

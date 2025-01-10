@@ -1,5 +1,6 @@
 package com.churchwebsite.churchwebsite.entities;
 
+import com.churchwebsite.churchwebsite.utils.MiscUtils;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -16,7 +17,7 @@ public class ChurchServices {
     private String excerpt;
 
     public String getExcerpt() {
-        return excerpt;
+        return MiscUtils.generateExcerpt(serviceDescription, 200);
     }
 
     public void setExcerpt(String excerpt) {

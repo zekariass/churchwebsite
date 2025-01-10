@@ -101,7 +101,6 @@ public class BlogController {
 
         blogs.forEach(blog -> {
             String excerpt = generateExrept(blog.getBlogText(), 200);
-            System.out.println("======================================>: "+excerpt);
             blog.setExcerpt(excerpt);
         });
 

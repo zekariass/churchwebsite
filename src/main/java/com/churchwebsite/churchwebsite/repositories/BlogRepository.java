@@ -11,4 +11,8 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     Page<Blog> findByBlogCategory(Pageable pageable, BlogCategory blogCategory);
     Page<Blog> findAllByArchived(Boolean archived, Pageable pageable);
     Page<Blog> findByBlogCategoryAndArchived(Pageable pageable, BlogCategory blogCategory, Boolean archived);
+
+    Page<Blog> findByBlogCategoryAndArchivedAndActive(Pageable pageable, BlogCategory blogCategory, boolean archived, boolean active);
+
+    Page<Blog> findAllByArchivedAndActive(boolean archived, Pageable pageable, boolean active);
 }

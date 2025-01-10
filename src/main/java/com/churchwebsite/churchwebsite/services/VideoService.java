@@ -1,6 +1,5 @@
 package com.churchwebsite.churchwebsite.services;
 
-import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Video;
 import com.churchwebsite.churchwebsite.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +27,11 @@ public class VideoService {
         Pageable pageable = PageRequest.of(page-1, pageSize, uploadTime);
 
         return videoRepository.findAll(pageable);
+    }
+
+    public Page<Video> findByArchived(Boolean archived, int page, Integer pageSize, Sort uploadTime) {
+        Pageable pageable = PageRequest.of(page-1, pageSize, uploadTime);
+
+        return videoRepository.findByArchived(archived, pageable);
     }
 }

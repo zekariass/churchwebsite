@@ -1,7 +1,8 @@
 package com.churchwebsite.churchwebsite.entities;
 
+import com.churchwebsite.churchwebsite.utils.MiscUtils;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,8 @@ public class LandingContent {
     private String landingContentTitle;
     private String content;
 
-    @LastModifiedDate
+    @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime contentCreationTime;
 
     @Column(name = "is_active")
@@ -28,6 +30,11 @@ public class LandingContent {
 
     @Column(name = "is_archived")
     private boolean archived;
+
+    private int contentOrder;
+
+    @Transient
+    private String excerpt;
 
     public LandingContent() {}
 
@@ -95,6 +102,18 @@ public class LandingContent {
         this.archived = archived;
     }
 
+    public int getContentOrder() {
+        return contentOrder;
+    }
+
+    public void setContentOrder(int contentOrder) {
+        this.contentOrder = contentOrder;
+    }
+
+    public String getExcerpt() {
+        return MiscUtils.generateExcerpt(content, 200);
+    }
+
     @Override
     public String toString() {
         return "LandingContent{" +
@@ -105,6 +124,7 @@ public class LandingContent {
                 ", active=" + active +
                 ", featured=" + featured +
                 ", archived=" + archived +
+                ", order=" + contentOrder +
                 '}';
     }
 }

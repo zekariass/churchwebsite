@@ -6,10 +6,13 @@
 </head>
 <body>
 <div th:fragment="contact-us-form" class="container">
+    <div id="messageDisplay" class="text-success d-flex justify-content-center">
+        <p class="fw-bold">[[${message}]]</p>
+    </div>
     <div class="d-flex justify-content-center">
         <h2>Contact Us</h2>
     </div>
-    <form th:action="@{/contactUs}" th:object="${contactUs}" method="post" class="needs-validation" novalidate>
+    <form th:action="@{/contactUs}" th:object="${contactUs}" method="post">
         <!-- First Name -->
         <div class="mb-3">
 <!--            <label for="firstName" class="form-label">First Name</label>-->
@@ -17,10 +20,9 @@
                    th:field="*{firstName}"
                    class="form-control form-control-lg"
                    id="firstName"
-                   placeholder="Enter your first name"
-                   required>
-            <div class="invalid-feedback">
-                Please provide your first name.
+                   placeholder="Enter your first name">
+            <div th:if="${#fields.hasErrors('firstName')}" class="ps-3 text-danger fw-bold">
+                <p th:errors="${contactUs.firstName}"></p>
             </div>
         </div>
 
@@ -31,10 +33,9 @@
                    th:field="*{lastName}"
                    class="form-control form-control-lg"
                    id="lastName"
-                   placeholder="Enter your last name"
-                   required>
-            <div class="invalid-feedback">
-                Please provide your last name.
+                   placeholder="Enter your last name">
+            <div th:if="${#fields.hasErrors('lastName')}" class="ps-3 text-danger fw-bold">
+                <p th:errors="${contactUs.lastName}"></p>
             </div>
         </div>
 
@@ -45,10 +46,9 @@
                    th:field="*{email}"
                    class="form-control form-control-lg"
                    id="email"
-                   placeholder="Enter your email address"
-                   required>
-            <div class="invalid-feedback">
-                Please provide a valid email address.
+                   placeholder="Enter your email address">
+            <div th:if="${#fields.hasErrors('email')}" class="ps-3 text-danger fw-bold">
+                <p th:errors="${contactUs.email}"></p>
             </div>
         </div>
 
@@ -60,8 +60,8 @@
                    class="form-control form-control-lg"
                    id="phoneNumber"
                    placeholder="Enter your phone number">
-            <div class="invalid-feedback">
-                Please provide a valid phone number.
+            <div th:if="${#fields.hasErrors('firstName')}" class="ps-3 text-danger fw-bold">
+                <p th:errors="${contactUs.phoneNumber}"></p>
             </div>
         </div>
 
@@ -71,12 +71,11 @@
             <textarea
                     th:field="*{message}"
                     class="form-control form-control-lg"
-                    id="message"
+                    id="message_"
                     rows="5"
-                    placeholder="Enter your message"
-                    required></textarea>
-            <div class="invalid-feedback">
-                Please provide a message.
+                    placeholder="Enter your message"></textarea>
+            <div th:if="${#fields.hasErrors('message')}" class="ps-3 text-danger fw-bold">
+                <p th:errors="${contactUs.message}"></p>
             </div>
         </div>
 

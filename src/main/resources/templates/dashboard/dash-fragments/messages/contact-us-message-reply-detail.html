@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Detail</title>
+    <!-- Bootstrap CSS -->
+</head>
+<body>
+<div th:fragment="contact-us-message-reply-detail" class="container mt-5">
+    <h2 class="mb-4">Reply Detail</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Subject: <span th:text="${reply.subject}"></span></h5>
+            <p class="card-text">
+                <strong>Receiver Email:</strong> <span th:text="${reply.receiverEmail}"></span><br>
+                <strong>Contact Us ID:</strong> <span th:text="${reply.contactUsMessage.contactUsId}"></span><br>
+                <strong>Message:</strong> <span th:utext="${reply.message}"></span><br>
+                <strong>Sent At:</strong> <span th:text="${reply.sentAt?.format(@dateTimeFormatter)}"></span><br>
+                <strong>Is it a follow-up message: </strong> <span th:text="${reply.followUp} ? 'Yes' : 'No'"></span>
+            </p>
+            <a th:href="@{/dashboard/messages}" class="info-button">Messages</a>
+            <a th:href="@{/dashboard/messages/replies/edit-and-resend/{id}(id=${reply.id})}" class="warning-button">Resend</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+</body>
+</html>

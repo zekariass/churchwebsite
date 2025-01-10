@@ -11,16 +11,17 @@
     <div class="col-md-6">
       <div class="mb-3 card">
         <div class="card-body">
-          <h5 class="card-title">Announcements</h5>
+          <h5 class="card-title text-info">Announcements</h5>
           <div th:each="announcement : ${announcements}" class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
-            <div class="vertical-timeline-item vertical-timeline-element">
+            <div class="vertical-timeline-item vertical-timeline-element mb-3">
               <div>
                 <span class="vertical-timeline-element-icon bounce-in">
                   <i class="badge badge-dot badge-dot-xl badge-success"></i>
                 </span>
                 <div class="vertical-timeline-element-content bounce-in">
                   <h4 class="timeline-title" th:text="${announcement.title}"></h4>
-                  <h6 class="text-muted" th:text="|Posted on ${announcement.createdAt.format(@dateTimeFormatter)}|"></h6>
+                  <p class="" th:text="${announcement.excerpt}"></p>
+                  <p class="text-muted" th:text="|Posted on ${announcement.createdAt.format(@dateTimeFormatter)}|"></p>
                   <a class="text-success" th:href="@{/announcements/detail/{id}(id=${announcement.id})}">
                     <h6>More Detail</h6>
                   </a>

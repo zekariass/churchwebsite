@@ -32,8 +32,8 @@
           <td th:text="${image.imageType.displayName}"></td>
           <td th:text="${image.createdAt.format(@dateTimeFormatter)}"></td>
           <td>
-            <a th:href="@{/dashboard/products/images/detail/{id}(id=${image.productImageId})}" role="button" class="primary-button btn-sm" >View</a>
-            <a th:href="@{/dashboard/products/images/delete/{id}(id=${image.productImageId})}" role="button" class="danger-button btn-sm" >Delete</a>
+            <a th:href="@{/dashboard/products/images/detail/{id}(id=${image.productImageId})}" role="button" class="primary-button button-sm" >View</a>
+            <a th:href="@{/dashboard/products/images/delete/{id}(id=${image.productImageId})}" role="button" class="danger-button button-sm" >Delete</a>
           </td>
         </tr>
         </tbody>

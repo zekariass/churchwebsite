@@ -1,8 +1,8 @@
 package com.churchwebsite.churchwebsite.entities;
 
+import com.churchwebsite.churchwebsite.utils.MiscUtils;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -32,9 +32,12 @@ public class News {
     private boolean archived;
 
     @ManyToOne
-    @JoinColumn(name = "posted_by")
+    @JoinColumn(name = "posted_by", updatable = false)
     @CreatedBy
     private User postedBy;
+
+    @Transient
+    private String excerpt;
 
     public News() {}
 
@@ -108,6 +111,10 @@ public class News {
 
     public void setPostedBy(User postedBy) {
         this.postedBy = postedBy;
+    }
+
+    public String getExcerpt() {
+        return MiscUtils.generateExcerpt(newsText, 200);
     }
 
     @Override

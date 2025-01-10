@@ -31,7 +31,7 @@
         <div th:if="${churchDetail?.church?.telegramChat != null and churchDetail?.church?.telegramChat != ''}" class="col-sm-6 col-xl-4 mt-4">
           <div class="card text-center border-0 rounded-3">
             <div class="card-body">
-              <a th:href="${churchDetail.church.telegramChat}" class="mb-0">
+              <a th:href="${churchDetail.church?.telegramChat}" class="mb-0">
                 <i class="fa-brands fa-2x fa-telegram me-3 text-info"></i>
                 <h3 class="h5 mb-3">Telegram Chat</h3>
               </a>

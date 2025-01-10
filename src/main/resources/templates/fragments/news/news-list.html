@@ -1,39 +1,74 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>News List</title>-->
+
+<!--</head>-->
+<!--<body th:fragment="news-list">-->
+
+<!--<div class="container">-->
+<!--    <ul class="timeline">-->
+<!--        <li th:each="news: ${newsList}" class="ps-3">-->
+<!--            &lt;!&ndash; begin timeline-time &ndash;&gt;-->
+<!--            <div class="timeline-time pe-3">-->
+<!--                <span class="date">[[${news.newsPostTime.format(@dateTimeFormatter)}]]</span>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; end timeline-time &ndash;&gt;-->
+<!--            &lt;!&ndash; begin timeline-icon &ndash;&gt;-->
+<!--            <div class="timeline-icon">-->
+<!--                <a href="javascript:;">&nbsp;</a>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; end timeline-icon &ndash;&gt;-->
+<!--            &lt;!&ndash; begin timeline-body &ndash;&gt;-->
+<!--            <div class="timeline-body" role="button" th:onclick="|window.location='@{/news/detail/{id}(id=${news.newsId})}'|">-->
+<!--                <div class="timeline-content">-->
+<!--                    <h6>-->
+<!--                        [[${news.newsTitle}]]-->
+<!--                    </h6>-->
+<!--                    <div class="timeline-time-inline">-->
+<!--                        <span class="date">[[${news.newsPostTime.format(@dateTimeFormatter)}]]</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; end timeline-body &ndash;&gt;-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>News List</title>
-
+    <!-- Bootstrap CSS -->
 </head>
 <body th:fragment="news-list">
 
-<div class="container">
-    <ul class="timeline">
-        <li th:each="news: ${newsList}" class="ps-3">
-            <!-- begin timeline-time -->
-            <div class="timeline-time pe-3">
-                <span class="date">[[${news.newsPostTime.format(@dateTimeFormatter)}]]</span>
-            </div>
-            <!-- end timeline-time -->
-            <!-- begin timeline-icon -->
-            <div class="timeline-icon">
-                <a href="javascript:;">&nbsp;</a>
-            </div>
-            <!-- end timeline-icon -->
-            <!-- begin timeline-body -->
-            <div class="timeline-body" role="button" th:onclick="|window.location='@{/news/detail/{id}(id=${news.newsId})}'|">
-                <div class="timeline-content">
-                    <h6>
-                        [[${news.newsTitle}]]
-                    </h6>
-                    <div class="timeline-time-inline">
-                        <span class="date">[[${news.newsPostTime.format(@dateTimeFormatter)}]]</span>
+    <div class="container mt-5">
+        <div class="row">
+            <th:block th:each="news: ${newsList}">
+                <div class="col-md-6 mb-3 px-3">
+                    <div class="card h-100">
+                        <div class="card-body" role="button" th:onclick="|window.location='@{/news/detail/{id}(id=${news.newsId})}'|">
+                            <h5 class="card-title" th:text="${news.newsTitle}"></h5>
+                            <p class="card-text text-muted" th:text="${news.newsPostTime.format(@dateTimeFormatter)}"></p>
+                            <p class="card-text" th:text="${news.excerpt}"></p>
+                        </div>
+                        <a class="text-success text-center mt-4" th:href="@{/news/detail/{id}(id=${news.newsId})}">
+                            <h6>More Detail</h6>
+                        </a>
                     </div>
                 </div>
-            </div>
-            <!-- end timeline-body -->
-        </li>
-    </ul>
-</div>
+            </th:block>
+        </div>
+    </div>
+
+<!-- Bootstrap JS -->
 </body>
 </html>

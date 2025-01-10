@@ -18,7 +18,7 @@
             object-fit: cover;
         }
     </style>
-    <div class="d-flex justify-content-end"><a th:href="@{/media-center/options}">Back to image options</a></div>
+    <div class="d-flex justify-content-end text-success"><a th:href="@{/media-center/options}" class="h6">Back to options</a></div>
     <h2>All image albums</h2>
     <div class="row g-4">
         <div class="col-md-6 col-lg-4" th:each="album, albumStat : ${albums}" th:if="${album.imageList.size() > 0}">

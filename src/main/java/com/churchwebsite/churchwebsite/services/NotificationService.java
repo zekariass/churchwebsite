@@ -85,4 +85,13 @@ public class NotificationService {
     public void sendPasswordResetEmail(String email, String subject, String htmlContent) throws MessagingException{
         emailService.sendEmail(email, subject, htmlContent);
     }
+
+    public void sendContactUsReplyEmail( String receiverEmail, String subject, String message, boolean followUp) throws MessagingException {
+        String emailSubject = subject;
+        if(followUp){
+            emailSubject = emailSubject + " - This is a follow up email";
+        }
+
+        emailService.sendEmail(receiverEmail, emailSubject, message);
+    }
 }

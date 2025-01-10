@@ -63,6 +63,7 @@ public class UserProfileService {
 
                 // set the updated user profile to current user to update the template until next login
                 user.setUserProfile(updatedUserProfile);
+                userService.saveUser(user);
             }
         }
     }

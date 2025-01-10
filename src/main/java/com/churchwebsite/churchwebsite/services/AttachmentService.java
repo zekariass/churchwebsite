@@ -27,24 +27,17 @@ public class AttachmentService {
         this.attachmentRepository = attachmentRepository;
     }
 
+
     public Page<Attachment> findAll(int page, int pageSize, String sortBy) {
-
-        Pageable pageable;
-        if(sortBy == null || sortBy.isEmpty() || sortBy.equals("attachmentTime")){
-            if(sortBy == null || sortBy.isEmpty()){
-                sortBy = "attachmentTime";
-            }
-            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
-        }else{
-            pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.by(sortBy)));
-        }
-
+        Pageable pageable = getPageable(page, pageSize, sortBy);
         return attachmentRepository.findAll(pageable);
     }
+
 
     public List<Attachment> findAll() {
         return attachmentRepository.findAll();
     }
+
 
     public Attachment save(Attachment attachment, MultipartFile multipartFile) {
         LocalFileStorageManager localFileStorageManager = new LocalFileStorageManager(attachmentUploadDir);
@@ -59,5 +52,24 @@ public class AttachmentService {
         return attachmentRepository.findById(fileId).orElseThrow(
                 () -> new RuntimeException("No attachment found.")
         );
+    }
+
+
+    public Page<Attachment> findByArchived(Boolean archived, int page, Integer pageSize, String sortBy) {
+        Pageable pageable = getPageable(page, pageSize, sortBy);
+        return attachmentRepository.findByArchived(archived, pageable);
+    }
+
+    public Pageable getPageable(int page, Integer pageSize, String sortBy) {
+        Pageable pageable;
+        if(sortBy == null || sortBy.isEmpty() || sortBy.equals("attachmentTime")){
+            if(sortBy == null || sortBy.isEmpty()){
+                sortBy = "attachmentTime";
+            }
+            pageable = PageRequest.of(page -1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else{
+            pageable = PageRequest.of(page -1, pageSize, Sort.by(Sort.Order.by(sortBy)));
+        }
+        return pageable;
     }
 }

@@ -26,9 +26,9 @@
           <td th:text="${category.name}"></td>
           <td th:text="${category.parentCategory != null ? category.parentCategory.name : 'None'}"></td>
           <td>
-            <a th:href="@{/dashboard/products/categories/detail/{id}(id=${category.productCategoryId})}" class="primary-button">View</a>
-            <a th:href="@{/dashboard/products/categories/edit/{id}(id=${category.productCategoryId})}" class="warning-button">Edit</a>
-            <a th:href="@{/dashboard/products/categories/delete/{id}(id=${category.productCategoryId})}" class="danger-button" >Delete</a>
+            <a th:href="@{/dashboard/products/categories/detail/{id}(id=${category.productCategoryId})}" class="primary-button button-sm">View</a>
+            <a th:href="@{/dashboard/products/categories/edit/{id}(id=${category.productCategoryId})}" class="warning-button button-sm">Edit</a>
+            <a th:href="@{/dashboard/products/categories/delete/{id}(id=${category.productCategoryId})}" class="danger-button button-sm" >Delete</a>
           </td>
         </tr>
         </tbody>

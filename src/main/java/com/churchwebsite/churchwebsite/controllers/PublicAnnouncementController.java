@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.Announcement;
+import com.churchwebsite.churchwebsite.entities.News;
 import com.churchwebsite.churchwebsite.services.AnnouncementService;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
@@ -37,11 +38,21 @@ public class PublicAnnouncementController {
                                       @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                       @RequestParam(value = "size", required = false) Integer pageSize,
                                       @RequestParam(value = "sortBy", defaultValue = "createdAt") String sortBy,
+                                      @RequestParam(value = "archived", defaultValue = "false") Boolean archived,
+                                      @RequestParam(value = "active", defaultValue = "true") Boolean active,
+                                      @RequestParam(value = "featured", required = false) Boolean featured,
                                       HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Announcement> pagedAnnouncement = announcementService.getAllShipments(page, pageSize, sortBy);
+        Page<Announcement> pagedAnnouncement; //= announcementService.getAllShipments(page, pageSize, sortBy);
+
+        if(featured != null){
+            pagedAnnouncement = announcementService.findByArchivedAndActiveAndFeatured(page, pageSize, sortBy, archived, active, featured);
+        }else{
+            pagedAnnouncement = announcementService.findByArchivedAndActive(page, pageSize, sortBy, archived, active);
+        }
+
         List<Announcement> announcements = pagedAnnouncement.getContent();
 
         model.addAttribute("activeContentPage", "announcements-list");

@@ -106,7 +106,10 @@ public class ChurchDetailService {
 
         // Instantiate local file managers
         if(churchLogo.isEmpty()){
-            church.setChurchLogo(church.getChurchLogo());
+            Church existingChurch = churchService.find(church.getChurchId()).orElse(null);
+            if(existingChurch != null){
+                church.setChurchLogo(existingChurch.getChurchLogo());
+            }
         }else{
             LocalFileStorageManager logoFileStorageManager = new LocalFileStorageManager(this.logoFileDir);
             String logoPath = logoFileStorageManager.storeFile(churchLogo);

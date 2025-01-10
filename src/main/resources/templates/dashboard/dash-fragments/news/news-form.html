@@ -20,13 +20,27 @@
           <input th:field="*{newsTitle}" type="text" class="form-control width-md-50" id="newsTitle">
         </div>
         <div class="col-12">
+
           <label for="tiny" class="form-label">News</label>
-          <textarea id="tiny" th:field="*{newsText}" class="form-control width-md-50" rows="4"></textarea>
-        </div>
+          <textarea id="tiny" name="newsText" th:field="*{newsText}" class="form-control width-md-50" rows="4"></textarea>
+
+          </div>
         <div class="form-check col">
           <input th:field="*{featured}" class="form-check-input" type="checkbox" id="isFeatured1">
           <label class="form-check-label" for="isFeatured1">
             Feature This News
+          </label>
+        </div>
+        <div th:if="${news.newsId > 0}" class="form-check col">
+          <input th:field="*{active}" class="form-check-input" type="checkbox" id="active">
+          <label class="form-check-label" for="active">
+            Active
+          </label>
+        </div>
+        <div th:if="${news.newsId > 0}" class="form-check col">
+          <input th:field="*{archived}" class="form-check-input" type="checkbox" id="archived">
+          <label class="form-check-label" for="archived">
+            Archive
           </label>
         </div>
       </div>
@@ -34,7 +48,11 @@
         <button type="submit" class="success-button">Save</button>
       </div>
     </form>
+
   </div>
 <!--  <script th:src="@{/js/custom-jodit.js}"></script>-->
+  <script>
+    CKEDITOR.replace('newsText');
+  </script>
 </body>
 </html>
