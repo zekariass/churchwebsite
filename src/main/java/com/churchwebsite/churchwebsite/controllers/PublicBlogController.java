@@ -77,6 +77,7 @@ public class PublicBlogController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("blogCatId", blogCatId);
+        model.addAttribute("pageTitle", "Blogs List");
 
         return PUBLIC_CONTENT;
     }
@@ -99,6 +100,7 @@ public class PublicBlogController {
         model.addAttribute("activeContentPage", "blog-detail");
         model.addAttribute("blog", blog);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blog Detail");
 
 
         return PUBLIC_CONTENT;

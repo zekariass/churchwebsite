@@ -34,4 +34,8 @@ public class VideoService {
 
         return videoRepository.findByArchived(archived, pageable);
     }
+
+    public void deleteVideoById(int id) {
+        videoRepository.deleteById(id);
+    }
 }

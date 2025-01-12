@@ -20,6 +20,7 @@ public class ErrorPageController implements ErrorController {
         model.addAttribute("status", statusCode);
         model.addAttribute("message", errMsg);
         model.addAttribute("timestamp", new java.util.Date());
+        model.addAttribute("pageTitle", "Error");
 
         return "error"; // Render `error.html` from templates
     }

@@ -28,7 +28,8 @@
           <td>
             <a th:href="@{/dashboard/products/categories/detail/{id}(id=${category.productCategoryId})}" class="primary-button button-sm">View</a>
             <a th:href="@{/dashboard/products/categories/edit/{id}(id=${category.productCategoryId})}" class="warning-button button-sm">Edit</a>
-            <a th:href="@{/dashboard/products/categories/delete/{id}(id=${category.productCategoryId})}" class="danger-button button-sm" >Delete</a>
+            <a th:href="@{/dashboard/products/categories/delete/{id}(id=${category.productCategoryId})}" class="danger-button button-sm"
+                onclick="return confirm('Are you sure you want to delete this product category?')">Delete</a>
           </td>
         </tr>
         </tbody>

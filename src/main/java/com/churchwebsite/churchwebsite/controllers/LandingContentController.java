@@ -61,6 +61,8 @@ public class LandingContentController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Matrimony form");
+
 
 
         return DASHBOARD_MAIN_PANEL;

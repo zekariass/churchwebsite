@@ -58,6 +58,8 @@ public class ShippingController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Shipments List");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -68,6 +70,7 @@ public class ShippingController {
         model.addAttribute("shippingStatuses", ShippingStatus.values());
         model.addAttribute("shipping", shippingService.getShipmentById(id).orElse(null));
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Shipment Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -78,6 +81,7 @@ public class ShippingController {
         model.addAttribute("activeDashPage", "shipping-edit-form");
         model.addAttribute("shippingStatuses", ShippingStatus.values());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Shipping Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

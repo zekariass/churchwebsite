@@ -66,6 +66,7 @@ public class PublicMediaCenterController {
     public String showMediaOption(Model model){
         model.addAttribute("activeContentPage", "media-center-options");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Media Options");
 
         return PUBLIC_CONTENT;
     }
@@ -97,6 +98,8 @@ public class PublicMediaCenterController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("albums", albums);
         model.addAttribute("baseMediaPath", baseMediaPath);
+        model.addAttribute("pageTitle", "Albums list");
+
 
         return PUBLIC_CONTENT;
     }
@@ -133,6 +136,8 @@ public class PublicMediaCenterController {
         Album album = albumService.getAlbumById(albumId);
         model.addAttribute("album", album);
         model.addAttribute("activeContentPage", "album-detail");
+        model.addAttribute("pageTitle", "Album Detail");
+
 
         return PUBLIC_CONTENT;
     }
@@ -164,6 +169,8 @@ public class PublicMediaCenterController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("videos", videoList);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Videos list");
+
 
         return PUBLIC_CONTENT;
     }
@@ -200,6 +207,7 @@ public class PublicMediaCenterController {
         model.addAttribute("attachments", attachments);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("pageTitle", "Files List");
 
         return PUBLIC_CONTENT;
     }

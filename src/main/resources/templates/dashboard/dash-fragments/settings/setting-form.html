@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add Setting</title>
+</head>
+<body>
+  <div th:fragment="setting-form" class="container mt-5">
+    <h2>Add New Setting</h2>
+    <form th:action="@{/dashboard/settings/form}" th:object="${newSetting}" method="POST" class="mt-4">
+      <input type="hidden" th:field="*{settingId}">
+      <div class="mb-3">
+        <label for="settingName1" class="form-label">Setting Name</label>
+        <input th:if="${newSetting.settingId == 0}" type="text" class="form-control" id="settingName1" th:field="*{settingName}" >
+        <input th:if="${newSetting.settingId > 0}" type="text" class="form-control" id="settingName2" th:field="*{settingName}" readonly>
+        <div th:if="${#fields.hasErrors('settingName')}">
+          <p th:errors="*{settingName}" class="fw-bold text-danger"></p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="settingDescription" class="form-label">Setting Description</label>
+        <textarea class="form-control" id="settingDescription" th:field="*{settingDescription}" rows="3" ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="settingValueInt" class="form-label">Setting Value (Integer)</label>
+        <input type="number" class="form-control" id="settingValueInt" th:field="*{settingValueInt}" >
+      </div>
+      <div class="mb-3">
+        <label for="settingValueChar" class="form-label">Setting Value (String)</label>
+        <input type="text" class="form-control" id="settingValueChar" th:field="*{settingValueChar}">
+      </div>
+      <div class="mb-3">
+        <label for="settingValueDouble" class="form-label">Setting Value (Decimal)</label>
+        <input type="number" class="form-control" id="settingValueDouble" th:field="*{settingValueDouble}" step="0.01" >
+      </div>
+
+      <div th:if="${noValue}" class="fw-bold py-3 text-danger">
+        <p>At lease one integer or string or decimal value must be provided!</p>
+      </div>
+      <button type="submit" class="success-button">Save Setting</button>
+    </form>
+  </div>
+</body>
+</html>

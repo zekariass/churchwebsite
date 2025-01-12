@@ -46,6 +46,8 @@ public class UserController {
     @GetMapping("/login")
     public String showLoginForm(Model model){
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Login Form");
+
         UserDetails userDetails = userService.getCurrentUser();
         if(userDetails == null){
             return "login-form";
@@ -113,6 +115,7 @@ public class UserController {
             model.addAttribute("user", user);
             model.addAttribute("userProfile", userProfile);
             model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+            model.addAttribute("pageTitle", "User Registration Form");
 
             return "user-registration-form";
         }
@@ -137,6 +140,7 @@ public class UserController {
             model.addAttribute("userProfile", new UserProfile());
         }
         model.addAttribute("resetPasswordDto", new PasswordResetDTO());
+        model.addAttribute("pageTitle", "Profile Page");
 
         return PUBLIC_CONTENT;
     }
@@ -180,6 +184,7 @@ public class UserController {
             model.addAttribute("user", currentUser);
             model.addAttribute("userProfile", currentUser.getUserProfile());
             model.addAttribute("resetPasswordDto", passwordResetDTO);
+            model.addAttribute("pageTitle", "Profile Page");
 
             return PUBLIC_CONTENT;
         }

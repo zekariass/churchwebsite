@@ -17,6 +17,7 @@ public class Address {
     private String state;
     private String country;
     private String postCode;
+    private String mapIframe;
 
     public Address() {
     }
@@ -125,7 +126,13 @@ public class Address {
         return address.toString().replaceAll("^,\\s*", "").replaceAll("\\s*,\\s*$", "");
     }
 
+    public String getMapIframe() {
+        return mapIframe;
+    }
 
+    public void setMapIframe(String mapIframe) {
+        this.mapIframe = mapIframe;
+    }
 
     @Override
     public String toString() {

@@ -54,6 +54,7 @@ public class ProductCategoryController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Product Categories");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -63,6 +64,7 @@ public class ProductCategoryController {
         model.addAttribute("category", productCategoryService.getCategoryById(id).orElse(null));
         model.addAttribute("activeDashPage", "product-category-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Product Category Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -76,6 +78,7 @@ public class ProductCategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("activeDashPage", "product-category-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Product Category Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -95,15 +98,11 @@ public class ProductCategoryController {
         model.addAttribute("category", productCategoryService.getCategoryById(categoryId).orElse(null));
         model.addAttribute("activeDashPage", "product-category-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Product Category Form");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
-
-//    @PutMapping("/edit/{id}")
-//    public String updateCategory(@PathVariable Integer id, @ModelAttribute ProductCategory updatedCategory) {
-//        productCategoryService.updateCategory(id, updatedCategory);
-//        return "redirect:/dashboard/products/categories/detail/"+id;
-//    }
 
     @GetMapping("/delete/{id}")
     public String deleteCategory(@PathVariable Integer id) {

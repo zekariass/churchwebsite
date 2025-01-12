@@ -62,6 +62,7 @@ public class BlogController {
         model.addAttribute("activeDashPage", "blog-form");
         model.addAttribute("album", album);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blog Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -117,6 +118,7 @@ public class BlogController {
         model.addAttribute("blogCatId", blogCatId);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blogs List");
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -144,6 +146,7 @@ public class BlogController {
         model.addAttribute("blog", blog);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blog Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -163,7 +166,7 @@ public class BlogController {
         model.addAttribute("album", album);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("pageTitle", "Blog Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

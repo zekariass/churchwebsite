@@ -44,21 +44,11 @@ public class ChurchDetailController {
 
         model.addAttribute("activeDashPage", "church-setup");
         model.addAttribute("churchDetail", churchDetailDTO);
+        model.addAttribute("pageTitle", "Church Setup Form");
+        model.addAttribute("showImapField", true);
+
         return DASHBOARD_MAIN_PANEL;
     }
-
-
-//    @PostMapping("/processSetup")
-//    public String createOrganisationDetail(@ModelAttribute ChurchDetailDTO churchDetail,
-//                                           @RequestParam("logo") MultipartFile churchLogo,
-//                                           @RequestParam("bannerFiles")List<MultipartFile> churchBanners,
-//                                           Model model){
-//
-//        // Call church detail service
-//        churchDetailService.createChurchDetail(churchDetail, churchLogo, churchBanners);
-//        return "redirect:/dashboard/church/detail";
-//    }
-
 
     @PostMapping("/setup/process")
     public String updateOrganisationDetail(@ModelAttribute ChurchDetailDTO churchDetail,
@@ -82,9 +72,13 @@ public class ChurchDetailController {
 
         if (orgDetail == null){
             model.addAttribute("activeDashPage", "church-not-exist");
+            model.addAttribute("pageTitle", "Church Not Exist");
+
         }else {
             model.addAttribute("activeDashPage", "church-detail");
             model.addAttribute("churchDetail", orgDetail);
+            model.addAttribute("pageTitle", "Church Detail");
+
         }
 
         String currentUrl = request.getRequestURI();
@@ -100,11 +94,18 @@ public class ChurchDetailController {
         Optional<Church> org = churchService.find(churchId);
         if (org.isEmpty()){
             model.addAttribute("activeDashPage", "church-not-exist");
+            model.addAttribute("pageTitle", "Church Not Exist");
+
         }else {
             Church church = org.get();
             model.addAttribute("activeDashPage", "church-setup");
             model.addAttribute("churchDetail", new ChurchDetailDTO(church, church.getAddress()));
+            model.addAttribute("pageTitle", "Church Setup");
+
         }
+
+        model.addAttribute("showImapField", true);
+
 
         return DASHBOARD_MAIN_PANEL;
     }

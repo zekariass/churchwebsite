@@ -67,7 +67,7 @@ public class OrdersController {
         model.addAttribute("orders", orders);
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("pageTitle", "Orders List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -78,6 +78,7 @@ public class OrdersController {
         model.addAttribute("activeDashPage", "order-detail");
         model.addAttribute("order", ordersService.getOrderById(id).orElse(null));
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Order Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -89,6 +90,8 @@ public class OrdersController {
         model.addAttribute("activeDashPage", "order-edit-form");
         model.addAttribute("orderStatuses", OrderStatus.values());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Order Form");
+
 
         return DASHBOARD_MAIN_PANEL;
     }

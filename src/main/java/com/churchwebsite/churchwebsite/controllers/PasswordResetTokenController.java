@@ -185,6 +185,7 @@ public class PasswordResetTokenController {
 
             model.addAttribute("passwordResetWithLinkDto", passwordResetWithLinkDTO);
             model.addAttribute("resetToken", token);
+            model.addAttribute("pageTitle", "Forgot Password Reset Form");
 
             return "forgot-password-reset-form";
         }

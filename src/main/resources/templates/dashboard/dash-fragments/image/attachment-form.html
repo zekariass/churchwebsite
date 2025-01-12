@@ -6,7 +6,7 @@
 </head>
 <body th:fragment="attachment-form">
     <div>
-        <a class="d-flex justify-content-end px-3 h6 text-primary" th:href="@{/medias/attachments}">List of Attachments</a>
+        <a class="d-flex justify-content-end px-3 h6 text-success" th:href="@{/medias/attachments}">List of Attachments</a>
         <h3>Add New Attachment</h3>
         <form th:action="@{/medias/attachments/form}" th:object="${attachment}" method="POST" enctype="multipart/form-data">
             <div class="row g-3 width-md-75">
@@ -19,11 +19,17 @@
                 <div class="my-3">
                     <label for="attachmentName" class="h3 form-label mb-3">Attachment Name</label>
                     <input id="attachmentName" th:field="*{attachmentName}" type="text" class="form-control">
+                    <div th:if="${#fields.hasErrors('attachmentName')}">
+                        <p th:errors="${attachment.attachmentName}" class="fw-bold text-danger"></p>
+                    </div>
                 </div>
 
                 <div class="my-3">
-                    <label for="attachmentPath" class="h3 form-label mb-3">Attachment Path</label>
-                    <input id="attachmentPath" name="attachmentFilePath" type="file" class="form-control">
+                    <label for="attachment" class="h3 form-label mb-3">Attachment</label>
+                    <input id="attachment" name="attachmentFilePath" type="file" class="form-control">
+                    <div th:if="${attachmentFilePathError != null}">
+                        <p th:text="${attachmentFilePathError}" class="fw-bold text-danger"></p>
+                    </div>
                 </div>
 
                 <div class="mt-3">
@@ -32,6 +38,32 @@
             </div>
             <script th:src="@{/js/image.js}"></script>
         </form>
+        <script>
+            const attachmentTypeEl = document.getElementById('attachmentType');
+            const fileInputEl = document.getElementById('attachment'); // Correct ID for the file input
+
+            function setAccept(fileType) {
+                if (fileType.toLowerCase().includes('word')) {
+                    fileInputEl.accept = '.doc,.docx'; // Accept Word files
+                } else if (fileType.toLowerCase().includes('pdf')) {
+                    fileInputEl.accept = '.pdf'; // Accept PDF files
+                } else {
+                    fileInputEl.accept = '*'; // Accept any file type
+                }
+            }
+
+            // Set initial accept attribute based on the default selected option
+            let initialText = attachmentTypeEl.options[attachmentTypeEl.selectedIndex].text;
+            setAccept(initialText);
+
+            // Add event listener to change the accept type when selection changes
+            attachmentTypeEl.addEventListener('change', function() {
+                const selectedText = attachmentTypeEl.options[attachmentTypeEl.selectedIndex].text;
+                setAccept(selectedText);
+            });
+        </script>
+
     </div>
+
 </body>
 </html>

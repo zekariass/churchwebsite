@@ -1,6 +1,5 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
 import com.churchwebsite.churchwebsite.entities.Address;
 import com.churchwebsite.churchwebsite.entities.RemembrancePrayer;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
@@ -36,6 +35,8 @@ public class RemembrancePrayerController {
         model.addAttribute("address", new Address());
         model.addAttribute("activeContentPage", "remembrance-request-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Remembrance Form");
+
         return PUBLIC_CONTENT;
     }
 

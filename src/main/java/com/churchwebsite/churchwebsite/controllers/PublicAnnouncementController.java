@@ -1,7 +1,6 @@
 package com.churchwebsite.churchwebsite.controllers;
 
 import com.churchwebsite.churchwebsite.entities.Announcement;
-import com.churchwebsite.churchwebsite.entities.News;
 import com.churchwebsite.churchwebsite.services.AnnouncementService;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
@@ -65,6 +64,8 @@ public class PublicAnnouncementController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("pageTitle", "Announcements");
+
 
         return PUBLIC_CONTENT;
     }
@@ -74,6 +75,7 @@ public class PublicAnnouncementController {
         model.addAttribute("activeContentPage", "announcement-detail");
         model.addAttribute("announcement", announcementService.getAnnouncementById(id).orElse(new Announcement()));
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Announcement Detail");
 
         return PUBLIC_CONTENT;
     }

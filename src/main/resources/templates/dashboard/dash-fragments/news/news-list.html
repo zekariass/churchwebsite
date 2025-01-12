@@ -27,7 +27,7 @@
                         <h6>More Detail</h6>
                     </a>
                     <div class="d-flex flex-row justify-content-end">
-                        <div class="d-flex  me-3 mb-3"  th:onclick="|window.location='@{/dashboard/news/delete/{id}(id=${news.newsId})}'|">
+                        <div class="d-flex  me-3 mb-3"  th:onclick="|window.location='@{/dashboard/news/delete/{id}(id=${news.newsId})}'|" onclick="return confirm('Are you sure you want to delete this news?');">
                             <i class="fa-solid fa-lg fa-trash delete-icon" role="button" style="color: brown;"></i>
                         </div>
                         <div class="d-flex me-3 mb-3"  th:onclick="|window.location='@{/dashboard/news/edit/{id}(id=${news.newsId})}'|">

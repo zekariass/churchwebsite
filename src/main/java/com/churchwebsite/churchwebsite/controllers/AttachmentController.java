@@ -8,6 +8,7 @@ import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import com.churchwebsite.churchwebsite.utils.LocalFileStorageManager;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,13 +71,14 @@ public class AttachmentController {
         model.addAttribute("attachments", attachments);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Attachments List");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
 
     @GetMapping("/form")
-    public String showAttachmentForm(Model model,
-                                     @ModelAttribute Attachment attachment){
+    public String showAttachmentForm(Model model){
 
         List<AttachmentType> attachmentTypes = attachmentTypeService.findAll();
 
@@ -86,6 +89,7 @@ public class AttachmentController {
         model.addAttribute("attachmentTypes", attachmentTypes);
         model.addAttribute("attachmentNames", attachementNames);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Attachments Form");
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -94,11 +98,33 @@ public class AttachmentController {
 
     @PostMapping("/form")
     public String processAttachmentForm(Model model,
-                                        @ModelAttribute Attachment attachment,
+                                        @Valid @ModelAttribute Attachment attachment,
+                                        BindingResult result,
                                         @RequestParam("attachmentFilePath") MultipartFile attachmentFilePath){
 
+        if(result.hasErrors() || attachmentFilePath.isEmpty()){
+
+            if(attachmentFilePath.isEmpty()){
+                model.addAttribute("attachmentFilePathError", "You must select a file.");
+            }
+
+            List<AttachmentType> attachmentTypes = attachmentTypeService.findAll();
+
+            List<String> attachementNames = attachmentTypes.stream().map(AttachmentType::getAttachmentTypeName).toList();
+
+            model.addAttribute("activeDashPage", "attachment-form");
+            model.addAttribute("attachment", attachment);
+            model.addAttribute("attachmentTypes", attachmentTypes);
+            model.addAttribute("attachmentNames", attachementNames);
+            model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+            model.addAttribute("pageTitle", "Attachments Form");
+
+
+            return DASHBOARD_MAIN_PANEL;
+        }
+
         Attachment savedAttachment = attachmentService.save(attachment, attachmentFilePath);
-        return "redirect:/medias/attachments/form";
+        return "redirect:/medias/attachments?sortBy=attachmentTime";
     }
 
 
@@ -130,6 +156,12 @@ public class AttachmentController {
             throw new RuntimeException(e);
         }
 
+    }
 
+    @GetMapping("/delete/{id}")
+    public String deleteById(@PathVariable("id") Integer id){
+        attachmentService.deleteById(id);
+
+        return "redirect:/medias/attachments";
     }
 }

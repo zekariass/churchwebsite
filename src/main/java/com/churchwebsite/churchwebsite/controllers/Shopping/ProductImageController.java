@@ -46,6 +46,8 @@ public class ProductImageController {
         model.addAttribute("images", product.getImages());
         model.addAttribute("imageTypes", ImageType.values());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Product Images");
+
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -56,6 +58,8 @@ public class ProductImageController {
         model.addAttribute("image", productImageService.getImageById(id).orElse(null));
         model.addAttribute("activeDashPage", "product-image-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Product Image");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -67,6 +71,7 @@ public class ProductImageController {
         model.addAttribute("activeDashPage", "product-image-form");
         model.addAttribute("imageTypes", ImageType.values());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Product Image Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

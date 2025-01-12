@@ -13,7 +13,8 @@
                     |
                     <a th:href="@{/dashboard/landing-contents}" class="text-success fw-bold mx-1">Back to the list</a>
                     |
-                    <a th:href="@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}" class="text-success fw-bold mx-1">Delete</a>
+                    <a th:href="@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}" class="text-success fw-bold mx-1"
+                       onclick="return confirm('Are you sure you want to delete this content?')">Delete</a>
                 </Span>
     </div>
     <div class="card-header">

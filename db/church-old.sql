@@ -11,7 +11,8 @@ CREATE TABLE `address` (
     `city` VARCHAR(255) NOT NULL,
     `state` VARCHAR(100) DEFAULT NULL,
     `country` VARCHAR(100) NOT NULL,
-    `post_code` VARCHAR(20) DEFAULT NULL
+    `post_code` VARCHAR(20) DEFAULT NULL,
+    `map_iframe` TEXT DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_profile`;
@@ -310,8 +311,7 @@ CREATE TABLE `payment_method` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO payment_method (payment_method_id, payment_method_name, payment_method_description) VALUES (1, 'Credit card', 'Credit card paymnet');
-INSERT INTO payment_method (payment_method_id, payment_method_name, payment_method_description) VALUES (2, 'PayPal', 'PayPal paymnet');
-INSERT INTO payment_method (payment_method_id, payment_method_name, payment_method_description) VALUES (3, 'Offline', 'Offline paymnet via transfer');
+INSERT INTO payment_method (payment_method_id, payment_method_name, payment_method_description) VALUES (2, 'Offline', 'Offline paymnet via transfer');
 
 DROP TABLE IF EXISTS `donation_type`;
 CREATE TABLE `donation_type` (

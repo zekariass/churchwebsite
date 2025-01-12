@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Album List</title>
+  <!-- Bootstrap CSS -->
+</head>
+<body>
+  <div th:fragment="albums-list-tabular">
+    <div class="container mt-5">
+      <h2 class="mb-4">Album List</h2>
+
+      <!-- Table -->
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th>Album Id</th>
+          <th>Album Name</th>
+          <th>Album Description</th>
+          <th>Creation Time</th>
+          <th>Archived</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through albums using Thymeleaf -->
+        <tr th:each="album : ${albums}">
+          <td th:text="${album.albumId}"></td>
+          <td th:text="${album.albumName}"></td>
+          <td th:text="${album.albumDescription}"></td>
+          <td th:text="${album.creationTime.format(@dateTimeFormatter)}"></td>
+          <td>
+            <span th:text="${album.archived ? 'Yes' : 'No'}"></span>
+          </td>
+          <td>
+            <!-- Delete Action -->
+            <a th:href="@{/images/albums/delete/{id}(id=${album.albumId})}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Are you sure you want to delete this album?');">
+              Delete
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <a href="/images/albums/form" class="text-success fw-bold">
+        Add New Album
+      </a>
+    </div>
+  </div>
+</body>
+</html>

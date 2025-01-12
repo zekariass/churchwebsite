@@ -7,7 +7,7 @@
 <body>
     <div th:fragment="address-form">
             <div class="row g-3">
-                <input th:field="*{address.addressId}" type="hidden" class="form-control">
+                <input th:field="*{address.addressId}" type="hidden">
                 <div class="col-md-6 col-12">
                     <label for="street" class="form-label">Street</label>
                     <input th:field="*{address.street}" type="text" class="form-control" id="street" placeholder="1234 Main St" required>
@@ -35,6 +35,10 @@
                 <div class="col-md-6 col-12">
                     <label for="postcode" class="form-label">Post Code</label>
                     <input th:field="*{address.postCode}" type="text" class="form-control" id="postcode" required>
+                </div>
+                <div th:if="${showImapField == true}" class="col-12">
+                    <label for="mapIframe" class="form-label">Map iFrame</label>
+                    <input th:field="*{address.mapIframe}" type="text" class="form-control" id="mapIframe" >
                 </div>
             </div>
     </div>

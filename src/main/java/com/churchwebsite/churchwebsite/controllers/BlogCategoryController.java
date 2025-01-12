@@ -40,6 +40,7 @@ public class BlogCategoryController {
         model.addAttribute("blogCategory", new BlogCategory());
         model.addAttribute("activeDashPage", "blog-category-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blog Category form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -50,10 +51,10 @@ public class BlogCategoryController {
 //                                         @RequestParam(value = "blogCategoryDescription", required = false) String blogCategoryDescription,
                                          Model model){
 
-//        blogCategory.setBlogCategoryDescription(blogCategoryDescription);
         BlogCategory savedBlogCategory = blogCategoryService.save(blogCategory);
 
         model.addAttribute("activeDashPage", "blog-category-list");
+
 
         if(blogCategoryId != 0){
             return "redirect:/dashboard/blogs/categories/detail/"+blogCategoryId;
@@ -81,6 +82,7 @@ public class BlogCategoryController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blog Categories List");
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -94,6 +96,7 @@ public class BlogCategoryController {
         model.addAttribute("activeDashPage", "blog-category-detail");
         model.addAttribute("blogCategory", blogCategory);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blog Category Detail");
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -107,6 +110,7 @@ public class BlogCategoryController {
         model.addAttribute("activeDashPage", "blog-category-form");
         model.addAttribute("blogCategory", blogCategory);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Blog Category form");
 
         return DASHBOARD_MAIN_PANEL;
     }

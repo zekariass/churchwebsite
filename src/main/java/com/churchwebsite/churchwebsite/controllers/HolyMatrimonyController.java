@@ -39,6 +39,8 @@ public class HolyMatrimonyController {
         model.addAttribute("address", new Address());
         model.addAttribute("activeContentPage", "matrimony-request-form");
         model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("pageTitle", "Holy Matrimony Request Form");
+
         return PUBLIC_CONTENT;
     }
 

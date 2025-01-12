@@ -36,6 +36,8 @@ public class VideoController {
         model.addAttribute("activeDashPage", "video-form");
         model.addAttribute("video", new Video());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Video Form");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -49,7 +51,7 @@ public class VideoController {
         model.addAttribute("video", new Video());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
-        return DASHBOARD_MAIN_PANEL;
+        return "redirect:/videos";
     }
 
     @GetMapping("")
@@ -72,8 +74,17 @@ public class VideoController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("videos", videoList);
+        model.addAttribute("pageTitle", "Videos List");
 
 
         return DASHBOARD_MAIN_PANEL;
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteVideo(@PathVariable("id") int id){
+
+        videoService.deleteVideoById(id);
+
+        return "redirect:/videos";
     }
 }

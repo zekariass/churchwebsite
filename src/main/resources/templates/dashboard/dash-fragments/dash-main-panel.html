@@ -2,8 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{dashboard/dash-layouts/dash-base}">
+<head>
+  <title th:title="${pageTitle}"></title>
+</head>
 <body>
   <div th:fragment="main-panel">
+
     <div class="main-panel">
 <!--      <header th:replace="~{dashboard/dash-fragments/dash-header::dash-header}"></header>-->
 
@@ -103,6 +107,10 @@
 
           <main th:if="${activeDashPage == 'albums-list'}">
             <div th:replace="~{dashboard/dash-fragments/image/albums-list::albums-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'albums-list-tabular'}">
+            <div th:replace="~{dashboard/dash-fragments/image/albums-list-tabular::albums-list-tabular}"></div>
           </main>
 
           <main th:if="${activeDashPage == 'album-detail'}">
@@ -374,6 +382,20 @@
 
           <main th:if="${activeDashPage == 'user-profile'}">
             <div th:replace="~{user-profile::user-profile}"></div>
+          </main>
+
+          <!--    ============= SETTINGS ============================= -->
+
+          <main th:if="${activeDashPage == 'settings-list'}">
+            <div th:replace="~{dashboard/dash-fragments/settings/settings-list::settings-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'setting-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/settings/setting-detail::setting-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'setting-form'}">
+            <div th:replace="~{dashboard/dash-fragments/settings/setting-form::setting-form}"></div>
           </main>
 
         </div>

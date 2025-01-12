@@ -6,12 +6,15 @@
 <body>
     <div th:fragment="membership-amount-form">
         <div class="container g-3">
-            <form th:action="@{/dashboard/members/membership-amounts/form/process}" th:object="${membershipAmount}" th:method="POST">
-                <input th:if="${membershipAmount.membershipAmountId > 0}" th:field="*{membershipAmountId}" type="hidden">
+            <form th:action="@{/dashboard/members/membership-amounts/form}" th:object="${membershipAmount}" th:method="POST">
+                <input th:field="*{membershipAmountId}" type="hidden">
 
                 <div class="col-12 col-md-6">
                     <label for="membershipAmoun" class="h3 form-label">Membership Amount</label>
-                    <input th:field="*{membershipAmount}" class="form-control" type="number" min="0" id="membershipAmoun">
+                    <input th:field="*{membershipAmount}" class="form-control" type="number" min="0" id="membershipAmoun" step="0.01">
+                    <div th:if="${#fields.hasErrors('membershipAmount')}">
+                        <p th:errors="${membershipAmount.membershipAmount}" class="text-danger fw-bold"></p>
+                    </div>
                 </div>
 
                 <div class="col-12 col-md-6 my-3">
@@ -23,6 +26,10 @@
                     <input class="btn btn-success" type="submit" value="Submit">
                 </div>
             </form>
+
+            <div class="text-end">
+                <a href="/dashboard/members/membership-amounts" class="success-button text-decoration-none">Back to list</a>
+            </div>
 
         </div>
     </div>

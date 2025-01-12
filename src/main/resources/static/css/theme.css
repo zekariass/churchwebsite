@@ -7,6 +7,7 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-decoration: none;
 }
 
 .success-button:hover {
@@ -22,6 +23,8 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-decoration: none;
+
 }
 
 .secondary-button {
@@ -33,6 +36,8 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-decoration: none;
+
 }
 
 .warning-button {
@@ -44,6 +49,8 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-decoration: none;
+
 }
 
 .warning-button:hover {
@@ -59,6 +66,7 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-decoration: none;
 }
 
 .dark-button {
@@ -70,6 +78,7 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-decoration: none;
 }
 
 .primary-button {
@@ -81,6 +90,7 @@
     font-size: 16px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-decoration: none;
 }
 
 [class$="-button"]:hover {
@@ -134,4 +144,9 @@
 
 .navbar, .sidebar{
     background-color: rgba(0, 128, 128, 0.75) !important;
+}
+
+.banner-caption, .banner-control{
+    background-color: brown !important;
+    opacity: 0.7 !important;
 }

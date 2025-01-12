@@ -34,6 +34,8 @@ public class OrderItemController {
         model.addAttribute("activeDashPage", "order-item-detail");
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Order Item Detail");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -45,6 +47,7 @@ public class OrderItemController {
         model.addAttribute("orderStatuses", OrderStatus.values());
         model.addAttribute("activeDashPage", "order-item-edit-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Order Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

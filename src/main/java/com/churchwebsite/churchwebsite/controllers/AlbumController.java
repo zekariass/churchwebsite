@@ -61,7 +61,35 @@ public class AlbumController {
         model.addAttribute("albums", albums);
         model.addAttribute("baseImagePath", baseImagePath);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Albums list");
 
+        return DASHBOARD_MAIN_PANEL;
+    }
+
+    @GetMapping("/list")
+    public String showAlbumListTabular(Model model,
+                                @RequestParam(value = "page", defaultValue = "1", required = false) int page,
+                                @RequestParam(value = "size", required = false) Integer pageSize,
+                                @RequestParam(value = "sortBy", required = false, defaultValue = "creationTime") String sortBy,
+                                HttpServletRequest request){
+
+        String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
+
+        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
+
+        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, sortBy);
+        List<Album> albums = pagedAlbums.getContent();
+
+        model.addAttribute("activeDashPage", "albums-list-tabular");
+        model.addAttribute("currentPage", pagedAlbums.getNumber() + 1);
+        model.addAttribute("totalItems", pagedAlbums.getTotalElements());
+        model.addAttribute("totalPages", pagedAlbums.getTotalPages());
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("currentUrl", request.getRequestURL());
+        model.addAttribute("albums", albums);
+        model.addAttribute("baseImagePath", baseImagePath);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Albums list");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -72,6 +100,7 @@ public class AlbumController {
         model.addAttribute("album", new Album());
         model.addAttribute("activeDashPage", "album-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Album Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -86,7 +115,7 @@ public class AlbumController {
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
 
-        return "redirect:/images/albums";
+        return "redirect:/images/albums/list";
     }
 
     @GetMapping("/detail/{id}")
@@ -99,8 +128,17 @@ public class AlbumController {
         model.addAttribute("activeDashPage", "album-detail");
         model.addAttribute("baseImagePath", baseImagePath);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Album Detail");
 
 
         return DASHBOARD_MAIN_PANEL;
+    }
+
+    @GetMapping("/delete/{id}")
+    public String showAlbumDelete(@PathVariable(value = "id", required = false) int albumId, Model model){
+
+        albumService.deleteById(albumId);
+
+        return "redirect:/images/albums/list";
     }
 }

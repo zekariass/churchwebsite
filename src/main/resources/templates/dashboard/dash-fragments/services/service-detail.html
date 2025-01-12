@@ -7,12 +7,13 @@
 <body>
 <div th:fragment="service-detail" class="container">
     <div class="m-3">
-                <Span class="d-flex justify-content-end">
-                    <a th:href="@{/dashboard/services/edit/{id}(id=${churchService.serviceId})}" class="me-1">Edit</a>
+                <Span class="d-flex justify-content-end fw-bold">
+                    <a th:href="@{/dashboard/services/edit/{id}(id=${churchService.serviceId})}" class="me-1 text-success">Edit</a>
                     |
-                    <a th:href="@{/dashboard/services}" class="mx-1">Back to the list</a>
+                    <a th:href="@{/dashboard/services}" class="mx-1 text-success">Back to the list</a>
                     |
-                    <a th:href="@{/dashboard/services/delete/{id}(id=${churchService.serviceId})}" class="mx-1">Delete</a>
+                    <a th:href="@{/dashboard/services/delete/{id}(id=${churchService.serviceId})}" class="mx-1 text-success"
+                       onclick="return confirm('Are you sure you want to delete this service?')">Delete</a>
                 </Span>
     </div>
     <div class="row justify-content-center">

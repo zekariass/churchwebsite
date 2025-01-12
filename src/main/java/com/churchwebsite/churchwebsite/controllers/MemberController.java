@@ -8,10 +8,12 @@ import com.churchwebsite.churchwebsite.services.*;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
 import com.churchwebsite.churchwebsite.utils.LocaleUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Currency;
@@ -51,26 +53,8 @@ public class MemberController {
     @GetMapping("/form")
     public String showMemberForm(Model model){
 
-        List<MembershipAmount> membershipAmounts = membershipAmountService.findAll();
-
-        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
-        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
-
-        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
-        localCountryCode = localCountryCode != null ? localCountryCode: "en";
-
-        Locale locale = new Locale(localLanguageCode, localCountryCode);
-
-        Currency currency = Currency.getInstance(locale);
-
-        model.addAttribute("activeDashPage", "member-form");
+        setModelAttributesToShowForm(model);
         model.addAttribute("member", new Member());
-        model.addAttribute("genders", Gender.values());
-        model.addAttribute("relationshipTypes", Relationship.values());
-        model.addAttribute("paymentMethods", MembershipPaymentMethod.values());
-        model.addAttribute("currencyCode", currency.getCurrencyCode());
-        model.addAttribute("membershipAmounts", membershipAmounts);
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -97,14 +81,24 @@ public class MemberController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Memberships List");
 
         return DASHBOARD_MAIN_PANEL;
     }
 
 
-    @PostMapping("/form/process")
-    public String processMemberForm(@ModelAttribute Member member,
-                                    @RequestParam("byAdmin") String byAdmin){
+    @PostMapping("/form")
+    public String processMemberForm(@Valid @ModelAttribute Member member,
+                                    BindingResult result,
+                                    @RequestParam("byAdmin") String byAdmin,
+                                    Model model){
+
+        if(result.hasErrors()){
+            setModelAttributesToShowForm(model);
+            model.addAttribute("member", member);
+
+            return DASHBOARD_MAIN_PANEL;
+        }
 
         CustomUserDetails user = userService.getCurrentUser();
 
@@ -126,6 +120,29 @@ public class MemberController {
         return "redirect:/dashboard/members";
     }
 
+    private void setModelAttributesToShowForm(Model model) {
+        List<MembershipAmount> membershipAmounts = membershipAmountService.findAll();
+
+        String localLanguageCode = settingsService.findBySettingName("LOCALE_LANGUAGE_CODE").getSettingValueChar();
+        String localCountryCode = settingsService.findBySettingName("LOCALE_COUNTRY_CODE").getSettingValueChar();
+
+        localLanguageCode = localLanguageCode != null ? localLanguageCode: "GB";
+        localCountryCode = localCountryCode != null ? localCountryCode: "en";
+
+        Locale locale = new Locale(localLanguageCode, localCountryCode);
+
+        Currency currency = Currency.getInstance(locale);
+
+        model.addAttribute("activeDashPage", "member-form");
+        model.addAttribute("genders", Gender.values());
+        model.addAttribute("relationshipTypes", Relationship.values());
+        model.addAttribute("paymentMethods", MembershipPaymentMethod.values());
+        model.addAttribute("currencyCode", currency.getCurrencyCode());
+        model.addAttribute("membershipAmounts", membershipAmounts);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Membership Form");
+    }
+
 
     @GetMapping("/edit/{id}")
     public String editMemberDetail(@PathVariable("id") int memberId,
@@ -142,6 +159,7 @@ public class MemberController {
         model.addAttribute("currencyCode", localeUtil.getCurrency().getCurrencyCode());
         model.addAttribute("membershipAmounts", membershipAmounts);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Membership Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -157,6 +175,7 @@ public class MemberController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("currencyCode", localeUtil.getCurrency().getCurrencyCode());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Membership Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }

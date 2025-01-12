@@ -19,6 +19,7 @@ public class AttachmentService {
 
     private final AttachmentRepository attachmentRepository;
 
+
     @Value("${local.file.attachment-dir}")
     private String attachmentUploadDir;
 
@@ -71,5 +72,19 @@ public class AttachmentService {
             pageable = PageRequest.of(page -1, pageSize, Sort.by(Sort.Order.by(sortBy)));
         }
         return pageable;
+    }
+
+    public void deleteById(Integer id) {
+        Attachment attachment = attachmentRepository.findById(id).orElse(null);
+        LocalFileStorageManager fileStorageManager = new LocalFileStorageManager(attachmentUploadDir);
+
+        if(attachment != null){
+            String fullAttachmentPath = attachment.getAttachmentPath();
+            String[] fileNameSplits = fullAttachmentPath.split("/");
+            String fileName = fileNameSplits[fileNameSplits.length-1];
+            fileStorageManager.deleteFile(fileName);
+        }
+
+        attachmentRepository.deleteById(id);
     }
 }

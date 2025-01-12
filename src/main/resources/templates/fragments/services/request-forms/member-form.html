@@ -38,7 +38,7 @@
       }
   </style>
   <div class="card-body">
-    <form  th:action="${'/members/form/process'}" th:object="${member}" method="POST">
+    <form  th:action="${'/members/form'}" th:object="${member}" method="POST">
       <div class="mb-3">
         <h3>Register as a member</h3>
       </div>
@@ -48,10 +48,16 @@
         <div class="col-md-6 col-12">
           <label for="firstName" class="form-label">Member First Name</label>
           <input th:field="*{firstName}" type="text" class="form-control width-md-75" id="firstName">
+          <div th:if="${#fields.hasErrors('firstName')}">
+            <p th:errors="${member.firstName}" class="text-danger fw-bold"></p>
+          </div>
         </div>
         <div class="col-md-6 col-12">
           <label for="lastName" class="form-label">Member Last Name</label>
           <input th:field="*{lastName}" type="text" class="form-control width-md-75" id="lastName">
+          <div th:if="${#fields.hasErrors('lastName')}">
+            <p th:errors="${member.lastName}" class="text-danger fw-bold"></p>
+          </div>
         </div>
         <div class="col-md-6 col-12">
           <label for="baptismalName" class="form-label">Member Baptismal Name</label>
@@ -118,7 +124,7 @@
             <h4 class="card-header">
               Family Members
             </h4>
-            <div class="card-body">
+            <div class="card-body table-responsive">
               <table id="familyTable">
                 <thead>
                 <tr>
@@ -321,6 +327,9 @@
         <label for="generous" class="form-label">Membership Amount</label>
         <input th:field="*{membershipAmount}" type="number" class="form-control width-md-75" id="generous">
       </div>
+      <div th:if="${#fields.hasErrors('membershipAmount')}">
+        <p th:errors="${member.membershipAmount}" class="text-danger fw-bold"></p>
+      </div>
 
       <div class="my-3">
         <label for="memberPaymentMethod"><h4>Choose your payment method</h4></label>
@@ -331,6 +340,9 @@
             <option th:value="${ptype}" th:text="${ptype.displayName}"></option>
           </th:block>
         </select>
+        <div th:if="${#fields.hasErrors('paymentMethod')}">
+          <p th:errors="${member.paymentMethod}" class="text-danger fw-bold"></p>
+        </div>
       </div>
 
       <div id="directDebitInfo">

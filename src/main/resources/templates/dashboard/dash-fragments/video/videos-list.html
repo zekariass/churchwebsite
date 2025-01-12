@@ -66,6 +66,9 @@
         }
 
     </style>
+    <div class="text-end">
+      <a th:href="@{/videos/form}" class="text-success fw-bold text-decoration-none">Add Youtube Video</a>
+    </div>
     <div class="row">
       <div th:each="video: ${videos}" class="col-md-6 col-lg-4 col-12">
         <div th:fragment="video-card" class="card shadow-sm">
@@ -79,6 +82,9 @@
           </div>
           <div class="card-body">
             <p class="card-text">[[${video.videoName}]]</p>
+            <div class="text-end">
+              <a th:href="@{/videos/delete/{id}(id=${video.videoId})}" onclick="return confirm('Are you sure you want to delete this video?')"><i class="fa-solid fa-trash text-danger"></i></a>
+            </div>
           </div>
         </div>
       </div>

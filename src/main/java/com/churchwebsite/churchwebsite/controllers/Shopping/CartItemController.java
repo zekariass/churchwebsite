@@ -22,37 +22,6 @@ public class CartItemController {
         this.cartItemService = cartItemService;
     }
 
-//    @GetMapping
-//    public String getAllCartItems(Model model) {
-//        List<CartItem> cartItems = cartItemService.getAllCartItems();
-//        model.addAttribute("cartItems", cartItems);
-//        return "cart-item/list";
-//    }
-
-//    @GetMapping("/{id}")
-//    public String getCartItemById(@PathVariable Integer id, Model model) {
-//        model.addAttribute("cartItem", cartItemService.getCartItemById(id).orElse(null));
-//        return "cart-item/detail";
-//    }
-//
-//    @PostMapping
-//    public String createCartItem(@ModelAttribute CartItem cartItem) {
-//        cartItemService.saveCartItem(cartItem);
-//        return "redirect:/cart-items";
-//    }
-
-//    @PutMapping("/{id}")
-//    public String updateCartItem(@PathVariable Integer id, @ModelAttribute CartItem updatedCartItem) {
-//        cartItemService.updateCartItem(id, updatedCartItem);
-//        return "redirect:/cart-items";
-//    }
-
-//    @DeleteMapping("/{id}")
-//    public String deleteCartItem(@PathVariable Integer id) {
-//        cartItemService.deleteCartItem(id);
-//        return "redirect:/cart-items";
-//    }
-
     @PostMapping("/{cartItemId}/increment")
     public String incrementCartItemQuantity(@PathVariable("cartItemId") Integer cartItemId,
                                             @RequestParam("productId") Integer productId,

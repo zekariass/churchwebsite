@@ -3,9 +3,11 @@ package com.churchwebsite.churchwebsite.controllers;
 import com.churchwebsite.churchwebsite.entities.MembershipAmount;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.MembershipAmountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,20 +29,31 @@ public class MembershipAmountController {
     @GetMapping("/form")
     public String showMembershipCategoryForm(Model model){
 
-        model.addAttribute("activeDashPage", "membership-amount-form");
+        setFormModelAttributes(model);
         model.addAttribute("membershipAmount", new MembershipAmount());
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
 
         return DASHBOARD_MAIN_PANEL;
     }
 
-    @PostMapping("/form/process")
-    public String processMembershipCategoryForm(@ModelAttribute MembershipAmount membershipAmount,
+
+    @PostMapping("/form")
+    public String processMembershipCategoryForm(@Valid @ModelAttribute MembershipAmount membershipAmount,
+                                                BindingResult result,
                                                 Model model){
 
-        MembershipAmount savedMembershipAmount = membershipAmountService.save(membershipAmount);
+        if(result.hasErrors()){
+            setFormModelAttributes(model);
+            model.addAttribute("membershipAmount",membershipAmount);
+            return DASHBOARD_MAIN_PANEL;
+        }
 
+        membershipAmountService.save(membershipAmount);
         return "redirect:/dashboard/members/membership-amounts";
+    }
+
+    private void setFormModelAttributes(Model model) {
+        model.addAttribute("activeDashPage", "membership-amount-form");
+        model.addAttribute("pageTitle", "Membership Amount Form");
     }
 
     @GetMapping("")
@@ -50,7 +63,7 @@ public class MembershipAmountController {
 
         model.addAttribute("activeDashPage", "membership-amounts-list");
         model.addAttribute("membershipAmounts", amounts);
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Membership Amounts List");
 
         return DASHBOARD_MAIN_PANEL;
 
@@ -65,7 +78,7 @@ public class MembershipAmountController {
 
         model.addAttribute("activeDashPage", "membership-amount-form");
         model.addAttribute("membershipAmount", membershipAmount);
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Membership Amount Form");
 
         return DASHBOARD_MAIN_PANEL;
 

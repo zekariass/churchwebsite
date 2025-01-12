@@ -51,4 +51,8 @@ public class AlbumService {
 
        return albumRepository.findByAlbumName(blog);
     }
+
+    public void deleteById(int albumId) {
+        albumRepository.deleteById(albumId);
+    }
 }

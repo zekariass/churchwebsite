@@ -30,7 +30,10 @@
                                       <span class="vertical-timeline-element-date">[[${event.eventDate}]]</span>
                                   </div>
                                   <div class="vertical-timeline-element-content bounce-in">
-                                      <a class="text-success" th:href="@{/dashboard/events/detail/{id}(id=${event.eventId})}"><h5>More Detail</h5></a>
+                                      <a class="text-success" th:href="@{/dashboard/events/detail/{id}(id=${event.eventId})}"><h6>More Detail</h6></a>
+                                      <a class="text-success small" th:href="@{/dashboard/events/delete/{id}(id=${event.eventId})}"
+                                         onclick="return confirm('Are you sure you want to delete this event?');"><i class="fa-solid fa-trash text-danger"></i>
+                                      </a>
                                   </div>
 
                               </div>

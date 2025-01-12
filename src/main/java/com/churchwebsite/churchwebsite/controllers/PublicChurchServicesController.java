@@ -62,6 +62,7 @@ public class PublicChurchServicesController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Services List");
 
         return PUBLIC_CONTENT;
     }
@@ -84,6 +85,8 @@ public class PublicChurchServicesController {
         model.addAttribute("churchService", churchService);
         model.addAttribute("activeContentPage", "service-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Service Detail");
+
         return PUBLIC_CONTENT;
     }
 }

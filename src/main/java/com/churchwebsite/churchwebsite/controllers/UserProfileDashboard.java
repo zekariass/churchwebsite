@@ -47,6 +47,7 @@ public class UserProfileDashboard {
         }
         model.addAttribute("resetPasswordDto", new PasswordResetDTO());
         model.addAttribute("controller", "dashboard");
+        model.addAttribute("pageTitle", "User Profile Page");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -63,6 +64,7 @@ public class UserProfileDashboard {
             model.addAttribute("user", userService.getCurrentUser().getUser());
             model.addAttribute("userProfile", userProfile);
             model.addAttribute("resetPasswordDto", new PasswordResetDTO());
+            model.addAttribute("pageTitle", "User Profile Page");
 
             return DASHBOARD_MAIN_PANEL;
         }
@@ -90,6 +92,7 @@ public class UserProfileDashboard {
             model.addAttribute("user", currentUser);
             model.addAttribute("userProfile", currentUser.getUserProfile());
             model.addAttribute("resetPasswordDto", passwordResetDTO);
+            model.addAttribute("pageTitle", "User Profile Page");
 
             return DASHBOARD_MAIN_PANEL;
         }

@@ -59,6 +59,32 @@ footer{
 }
 
 
+.sticky-header{
+    position: sticky !important;
+    top: -120px !important;
+    z-index: 1000 !important;
+}
+
+.sticky-header-no-logo{
+    position: sticky !important;
+    top: -80px !important;
+    z-index: 1000 !important;
+}
+
+@media (max-width: 992px){
+     .sticky-header{
+         position: sticky !important;
+         top: -10px !important;
+         z-index: 1000 !important;
+     }
+
+     .sticky-header-no-logo{
+         position: sticky !important;
+         top: -10px !important;
+         z-index: 1000 !important;
+     }
+}
+
 /* =========================================================== */
 /******* NEWS LIST ***********/
 body{
@@ -354,4 +380,49 @@ body{
   text-align: center;    /* Center the text */
   border: none;          /* Remove default border */
   cursor: pointer;       /* Pointer cursor for buttons or interactive elements */
+}
+
+
+.opacity-10{
+    opacity: 0.1 !important;
+}
+
+.opacity-20{
+    opacity: 0.2 !important;
+}
+
+.opacity-30{
+    opacity: 0.3 !important;
+}
+
+.opacity-40{
+    opacity: 0.4 !important;
+}
+
+.opacity-50{
+    opacity: 0.5 !important;
+}
+
+.opacity-60{
+    opacity: 0.6 !important;
+}
+
+.opacity-70{
+    opacity: 0.7 !important;
+}
+
+.opacity-80{
+    opacity: 0.8 !important;
+}
+
+.opacity-90{
+    opacity: 0.9 !important;
+}
+
+.opacity-100{
+    opacity: 1.0 !important;
+}
+
+tr:hover{
+    background-color: #F5FEFD !important;
 }

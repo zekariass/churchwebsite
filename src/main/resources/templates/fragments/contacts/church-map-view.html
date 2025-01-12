@@ -7,36 +7,38 @@
 <body>
 <div th:fragment="church-map-view">
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <style>
-    #map {
-        height: 400px; /* Set the height of the map */
-        width: 100%;
-    }
-  </style>
+<!--  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />-->
+<!--  <style>-->
+<!--    #map {-->
+<!--        height: 400px; /* Set the height of the map */-->
+<!--        width: 100%;-->
+<!--    }-->
+<!--  </style>-->
   <h4 class="mb-3 d-flex justify-content-center"> See Us On Map</h4>
-  <div id="map"></div>
+  <div class="overflow-auto">
+    <div th:utext="${churchDetail?.church?.address?.mapIframe}"></div>
+  </div>
   <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    // Coordinates for Armley Manor (Replace with geocoded values if dynamic)
-    const latitude = 53.7984;
-    const longitude = -1.5861;
+<!--  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>-->
+<!--  <script>-->
+<!--    // Coordinates for Armley Manor (Replace with geocoded values if dynamic)-->
+<!--    const latitude = 53.7984;-->
+<!--    const longitude = -1.5861;-->
 
-    // Initialize the map
-    const map = L.map('map').setView([latitude, longitude], 15); // Zoom level 15 for a closer view
+<!--    // Initialize the map-->
+<!--    const map = L.map('map').setView([latitude, longitude], 15); // Zoom level 15 for a closer view-->
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+<!--    // Add OpenStreetMap tiles-->
+<!--    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {-->
+<!--        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'-->
+<!--    }).addTo(map);-->
 
-    // Add a marker for the address
-    const marker = L.marker([latitude, longitude]).addTo(map);
+<!--    // Add a marker for the address-->
+<!--    const marker = L.marker([latitude, longitude]).addTo(map);-->
 
-    // Add a popup to the marker
-    marker.bindPopup("<b>Armley Manor</b><br>Mistress Lane, Leeds, United Kingdom, LS12 2HL").openPopup();
-  </script>
+<!--    // Add a popup to the marker-->
+<!--    marker.bindPopup("<b>Armley Manor</b><br>Mistress Lane, Leeds, United Kingdom, LS12 2HL").openPopup();-->
+<!--  </script>-->
 </div>
 </body>
 </html>

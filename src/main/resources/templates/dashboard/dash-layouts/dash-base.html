@@ -2,9 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Church Website Dashboard</title>
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
 <!--  <link rel="icon" th:href="${churchDetail?.church?.churchLogo}" type="image/x-icon" />-->
+
+  <title th:title="${pageTitle}"></title>
+
 
   <link rel="stylesheet" type="text/css" image="all" th:href="@{/assets/css/dash-fragments.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/theme.css}">

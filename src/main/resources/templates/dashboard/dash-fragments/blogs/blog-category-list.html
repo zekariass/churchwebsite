@@ -18,7 +18,9 @@
                             <div class="col-md-2 col-3">
                                 <div class="badge badge-primary rounded-pill w-100 mb-3"> <span class="justify-content-end"> [[${category.blogs.size()}]]</span> blogs</div>
                                 <!--                            <div class="d-flex justify-content-end"  >-->
-                                <div class="d-flex justify-content-end"><i class="fa-solid fa-lg fa-trash delete-icon " style="color: brown;" th:onclick="|window.location='@{/dashboard/blogs/categories/delete/{id}(id=${category.blogCategoryId})}'|"></i></div>
+                                <div class="d-flex justify-content-end">
+                                    <i class="fa-solid fa-lg fa-trash delete-icon " style="color: brown;" th:onclick="|if(confirm('Are you sure you want to delete the blog category?')) {window.location='@{/dashboard/blogs/categories/delete/{id}(id=${category.blogCategoryId})}';}|"></i>
+                                </div>
                                 <!--                            </div>-->
                             </div>
                         </li>

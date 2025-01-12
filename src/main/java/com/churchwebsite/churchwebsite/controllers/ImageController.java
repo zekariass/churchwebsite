@@ -53,6 +53,7 @@ public class ImageController {
         model.addAttribute("albums", albums);
         model.addAttribute("album", new Album());
         model.addAttribute("image", new Image());
+        model.addAttribute("pageTitle", "Image Form");
 
 
         if(forAlbumId == null || forAlbumId == 0){

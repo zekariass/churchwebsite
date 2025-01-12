@@ -32,6 +32,7 @@ public class EventController {
         model.addAttribute("activeDashPage", "eventRegistrationForm");
         model.addAttribute("event", new Event());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Event Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -63,6 +64,7 @@ public class EventController {
         model.addAttribute("currentUrl", request.getRequestURL());
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Events List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -76,6 +78,7 @@ public class EventController {
         model.addAttribute("event", event);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Event Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -89,6 +92,7 @@ public class EventController {
         model.addAttribute("event", event);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Event Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

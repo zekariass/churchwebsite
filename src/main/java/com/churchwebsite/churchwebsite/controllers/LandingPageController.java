@@ -34,6 +34,7 @@ public class LandingPageController {
         model.addAttribute("landingContentList", landingContentList);
         model.addAttribute("activeContentPage", "landing-page");
         model.addAttribute("emailSubscription", new EmailSubscription());
+        model.addAttribute("pageTitle", "Home Page");
 
         return "layouts/base";
     }

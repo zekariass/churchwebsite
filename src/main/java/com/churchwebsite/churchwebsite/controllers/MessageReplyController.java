@@ -36,12 +36,9 @@ public class MessageReplyController {
         ContactUs contactUs = contactUsService.findById(id);
         List<MessageReply> messageReplies = messageReplyService.findByContactUsMessage(contactUs);
 
-//        for(MessageReply reply: messageReplies){
-//            String excerpt = MiscUtils.generateExcerpt(reply.getMessage(), 200);
-//            reply.setExcerpt(excerpt);
-//        }
-
         model.addAttribute("replies", messageReplies);
+        model.addAttribute("pageTitle", "Message Replies List");
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -51,6 +48,8 @@ public class MessageReplyController {
         model.addAttribute("activeDashPage", "contact-us-message-reply-detail");
 
         model.addAttribute("reply", messageReply);
+        model.addAttribute("pageTitle", "Message Reply Detail");
+
         return DASHBOARD_MAIN_PANEL;
     }
 
@@ -63,6 +62,7 @@ public class MessageReplyController {
         model.addAttribute("contactUs", contactUs);
         model.addAttribute("messageReply", new MessageReply());
         model.addAttribute("activeDashPage", "contact-us-message-reply-form");
+        model.addAttribute("pageTitle", "Message Reply Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -76,6 +76,7 @@ public class MessageReplyController {
         model.addAttribute("contactUs", reply.getContactUsMessage());
         model.addAttribute("messageReply", reply);
         model.addAttribute("activeDashPage", "contact-us-message-reply-form");
+        model.addAttribute("pageTitle", "Message Reply Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -92,6 +93,7 @@ public class MessageReplyController {
             model.addAttribute("contactUs", contactUs);
             model.addAttribute("messageReply", reply);
             model.addAttribute("activeDashPage", "contact-us-message-reply-form");
+            model.addAttribute("pageTitle", "Message Reply Form");
 
             return DASHBOARD_MAIN_PANEL;
         }

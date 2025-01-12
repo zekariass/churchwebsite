@@ -49,6 +49,8 @@ public class ChurchServicesController {
         model.addAttribute("service", new ChurchServices());
         model.addAttribute("activeDashPage", "service-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Service Form");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -62,6 +64,7 @@ public class ChurchServicesController {
         model.addAttribute("service", churchService);
         model.addAttribute("activeDashPage", "service-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Service Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -88,11 +91,6 @@ public class ChurchServicesController {
         Page<ChurchServices> pagedServices = churchServicesService.findAll(page, pageSize, sortBy);
         List<ChurchServices> churchServices = pagedServices.getContent();
 
-//        churchServices.forEach(service -> {
-//            String excerpt = generateExcerpt(service.getServiceDescription(), 200);
-//            service.setExcerpt(excerpt);
-//        });
-
         model.addAttribute("activeDashPage", "services-list");
         model.addAttribute("churchServices", churchServices);
 
@@ -103,18 +101,11 @@ public class ChurchServicesController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Services List");
 
         return DASHBOARD_MAIN_PANEL;
     }
-//
-//    private String generateExcerpt(String richText, int length) {
-//        if(richText == null || richText.isEmpty()){
-//            return "";
-//        }else{
-//            String plainText = Jsoup.parse(richText).text();
-//            return plainText.length() > length ? plainText.substring(0, length) : plainText;
-//        }
-//    }
+
 
     @GetMapping("/detail/{id}")
     public String showServicesDetail(Model model,
@@ -126,6 +117,7 @@ public class ChurchServicesController {
         model.addAttribute("churchService", churchService);
         model.addAttribute("activeDashPage", "service-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Service Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -164,7 +156,7 @@ public class ChurchServicesController {
         model.addAttribute("sortBy", sortBy);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("pageTitle", "Baptism Requests List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -178,6 +170,7 @@ public class ChurchServicesController {
         model.addAttribute("baptism", baptism);
         model.addAttribute("activeDashPage", "baptism-request-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Baptism Request Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -191,6 +184,7 @@ public class ChurchServicesController {
         model.addAttribute("baptismRequestStatus", ServiceStatus.values());
         model.addAttribute("activeDashPage", "baptism-request-status-update");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Baptism Request Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -232,6 +226,7 @@ public class ChurchServicesController {
         model.addAttribute("sortBy", sortBy);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Matrimony Requests List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -245,6 +240,7 @@ public class ChurchServicesController {
         model.addAttribute("matrimony", matrimony);
         model.addAttribute("activeDashPage", "matrimony-request-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Matrimony Request Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -258,6 +254,7 @@ public class ChurchServicesController {
         model.addAttribute("matrimonyRequestStatus", ServiceStatus.values());
         model.addAttribute("activeDashPage", "matrimony-request-status-update");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Matrimony Request Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -299,12 +296,14 @@ public class ChurchServicesController {
         model.addAttribute("sortBy", sortBy);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Remembrance Request List");
+
 
         return DASHBOARD_MAIN_PANEL;
     }
 
     @GetMapping("/remembrance/requests/detail/{id}")
-    public String showRemebmbranceDetail(Model model,
+    public String showRemembranceDetail(Model model,
                                       @PathVariable("id") int requestId){
 
         RemembrancePrayer remembrancePrayer = remembrancePrayerService.findById(requestId);
@@ -312,6 +311,7 @@ public class ChurchServicesController {
         model.addAttribute("remembrance", remembrancePrayer);
         model.addAttribute("activeDashPage", "remembrance-request-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Remembrance Request Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }

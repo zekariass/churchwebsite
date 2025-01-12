@@ -32,3 +32,13 @@ build/
 ### VS Code ###
 .vscode/
 #/src/main/resources/static/image/
+.env
+/src/main/resources/static/media/user/profile/*
+/src/main/resources/static/media/blogs/*
+/src/main/resources/static/media/centre/*
+/src/main/resources/static/media/general/*
+/src/main/resources/static/media/information/*
+/src/main/resources/static/media/logo/*
+/src/main/resources/static/media/news/*
+/src/main/resources/static/media/products/*
+/src/main/resources/static/media/user/profile/*

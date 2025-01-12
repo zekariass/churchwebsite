@@ -35,6 +35,7 @@ public class NewsController {
         model.addAttribute("activeDashPage", "news-form");
         model.addAttribute("news", new News());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "News Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -73,7 +74,7 @@ public class NewsController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("pageTitle", "News List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -88,6 +89,7 @@ public class NewsController {
         model.addAttribute("activeDashPage", "news-detail");
         model.addAttribute("news", news);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "News Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -102,6 +104,7 @@ public class NewsController {
         model.addAttribute("activeDashPage", "news-form");
         model.addAttribute("news", news);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "News Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -119,7 +122,6 @@ public class NewsController {
                              Model model){
 
         newsService.deleteById(newsId);
-
         return "redirect:/dashboard/news";
     }
 }

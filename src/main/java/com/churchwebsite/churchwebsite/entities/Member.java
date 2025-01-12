@@ -4,11 +4,12 @@ import com.churchwebsite.churchwebsite.enums.Gender;
 import com.churchwebsite.churchwebsite.enums.MembershipPaymentMethod;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,16 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberId;
 
+    @NotEmpty(message = "You must provide first name.")
+    @NotNull(message = "You must provide first name.")
     private String firstName;
+
+    @NotEmpty(message = "You must provide last name.")
+    @NotNull(message = "You must provide last name.")
     private String lastName;
+
     private String baptismalName;
+
     private String fatherConfessorName;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -33,6 +41,8 @@ public class Member {
     @Email
     private String email;
 
+    @NotEmpty(message = "You must provide phone number.")
+    @NotNull(message = "You must provide phone number.")
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -45,8 +55,10 @@ public class Member {
     @Column(updatable = false)
     private LocalDate membershipDate;
 
-    private double membershipAmount;
+    @NotNull(message = "You must select amount.")
+    private Double membershipAmount;
 
+    @NotNull(message = "You must select payment method.")
     @Enumerated(EnumType.STRING)
     private MembershipPaymentMethod paymentMethod;
 
@@ -168,11 +180,11 @@ public class Member {
         this.membershipDate = membershipDate;
     }
 
-    public double getMembershipAmount() {
+    public Double getMembershipAmount() {
         return membershipAmount;
     }
 
-    public void setMembershipAmount(double membershipAmount) {
+    public void setMembershipAmount(Double membershipAmount) {
         this.membershipAmount = membershipAmount;
     }
 

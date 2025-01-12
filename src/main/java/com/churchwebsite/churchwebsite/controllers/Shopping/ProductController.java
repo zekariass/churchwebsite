@@ -63,6 +63,7 @@ public class ProductController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Products List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -88,6 +89,7 @@ public class ProductController {
         model.addAttribute("listingStatuses", ProductListingStatus.values());
         model.addAttribute("activeDashPage", "product-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Products Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -110,6 +112,7 @@ public class ProductController {
         model.addAttribute("listingStatuses", ProductListingStatus.values());
         model.addAttribute("activeDashPage", "product-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Products Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

@@ -33,7 +33,8 @@
           <td th:text="${image.createdAt.format(@dateTimeFormatter)}"></td>
           <td>
             <a th:href="@{/dashboard/products/images/detail/{id}(id=${image.productImageId})}" role="button" class="primary-button button-sm" >View</a>
-            <a th:href="@{/dashboard/products/images/delete/{id}(id=${image.productImageId})}" role="button" class="danger-button button-sm" >Delete</a>
+            <a th:href="@{/dashboard/products/images/delete/{id}(id=${image.productImageId})}" role="button" class="danger-button button-sm"
+               onclick="return confirm('Are you sure you want to delete this product image?')">Delete</a>
           </td>
         </tr>
         </tbody>

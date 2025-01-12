@@ -38,8 +38,8 @@
             <td th:text="${order.createdAt.format(@dateTimeFormatter)}"></td>
             <td>
               <div class="d-flex flex-row">
-                <a th:href="@{'/dashboard/orders/detail/' + ${order.orderId}}" class="info-button btn-sm me-2">View</a>
-                <a th:href="@{'/dashboard/orders/edit/form/' + ${order.orderId}}" class="warning-button btn-sm">Edit</a>
+                <a th:href="@{'/dashboard/orders/detail/' + ${order.orderId}}" class="info-button button-sm me-2">View</a>
+                <a th:href="@{'/dashboard/orders/edit/form/' + ${order.orderId}}" class="warning-button button-sm">Edit</a>
               </div>
             </td>
           </tr>

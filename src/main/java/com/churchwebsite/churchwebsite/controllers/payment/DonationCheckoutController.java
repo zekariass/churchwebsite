@@ -43,6 +43,7 @@ public class DonationCheckoutController {
         model.addAttribute("productRequest", new ProductRequest());
         model.addAttribute("currencyCode", localeUtil.getCurrency().getSymbol());
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
+        model.addAttribute("pageTitle", "Donation Options");
 
         return PUBLIC_CONTENT;
     }
@@ -76,6 +77,7 @@ public class DonationCheckoutController {
 
         model.addAttribute("activeContentPage", "donation-success");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Donation Success");
 
         return PUBLIC_CONTENT;
     }
@@ -86,6 +88,7 @@ public class DonationCheckoutController {
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("activeContentPage", "donation-cancel");
+        model.addAttribute("pageTitle", "Donation Cancelled");
 
         return PUBLIC_CONTENT;
     }

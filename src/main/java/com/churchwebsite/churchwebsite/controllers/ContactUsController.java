@@ -44,6 +44,7 @@ public class ContactUsController {
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("contactUs", new ContactUs());
         model.addAttribute("churchContacts", churchContactService.findAllContacts());
+        model.addAttribute("pageTitle", "Contact Us Options");
 
         return PUBLIC_CONTENT;
     }

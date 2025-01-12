@@ -26,7 +26,7 @@
                     </thead>
                     <tbody>
                     <!-- Iterate through the attachments list -->
-                    <tr th:each="member, iterStat : ${members}" class="shadow mb-2" role="button" th:onclick="|window.location='@{/dashboard/members/detail/{id}(id=${member.memberId})}'|">
+                    <tr th:each="member, iterStat : ${members}" class="shadow mb-2" role="button">
                         <!--                    <td th:text="${iterStat.index + 1}"></td> &lt;!&ndash; Row number &ndash;&gt;-->
                         <td>[[${member.memberId}]]</td> <!-- Row number -->
                         <td>[[${member.baptismalName}]]</td>
@@ -40,7 +40,7 @@
                             <span class="text-dark">/</span>
                             <a th:href="@{/dashboard/members/edit/{id}(id=${member.memberId})}" >Edit</a>
                             <span class="text-dark">/</span>
-                            <a th:href="@{/dashboard/members/delete/{id}(id=${member.memberId})}" >Delete</a>
+                            <a th:href="@{/dashboard/members/delete/{id}(id=${member.memberId})}" onclick="return confirm('Are you sure your want to delete this member');" >Delete</a>
                         </td>
                     </tr>
                     <!-- Show a message if there are no attachments -->

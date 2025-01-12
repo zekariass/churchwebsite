@@ -37,6 +37,10 @@
                     <label for="postcode" class="form-label">Post Code</label>
                     <input th:field="*{postCode}" type="text" class="form-control" id="postcode">
                 </div>
+                <div th:if="${showImapField == true}" class="col-12">
+                    <label for="mapIframe" class="form-label">Map iFrame</label>
+                    <input th:field="*{address.mapIframe}" type="text" class="form-control" id="mapIframe" >
+                </div>
                 <input type="hidden" name="returnUrl" th:value="${param.returnUrl}">
             </div>
             <div class="mt-3">

@@ -2,8 +2,7 @@ package com.churchwebsite.churchwebsite.enums;
 
 public enum MembershipPaymentMethod {
     DIRECT_DEBIT("Direct Debit"),
-    CASH("Cash (Every Month)"),
-    PAYPAL("PayPal");
+    CASH("Cash (Every Month)");
 
     private final String displayName;
 

@@ -21,7 +21,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="reply : ${message.replies}" th:onclick="|window.location='@{/dashboard/messages/replies/detail/{id}(id=${reply.id})}'|" role="button">
+                <tr th:each="reply : ${message.replies}" role="button">
                     <td th:text="${reply.id}"></td>
                     <td th:text="${reply.receiverEmail}"></td>
                     <td th:text="${message.contactUsId}"></td>

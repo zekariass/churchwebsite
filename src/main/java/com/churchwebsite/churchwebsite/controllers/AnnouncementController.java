@@ -53,6 +53,7 @@ public class AnnouncementController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Announcements List");
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -63,6 +64,7 @@ public class AnnouncementController {
         model.addAttribute("activeDashPage", "announcement-detail");
         model.addAttribute("announcement", announcementService.getAnnouncementById(id).orElse(new Announcement()));
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Announcement Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -72,6 +74,7 @@ public class AnnouncementController {
         model.addAttribute("activeDashPage", "announcement-form");
         model.addAttribute("announcement", new Announcement());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Announcement Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -81,6 +84,7 @@ public class AnnouncementController {
         model.addAttribute("activeDashPage", "announcement-form");
         model.addAttribute("announcement", announcementService.getAnnouncementById(anId).orElse(new Announcement()));
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Announcements Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

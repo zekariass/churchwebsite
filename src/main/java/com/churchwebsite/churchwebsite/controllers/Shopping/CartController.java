@@ -76,6 +76,7 @@ public class CartController {
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Cart Detail");
         return "cart"; // Returns a view named "cart.html"
     }
 
@@ -131,7 +132,7 @@ public class CartController {
         model.addAttribute("checkoutDto", new CheckoutDTO());
         model.addAttribute("shippingPrice", 0.0);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("pageTitle", "Cart Detail");
 
         return PUBLIC_CONTENT;
     }
@@ -206,6 +207,7 @@ public class CartController {
         model.addAttribute("shippingAddress", checkoutDTO.getAddress());
         model.addAttribute("confirmationPage", true);
         model.addAttribute("checkoutDTO", checkoutDTO);
+        model.addAttribute("pageTitle", "Checkout");
 
 
         return PUBLIC_CONTENT;
@@ -264,6 +266,7 @@ public class CartController {
             // Add the response to the model
             model.addAttribute("stripeResponse", stripeResponse);
             model.addAttribute("activeContentPage", "checkout-payment-result");
+            model.addAttribute("pageTitle", "Checkout Confirm");
 
             // Return the name of the Thymeleaf template (e.g., "checkoutResult")
             return new RedirectView(stripeResponse.getSessionUrl());
@@ -314,6 +317,7 @@ public class CartController {
 
         model.addAttribute("activeContentPage", "checkout-success");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Checkout Success");
 
         return PUBLIC_CONTENT;
     }
@@ -382,6 +386,8 @@ public class CartController {
     public String showCheckoutCancellation(Model model){
         model.addAttribute("activeContentPage", "checkout-cancel");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Checkout Cancel");
+
         return PUBLIC_CONTENT;
     }
 

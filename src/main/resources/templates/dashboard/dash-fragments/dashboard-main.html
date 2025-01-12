@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title></title>
+  <title th:title="${pageTitle}">Church Website Dashboard</title>
+
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -250,6 +251,11 @@
                 </a>
               </li>
               <li>
+                <a th:href="@{/images/albums/list}">
+                  <span class="sub-item">Albums Table</span>
+                </a>
+              </li>
+              <li>
                 <a th:href="@{/images/albums/form}">
                   <span class="sub-item">New Album</span>
                 </a>
@@ -418,7 +424,15 @@
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Profile</span>
         </a>
-      </li><!-- End Login Page Nav -->
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/dashboard/settings">
+          <i class="bi bi-gear"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+
     </ul>
   </aside>
   <!-- ========================================= End of Sidebar ============================================= -->

@@ -34,6 +34,8 @@ public class PublicAboutUsController {
         model.addAttribute("aboutUsList", aboutUsList);
         model.addAttribute("activeContentPage", "about-us");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "About Us");
+
 
         return PUBLIC_CONTENT;
     }

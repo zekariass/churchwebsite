@@ -1,6 +1,7 @@
 package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ public class MembershipAmount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int membershipAmountId;
 
-    private double membershipAmount;
+    @NotNull(message = "You must provide an amount.")
+    private Double membershipAmount;
+
     private String membershipAmountDescription;
 
     @Transient
@@ -34,11 +37,11 @@ public class MembershipAmount {
         this.membershipAmountId = membershipAmountId;
     }
 
-    public double getMembershipAmount() {
+    public Double getMembershipAmount() {
         return membershipAmount;
     }
 
-    public void setMembershipAmount(double membershipAmount) {
+    public void setMembershipAmount(Double membershipAmount) {
         this.membershipAmount = membershipAmount;
     }
 

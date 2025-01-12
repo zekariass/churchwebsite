@@ -41,6 +41,8 @@ public class BaptismController {
         model.addAttribute("address", new Address());
         model.addAttribute("activeContentPage", "baptism-request-form");
         model.addAttribute("churchDetail", churchDetail);
+        model.addAttribute("pageTitle", "Baptism Form");
+
         return PUBLIC_CONTENT;
     }
 

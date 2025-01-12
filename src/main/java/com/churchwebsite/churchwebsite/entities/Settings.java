@@ -1,6 +1,8 @@
 package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "settings")
@@ -9,6 +11,9 @@ public class Settings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int settingId;
+
+    @NotEmpty(message = "Setting name cannot be empty.")
+    @NotNull(message = "Provide setting name.")
     private String settingName;
     private String settingDescription;
     private int settingValueInt;
@@ -71,6 +76,10 @@ public class Settings {
 
     public void setSettingValueDouble(double settingValueDouble) {
         this.settingValueDouble = settingValueDouble;
+    }
+
+    public boolean atLeastAValueIsProvided(){
+        return settingValueInt >= 0 || settingValueDouble >= 0.0 || !settingValueChar.isEmpty();
     }
 
     @Override

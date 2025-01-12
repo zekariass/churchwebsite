@@ -1,6 +1,8 @@
 package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,7 +18,10 @@ public class Attachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int attachmentId;
 
+    @NotEmpty(message = "Provide name for your attachment.")
+    @NotNull(message = "Provide name for your attachment.")
     private String attachmentName;
+
     private String attachmentPath;
 
     @CreatedDate

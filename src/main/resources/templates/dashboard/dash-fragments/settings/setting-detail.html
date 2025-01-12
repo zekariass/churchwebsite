@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Setting Details</title>
+</head>
+<body>
+  <div th:fragment="setting-detail" class="container mt-5">
+    <h2>Setting Details</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered mt-3">
+        <tbody>
+        <tr>
+          <th scope="row">Setting Name</th>
+          <td th:text="${setting.settingName}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Setting Description</th>
+          <td th:text="${setting.settingDescription}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Setting Value (Integer)</th>
+          <td th:text="${setting.settingValueInt}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Setting Value (Character)</th>
+          <td th:text="${setting.settingValueChar}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Setting Value (Double)</th>
+          <td th:text="${setting.settingValueDouble}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex flex-row my-3">
+      <a href="/dashboard/settings" class="secondary-button me-2 mb-2 fw-bold">Settings List</a>
+<!--      <a th:href="@{/dashboard/settings/detail/{id}(id=${setting.settingId})}" class="info-button me-2 mb-2 col fw-bold">Detail</a>-->
+      <a th:href="@{/dashboard/settings/edit/{id}(id=${setting.settingId})}" class="warning-button me-2 mb-2 fw-bold">Edit</a>
+<!--      <a th:href="@{/dashboard/settings/delete/{id}(id=${setting.settingId})}" class="danger-button me-2 mb-2 col fw-bold">Delete</a>-->
+    </div>
+  </div>
+</body>
+</html>

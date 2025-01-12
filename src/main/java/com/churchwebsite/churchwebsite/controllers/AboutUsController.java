@@ -54,6 +54,7 @@ public class AboutUsController {
         model.addAttribute("sortBy", sortBy);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "About Us List");
 
 
         return DASHBOARD_MAIN_PANEL;
@@ -66,6 +67,7 @@ public class AboutUsController {
         AboutUs aboutUs = aboutUsService.getAboutUsById(id);
         model.addAttribute("aboutUs", aboutUs);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "About Us Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -75,7 +77,7 @@ public class AboutUsController {
         model.addAttribute("activeDashPage", "about-us-form");
         model.addAttribute("aboutUs", new AboutUs());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("pageTitle", "About Us Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -85,7 +87,7 @@ public class AboutUsController {
         model.addAttribute("activeDashPage", "about-us-form");
         model.addAttribute("aboutUs", aboutUsService.getAboutUsById(anId));
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
+        model.addAttribute("pageTitle", "About Us Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

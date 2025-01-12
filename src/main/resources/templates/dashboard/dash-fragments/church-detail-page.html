@@ -217,7 +217,7 @@
                                    <img th:src="${banner.churchBanner}" alt="Organisation Banner" style="max-width: 100% !important;" class="rounded-3">
                                </div>
                                <div class="col-3 d-flex align-items-center">
-                                   <a th:href="@{/dashboard/church/banner/delete/{id}(id=${banner.churchBannerId})}"><i class="fa fa-2x fa-trash" aria-hidden="true" style="color: brown"></i></a>
+                                   <a th:href="@{/dashboard/church/banner/delete/{id}(id=${banner.churchBannerId})}" onclick="return confirm('Are you sure you want to delete this banner?')"><i class="fa fa-2x fa-trash" aria-hidden="true" style="color: brown"></i></a>
                                </div>
                            </div>
                         </div>

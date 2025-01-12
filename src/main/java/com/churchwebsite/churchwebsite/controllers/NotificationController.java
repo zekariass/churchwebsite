@@ -62,6 +62,7 @@ public class NotificationController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Notifications List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -73,6 +74,7 @@ public class NotificationController {
         model.addAttribute("notification", new Notification());
         model.addAttribute("activeDashPage", "notification-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Notifications Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -109,6 +111,7 @@ public class NotificationController {
         model.addAttribute("notification", notification);
         model.addAttribute("activeDashPage", "notification-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Notification Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -129,6 +132,8 @@ public class NotificationController {
         }catch (MessagingException me){
             model.addAttribute("activeDashPage", "notification-form");
             model.addAttribute("error", me.getMessage());
+            model.addAttribute("pageTitle", "Notifications List");
+
             return DASHBOARD_MAIN_PANEL;
         }
 

@@ -26,8 +26,8 @@
                         <p class="text-muted">Display Order: [[${landingContent.contentOrder}]]</p>
                     </div>
                     <div class="d-flex justify-content-end" >
-                        <i class="fa-solid fa-lg fa-trash delete-icon me-2" style="color: brown;" th:onclick="|window.location='@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}'|"></i>
-                        <i class="fa-solid fa-lg fas fa-edit text-info" th:onclick="|window.location='@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}'|"></i>
+                        <i class="fa-solid fa-lg fa-trash delete-icon me-2" style="color: brown;" th:onclick="|if(confirm('Are you sure you want to delete this content?')) {window.location='@{/dashboard/landing-contents/delete/{id}(id=${landingContent.landingContentId})}'}|"></i>
+                        <i class="fa-solid fa-lg fas fa-edit text-info" th:onclick="|window.location='@{/dashboard/landing-contents/edit/{id}(id=${landingContent.landingContentId})}'|"></i>
                     </div>
                 </div>
             </div>

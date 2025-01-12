@@ -102,9 +102,12 @@
                         </div>
                     </div>
                     <div class="my-3">
-                        <a th:href="@{/address/update/{id}(id=${event.address.addressId}, returnUrl=${currentUrl})}" class="success-button">
+                        <a th:href="@{/address/update/{id}(id=${event.address.addressId}, returnUrl=${currentUrl})}" class="success-button me-3">
                             <i class="fa-solid fa-pencil"></i>
                             <span>Edit Address</span>
+                        </a>
+                        <a th:href="@{/dashboard/events/delete/{id}(id=${event.eventId})}"
+                           onclick="return confirm('Are you sure you want to delete this event?');"><i class="fa-solid fa-2x fa-trash text-danger"></i>
                         </a>
 
                     </div>

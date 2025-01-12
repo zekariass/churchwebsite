@@ -38,6 +38,8 @@ public class AddressController {
 
         model.addAttribute("activeDashPage", "updateAddress");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Address Form");
+
 
         return DASHBOARD_MAIN_PANEL;
     }

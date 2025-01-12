@@ -106,6 +106,7 @@ public class ShoppingController {
                         (existing, replacement) -> replacement            // In case of duplicates, keep the replacement
                 )));
         model.addAttribute("totalCartItems", cartItems.stream().mapToInt(CartItem::getQuantity).sum());
+        model.addAttribute("pageTitle", "Products");
 
         return PUBLIC_CONTENT; // Corresponds to shopping-list.html
     }
@@ -146,6 +147,7 @@ public class ShoppingController {
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalCartItems", cartItems.stream().mapToInt(CartItem::getQuantity).sum());
         model.addAttribute("productCartItem", productCartItem);
+        model.addAttribute("pageTitle", "Product Detail");
 
         return PUBLIC_CONTENT; // Corresponds to product-detail.html
     }

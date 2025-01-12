@@ -64,6 +64,7 @@ public class PublicNewsController {
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "News List");
 
 
         return PUBLIC_CONTENT;
@@ -79,6 +80,7 @@ public class PublicNewsController {
         model.addAttribute("activeContentPage", "news-detail");
         model.addAttribute("news", news);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "News Detail");
 
         return PUBLIC_CONTENT;
     }

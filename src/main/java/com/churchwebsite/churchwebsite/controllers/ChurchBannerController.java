@@ -34,6 +34,7 @@ public class ChurchBannerController {
         model.addAttribute("churchId", orgId);
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Banner");
 
         return DASHBOARD_MAIN_PANEL;
     }

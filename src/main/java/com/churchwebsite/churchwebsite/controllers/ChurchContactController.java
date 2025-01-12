@@ -34,6 +34,7 @@ public class ChurchContactController {
         model.addAttribute("activeDashPage", "church-contacts-list");
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Church Contact List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -45,6 +46,7 @@ public class ChurchContactController {
         model.addAttribute("activeDashPage", "church-contact-form");
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Church Contact Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -55,6 +57,7 @@ public class ChurchContactController {
         if (result.hasErrors()) {
 
             model.addAttribute("activeDashPage", "church-contact-form");
+            model.addAttribute("pageTitle", "Church Contact Form");
 
             return DASHBOARD_MAIN_PANEL;
         }
@@ -71,18 +74,20 @@ public class ChurchContactController {
 
         model.addAttribute("activeDashPage", "church-contact-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Church Contact Form");
 
         return DASHBOARD_MAIN_PANEL;
     }
 
     // Show form to edit an existing contact
     @GetMapping("/detail/{id}")
-    public String showEditDetail(@PathVariable int id, Model model) {
+    public String showContactDetail(@PathVariable int id, Model model) {
         ChurchContact contact = contactService.findContactById(id);
         model.addAttribute("contact", contact);
 
         model.addAttribute("activeDashPage", "church-contact-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Church Contact Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -97,6 +102,7 @@ public class ChurchContactController {
 
             model.addAttribute("activeDashPage", "church-contact-form");
             model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+            model.addAttribute("pageTitle", "Church Contact Form");
 
 
             return DASHBOARD_MAIN_PANEL;

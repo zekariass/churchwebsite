@@ -59,6 +59,7 @@ public class OrderPaymentController {
         model.addAttribute("currencySymbol", localeUtil.getCurrency().getSymbol());
         model.addAttribute("paymentStatuses", PaymentStatus.values());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Payments List");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -70,6 +71,7 @@ public class OrderPaymentController {
         model.addAttribute("paymentStatuses", PaymentStatus.values());
         model.addAttribute("activeDashPage", "order-payment-detail");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Payment Detail");
 
         return DASHBOARD_MAIN_PANEL;
     }
@@ -88,6 +90,7 @@ public class OrderPaymentController {
         model.addAttribute("paymentStatuses", PaymentStatus.values());
         model.addAttribute("activeDashPage", "order-payment-edit-form");
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Order Form");
 
         return DASHBOARD_MAIN_PANEL;
     }

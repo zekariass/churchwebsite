@@ -1,9 +1,12 @@
 package com.churchwebsite.churchwebsite.controller_advices;
 
+import com.churchwebsite.churchwebsite.dtos.ChurchDetailDTO;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import java.io.IOException;
 
 @ControllerAdvice
 public class ChurchDetailAdvice {
@@ -15,7 +18,8 @@ public class ChurchDetailAdvice {
     }
 
     @ModelAttribute
-    public void churchDetail(Model model){
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+    public void churchDetail(Model model) throws IOException {
+        ChurchDetailDTO churchDetailDTO = churchDetailService.getChurchDetail();
+        model.addAttribute("churchDetail", churchDetailDTO);
     }
 }

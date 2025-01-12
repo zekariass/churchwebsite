@@ -15,7 +15,7 @@
 
         <div class="mb-3">
             <label for="receiverEmail" class="form-label">Receiver Email</label>
-            <input type="email" class="form-control" id="receiverEmail" th:field="*{receiverEmail}">
+            <input type="email" class="form-control" id="receiverEmail" name="receiverEmail" th:value="${contactUs.email}" readonly>
             <div th:if="${#fields.hasErrors('receiverEmail')}">
                 <p th:errors="*{receiverEmail}" class="fw-bold text-danger"></p>
             </div>
