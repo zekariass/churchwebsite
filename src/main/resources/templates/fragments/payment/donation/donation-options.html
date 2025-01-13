@@ -14,171 +14,201 @@
             <h6>Help our church [[${churchDetail?.church?.churchName}]] today. Choose the how you want to donate from the following options.</h6>
         </div>
 
-        <div class="shadow col-md-6 p-4 rounded-3">
-            <div>
-                <h5>Choose the amount you want to donate</h5>
-                <form th:action="@{/donation/process}" method="post">
-                    <div class="mb-3" id="amountOptions">
-                        <div class="bg-info p-3 rounded-3" id="donationAmount">
-                            <div class="d-flex flex-column flex-md-row ">
-                                <div class="me-4">
-                                    <input class="form-check-input amountOptions"
-                                           type="radio"
-                                           name="donationAmount"
-                                           value=20>
-                                    <label class="form-check-label">
-                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]20
-                                    </label>
+        <div class="row">
+            <div class="col-md-6 card mb-3">
+                <div th:each="donationPurpose: ${donationPurposes}">
+                    <div class="mb-4 container card-body">
+                        <h4>[[${donationPurpose.donationPurposeName}]]</h4>
+                        <p th:utext="${donationPurpose.donationPurposeDescription}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 rounded-3">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <h5>Choose the amount you want to donate</h5>
+                            <div class="my-3 text-danger fw-bold">
+                                <div class="mb-3">
+                                    [[${stripeResponse?.status}]]
                                 </div>
-                                <div class="me-4">
-                                    <input class="form-check-input amountOptions"
-                                           type="radio"
-                                           name="donationAmount"
-                                           value=30>
-                                    <label class="form-check-label">
-                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]30
-                                    </label>
-                                </div>
-                                <div class="me-4">
-                                    <input class="form-check-input amountOptions"
-                                           type="radio"
-                                           name="donationAmount"
-                                           value=40>
-                                    <label class="form-check-label">
-                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]40
-                                    </label>
-                                </div>
-                                <div class="me-4">
-                                    <input class="form-check-input amountOptions"
-                                           type="radio"
-                                           name="donationAmount"
-                                           value=50>
-                                    <label class="form-check-label">
-                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]50
-                                    </label>
-                                </div>
-                                <div class="me-4">
-                                    <input class="form-check-input amountOptions"
-                                           type="radio"
-                                           name="donationAmount"
-                                           value=100>
-                                    <label class="form-check-label">
-                                        [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]100
-                                    </label>
+                                <div>
+                                    [[${stripeResponse?.message}]]
                                 </div>
                             </div>
+                            <form th:action="@{/donation/options}" method="post" th:object="${donation}">
+                                <div class="mb-3" id="amountOptions">
+                                    <div class="bg-info p-3 rounded-3 fw-bold" id="donationAmount">
+                                        <div class="mb-3">
+                                            <label for="donationPurpose" class="form-label">Donation For</label>
+                                            <select th:field="*{donationPurpose}" class="form-select w-auto">
+                                                <option value="">-- Select Donation Purpose --</option>
+                                                <option th:each="donationPurpose: ${donationPurposes}"
+                                                        th:text="${donationPurpose.donationPurposeName}"
+                                                        th:value="${donationPurpose.id}"
+                                                        id="donationPurpose">
+                                                </option>
+                                            </select>
+                                            <div th:if="${#fields.hasErrors('donationPurpose')}">
+                                                <p th:errors="${donation.donationPurpose}" class="text-danger fw-bold"></p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column flex-md-row ">
+                                            <div class="me-4">
+                                                <input class="form-check-input amountOptions"
+                                                       type="radio"
+                                                       th:field="*{donationAmount}"
+                                                       value=10>
+                                                <label class="form-check-label">
+                                                    [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]10
+                                                </label>
+                                            </div>
+                                            <div class="me-4">
+                                                <input class="form-check-input amountOptions"
+                                                       type="radio"
+                                                       th:field="*{donationAmount}"
+                                                       value=20>
+                                                <label class="form-check-label">
+                                                    [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]20
+                                                </label>
+                                            </div>
+                                            <div class="me-4">
+                                                <input class="form-check-input amountOptions"
+                                                       type="radio"
+                                                       th:field="*{donationAmount}"
+                                                       value=30>
+                                                <label class="form-check-label">
+                                                    [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]30
+                                                </label>
+                                            </div>
+                                            <div class="me-4">
+                                                <input class="form-check-input amountOptions"
+                                                       type="radio"
+                                                       th:field="*{donationAmount}"
+                                                       value=40>
+                                                <label class="form-check-label">
+                                                    [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]40
+                                                </label>
+                                            </div>
+                                            <div class="me-4">
+                                                <input class="form-check-input amountOptions"
+                                                       type="radio"
+                                                       th:field="*{donationAmount}"
+                                                       value=50>
+                                                <label class="form-check-label">
+                                                    [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]50
+                                                </label>
+                                            </div>
+                                            <div class="me-4">
+                                                <input class="form-check-input amountOptions"
+                                                       type="radio"
+                                                       th:field="*{donationAmount}"
+                                                       value=100>
+                                                <label class="form-check-label">
+                                                    [[${currencySymbol} != null ? ${currencySymbol}: ${currencyCode}]]100
+                                                </label>
+                                            </div>
+                                        </div>
 
-                            <div class="my-4">
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       value="beGenerous"
-                                       id="beGenerousCheck">
-                                <label class="form-check-label fw-bold">Custom Amount</label>
-                            </div>
+                                        <div class="my-4">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   value="beGenerous"
+                                                   id="beGenerousCheck">
+                                            <label class="form-check-label fw-bold">Custom Amount</label>
+                                        </div>
 
-                            <div class="col-md-4 col-12 mb-4" id="beGenerousField">
-                                <label for="generous" class="form-label">Membership Amount</label>
-                                <input name="donationAmount" type="number" class="form-control width-md-75" id="generous">
-                            </div>
+                                        <div class="col-md-4 col-12 mb-4" id="beGenerousField">
+                                            <label for="generous" class="form-label">Membership Amount</label>
+                                            <input th:field="*{donationAmount}" type="number" class="form-control width-md-75" id="generous">
+                                        </div>
 
-<!--                            <div>-->
-<!--                                <div class="container">-->
-<!--                                <h4 class="my-3">Enter Your Information</h4>-->
-<!--                                    <div class="mb-3">-->
-<!--                                        <input type="text"-->
-<!--                                               name="*{firstName}"-->
-<!--                                               class="form-control form-control-lg"-->
-<!--                                               id="firstName"-->
-<!--                                               placeholder="Enter your first name"-->
-<!--                                               required>-->
-<!--                                        <div class="invalid-feedback">-->
-<!--                                            Please provide your first name.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                                        <div th:if="${#fields.hasErrors('donationAmount')}">
+                                            <p th:errors="${donation.donationAmount}" class="text-danger fw-bold"></p>
+                                        </div>
 
-<!--                                    &lt;!&ndash; Last Name &ndash;&gt;-->
-<!--                                    <div class="mb-3">-->
-<!--                                        <input type="text"-->
-<!--                                               name="*{lastName}"-->
-<!--                                               class="form-control form-control-lg"-->
-<!--                                               id="lastName"-->
-<!--                                               placeholder="Enter your last name"-->
-<!--                                               required>-->
-<!--                                        <div class="invalid-feedback">-->
-<!--                                            Please provide your last name.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
 
-<!--                                    &lt;!&ndash; Email &ndash;&gt;-->
-<!--                                    <div class="mb-3">-->
-<!--                                        <input type="email"-->
-<!--                                               name="*{email}"-->
-<!--                                               class="form-control form-control-lg"-->
-<!--                                               id="email"-->
-<!--                                               placeholder="Enter your email address"-->
-<!--                                               required>-->
-<!--                                        <div class="invalid-feedback">-->
-<!--                                            Please provide a valid email address.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                                        <div>
+                                            <div class="container">
+                                            <h4 class="my-3">Enter Your Information</h4>
+                                                <div class="mb-3">
+                                                    <input type="text"
+                                                           th:field="*{donorFullName}"
+                                                           class="form-control form-control-lg"
+                                                           id="fullName"
+                                                           placeholder="Enter your full name">
+                                                    <div class="my-1">
+                                                        <p th:text="${fullNameError}" class="text-danger fw-bold"></p>
+                                                    </div>
+                                                </div>
 
-<!--                                    &lt;!&ndash; Phone Number &ndash;&gt;-->
-<!--                                    <div class="mb-3">-->
-<!--                                        <input type="tel"-->
-<!--                                               name="*{phoneNumber}"-->
-<!--                                               class="form-control form-control-lg"-->
-<!--                                               id="phoneNumber"-->
-<!--                                               placeholder="Enter your phone number">-->
-<!--                                        <div class="invalid-feedback">-->
-<!--                                            Please provide a valid phone number.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+
+                                                <!-- Last Name -->
+                                                <div class="mb-3">
+                                                    <input type="text"
+                                                           th:field="*{donorEmail}"
+                                                           class="form-control form-control-lg"
+                                                           id="donorEmail"
+                                                           placeholder="Enter your email">
+                                                </div>
+
+                                                <!-- Phone Number -->
+                                                <div class="mb-3">
+                                                    <input type="tel"
+                                                           th:field="*{phoneNumber}"
+                                                           class="form-control form-control-lg"
+                                                           id="phoneNumber"
+                                                           placeholder="Enter your phone number">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="my-3">
+                                            <label for="donationPaymentType" class="form-check-label">
+                                                Payment Method
+                                            </label>
+                                            <select th:field="*{paymentMethod}" class="form-select w-auto" id="donationPaymentType">
+                                                <option value="" >-- Select Payment Type --</option>
+                                                <option th:each="paymentType: ${donationPaymentTypes}" th:value="${paymentType}" th:text="${paymentType.displayName}">
+                                            </select>
+                                            <div th:if="${#fields.hasErrors('paymentMethod')}">
+                                                <p th:errors="${donation.paymentMethod}" class="text-danger fw-bold"></p>
+                                            </div>
+                                        </div>
+
+                                        <div id="directDebitInfo">
+                                            <h5>Bank Account Information For Direct Debit</h5>
+                                            <div class="col-md-6 col-12">
+                                                <label for="sortCode" class="form-label">Sort Code</label>
+                                                <input th:field="*{directDebitSortCode}" type="text" class="form-control width-md-75" id="sortCode">
+                                                <div class="my-1">
+                                                    <p th:text="${sortCodeError}" class="text-danger fw-bold"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <label for="acctNumber" class="form-label">Account Number</label>
+                                                <input th:field="*{directDebitAccount}" type="text" class="form-control width-md-75" id="acctNumber">
+                                                <div class="my-1">
+                                                    <p th:text="${accountError}" class="text-danger fw-bold"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="my-3" id="bankInfo">
+                                            <h2 class="mb-2">Church Bank Info</h2>
+                                            <p th:utext="${churchDetail?.church?.bankInfo}"></p>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="success-button">Donate</button>
+
+                            </form>
                         </div>
                     </div>
-
-                    <button type="submit" class="success-button">Donate</button>
-
-                </form>
             </div>
-
-<!--            <div class=" d-flex flex-md-row flex-column my-5">-->
-<!--                <div class="justify-content-center me-4 mb-4" role="button" id="paypal">-->
-<!--                    <div class="d-flex justify-content-center w-auto">-->
-<!--                        <i class="fa-brands fa-paypal text-info fa-3x"></i>-->
-<!--                    </div>-->
-<!--                    <div class="d-flex justify-content-center">-->
-<!--                        <h5>Paypal</h5>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="justify-content-center me-4 mb-4" role="button" id="creditCard" th:onclick="|window.location='@{/checkout}'|">-->
-<!--                    <div class="d-flex justify-content-center w-auto">-->
-<!--                        <i class="fa-solid fa-credit-card text-danger fa-3x"></i>-->
-<!--                    </div>-->
-<!--                    <div class="d-flex justify-content-center">-->
-<!--                        <h5>Credit Card</h5>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="justify-content-center me-4 mb-4" role="button" id="check">-->
-<!--                    <div class="d-flex justify-content-center w-auto">-->
-<!--                        <i class="fas fa-money-check-alt text-secondary fa-3x"></i>-->
-<!--                    </div>-->
-<!--                    <div class="d-flex justify-content-center">-->
-<!--                        <h5>Check</h5>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="justify-content-center me-4 mb-4" role="button" id="directDebit">-->
-<!--                    <div class="d-flex justify-content-center w-auto">-->
-<!--                        <img class="" th:src="@{/media/209453_debit_direct_icon.svg}" style="width: 3em;" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="d-flex justify-content-center">-->
-<!--                        <h5>Direct Debit</h5>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
 
         <script>
@@ -206,8 +236,40 @@
                   }
             });
 
+
+            // TOGGLE THE DIRECT DEBIT INFO FIELDS WHEN PAYMENT METHOD SELECTION
+
+            document.getElementById('directDebitInfo').style.display = 'none';
+            document.getElementById('bankInfo').style.display = 'none';
+
+            const selectedPaymentMethodBefore = document.getElementById('donationPaymentType').value;;
+            toggleOptionalView(selectedPaymentMethodBefore);
+
+            document.getElementById('donationPaymentType').addEventListener('change', function() {
+                const selectedPaymentMethod = this.value;  // Get the selected payment method
+
+                toggleOptionalView(selectedPaymentMethod);
+
             });
+
+
+            function toggleOptionalView(selectedPaymentMethod){
+                   if (selectedPaymentMethod === 'DIRECT_DEBIT_MONTHLY') {
+                    document.getElementById('directDebitInfo').style.display = 'block';
+                    document.getElementById('bankInfo').style.display = 'none';
+                } else if(selectedPaymentMethod === 'CHECK'){
+                    document.getElementById('bankInfo').style.display = 'block';
+                    document.getElementById('directDebitInfo').style.display = 'none';
+                }else {
+                    document.getElementById('directDebitInfo').style.display = 'none';
+                    document.getElementById('bankInfo').style.display = 'none';
+                }
+            }
+
+
+        });
         </script>
+
     </div>
 </body>
 </html>

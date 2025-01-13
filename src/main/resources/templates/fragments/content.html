@@ -120,8 +120,8 @@
             <div th:replace="~{fragments/payment/donation/donation-options::donation-options}"></div>
         </main>
 
-        <main th:if="${activeContentPage == 'donation-checkout-request-result'}">
-            <div th:replace="~{fragments/payment/donation/donation-checkout-request-result::donation-checkout-request-result}"></div>
+        <main th:if="${activeContentPage == 'donation-checkout-request-failure'}">
+            <div th:replace="~{fragments/payment/donation/donation-checkout-request-failure::donation-checkout-request-failure}"></div>
         </main>
 
         <main th:if="${activeContentPage == 'donation-success'}">

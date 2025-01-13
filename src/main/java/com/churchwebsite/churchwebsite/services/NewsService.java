@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NewsService {
     private final NewsRepository newsRepository;
@@ -67,5 +69,9 @@ public class NewsService {
         }
 
         return newsRepository.findByArchivedAndActive(archived, active, pageable);
+    }
+
+    public List<News> findByArchivedAndActiveAndFeatured(boolean archived, boolean active, boolean featured) {
+        return newsRepository.findByArchivedAndActiveAndFeatured(archived, active, featured);
     }
 }

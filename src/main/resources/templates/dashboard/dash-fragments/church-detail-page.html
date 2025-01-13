@@ -46,6 +46,13 @@
 
                 <div class="mb-5 wow fadeIn">
                     <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="h1 mb-0 text-primary">Church Bank Info</h2>
+                    </div>
+                    <p th:utext="${churchDetail.church.bankInfo}"></p>
+                </div>
+
+                <div class="mb-5 wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
                         <h2 class="h1 mb-0 text-primary">Address</h2>
                     </div>
                         <p class="text-muted h6">[[${churchDetail.address.getFullAddress()}]]</p>
@@ -221,6 +228,7 @@
                                </div>
                            </div>
                         </div>
+
                         <div class="my-3">
                             <a th:href="@{/dashboard/church/banner/add(churchId=${churchDetail.church.churchId}, returnUrl=${currentUrl})}" class="success-button">
                                 <i class="fa-solid fa-plus"></i>

@@ -231,7 +231,7 @@
             <div th:replace="~{dashboard/dash-fragments/services/remembrance-request-detail::remembrance-request-detail}"></div>
           </main>
 
-<!--          ========== PAYMENT METHOD ==============================-->
+          <!-- ========== PAYMENT METHOD ==============================-->
           <main th:if="${activeDashPage == 'payment-method-form'}">
             <div th:replace="~{dashboard/dash-fragments/payments/payment-method-form::payment-method-form}"></div>
           </main>
@@ -240,6 +240,22 @@
             <div th:replace="~{dashboard/dash-fragments/payments/payment-methods-list::payment-methods-list}"></div>
           </main>
 
+          <!-- ========== DONATION ==============================-->
+          <main th:if="${activeDashPage == 'donation-purposes-list'}">
+            <div th:replace="~{dashboard/dash-fragments/donation/donation-purposes-list::donation-purposes-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'donation-purpose-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/donation/donation-purpose-detail::donation-purpose-detail}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'donation-purpose-form'}">
+            <div th:replace="~{dashboard/dash-fragments/donation/donation-purpose-form::donation-purpose-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'donations-list'}">
+            <div th:replace="~{dashboard/dash-fragments/donation/donations-list::donations-list}"></div>
+          </main>
 
           <!--   ========== CHURCH CONTACTS ==============================-->
           <main th:if="${activeDashPage == 'church-contact-form'}">
@@ -382,6 +398,18 @@
 
           <main th:if="${activeDashPage == 'user-profile'}">
             <div th:replace="~{user-profile::user-profile}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'users-list'}">
+            <div th:replace="~{dashboard/dash-fragments/users/users-list::users-list}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'user-edit-form'}">
+            <div th:replace="~{dashboard/dash-fragments/users/user-edit-form::user-edit-form}"></div>
+          </main>
+
+          <main th:if="${activeDashPage == 'user-detail'}">
+            <div th:replace="~{dashboard/dash-fragments/users/user-detail::user-detail}"></div>
           </main>
 
           <!--    ============= SETTINGS ============================= -->

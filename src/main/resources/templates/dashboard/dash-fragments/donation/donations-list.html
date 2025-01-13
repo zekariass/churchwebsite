@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Donation Listing</title>
+    <!-- Bootstrap CSS -->
+</head>
+<body th:fragment="donations-list">
+
+<div class="container mt-5">
+    <h2 class="mb-4">Donation List</h2>
+    <div class="d-flex justify-content-end my-4 w-auto">
+        <div>
+            <label for="filterByPurpose" class="form-label">Filter By Donation Purpose</label>
+            <select class="form-select w-auto" id="filterByPurpose">
+                <option value="" selected>Select Donation Purpose</option>
+                <option th:each="donationPurpose: ${donationPurposes}"
+                        th:value="${donationPurpose.id}"
+                        th:selected="${param?.donationPurpose+'' == donationPurpose.id+''}"
+                        th:text="${donationPurpose.donationPurposeName}">
+                </option>
+            </select>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Donation Amount</th>
+            <th scope="col">Donation Time</th>
+            <th scope="col">Payment Method</th>
+            <th scope="col">Purpose</th>
+            <th scope="col">Donor Name</th>
+            <th scope="col">Donor Email</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Sort Code</th>
+            <th scope="col">Account Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="donation : ${donations}">
+            <td th:text="${donation.id}"></td>
+            <td th:text="${donation.donationAmount}"></td>
+            <td th:text="${donation.donationTime.format(@dateTimeFormatter)}"></td>
+            <td th:text="${donation.paymentMethod?.displayName}"></td>
+            <td th:text="${donation.donationPurpose?.donationPurposeName}"></td>
+            <td th:text="${donation.donorFullName}"></td>
+            <td th:text="${donation.donorEmail}"></td>
+            <td th:text="${donation.phoneNumber}"></td>
+            <td th:text="${donation.directDebitSortCode}"></td>
+            <td th:text="${donation.directDebitAccount}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <div th:replace="~{fragments/pagination::pagination}"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+
+        const selectEl = document.getElementById('filterByPurpose');
+        selectEl.addEventListener('change', function(){
+            const selectedValue = this.value;
+<!--            let url = new URL(window.location.href);-->
+<!--            url.searchParams.set('donationPurpose', selectedValue);-->
+<!--            window.location-->
+
+                let params = new URLSearchParams(window.location.search);
+                if(selectedValue == '' || selectedValue == null){
+                    params.delete('donationPurpose');
+                }else{
+                    params.set('donationPurpose', selectedValue);
+                }
+                window.location.search = params.toString();
+        });
+    });
+</script>
+
+</body>
+</html>

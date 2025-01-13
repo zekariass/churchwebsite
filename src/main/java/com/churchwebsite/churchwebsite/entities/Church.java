@@ -41,6 +41,7 @@ public class Church {
     private String linkedIn;
     private String reddit;
     private String email;
+    private String bankInfo;
 
     @OneToMany(mappedBy = "church", cascade = CascadeType.ALL)
     private List<ChurchBanner> banners;
@@ -237,6 +238,14 @@ public class Church {
 
     public void setTelegramGroup(String telegramGroup) {
         this.telegramGroup = telegramGroup;
+    }
+
+    public String getBankInfo() {
+        return bankInfo;
+    }
+
+    public void setBankInfo(String bankInfo) {
+        this.bankInfo = bankInfo;
     }
 
     @Override

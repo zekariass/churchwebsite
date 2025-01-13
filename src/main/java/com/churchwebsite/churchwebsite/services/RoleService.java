@@ -1,14 +1,14 @@
 package com.churchwebsite.churchwebsite.services;
 
 import com.churchwebsite.churchwebsite.entities.Role;
+import com.churchwebsite.churchwebsite.entities.User;
 import com.churchwebsite.churchwebsite.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
@@ -24,4 +24,9 @@ public class RoleService {
         return new HashSet<>(roleRepository.findAll());
     }
 
+
+
+    public List<Role> findByUser(User user) {
+        return roleRepository.findByUsers_UserId(user.getUserId());
+    }
 }

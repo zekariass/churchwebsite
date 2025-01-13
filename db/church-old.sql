@@ -313,37 +313,36 @@ CREATE TABLE `payment_method` (
 INSERT INTO payment_method (payment_method_id, payment_method_name, payment_method_description) VALUES (1, 'Credit card', 'Credit card paymnet');
 INSERT INTO payment_method (payment_method_id, payment_method_name, payment_method_description) VALUES (2, 'Offline', 'Offline paymnet via transfer');
 
-DROP TABLE IF EXISTS `donation_type`;
-CREATE TABLE `donation_type` (
-    `donation_type_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `donation_type_name` VARCHAR(255) NOT NULL,
-    `donation_type_description` TEXT DEFAULT NULL
+DROP TABLE IF EXISTS `donation_purpose`;
+CREATE TABLE `donation_purpose` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `donation_purpose_name` VARCHAR(255) NOT NULL,
+    `donation_purpose_description` TEXT DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `donor`;
-CREATE TABLE `donor` (
-    `donor_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `donor_first_name` VARCHAR(100) DEFAULT NULL,
-    `donor_last_name` VARCHAR(100) DEFAULT NULL,
-    `donor_email` VARCHAR(100) DEFAULT NULL,
-    `donor_address_id` INT DEFAULT NULL,
-    FOREIGN KEY (`donor_address_id`) REFERENCES `address`(`address_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ -- OP TABLE IF EXISTS `donor`;
+-- CREATE TABLE `donor` (
+--     `donor_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+--     `donor_first_name` VARCHAR(100) DEFAULT NULL,
+--     `donor_last_name` VARCHAR(100) DEFAULT NULL,
+--     `donor_email` VARCHAR(100) DEFAULT NULL,
+--     `donor_address_id` INT DEFAULT NULL,
+--     FOREIGN KEY (`donor_address_id`) REFERENCES `address`(`address_id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `donation`;
 CREATE TABLE `donation` (
-    `donation_id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `donation_amount` DECIMAL(10, 2) DEFAULT 0.0,
     `donation_time` DATETIME NOT NULL,
-    `agreed_to_terms` BOOLEAN DEFAULT FALSE,
-    `donation_payment_method_id` INT NOT NULL,
-    `donation_type_id` INT NOT NULL,
-    `user_id` INT DEFAULT NULL,
-    `donor_id` INT DEFAULT NULL,
-    FOREIGN KEY (`donation_type_id`) REFERENCES `donation_type`(`donation_type_id`),
-    FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`),
-    FOREIGN KEY (`donor_id`) REFERENCES `donor`(`donor_id`),
-    FOREIGN KEY (`donation_payment_method_id`) REFERENCES `payment_method`(`payment_method_id`)
+    `payment_method` VARCHAR(100) NOT NULL,
+    `donation_purpose_id` INT NOT NULL,
+    `donor_full_name` VARCHAR(100) DEFAULT NULL,
+    `donor_email` VARCHAR(100) DEFAULT NULL,
+    `phone_number` VARCHAR(20) DEFAULT NULL,
+    `direct_debit_sort_code` VARCHAR(35) DEFAULT NULL,
+    `direct_debit_account` VARCHAR(35) DEFAULT NULL,
+    FOREIGN KEY (`donation_purpose_id`) REFERENCES `donation_purpose`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `church_contact`;
@@ -399,6 +398,7 @@ CREATE TABLE `church` (
     `reddit` VARCHAR(100) DEFAULT NULL,
     `email` VARCHAR(100) DEFAULT NULL,
     `address_id` INT NOT NULL,
+    `bank_info` TEXT DEFAULT NULL,
     FOREIGN KEY (`address_id`) REFERENCES `address`(`address_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

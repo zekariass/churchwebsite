@@ -9,7 +9,7 @@
 
     <div class="row d-flex justify-content-center mt-70 mb-70">
         <div class="col-md-6">
-            <div class="main-card mb-3 card">
+            <div th:if="${events?.size() > 0}" class="main-card mb-3 card">
                 <div class="card-body">
                     <h5 class="card-title">Events</h5>
                     <div th:each="event: ${events}" class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
@@ -33,7 +33,11 @@
                     </div>
                 </div>
             </div>
-        </div> </div>
+            <div th:if="${events?.size() == 0}">
+                No Events Found.
+            </div>
+        </div>
+    </div>
     <div class="my-3">
         <div th:replace="~{fragments/pagination::pagination}"></div>
     </div>

@@ -74,4 +74,8 @@ public class AnnouncementService {
 
         return announcementRepository.findByArchivedAndActive(archived, active, pageable);
     }
+
+    public List<Announcement> findByArchivedAndActiveAndFeatured(boolean archived, boolean active, boolean featured) {
+        return announcementRepository.findByArchivedAndActiveAndFeatured(archived, active, featured);
+    }
 }

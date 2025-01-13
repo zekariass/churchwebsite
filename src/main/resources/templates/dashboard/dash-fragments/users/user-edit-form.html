@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit User</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+  <div th:fragment="user-edit-form" class="mt-5">
+    <div class="text-end fw-bold">
+      <a href="/dashboard/users" class="text-success">Back to users list</a>
+    </div>
+    <h2>Edit User</h2>
+    <form th:action="@{'/dashboard/users/edit/'+${user.userId}}" th:object="${user}" method="post">
+      <input type="hidden" th:field="*{userId}">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" th:field="*{username}" readonly>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" th:field="*{email}" readonly>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="active" th:field="*{active}">
+        <label for="active" class="form-check-label">Active</label>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="blocked" th:field="*{blocked}">
+        <label for="blocked" class="form-check-label">Blocked</label>
+      </div>
+      <div class="mb-3">
+        <label for="roles" class="form-label">Roles</label>
+        <select multiple class="form-control w-auto" id="roles" th:field="*{roles}">
+          <option th:each="role : ${userRoles}" th:value="${role.roleId}" th:text="${role.roleName}"
+                  th:selected="${user.roles.contains(role)}"></option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success">Update</button>
+    </form>
+  </div>
+</body>
+</html>

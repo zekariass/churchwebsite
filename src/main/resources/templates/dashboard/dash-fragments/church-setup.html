@@ -27,6 +27,11 @@
                     </div>
 
                     <div>
+                        <label class="form-label">Bank Information</label>
+                        <textarea th:field="*{church.bankInfo}" id="tiny"></textarea>
+                    </div>
+
+                    <div>
                         <h3 class="my-3">Address</h3>
                         <div th:replace="~{dashboard/dash-fragments/address-form::address-form}"></div>
                     </div>

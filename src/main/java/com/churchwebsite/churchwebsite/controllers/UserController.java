@@ -1,206 +1,109 @@
 package com.churchwebsite.churchwebsite.controllers;
 
-import com.churchwebsite.churchwebsite.dtos.PasswordResetDTO;
-import com.churchwebsite.churchwebsite.entities.Role;
 import com.churchwebsite.churchwebsite.entities.User;
-import com.churchwebsite.churchwebsite.entities.UserProfile;
-import com.churchwebsite.churchwebsite.services.*;
+import com.churchwebsite.churchwebsite.services.CustomUserDetailService;
+import com.churchwebsite.churchwebsite.services.PaginationService;
+import com.churchwebsite.churchwebsite.services.RoleService;
+import com.churchwebsite.churchwebsite.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("dashboard/users")
 public class UserController {
 
     private final UserService userService;
+    private final CustomUserDetailService customUserDetailService;
+    private final PaginationService paginationService;
     private final RoleService roleService;
-    private final ChurchDetailService churchDetailService;
-    private final UserProfileService userProfileService;
-    private final PasswordEncoder passwordEncoder;
 
-    private String PUBLIC_CONTENT = "layouts/base";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
 
-    public UserController(UserService userService, RoleService roleService, ChurchDetailService churchDetailService, UserProfileService userProfileService, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public UserController(UserService userService, CustomUserDetailService customUserDetailService, PaginationService paginationService, RoleService roleService) {
         this.userService = userService;
+        this.customUserDetailService = customUserDetailService;
+        this.paginationService = paginationService;
         this.roleService = roleService;
-        this.churchDetailService = churchDetailService;
-        this.userProfileService = userProfileService;
-        this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/login")
-    public String showLoginForm(Model model){
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-        model.addAttribute("pageTitle", "Login Form");
+    @GetMapping("")
+    public String getAllUsers(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                              @RequestParam(value = "size", required = false) Integer pageSize,
+                              @RequestParam(value = "sortBy", defaultValue = "username") String sortBy,
+                              @RequestParam(value = "email", required = false) String email,
+                              @RequestParam(value = "username", required = false) String username,
+                              @RequestParam(value = "firstName", required = false) String firstName,
+                              @RequestParam(value = "lastName", required = false) String lastName,
+                              @RequestParam(value = "role", required = false) Integer roleId,
+                              HttpServletRequest request,
+                              Model model){
 
-        UserDetails userDetails = userService.getCurrentUser();
-        if(userDetails == null){
-            return "login-form";
-        }
-        return "redirect:/";
-    }
+        pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-    @GetMapping("/logout")
-    public String processLogout(HttpServletRequest request, HttpServletResponse response, Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null){
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
-        }
-
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-
-        return "redirect:?logout";
-    }
-
-    @GetMapping("/register")
-    public String showUserRegistrationForm(Model model){
-        Set<Role> roles = roleService.findAll();
-        model.addAttribute("roles", roles);
-        model.addAttribute("user", new User());
-        model.addAttribute("userProfile", new UserProfile());
-        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-        return "user-registration-form";
-    }
-
-    @PostMapping("/register/form/process")
-    public String processUserRegistration(@Valid @ModelAttribute ("user") User user,
-                                          BindingResult result,
-                                          @ModelAttribute ("userProfile") UserProfile userProfile,
-                                          @RequestParam(value = "profilePhotoBlob", required = false) MultipartFile multipartFile,
-                                          Model model){
+        Page<User> pagedUsers = userService.findAll(email, username, firstName, lastName, roleId, page, pageSize, sortBy);
 
 
-        // Check if username exists
-        if(user.getUsername() != null || !Objects.equals(user.getUsername(), "")){
-            boolean userExist = userService.existsByUsername(user.getUsername());
-            if(userExist){
-                result.rejectValue("username", "error.username", "Username already registered!");
-            }
-        }
-
-        // Check if Email exist
-        if(user.getEmail() != null || !Objects.equals(user.getEmail(), "")){
-            boolean emailExist = userService.existsByEmail(user.getEmail());
-            if(emailExist){
-                result.rejectValue("email", "error.email", "Email already registered!");
-            }
-        }
-
-        // Check if password and passwordConfirm does not match
-        if(!(user.getPassword().isEmpty() && user.getPasswordConfirm().isEmpty()) && !(user.getPassword() == null && user.getPasswordConfirm() == null)){
-            if(!Objects.equals(user.getPasswordConfirm(), user.getPassword())){
-                result.rejectValue("passwordConfirm", "error.passwordConfirm", "Password does not match");
-            }
-        }
-
-        // Check for errors
-        if(result.hasErrors()){
-            Set<Role> roles = roleService.findAll();
-            model.addAttribute("roles", roles);
-            model.addAttribute("user", user);
-            model.addAttribute("userProfile", userProfile);
-            model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
-            model.addAttribute("pageTitle", "User Registration Form");
-
-            return "user-registration-form";
-        }
+        List<User> users = pagedUsers.getContent();
 
 
-        userService.addNewUserWithProfile(user, userProfile, multipartFile);
-        return "redirect:/users/login";
+        model.addAttribute("currentPage", pagedUsers.getNumber()+1);
+        model.addAttribute("totalItems", pagedUsers.getTotalElements());
+        model.addAttribute("totalPages", pagedUsers.getTotalPages());
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("currentUrl", request.getRequestURL());
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("pageTitle", "Users List");
+
+        model.addAttribute("roles", roleService.findAll());
+
+        model.addAttribute("users", users);
+        model.addAttribute("activeDashPage", "users-list");
+
+        return DASHBOARD_MAIN_PANEL;
+
     }
 
 
-    @GetMapping("/profile")
-    public String showUserProfile(Model model){
+    @GetMapping("/edit/{id}")
+    public String showUserEditForm(@PathVariable("id") User user, Model model){
 
-        User user = userService.getCurrentUser().getUser();
+        model.addAttribute("user", user);
+        model.addAttribute("userRoles", roleService.findAll());
+        model.addAttribute("activeDashPage", "user-edit-form");
 
-        model.addAttribute("activeContentPage", "user-profile");
-        model.addAttribute("user", userService.getCurrentUser().getUser());
-
-        if(user.getUserProfile() != null){
-            model.addAttribute("userProfile", userService.getCurrentUser().getUser().getUserProfile());
-        }else{
-            model.addAttribute("userProfile", new UserProfile());
-        }
-        model.addAttribute("resetPasswordDto", new PasswordResetDTO());
-        model.addAttribute("pageTitle", "Profile Page");
-
-        return PUBLIC_CONTENT;
+        return DASHBOARD_MAIN_PANEL;
     }
 
-    @PostMapping("/profile/edit/process")
-    public String processUserProfileUpdate(@Valid @ModelAttribute UserProfile userProfile,
-                                           BindingResult result,
-                                           @RequestParam(value = "userProfilePhotoBlob", required = false) MultipartFile userProfilePhoto,
-                                           Model model
-                                           ){
-
-        if(result.hasErrors()){
-            model.addAttribute("activeContentPage", "user-profile");
-            model.addAttribute("user", userService.getCurrentUser().getUser());
-            model.addAttribute("userProfile", userProfile);
-            model.addAttribute("resetPasswordDto", new PasswordResetDTO());
-
-            return PUBLIC_CONTENT;
+    @PostMapping("/edit/{id}")
+    public String updateUser(@ModelAttribute("user") User user, Model model){
+        if(user.isBlocked()){
+            user.setActive(false);
         }
+        userService.saveUser(user);
 
-        userProfileService.updateUserProfile(userProfile, userProfilePhoto);
-
-        return "redirect:/users/profile";
+        return "redirect:/dashboard/users";
     }
 
+    @GetMapping("/detail/{id}")
+    public String showUserDetail(@PathVariable("id") User user, Model model){
 
-    @PostMapping("/password/reset")
-    public String processPasswordReset(@Valid @ModelAttribute("resetPasswordDto") PasswordResetDTO passwordResetDTO,
-                                       BindingResult result,
-                                       RedirectAttributes redirectAttributes,
-                                       Model model){
+        model.addAttribute("user", user);
+        model.addAttribute("activeDashPage", "user-detail");
 
-        User currentUser = userService.getCurrentUser().getUser();
-
-        if(!passwordResetDTO.passwordMatches()){
-            result.rejectValue("newPasswordConfirm", "error.newPasswordConfirm", "Password does not match!");
-        }
-
-        if(result.hasErrors()){
-            model.addAttribute("activeContentPage", "user-profile");
-            model.addAttribute("user", currentUser);
-            model.addAttribute("userProfile", currentUser.getUserProfile());
-            model.addAttribute("resetPasswordDto", passwordResetDTO);
-            model.addAttribute("pageTitle", "Profile Page");
-
-            return PUBLIC_CONTENT;
-        }
-
-        if(!passwordEncoder.matches(passwordResetDTO.getCurrentPassword(), currentUser.getPassword())){
-            redirectAttributes.addFlashAttribute("error", "Current password is incorrect");
-            return "redirect:/users/profile";
-        }
-
-        currentUser.setPassword(passwordEncoder.encode(passwordResetDTO.getNewPassword()));
-        currentUser.setPasswordConfirm(passwordResetDTO.getNewPasswordConfirm());
-
-        userService.saveUser(currentUser);
-
-        redirectAttributes.addFlashAttribute("message", "Password updated successfully");
-        return "redirect:/users/profile";
+        return DASHBOARD_MAIN_PANEL;
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer userId){
+
+        userService.deleteById(userId);
+        return "redirect:/dashboard/users";
+    }
 }

@@ -6,11 +6,15 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StripeService {
+
+    private static final Logger logger = LoggerFactory.getLogger(StripeService.class);
 
     @Value("${STRIPE_SECRET_KEY}")
     private String secretKey;
@@ -57,7 +61,12 @@ public class StripeService {
             try {
                 session = Session.create(params);
             } catch (StripeException e) {
-                //log the error
+                logger.error("==============================> Error creating Stripe session: {}", e.getMessage());
+                return StripeResponse
+                        .builder()
+                        .status("FAILURE")
+                        .message(e.getMessage())
+                        .build();
             }
 
             return StripeResponse

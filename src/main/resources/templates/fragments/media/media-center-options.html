@@ -2,24 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Media Cente Options</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Center Options</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div th:fragment="media-center-options">
-        <div class="d-flex align-items-center justify-content-center w-100 h-100" style="min-height: 40vh;">
-            <div>
-                <div class="mb-3 shadow-sm text-center px-5 py-3 text-success" role="button" th:onclick="|window.location.href='@{/media-center/albums}'|">
-                    <h5 class="">Images</h5>
-                </div>
-                <div class="mb-3 shadow-sm text-center px-5 py-3 text-success" role="button" th:onclick="|window.location.href='@{/media-center/videos}'|">
-                    <h5 class="">Videos</h5>
-                </div>
-                <div class="mb-3 shadow-sm text-center px-5 py-3 text-success" role="button" th:onclick="|window.location.href='@{/media-center/files}'|">
-                    <h5 class="">Files</h5>
-                </div>
-            </div>
+<div th:fragment="media-center-options" class="d-flex align-items-center justify-content-center" style="min-height: 40vh;">
+    <div class="text-center">
+        <!-- Images Option -->
+        <div class="mb-4 shadow-sm p-4 rounded bg-light text-success" role="button" th:onclick="|window.location.href='@{/media-center/albums}'|">
+            <h5>Images</h5>
+        </div>
+
+        <!-- Videos Option -->
+        <div class="mb-4 shadow-sm p-4 rounded bg-light text-success" role="button" th:onclick="|window.location.href='@{/media-center/videos}'|">
+            <h5>Videos</h5>
+        </div>
+
+        <!-- Files Option -->
+        <div class="mb-4 shadow-sm p-4 rounded bg-light text-success" role="button" th:onclick="|window.location.href='@{/media-center/files}'|">
+            <h5>Files</h5>
         </div>
     </div>
+</div>
 
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

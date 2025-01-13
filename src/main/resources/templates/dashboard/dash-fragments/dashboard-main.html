@@ -396,7 +396,25 @@
       </li>
       <!-- ========================================END OF SHOPPING CENTER  ========================-->
 
+      <!-- ========================================END OF NEWS CONTENT ========================-->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#don-nav" data-bs-toggle="collapse" href="#">
+          <i class="fa-solid fa-hand-holding-heart"></i><span>Donations</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="don-nav" class="nav-content collapse bg-light" data-bs-parent="#sidebar-nav">
+          <li>
+            <a th:href="@{/dashboard/donations/purposes}">
+              <span class="sub-item">Donation Purposes</span>
+            </a>
+          </li>
+          <li>
+            <a th:href="@{/dashboard/donations}">
+              <span class="sub-item">Donations</span>
+            </a>
+          </li>
+        </ul>
+      </li>
 
 
 
@@ -423,6 +441,13 @@
         <a class="nav-link collapsed" href="/dashboard/users/profile">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Profile</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/dashboard/users">
+          <i class="fa-solid fa-user"></i>
+          <span>Users</span>
         </a>
       </li>
 

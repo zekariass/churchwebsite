@@ -6,10 +6,16 @@ import com.churchwebsite.churchwebsite.entities.UserProfile;
 import com.churchwebsite.churchwebsite.repositories.RoleRepository;
 import com.churchwebsite.churchwebsite.repositories.UserProfileRepository;
 import com.churchwebsite.churchwebsite.repositories.UserRepository;
+import com.churchwebsite.churchwebsite.specifications.UserSpecification;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
 import com.churchwebsite.churchwebsite.utils.LocalFileStorageManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -122,4 +128,34 @@ public class UserService {
         return userRepository.findByUsername(username).orElse(null);
     }
 
+    public Page<User> findAll(String email, String username, String firstName, String lastName, Integer roleId, int page, Integer pageSize, String sortBy) {
+        if(sortBy.isEmpty()){
+            sortBy = "registrationTime";
+        }
+
+        Pageable pageable;
+        if(sortBy.equals("registrationTime")){
+            pageable = PageRequest.of(page -1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
+        }else{
+            pageable = PageRequest.of(page -1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        }
+
+
+        Specification<User> spec = Specification.where(UserSpecification.hasEmail(email))
+                                                .and(UserSpecification.hasUsername(username))
+                                                .and(UserSpecification.hasFirstName(firstName))
+                                                .and(UserSpecification.hasLastName(lastName))
+                                                .and(UserSpecification.hasRole(roleId));
+
+        return userRepository.findAll(spec, pageable);
+
+    }
+
+    public User findById(Integer userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
+    public void deleteById(Integer userId) {
+        userRepository.deleteById(userId);
+    }
 }
