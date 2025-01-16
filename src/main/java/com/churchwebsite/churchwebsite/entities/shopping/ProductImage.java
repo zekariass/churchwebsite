@@ -31,6 +31,9 @@ public class ProductImage {
     @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
 
+    @Column(name = "public_id")
+    private String publicId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "image_type", columnDefinition = "ENUM('THUMBNAIL', 'GALLERY')")
     private ImageType imageType = ImageType.GALLERY;

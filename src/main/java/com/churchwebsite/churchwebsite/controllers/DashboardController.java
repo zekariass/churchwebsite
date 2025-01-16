@@ -25,7 +25,8 @@ public class DashboardController {
     private final ContactUsService contactUsService;
     private final PaginationService paginationService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public DashboardController(ChurchDetailService churchDetailService, UserService userService, ContactUsService contactUsService, PaginationService paginationService) {

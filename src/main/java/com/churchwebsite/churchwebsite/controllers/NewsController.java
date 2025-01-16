@@ -20,7 +20,9 @@ public class NewsController {
     private final NewsService newsService;
     private final ChurchDetailService churchDetailService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
+
     private final PaginationService paginationService;
 
     @Autowired

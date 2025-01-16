@@ -5,7 +5,7 @@ import com.churchwebsite.churchwebsite.entities.Attachment;
 import com.churchwebsite.churchwebsite.entities.Image;
 import com.churchwebsite.churchwebsite.entities.Video;
 import com.churchwebsite.churchwebsite.services.*;
-import com.churchwebsite.churchwebsite.utils.LocalFileStorageManager;
+import com.churchwebsite.churchwebsite.services.storage.LocalFileStorageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;

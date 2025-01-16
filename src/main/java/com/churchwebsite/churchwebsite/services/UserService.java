@@ -8,7 +8,7 @@ import com.churchwebsite.churchwebsite.repositories.UserProfileRepository;
 import com.churchwebsite.churchwebsite.repositories.UserRepository;
 import com.churchwebsite.churchwebsite.specifications.UserSpecification;
 import com.churchwebsite.churchwebsite.utils.CustomUserDetails;
-import com.churchwebsite.churchwebsite.utils.LocalFileStorageManager;
+import com.churchwebsite.churchwebsite.services.storage.LocalFileStorageManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

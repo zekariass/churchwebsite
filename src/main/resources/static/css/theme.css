@@ -53,8 +53,8 @@
 
 }
 
-.warning-button:hover {
-    background-color: #ffc407; /* Success green color */
+ .warning-button:hover {
+    background-color: #90EE90;
 }
 
 .danger-button {
@@ -94,7 +94,7 @@
 }
 
 [class$="-button"]:hover {
-    color: #FAF9F6 !important;
+    color: #8cc751 !important;
 }
 
 .text-brown{

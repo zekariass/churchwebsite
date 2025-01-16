@@ -11,35 +11,37 @@
         <div class="d-flex justify-content-end my-3">
             <a th:href="@{/dashboard/notifications/form}" class="success-button">Create New Notification</a>
         </div>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Subject</th>
-                <th>Sent Time</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="notification : ${notifications}">
-                <td th:text="${notification.notificationId}"></td>
-                <td th:text="${notification.notificationSubject}"></td>
-                <td th:text="${notification.notificationSentTime.format(@dateTimeFormatter)}"></td>
-                <td>
-                    <div class="d-flex flex-row">
-                        <a th:href="@{/dashboard/notifications/detail/{id}(id=${notification.notificationId})}" class="btn btn-info btn-sm me-1">Detail</a>
-                        <form th:action="@{/dashboard/notifications/{id}/delete(id=${notification.notificationId})}" class="me-1" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                        <form th:action="@{/dashboard/notifications/{id}/resend(id=${notification.notificationId})}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-success btn-sm">Resend</button>
-                        </form>
-                        <p id="resend" class="text-success d-none">Notification resent!</p>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Subject</th>
+                    <th>Sent Time</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="notification : ${notifications}">
+                    <td th:text="${notification.notificationId}"></td>
+                    <td th:text="${notification.notificationSubject}"></td>
+                    <td th:text="${notification.notificationSentTime.format(@dateTimeFormatter)}"></td>
+                    <td>
+                        <div class="d-flex flex-row">
+                            <a th:href="@{/dashboard/notifications/detail/{id}(id=${notification.notificationId})}" class="btn btn-info btn-sm me-1">Detail</a>
+                            <form th:action="@{/dashboard/notifications/{id}/delete(id=${notification.notificationId})}" class="me-1" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                            <form th:action="@{/dashboard/notifications/{id}/resend(id=${notification.notificationId})}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-success btn-sm">Resend</button>
+                            </form>
+                            <p id="resend" class="text-success d-none">Notification resent!</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="mt-4">
         <div th:replace="~{fragments/pagination::pagination}"></div>

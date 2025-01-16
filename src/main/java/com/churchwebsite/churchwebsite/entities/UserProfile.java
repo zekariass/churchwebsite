@@ -25,6 +25,7 @@ public class UserProfile {
     private LocalDate dob;
     private String phoneNumber;
     private String profilePhoto;
+    private String publicId;
     private String biography;
 
     @OneToOne(mappedBy = "userProfile")
@@ -131,6 +132,14 @@ public class UserProfile {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 
     public String getBiography() {

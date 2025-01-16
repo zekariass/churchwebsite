@@ -22,36 +22,38 @@
             </select>
         </div>
     </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Donation Amount</th>
-            <th scope="col">Donation Time</th>
-            <th scope="col">Payment Method</th>
-            <th scope="col">Purpose</th>
-            <th scope="col">Donor Name</th>
-            <th scope="col">Donor Email</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Sort Code</th>
-            <th scope="col">Account Number</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="donation : ${donations}">
-            <td th:text="${donation.id}"></td>
-            <td th:text="${donation.donationAmount}"></td>
-            <td th:text="${donation.donationTime.format(@dateTimeFormatter)}"></td>
-            <td th:text="${donation.paymentMethod?.displayName}"></td>
-            <td th:text="${donation.donationPurpose?.donationPurposeName}"></td>
-            <td th:text="${donation.donorFullName}"></td>
-            <td th:text="${donation.donorEmail}"></td>
-            <td th:text="${donation.phoneNumber}"></td>
-            <td th:text="${donation.directDebitSortCode}"></td>
-            <td th:text="${donation.directDebitAccount}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Donation Amount</th>
+                <th scope="col">Donation Time</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Purpose</th>
+                <th scope="col">Donor Name</th>
+                <th scope="col">Donor Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Sort Code</th>
+                <th scope="col">Account Number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="donation : ${donations}">
+                <td th:text="${donation.id}"></td>
+                <td th:text="${donation.donationAmount}"></td>
+                <td th:text="${donation.donationTime.format(@dateTimeFormatter)}"></td>
+                <td th:text="${donation.paymentMethod?.displayName}"></td>
+                <td th:text="${donation.donationPurpose?.donationPurposeName}"></td>
+                <td th:text="${donation.donorFullName}"></td>
+                <td th:text="${donation.donorEmail}"></td>
+                <td th:text="${donation.phoneNumber}"></td>
+                <td th:text="${donation.directDebitSortCode}"></td>
+                <td th:text="${donation.directDebitAccount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div>
     <div th:replace="~{fragments/pagination::pagination}"></div>

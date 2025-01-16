@@ -17,7 +17,8 @@ public class ChurchBannerController {
 
     private final ChurchBannerService churchBannerService;
     private final ChurchDetailService churchDetailService;
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public ChurchBannerController(ChurchBannerService churchBannerService, ChurchDetailService churchDetailService) {

@@ -24,7 +24,8 @@ public class ProductImageController {
     private final ProductImageService productImageService;
     private  final ChurchDetailService churchDetailService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public ProductImageController(ProductService productService, ProductImageService productImageService, ChurchDetailService churchDetailService) {
@@ -43,12 +44,11 @@ public class ProductImageController {
 
         model.addAttribute("activeDashPage", "product-images-list");
         model.addAttribute("product", product);
+        assert product != null;
         model.addAttribute("images", product.getImages());
         model.addAttribute("imageTypes", ImageType.values());
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("pageTitle", "Product Images");
-
-
 
         return DASHBOARD_MAIN_PANEL;
     }

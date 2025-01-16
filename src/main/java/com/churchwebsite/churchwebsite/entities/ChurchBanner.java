@@ -12,6 +12,8 @@ public class ChurchBanner {
 
     private String churchBanner;
 
+    private String publicId;
+
     @ManyToOne
     @JoinColumn(name = "church_id")
     private Church church;
@@ -19,9 +21,10 @@ public class ChurchBanner {
     public ChurchBanner() {
     }
 
-    public ChurchBanner(String churchBanner, Church church) {
+    public ChurchBanner(String churchBanner, String publicId, Church church) {
         this.churchBanner = churchBanner;
         this.church = church;
+        this.publicId = publicId;
     }
 
     public int getChurchBannerId() {
@@ -48,6 +51,14 @@ public class ChurchBanner {
 //        String orgBanner = new String(churchBanner);
 //        return orgBanner.replace("\\", "/");
         return churchBanner;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 
     @Override

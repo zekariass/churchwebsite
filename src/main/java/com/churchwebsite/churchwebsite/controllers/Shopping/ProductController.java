@@ -27,7 +27,8 @@ public class ProductController {
     private final LocaleUtil localeUtil;
     private  final ChurchDetailService churchDetailService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     public ProductController(ProductService productService,
                              ProductCategoryService productCategoryService,

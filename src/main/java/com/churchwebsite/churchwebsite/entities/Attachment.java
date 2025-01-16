@@ -23,6 +23,7 @@ public class Attachment {
     private String attachmentName;
 
     private String attachmentPath;
+    private String publicId;
 
     @CreatedDate
     private LocalDateTime attachmentTime;
@@ -102,6 +103,14 @@ public class Attachment {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 
     @Override

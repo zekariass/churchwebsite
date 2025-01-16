@@ -8,39 +8,41 @@
 <div th:fragment="contact-us-messages-list">
     <div class="container mt-5">
         <h2>Messages List</h2>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Message Time</th>
-                <th>Read Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="message : ${messages}" role="button" th:class="${message.read ? 'text-muted row-hover' : 'fw-bold row-hover'}">
-                <td th:text="${message.contactUsId}"></td>
-                <td th:text="${message.firstName}"></td>
-                <td th:text="${message.lastName}"></td>
-                <td th:text="${message.email}"></td>
-                <td th:text="${message.phoneNumber}"></td>
-                <td th:text="${message.messageTime.format(@dateTimeFormatter)}"></td>
-                <td th:if="${message.read}"><i class="fa-solid fa-check text-success fw-bold"></i></td>
-                <td th:if="${!message.read}"><i class="fa-solid fa-question text-danger fw-bold"></i></td>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Message Time</th>
+                    <th>Read Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="message : ${messages}" role="button" th:class="${message.read ? 'text-muted row-hover' : 'fw-bold row-hover'}">
+                    <td th:text="${message.contactUsId}"></td>
+                    <td th:text="${message.firstName}"></td>
+                    <td th:text="${message.lastName}"></td>
+                    <td th:text="${message.email}"></td>
+                    <td th:text="${message.phoneNumber}"></td>
+                    <td th:text="${message.messageTime.format(@dateTimeFormatter)}"></td>
+                    <td th:if="${message.read}"><i class="fa-solid fa-check text-success fw-bold"></i></td>
+                    <td th:if="${!message.read}"><i class="fa-solid fa-question text-danger fw-bold"></i></td>
 
-<!--                ></td>-->
-                <td>
-                    <a th:href="@{'/dashboard/messages/detail/' + ${message.contactUsId}}" class="info-button button-sm">View</a>
-                    <a th:href="@{'/dashboard/messages/delete/' + ${message.contactUsId}}" class="danger-button button-sm"
-                        onclick="return confirm('Are you sure you want to delete this message?');">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <!--                ></td>-->
+                    <td>
+                        <a th:href="@{'/dashboard/messages/detail/' + ${message.contactUsId}}" class="info-button button-sm">View</a>
+                        <a th:href="@{'/dashboard/messages/delete/' + ${message.contactUsId}}" class="danger-button button-sm"
+                           onclick="return confirm('Are you sure you want to delete this message?');">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="my-3">
         <div th:replace="~{fragments/pagination::pagination}"></div>

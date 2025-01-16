@@ -17,7 +17,8 @@ import java.util.Optional;
 public class DonationPurposeController {
 
     private final DonationPurposeService donationPurposeService;
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public DonationPurposeController(DonationPurposeService donationPurposeService) {

@@ -23,7 +23,7 @@
           <th:block th:each="album, albumStat : ${albums}">
               <div th:if="${album.imageList.size() > 0}" class="col-sm-6 col-md-4 col-xxl-3 mb-4">
                   <!-- Album Card -->
-                  <div class="shadow p-3" style="height: 300px;" role="button" th:onclick="|window.location='@{/images/albums/detail/{id}(id=${album.albumId})}'|">
+                  <div class="shadow p-1" style="height: 300px;" role="button" th:onclick="|window.location='@{/images/albums/detail/{id}(id=${album.albumId})}'|">
                       <div>
                           <!-- Carousel -->
                           <div th:id="'carousel_' + ${albumStat.index}" class="carousel slide" data-bs-ride="carousel">

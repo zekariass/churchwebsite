@@ -22,7 +22,8 @@ public class BlogCategoryController {
     private final PaginationService paginationService;
     private final ChurchDetailService churchDetailService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Value("${settings.default.page.size:10}")
     private int defaultPageSize;

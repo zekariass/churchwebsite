@@ -2,10 +2,14 @@ package com.churchwebsite.churchwebsite.services.shopping;
 
 import com.churchwebsite.churchwebsite.entities.shopping.Product;
 import com.churchwebsite.churchwebsite.entities.shopping.ProductCategory;
+import com.churchwebsite.churchwebsite.entities.shopping.ProductImage;
 import com.churchwebsite.churchwebsite.enums.ProductDeliveryType;
 import com.churchwebsite.churchwebsite.enums.ProductListingStatus;
 import com.churchwebsite.churchwebsite.repositories.Shopping.ProductCategoryRepository;
 import com.churchwebsite.churchwebsite.repositories.Shopping.ProductRepository;
+import com.churchwebsite.churchwebsite.services.storage.CloudinaryFileStorageManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,19 +17,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductService {
 
+    private final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     private final ProductRepository productRepository;
     private final ProductCategoryRepository productCategoryRepository;
+    private final CloudinaryFileStorageManager cloudinaryFileStorageManager;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, ProductCategoryRepository productCategoryRepository) {
+    public ProductService(ProductRepository productRepository, ProductCategoryRepository productCategoryRepository, CloudinaryFileStorageManager cloudinaryFileStorageManager) {
         this.productRepository = productRepository;
         this.productCategoryRepository = productCategoryRepository;
+        this.cloudinaryFileStorageManager = cloudinaryFileStorageManager;
     }
 
     public Page<Product> getAllProducts(int page, Integer pageSize, String sortBy) {
@@ -34,7 +43,7 @@ public class ProductService {
         }
 
         Pageable pageable;
-        if(sortBy == "name"){
+        if(sortBy.equals("name")){
             pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.desc(sortBy)));
         }else{
             pageable = PageRequest.of(page-1, pageSize, Sort.by(Sort.Order.asc(sortBy)));
@@ -71,6 +80,17 @@ public class ProductService {
     }
 
     public void deleteProduct(Integer id) {
+        Optional<Product> product = productRepository.findById(id);
+        if(product.isPresent()){
+            List<ProductImage> productImages = product.get().getImages();
+            for(ProductImage productImage: productImages){
+                try {
+                    cloudinaryFileStorageManager.deleteFile(productImage.getPublicId());
+                } catch (IOException e) {
+                    logger.error("ERROR: ==================================: "+ e.getMessage());
+                }
+            }
+        }
         productRepository.deleteById(id);
     }
 

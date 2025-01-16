@@ -28,6 +28,7 @@
         z-index: 100; /* Make sure it is above the carousel */
 <!--        background-color: rgba(0, 128, 128, 0.75);-->
         alpha: 50%;
+
       }
 
       .navbar-collapse {
@@ -118,8 +119,8 @@
 
               <ol class="breadcrumb mb-0 flex-grow-1 text-end">
                 <!-- Dashboard link -->
-                <li class="breadcrumb-item d-none d-md-block">
-                  <a th:href="@{/dashboard/home}" sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')" class="fw-bold fs-md-5 fs-6 text-white">
+                <li sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')"  class="breadcrumb-item d-none d-md-block">
+                  <a th:href="@{/dashboard/home}" class="fw-bold fs-md-5 fs-6 text-white">
                     Dashboard
                   </a>
                 </li>
@@ -144,7 +145,7 @@
                     Login
                   </a>
                 </li>
-                <li sec:authorize="isAnonymous()" class="breadcrumb-item">
+                <li sec:authorize="isAnonymous()" class="breadcrumb-item me-2">
                   <a th:href="@{/users/register}" class="fw-bold fs-md-5 fs-6 text-white">
                     Register
                   </a>
@@ -174,7 +175,7 @@
         </div>
         <!-- Collapsible content -->
         <div class="collapse navbar-collapse w-100 mt-4 rounded-md-pill ps-3 round-pill" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto text-mute">
             <li class="d-block d-md-none nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/members/form}">Membership</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3 d-md-none d-block">
               <a th:href="@{/dashboard/home}" sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')" class="nav-link">
@@ -184,14 +185,16 @@
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/church-services}">Services</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/announcements}">Announcements</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/news}">News</a></li>
-            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/media-center/options}">Media Center</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/media-center/albums}">Images</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/media-center/videos}">Videos</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/media-center/files}">Documents</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/events}">Events</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/blogs}">Blogs</a></li>
-            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/shopping/products}">Shop</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/contactUs}">Contact Us</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/aboutUs}">About Us</a></li>
 <!--            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/theClergy}">The Clergy</a></li>-->
-            <li class="nav-item fs-4 fw-bold pe-3"><a class="nav-link" th:href="@{/donation/options}" style="color: aqua !important;">Donate</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link"  th:href="@{/shopping/products}" style="color: red !important;">Shop</a></li>
+            <li class="nav-item fw-bold"><a class="nav-link" th:href="@{/donation/options}" style="color: white !important; display: inline-block; width: auto !important;"><h5 class="warning-button button-sm rounded-3">Donate</h5></a></li>
             <li sec:authorize="isAuthenticated()" class="nav-item fs-md-5 fs-6 pe-3 d-md-none d-block">
               <a th:href="@{/users/logout}" class="nav-link">
                 Logout

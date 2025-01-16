@@ -74,30 +74,39 @@ $('.carousel-control-prev, .carousel-control-next').on('click', function(){
 
 
 function copyToClipboard(button) {
-  // Get the value from the data-copy attribute
+      // Get the value from the data-copy attribute
 
-   const hiddenText = button.getAttribute('data-copy');
-   let pathToCopy = window.location.origin + hiddenText;
+       const hiddenText = button.getAttribute('data-copy');
+       let pathToCopy;
 
-    pathToCopy = pathToCopy.replace(/\\/g, '/');
-  // Create a temporary input element to hold the value to be copied
-  const input = document.createElement('input');
-  input.value = pathToCopy;
-  document.body.appendChild(input);
+       if(hiddenText.toLowerCase().includes('http')){
+           pathToCopy = hiddenText;
+       }else{
+            pathToCopy = window.location.origin + hiddenText;
+       }
 
-  // Select the text inside the input
-  input.select();
-  input.setSelectionRange(0, 99999); // For mobile devices
 
-  // Copy the selected text to the clipboard
-  document.execCommand('copy');
 
-  // Remove the temporary input element
-  document.body.removeChild(input);
+        pathToCopy = pathToCopy.replace(/\\/g, '/');
 
-  // Show the success message
-  const successMessage = button.nextElementSibling; // next <p> element
-  successMessage.style.display = 'block';
+      // Create a temporary input element to hold the value to be copied
+      const input = document.createElement('input');
+      input.value = pathToCopy;
+      document.body.appendChild(input);
+
+      // Select the text inside the input
+      input.select();
+      input.setSelectionRange(0, 99999); // For mobile devices
+
+      // Copy the selected text to the clipboard
+      document.execCommand('copy');
+
+      // Remove the temporary input element
+      document.body.removeChild(input);
+
+      // Show the success message
+      const successMessage = button.nextElementSibling; // next <p> element
+      successMessage.style.display = 'block';
 
   // Hide the success message after 3 seconds
   setTimeout(function() {

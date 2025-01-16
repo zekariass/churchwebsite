@@ -3,7 +3,8 @@ package com.churchwebsite.churchwebsite.services;
 import com.churchwebsite.churchwebsite.entities.Album;
 import com.churchwebsite.churchwebsite.entities.Image;
 import com.churchwebsite.churchwebsite.repositories.ImageRepository;
-import com.churchwebsite.churchwebsite.utils.LocalFileStorageManager;
+import com.churchwebsite.churchwebsite.services.storage.CloudinaryFileStorageManager;
+import com.churchwebsite.churchwebsite.services.storage.LocalFileStorageManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -14,20 +15,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ImageService {
     private final ImageRepository imageRepository;
     private LocalFileStorageManager localFileManager;
+    private final CloudinaryFileStorageManager cloudinaryFileStorageManager;
     private final AlbumService albumService;
 
     @Value("${local.file.media-center-dir}")
-    private String uploadDir;
+    private String localImageUploadDir;
+
+    @Value("${cloudinary.file.media-center-dir}")
+    private String cloudinaryImageUploadDir;
+
+    @Value("${file.storage.type}")
+    private String fileStorageType;
 
     @Autowired
-    public ImageService(ImageRepository imageRepository,
+    public ImageService(ImageRepository imageRepository, CloudinaryFileStorageManager cloudinaryFileStorageManager,
                         AlbumService albumService){
         this.imageRepository = imageRepository;
+        this.cloudinaryFileStorageManager = cloudinaryFileStorageManager;
         this.albumService = albumService;
     }
 
@@ -36,11 +46,19 @@ public class ImageService {
     }
 
     public String save(Image image, MultipartFile multipartFile) {
-        localFileManager = new LocalFileStorageManager(uploadDir);
-        String savedPath = localFileManager.storeFile(multipartFile);
+        String savedPath;
+
+        if(fileStorageType.equalsIgnoreCase("cloudinary")){
+            Map result = cloudinaryFileStorageManager.storeFile(multipartFile, cloudinaryImageUploadDir);
+            savedPath = (String) result.get("url");
+            image.setPublicId((String) result.get("public_id"));
+        }else{
+            localFileManager = new LocalFileStorageManager(localImageUploadDir);
+            savedPath = localFileManager.storeFile(multipartFile);
+            image.setPublicId(null);
+        }
 
         image.setImagePath(savedPath);
-
         imageRepository.save(image);
         return savedPath;
     }

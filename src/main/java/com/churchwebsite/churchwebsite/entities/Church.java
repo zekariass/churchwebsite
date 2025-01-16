@@ -17,6 +17,8 @@ public class Church {
     private String churchDescription;
     private String churchLogo;
 
+    private String publicId;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
@@ -246,6 +248,14 @@ public class Church {
 
     public void setBankInfo(String bankInfo) {
         this.bankInfo = bankInfo;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 
     @Override

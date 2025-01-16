@@ -462,12 +462,11 @@
   </aside>
   <!-- ========================================= End of Sidebar ============================================= -->
 
-  <main id="main" class="main" style="background-color: #FAF9F6 !important;">
-
-    <div class="card">
+  <main id="main" class="main bg-smoke" th:style="'background-image: url(' + @{/media/st_maryam.svg} + ') !important;'">
+    <div class="card" style="background-color: rgba(255, 255, 255, 0.9) !important;">
       <div class="card-body">
         <section class="section dashboard" style="min-height: 40em !important;">
-          <div th:replace="~{/dashboard/dash-fragments/dash-main-panel::main-panel}"></div>
+          <div th:replace="~{dashboard/dash-fragments/dash-main-panel::main-panel}"></div>
         </section>
       </div>
     </div>

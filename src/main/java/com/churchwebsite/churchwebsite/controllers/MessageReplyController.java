@@ -22,7 +22,8 @@ public class MessageReplyController {
     private final MessageReplyService messageReplyService;
     private final ContactUsService contactUsService;
     private final NotificationService notificationService;
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public MessageReplyController(MessageReplyService messageReplyEmailService, ContactUsService contactUsService, NotificationService notificationService) {

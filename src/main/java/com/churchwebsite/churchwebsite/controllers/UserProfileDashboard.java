@@ -23,7 +23,8 @@ public class UserProfileDashboard {
     private final UserService userService;
     private final UserProfileService userProfileService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public UserProfileDashboard(PasswordEncoder passwordEncoder, UserService userService, UserProfileService userProfileService) {

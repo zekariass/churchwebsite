@@ -6,62 +6,61 @@
     <title th:fragment="title">Landing Page</title>
 </head>
 <body>
-<main th:fragment="landing-page" class="mt-5">
-    <!-- Alert Messages -->
-    <div th:if="${param.logout}" class="alert alert-success text-center" role="alert">
-        You are logged out!
-    </div>
-    <div th:if="${param.subscribed}" class="alert alert-success text-center" role="alert">
-        Your email has been added to our email list!
-    </div>
-
-    <!-- Subscription Form (Mobile View) -->
-    <div class="nav-item mb-4 d-flex align-items-center justify-content-center d-md-none">
-        <form class="d-flex w-75" method="POST" action="#">
-            <input type="text" name="query" placeholder="Subscribe to email list" aria-placeholder="Subscribe to email list" class="form-control me-2">
-            <button type="submit" title="Subscribe" class="btn btn-info btn-sm">Subscribe</button>
-        </form>
-    </div>
-
-    <!-- Content and Sidebar -->
-    <div class="row my-4 shadow-sm p-md-4 bg-white rounded">
-        <!-- Main Content -->
-        <div class="col-md-9">
-            <div th:each="landingContent : ${landingContentList}" class="mb-3">
-                <div class="shadow-sm p-md-3 rounded bg-light">
-                    <p class="mb-0" th:utext="${landingContent.content}"></p>
-                </div>
-            </div>
+    <main th:if="${landingContentList?.size() > 0}" th:fragment="landing-page" class="mt-5">
+        <!-- Alert Messages -->
+        <div th:if="${param.logout}" class="alert alert-success text-center" role="alert">
+            You are logged out!
+        </div>
+        <div th:if="${param.subscribed}" class="alert alert-success text-center" role="alert">
+            Your email has been added to our email list!
         </div>
 
-        <!-- Announcements and News Sidebar -->
-        <div th:if="${announcements?.size() > 0 or newsList?.size() > 0}" class="col-md-3">
-            <div class="shadow my-2 py-2 rounded-3">
-                <div class="">
-                    <!-- Announcements Section -->
-                    <div th:if="${announcements?.size() > 0}">
-                        <h5 class="text-center mb-3">Featured Announcements</h5>
-                        <ul class="list-group list-group-flush">
-                            <li th:each="announcement : ${announcements}" class="list-group-item">
-                                <span th:text="${announcement.title}"></span>
-                            </li>
-                        </ul>
-                    </div>
+        <!-- Subscription Form (Mobile View) -->
+        <div class="nav-item mb-4 d-flex align-items-center justify-content-center d-md-none">
+            <form class="d-flex w-75" method="POST" action="#">
+                <input type="text" name="query" placeholder="Subscribe to email list" aria-placeholder="Subscribe to email list" class="form-control me-2">
+                <button type="submit" title="Subscribe" class="btn btn-info btn-sm">Subscribe</button>
+            </form>
+        </div>
 
-                    <!-- News Section -->
-                    <div th:if="${newsList?.size() > 0}" class="mt-4">
-                        <h5 class="text-center mb-3">Featured News</h5>
-                        <ul class="list-group list-group-flush">
-                            <li th:each="news : ${newsList}" class="list-group-item">
-                                <span th:text="${news.newsTitle}"></span>
-                            </li>
-                        </ul>
+        <!-- Content and Sidebar -->
+        <div class="row my-4 shadow-sm p-md-4 bg-white rounded">
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div th:each="landingContent : ${landingContentList}" class="mb-3">
+                    <div class="shadow-sm p-md-3 rounded bg-light">
+                        <p class="mb-0" th:utext="${landingContent.content}"></p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</main>
 
+            <!-- Announcements and News Sidebar -->
+            <div th:if="${announcements?.size() > 0 or newsList?.size() > 0}" class="col-md-3">
+                <div class="shadow my-2 py-2 rounded-3">
+                    <div class="">
+                        <!-- Announcements Section -->
+                        <div th:if="${announcements?.size() > 0}">
+                            <h5 class="text-center mb-3">Featured Announcements</h5>
+                            <ul class="list-group list-group-flush">
+                                <li th:each="announcement : ${announcements}" class="list-group-item">
+                                    <span th:text="${announcement.title}"></span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- News Section -->
+                        <div th:if="${newsList?.size() > 0}" class="mt-4">
+                            <h5 class="text-center mb-3">Featured News</h5>
+                            <ul class="list-group list-group-flush">
+                                <li th:each="news : ${newsList}" class="list-group-item">
+                                    <span th:text="${news.newsTitle}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

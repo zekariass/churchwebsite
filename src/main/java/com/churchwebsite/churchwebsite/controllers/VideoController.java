@@ -18,7 +18,8 @@ import java.util.List;
 @RequestMapping("videos")
 public class VideoController {
     private final VideoService videoService;
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
     private final PaginationService paginationService;
     private final ChurchDetailService churchDetailService;
 

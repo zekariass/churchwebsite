@@ -23,7 +23,8 @@ public class UserController {
     private final PaginationService paginationService;
     private final RoleService roleService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public UserController(UserService userService, CustomUserDetailService customUserDetailService, PaginationService paginationService, RoleService roleService) {

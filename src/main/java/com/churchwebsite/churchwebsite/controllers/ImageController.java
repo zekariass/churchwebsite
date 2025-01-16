@@ -27,7 +27,8 @@ public class ImageController {
     private final AttachmentTypeService attachmentTypeService;
     private final ChurchDetailService churchDetailService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public ImageController(ImageService imageService,

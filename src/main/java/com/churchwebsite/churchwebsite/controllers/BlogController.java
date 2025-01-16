@@ -30,7 +30,8 @@ public class BlogController {
     @Value("${settings.default.page.size:10}")
     private int defaultPageSize;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public BlogController(BlogService blogService,

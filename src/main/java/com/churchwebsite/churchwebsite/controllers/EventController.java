@@ -16,7 +16,8 @@ import java.util.List;
 @RequestMapping("/dashboard/events")
 public class EventController {
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     private final ChurchDetailService churchDetailService;
     private final EventService eventService;

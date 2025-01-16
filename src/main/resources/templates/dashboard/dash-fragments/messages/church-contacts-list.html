@@ -10,31 +10,33 @@
             <a th:href="@{/dashboard/church-contacts/form}" class="success-button">Add New Contact</a>
         </div>
 
-        <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="contact : ${contacts}" role="button">
-                <td th:text="${contact.contactId}"></td>
-                <td th:text="${contact.contactFullName}"></td>
-                <td th:text="${contact.contactPhone}"></td>
-                <td th:text="${contact.contactEmail}"></td>
-                <td>
-                    <a th:href="@{/dashboard/church-contacts/detail/{id}(id=${contact.contactId})}" class="info-button button-sm">Detail</a>
-                    <a th:href="@{/dashboard/church-contacts/edit/{id}(id=${contact.contactId})}" class="warning-button button-sm">Edit</a>
-                    <a th:href="@{/dashboard/church-contacts/delete/{id}(id=${contact.contactId})}" class="danger-button button-sm"
-                       onclick="return confirm('Are you sure you want to delete this contact?');">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+       <div class="table-responsive">
+           <table class="table table-bordered table-hover">
+               <thead class="table-dark">
+               <tr>
+                   <th>ID</th>
+                   <th>Full Name</th>
+                   <th>Phone</th>
+                   <th>Email</th>
+                   <th>Actions</th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr th:each="contact : ${contacts}" role="button">
+                   <td th:text="${contact.contactId}"></td>
+                   <td th:text="${contact.contactFullName}"></td>
+                   <td th:text="${contact.contactPhone}"></td>
+                   <td th:text="${contact.contactEmail}"></td>
+                   <td>
+                       <a th:href="@{/dashboard/church-contacts/detail/{id}(id=${contact.contactId})}" class="info-button button-sm">Detail</a>
+                       <a th:href="@{/dashboard/church-contacts/edit/{id}(id=${contact.contactId})}" class="warning-button button-sm">Edit</a>
+                       <a th:href="@{/dashboard/church-contacts/delete/{id}(id=${contact.contactId})}" class="danger-button button-sm"
+                          onclick="return confirm('Are you sure you want to delete this contact?');">Delete</a>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+       </div>
     </div>
 </body>
 </html>

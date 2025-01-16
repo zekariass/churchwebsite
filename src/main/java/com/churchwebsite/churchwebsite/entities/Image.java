@@ -21,6 +21,8 @@ public class Image implements Cloneable {
 
     private String imagePath;
 
+    private String publicId;
+
     @CreatedDate
     private LocalDateTime uploadTime;
 
@@ -105,6 +107,14 @@ public class Image implements Cloneable {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
     }
 
     @Override

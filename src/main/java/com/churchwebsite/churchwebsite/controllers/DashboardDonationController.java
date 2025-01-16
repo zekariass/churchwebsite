@@ -24,7 +24,8 @@ public class DashboardDonationController {
     private final PaginationService paginationService;
     private final DonationPurposeService donationPurposeService;
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public DashboardDonationController(DonationService donationService, PaginationService paginationService, DonationPurposeService donationPurposeService) {

@@ -25,6 +25,7 @@
                 </select>
             </div>
         </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead class="table-dark">
@@ -63,16 +64,20 @@
                     <td>
                         <!-- Actions: View or Download -->
 <!--                        <a th:href="@{/attachments/view/{id}(id=${attachment.attachmentId})}" class="btn btn-sm btn-landing-content me-2 mb-2">View</a>-->
-                        <a th:href="@{/medias/attachments/download/{id}(id=${attachment.attachmentId})}" class="success-button button-sm me-2 mb-2">Download</a>
-                        <a class="secondary-button button-sm mb-2 me-2 path-btn"
-                           th:attr="data-copy=${attachment.attachmentPath}"
-                           onclick="copyToClipboard(this)">
-                            Copy URI
-                        </a>
-                        <a th:href="@{/medias/attachments/delete/{id}(id=${attachment.attachmentId})}" class="danger-button button-sm me-2 mb-2"
-                            onclick="return confirm('Are you sure you want to delete this attachment?')">Delete</a>
+                       <div class="mb-3 d-flex">
+                           <a th:href="@{/medias/attachments/download/{id}(id=${attachment.attachmentId})}" class="text-success pe-2 mb-2 "><i class="fa-solid fa-download"></i></a>
 
-                        <P class="text-success path-copied" style="display: none;"> Path copied!</P>
+                           <a th:href="@{/medias/attachments/delete/{id}(id=${attachment.attachmentId})}" class="text-danger pe-2 mb-2 "
+                              onclick="return confirm('Are you sure you want to delete this attachment?')"><i class=" fa-solid fa-trash"></i></a>
+
+                           <a class="secondary-button button-sm mb-2 pe-2 path-btn "
+                              th:attr="data-copy=${attachment.attachmentPath}"
+                              onclick="copyToClipboard(this)">
+                               Copy URI
+                           </a>
+                           <P class="text-success path-copied" style="display: none;"> Path copied!</P>
+                       </div>
+
                     </td>
                 </tr>
                 <!-- Show a message if there are no attachments -->

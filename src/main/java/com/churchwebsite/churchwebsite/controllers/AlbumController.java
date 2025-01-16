@@ -6,6 +6,7 @@ import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.PaginationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,16 @@ public class AlbumController {
     @Autowired
     private  ResourceLoader resourceLoader;
 
+    @Value("${file.storage.type}")
+    private String fileStorageType;
 
     private final AlbumService albumService;
     private final PaginationService paginationService;
     private final ChurchDetailService churchDetailService;
 
 
-    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public AlbumController(AlbumService albumService, PaginationService paginationService, ChurchDetailService churchDetailService) {
@@ -45,12 +49,15 @@ public class AlbumController {
                                 @RequestParam(value = "sortBy", required = false, defaultValue = "creationTime") String sortBy,
                                 HttpServletRequest request){
 
-        String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
-
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
         Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, sortBy);
         List<Album> albums = pagedAlbums.getContent();
+
+        if(fileStorageType.equalsIgnoreCase("local")) {
+            String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
+            model.addAttribute("baseImagePath", baseImagePath);
+        }
 
         model.addAttribute("activeDashPage", "albums-list");
         model.addAttribute("currentPage", pagedAlbums.getNumber() + 1);
@@ -59,7 +66,6 @@ public class AlbumController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("albums", albums);
-        model.addAttribute("baseImagePath", baseImagePath);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("pageTitle", "Albums list");
 
@@ -73,7 +79,10 @@ public class AlbumController {
                                 @RequestParam(value = "sortBy", required = false, defaultValue = "creationTime") String sortBy,
                                 HttpServletRequest request){
 
-        String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
+        if(fileStorageType.equalsIgnoreCase("local")) {
+            String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
+            model.addAttribute("baseImagePath", baseImagePath);
+        }
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
@@ -87,7 +96,6 @@ public class AlbumController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentUrl", request.getRequestURL());
         model.addAttribute("albums", albums);
-        model.addAttribute("baseImagePath", baseImagePath);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("pageTitle", "Albums list");
 
@@ -122,11 +130,13 @@ public class AlbumController {
     public String showAlbumDetail(@PathVariable(value = "id", required = false) int albumId, Model model){
 
         Album album = albumService.getAlbumById(albumId);
-        String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
+        if(fileStorageType.equalsIgnoreCase("local")) {
+            String baseImagePath = File.separator + Paths.get("image/centre") + File.separator;
+            model.addAttribute("baseImagePath", baseImagePath);
+        }
 
         model.addAttribute("album", album);
         model.addAttribute("activeDashPage", "album-detail");
-        model.addAttribute("baseImagePath", baseImagePath);
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
         model.addAttribute("pageTitle", "Album Detail");
 

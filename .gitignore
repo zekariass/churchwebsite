@@ -32,7 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 #/src/main/resources/static/image/
-.env
 /src/main/resources/static/media/user/profile/*
 /src/main/resources/static/media/blogs/*
 /src/main/resources/static/media/centre/*
@@ -42,3 +41,6 @@ build/
 /src/main/resources/static/media/news/*
 /src/main/resources/static/media/products/*
 /src/main/resources/static/media/user/profile/*
+
+churchwebsite.pem
+.env
