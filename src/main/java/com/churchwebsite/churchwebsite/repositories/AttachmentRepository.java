@@ -9,4 +9,6 @@ public interface AttachmentRepository extends JpaRepository<Attachment, Integer>
     Page<Attachment> findAll(Pageable pageable);
 
     Page<Attachment> findByArchived(Boolean archived, Pageable pageable);
+
+    Page<Attachment> findByAttachmentNameContaining(String name, Pageable pageable);
 }

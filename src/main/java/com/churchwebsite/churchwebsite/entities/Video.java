@@ -1,7 +1,6 @@
 package com.churchwebsite.churchwebsite.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,6 +21,7 @@ public class Video {
     private String youtubeVideoId;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime uploadTime;
 
     @ManyToOne

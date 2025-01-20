@@ -9,7 +9,7 @@
     <div class="container">
         <!-- Check for Cart Items -->
         <div th:if="${cartItems.size() > 0}">
-            <h1 class="mb-5">Your Shopping Cart</h1>
+            <h3 class="mb-3">Your Shopping Cart</h3>
             <!-- Continue Shopping -->
             <div class="mb-4 text-center">
                 <a th:href="@{/shopping/products}" role="button" class="text-success text-decoration text-decoration-none">
@@ -109,7 +109,7 @@
                 </div>
                 <!-- Right Column: Summary -->
                 <div class="col-lg-4">
-                    <div th:replace="~{/fragments/shopping/shopping-cart-summary::shopping-cart-summary}"></div>
+                    <div th:replace="~{fragments/shopping/shopping-cart-summary::shopping-cart-summary}"></div>
 
                     <div class="card my-3">
                        <div class="card-body">
@@ -118,7 +118,7 @@
                                <input type="hidden" name="totalPrice" th:value="${cartTotalPrice}">
                                <input type="hidden" name="totalTax" th:value="${totalTax}">
                                <h4>Shipping Address</h4>
-                               <div th:replace="~{/dashboard/dash-fragments/address-form::address-form}"></div>
+                               <div th:replace="~{dashboard/dash-fragments/address-form::address-form}"></div>
                                 <div class="text-start text-md-center mt-3">
                                     <button type="submit" class="success-button w-100 text-decoration text-decoration-none">
                                         Proceed to checkout

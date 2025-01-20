@@ -68,8 +68,8 @@
 </head>
 
 <body th:fragment="album-detail">
-  <div class="container my-5">
-    <h1 class="text-center text-md-start mb-4">[[${album.albumName}]]</h1>
+  <div class="container my-3">
+    <h4 class="text-center text-md-start mb-4">Album: [[${album.albumName}]]</h4>
       <div class="d-flex justify-content-md-start justify-content-center">
           <a th:href="@{/images/form?forAlbumId={id}(id=${album.albumId})}" role="button" class="success-button mb-3">Add new photo or video</a>
       </div>
@@ -83,12 +83,32 @@
            <div class="caption"></div>
          </div>
           <!-- Button for copying -->
-          <button class="btn btn-primary path-btn"
-                  th:attr="data-copy=${image.imagePath}"
-                  onclick="copyToClipboard(this)">
-            Copy the Path
-          </button>
-          <P class="text-success path-copied" style="display: none;"> Path copied!</P>
+            <div class="row g-2 px-3 mb-2">
+                <div class="col-12 col-md-auto">
+                    <button class="btn btn-primary path-btn w-100"
+                            th:attr="data-copy=${image.imagePath}"
+                            onclick="copyToClipboard(this)">
+                        Copy the Path
+                    </button>
+                    <P class="text-success path-copied" style="display: none;"> Path copied!</P>
+                </div>
+
+
+<!--                <div class="col-12 col-md-auto">-->
+<!--                    <a th:href="@{'/images/edit/'+${image.imageId}}"-->
+<!--                       class="btn btn-warning w-100">-->
+<!--                        Edit-->
+<!--                    </a>-->
+<!--                </div>-->
+                <div class="col-12 col-md-auto">
+                    <a th:href="@{'/images/delete/'+${image.imageId}}"
+                       class="btn btn-danger w-100"
+                        onclick="return confirm('Are you sure you want to delete this image?');">
+                        Delete
+                    </a>
+                </div>
+            </div>
+
         </div>
       </div>
     </div>

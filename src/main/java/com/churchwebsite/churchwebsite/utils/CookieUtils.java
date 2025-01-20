@@ -55,7 +55,7 @@ public class CookieUtils {
             Cookie cookie = new Cookie(CART_COOKIE_NAME, encodedJson);
             cookie.setPath(CART_COOKIE_PATH);
             cookie.setHttpOnly(true); // Security enhancement
-            cookie.setSecure(true);  // Requires HTTPS
+            cookie.setSecure(false);  // Requires HTTPS
 
             if (cookieLifetime != null) {
                 cookie.setMaxAge(cookieLifetime);
@@ -74,7 +74,7 @@ public class CookieUtils {
         Cookie cookie = new Cookie(CART_COOKIE_NAME, null);
         cookie.setPath(CART_COOKIE_PATH);
         cookie.setHttpOnly(true); // Security enhancement
-        cookie.setSecure(true);  // Requires HTTPS
+        cookie.setSecure(false);  // Requires HTTPS
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }

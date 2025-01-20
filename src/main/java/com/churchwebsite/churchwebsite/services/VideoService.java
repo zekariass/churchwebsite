@@ -38,4 +38,9 @@ public class VideoService {
     public void deleteVideoById(int id) {
         videoRepository.deleteById(id);
     }
+
+    public Video findById(int id) {
+
+        return videoRepository.findById(id).orElse(new Video());
+    }
 }

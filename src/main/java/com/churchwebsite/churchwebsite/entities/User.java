@@ -42,6 +42,7 @@ public class User {
     private String passwordConfirm;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime registrationTime;
 
     private boolean isActive;

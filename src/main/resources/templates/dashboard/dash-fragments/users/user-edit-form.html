@@ -10,7 +10,7 @@
       <a href="/dashboard/users" class="text-success">Back to users list</a>
     </div>
     <h2>Edit User</h2>
-    <form th:action="@{'/dashboard/users/edit/'+${user.userId}}" th:object="${user}" method="post">
+    <form th:action="@{'/dashboard/users/edit/'+${anyUser.userId}}" th:object="${anyUser}" method="post">
       <input type="hidden" th:field="*{userId}">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
@@ -32,7 +32,7 @@
         <label for="roles" class="form-label">Roles</label>
         <select multiple class="form-control w-auto" id="roles" th:field="*{roles}">
           <option th:each="role : ${userRoles}" th:value="${role.roleId}" th:text="${role.roleName}"
-                  th:selected="${user.roles.contains(role)}"></option>
+                  th:selected="${anyUser.roles.contains(role)}"></option>
         </select>
       </div>
       <button type="submit" class="btn btn-success">Update</button>

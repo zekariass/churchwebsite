@@ -6,7 +6,10 @@ import com.churchwebsite.churchwebsite.services.AlbumService;
 import com.churchwebsite.churchwebsite.services.ChurchDetailService;
 import com.churchwebsite.churchwebsite.services.ImageService;
 import com.churchwebsite.churchwebsite.services.AttachmentTypeService;
+import com.churchwebsite.churchwebsite.services.storage.CloudinaryFileStorageManager;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +17,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("images")
@@ -27,17 +32,22 @@ public class ImageController {
     private final AttachmentTypeService attachmentTypeService;
     private final ChurchDetailService churchDetailService;
 
-//    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
+    private final Logger logger = LoggerFactory.getLogger(AlbumController.class);
+    private final CloudinaryFileStorageManager cloudinaryFileStorageManager;
+
+
+    //    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
     @Autowired
     public ImageController(ImageService imageService,
                            AlbumService albumService,
-                           AttachmentTypeService attachmentTypeService, ChurchDetailService churchDetailService){
+                           AttachmentTypeService attachmentTypeService, ChurchDetailService churchDetailService, CloudinaryFileStorageManager cloudinaryFileStorageManager){
         this.imageService = imageService;
         this.albumService = albumService;
         this.attachmentTypeService = attachmentTypeService;
         this.churchDetailService = churchDetailService;
+        this.cloudinaryFileStorageManager = cloudinaryFileStorageManager;
     }
 
 
@@ -132,5 +142,45 @@ public class ImageController {
         }
             return "redirect:/images/albums";
         }
+
+
+    @GetMapping("/delete/{id}")
+    public String imageDelete(@PathVariable(value = "id") int imageId){
+
+        Optional<Image> image = imageService.findById(imageId);
+        if(image.isPresent()){
+            try {
+                cloudinaryFileStorageManager.deleteFile(image.get().getPublicId());
+                imageService.deleteById(imageId);
+                return "redirect:/images/albums/detail/"+ image.get().getAlbum().getAlbumId();
+            } catch (IOException e) {
+                logger.error("ERROR: =================================== {}", e.getMessage());
+            }
+        }
+
+        return "redirect:/images/albums";
+    }
+
+//
+//    @GetMapping("/edit/{id}")
+//    public String imageEdit(@PathVariable(value = "id") int imageId, Model model){
+//
+//        Image image = imageService.findById(imageId).orElse(new Image());
+//
+//
+//        List<Album> albums = albumService.getAlbumList();
+//
+//        model.addAttribute("activeDashPage", "image-form");
+//        model.addAttribute("albums", albums);
+//        model.addAttribute("album", new Album());
+//        model.addAttribute("image", new Image());
+//        model.addAttribute("pageTitle", "Image Form");
+//
+//        model.addAttribute("forAlbumId", image.getAlbum().getAlbumId());
+//
+//
+//
+//        return DASHBOARD_MAIN_PANEL;
+//    }
 
 }

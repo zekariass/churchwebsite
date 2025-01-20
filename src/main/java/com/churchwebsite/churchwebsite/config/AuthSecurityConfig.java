@@ -64,6 +64,7 @@ public class AuthSecurityConfig {
             "/church-services/**",
             "/members",
             "/members/**",
+            "/members/**",
             "/contactUs",
             "/contactUs/**",
             "/donate",
@@ -75,8 +76,9 @@ public class AuthSecurityConfig {
             "/shopping/products/**",
             "/shopping/cart/**",
             "/aboutUs",
+            "/aboutUs/**",
             "/announcements",
-            "/announcements/detail",
+            "/announcements/detail/**",
             "/subscription/email/subscribe"
 
     };

@@ -28,7 +28,7 @@ public class Image implements Cloneable {
 
 //    private String mediaType;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne()
     @JoinColumn(name = "album_id")
     @NotNull(message = "Album must be selected or created new one.")
     private Album album;

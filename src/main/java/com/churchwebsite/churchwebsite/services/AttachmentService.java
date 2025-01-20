@@ -133,4 +133,13 @@ public class AttachmentService {
 
         attachmentRepository.deleteById(id);
     }
+
+    public Page<Attachment> findByAttachmentNameContaining(String name, int page, Integer pageSize, String sortBy) {
+        Pageable pageable = getPageable(page, pageSize, sortBy);
+        return attachmentRepository.findByAttachmentNameContaining(name, pageable);
+    }
+
+    public void saveExisting(Attachment attachment) {
+        attachmentRepository.save(attachment);
+    }
 }

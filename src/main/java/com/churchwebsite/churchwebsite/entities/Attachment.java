@@ -26,6 +26,7 @@ public class Attachment {
     private String publicId;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime attachmentTime;
 
     @ManyToOne

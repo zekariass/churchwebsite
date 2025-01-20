@@ -4,27 +4,27 @@
     <meta charset="UTF-8">
     <title>Event Detail</title>
 </head>
-<body>
-<div th:fragment="service-detail" class="px-5 bg-white shadow-sm">
-    <div class="m-3">
-                <Span class="d-flex justify-content-end">
-                    <a th:href="@{/church-services}" class="mt-2 me-2 text-success"><h5>Services</h5></a>
-                </Span>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="ps-lg-1-6 ps-xl-5">
-                <div class="mb-5 wow fadeIn">
-                    <div class="text-start mb-1-6 wow fadeIn">
-                        <h2 class="h1 mb-0 text-primary">[[${churchService.serviceName}]]</h2>
+<body th:fragment="service-detail" >
+    <div class="container bg-white shadow-sm">
+        <div class="m-3">
+                    <Span class="d-flex justify-content-end">
+                        <a th:href="@{/church-services}" class="mt-2 me-2 text-success"><h5>Services</h5></a>
+                    </Span>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="px-2">
+                    <div class="mb-5 wow fadeIn">
+                        <div class="text-start mb-1-6 wow fadeIn">
+                            <h2 class="h1 mb-0 text-primary">[[${churchService.serviceName}]]</h2>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <div th:utext="${churchService.serviceDescription}"></div>
+                    <div class="mb-3">
+                        <div th:utext="${churchService.serviceDescription}"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

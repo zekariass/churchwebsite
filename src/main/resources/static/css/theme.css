@@ -150,3 +150,8 @@
     background-color: brown !important;
     opacity: 0.7 !important;
 }
+
+a:hover{
+    color: blue !important;
+    text-decoration: none !important;
+}

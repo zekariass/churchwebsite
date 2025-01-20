@@ -116,9 +116,9 @@ public class AttachmentController {
     public String processAttachmentForm(Model model,
                                         @Valid @ModelAttribute Attachment attachment,
                                         BindingResult result,
-                                        @RequestParam("attachmentFilePath") MultipartFile attachmentFilePath){
+                                        @RequestParam(value = "attachmentFilePath", required = false) MultipartFile attachmentFilePath){
 
-        if(result.hasErrors() || attachmentFilePath.isEmpty()){
+        if(attachment.getAttachmentId() == 0 && (result.hasErrors() || attachmentFilePath.isEmpty())){
 
             if(attachmentFilePath.isEmpty()){
                 model.addAttribute("attachmentFilePathError", "You must select a file.");
@@ -139,7 +139,11 @@ public class AttachmentController {
             return DASHBOARD_MAIN_PANEL;
         }
 
-        Attachment savedAttachment = attachmentService.save(attachment, attachmentFilePath);
+        if(attachment.getAttachmentId() > 0){
+            attachmentService.saveExisting(attachment);
+        }else{
+            Attachment savedAttachment = attachmentService.save(attachment, attachmentFilePath);
+        }
         return "redirect:/medias/attachments?sortBy=attachmentTime";
     }
 
@@ -195,5 +199,25 @@ public class AttachmentController {
         attachmentService.deleteById(id);
 
         return "redirect:/medias/attachments";
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public String editAttachment(@PathVariable("id") Integer id, Model model){
+        Attachment attachment = attachmentService.findById(id);
+
+        List<AttachmentType> attachmentTypes = attachmentTypeService.findAll();
+
+        List<String> attachementNames = attachmentTypes.stream().map(AttachmentType::getAttachmentTypeName).toList();
+
+        model.addAttribute("activeDashPage", "attachment-form");
+        model.addAttribute("attachment", attachment);
+        model.addAttribute("attachmentTypes", attachmentTypes);
+        model.addAttribute("attachmentNames", attachementNames);
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Attachments Form");
+
+
+        return DASHBOARD_MAIN_PANEL;
     }
 }

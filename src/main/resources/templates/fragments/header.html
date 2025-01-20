@@ -12,28 +12,33 @@
   <header class="main-header mb-3" >
     <style>
       .carousel-item {
-        height: 70vh;
-<!--        min-height: 500px;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-<!--        top: 10vh;-->
+<!--        height: 70vh;-->
+            width: 100%;
+            aspect-ratio: 16/8;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            top: 0vh;
+      }
+
+     @media (max-width: 768px) { /* For tablets */
+        .carousel-item {
+              aspect-ratio: 8/14;
+        }
       }
 
       .navbar {
-        position: relative; /* Position navbar above the carousel */
+        position: relative;
         top: 0;
         left: 0;
         width: 100%;
         z-index: 100; /* Make sure it is above the carousel */
-<!--        background-color: rgba(0, 128, 128, 0.75);-->
         alpha: 50%;
 
       }
 
       .navbar-collapse {
         background-color: rgba(255, 255, 255, 1.0) !important; /* Maintain transparency when the collapse menu is open */
-  <!--      background-color: #cccccc !important;-->
       }
 
       .navbar .navbar-nav .nav-link {
@@ -48,6 +53,14 @@
       .carousel-caption p {
         background: rgba(0, 0, 0, 0.5);
         padding: 5px;
+      }
+
+      .banner-caption {
+          font-size: clamp(1.5rem, 3vw, 4rem); /* Adjust size based on viewport width */
+      }
+
+      .carousel-caption p {
+          font-size: clamp(1rem, 2.5vw, 2rem); /* Adjust paragraph size */
       }
 
       .logo{
@@ -90,10 +103,195 @@
               font-size: 1rem;
             }
 
+
+
+
+     /* Toggler Button */
+.navbar-toggler {
+    width: 50px; /* Button width */
+    height: 40px; /* Button height */
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Thin border with transparency */
+    border-radius: 5px; /* Slightly rounded corners */
+    display: flex; /* Flex for centering */
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Remove extra padding */
+    background-color: white; /* Background color */
+    transition: all 0.3s ease; /* Smooth hover effects */
+}
+
+/* Toggler Icon */
+.navbar-toggler-icon {
+    display: block;
+    width: 30px; /* Equal width for all lines */
+    height: 3px; /* Thickness of the lines */
+    background-color: black; /* Line color */
+    position: relative; /* For pseudo-elements */
+    border-radius: 2px; /* Rounded ends for the lines */
+    transition: all 0.3s ease; /* Smooth transitions */
+}
+
+/* Top and Bottom Lines */
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+    content: '';
+    width: 30px; /* Same width as the main line */
+    height: 3px; /* Same thickness */
+    background-color: black; /* Same color */
+    position: absolute;
+    left: 0;
+    border-radius: 2px; /* Rounded ends */
+    transition: all 0.3s ease; /* Smooth transitions */
+}
+
+/* Position the Lines */
+.navbar-toggler-icon::before {
+    top: -8px; /* Spacing for the top line */
+}
+
+.navbar-toggler-icon::after {
+    top: 8px; /* Spacing for the bottom line */
+}
+
+/* Hover Effect */
+.navbar-toggler:hover {
+    border-color: #007bff; /* Change border color on hover */
+}
+
+.navbar-toggler:hover .navbar-toggler-icon,
+.navbar-toggler:hover .navbar-toggler-icon::before,
+.navbar-toggler:hover .navbar-toggler-icon::after {
+    background-color: #007bff; /* Change line color on hover */
+}
+
+/* Adjust Sizes for Small Screens */
+@media (max-width: 768px) {
+    .navbar-toggler {
+        width: 40px;
+        height: 30px;
+    }
+
+    .navbar-toggler-icon,
+    .navbar-toggler-icon::before,
+    .navbar-toggler-icon::after {
+        width: 25px;
+        height: 2px;
+    }
+
+    .navbar-toggler-icon::before {
+        top: -6px;
+    }
+
+    .navbar-toggler-icon::after {
+        top: 6px;
+    }
+}
+
+
+
+
+
+      /* Adjustments for mobile screens */
+  @media (max-width: 992px) {
+    .navbar-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center the items */
+      padding-left: 0; /* Remove extra padding */
+      margin-bottom: 5px; /* Spacing between items */
+    }
+
+    .navbar-nav .nav-item {
+      width: 100%; /* Make nav items take full width */
+      text-align: center; /* Center the text */
+    }
+
+    .navbar-nav .nav-item a {
+<!--      padding: 0.5rem 0; /* Increase clickable area */-->
+    }
+
+    /* Adjust Donate button on small screens */
+    .nav-item .warning-button {
+      font-size: 1.2rem; /* Adjust font size */
+      padding: 0.5rem 1rem; /* Increase padding */
+    }
+
+    .nav-item .nav-link {
+      font-size: 1rem; /* Adjust font size for small screens */
+    }
+  }
+
+  /* Adjustments for medium screens (below large desktops) */
+  @media (min-width: 768px) and (max-width: 1424px) {
+    /* Stack items horizontally with scrollable container */
+    .navbar-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Center the items horizontally */
+<!--      gap: 1rem;-->
+      overflow-x: auto; /* Allow scrolling if items overflow */
+      padding-left: 0;
+      margin-bottom: 0;
+      max-width: 100%; /* Prevent items from going off-screen */
+    }
+
+    /* Adjust padding and font size for medium screens */
+    .navbar-nav .nav-item {
+      text-align: center;
+    }
+
+    .navbar-nav .nav-link {
+      font-size: 1rem;
+      padding: 0.8rem 0; /* Reduce padding */
+    }
+
+    /* Prevent menu items from getting squished */
+    .navbar-nav .nav-item a {
+      white-space: nowrap; /* Prevent text from wrapping */
+    }
+  }
+
+  /* Adjustments for large screens */
+  @media (min-width: 1424px) {
+    /* Align the items horizontally on larger screens */
+<!--    .navbar-nav {-->
+<!--      display: flex;-->
+<!--      flex-direction: row;-->
+<!--      justify-content: flex-end; /* Align items to the right */-->
+<!--      gap: 1rem; /* Space between the items */-->
+<!--    }-->
+
+    /* Adjust link padding and font size on larger screens */
+    .navbar-nav .nav-item {
+      text-align: center;
+    }
+
+    .nav-item .nav-link {
+      font-size: 1.1rem; /* Larger font size for desktop */
+    }
+  }
+
+      @media (max-width: 992px){
+        #menu-ul{
+          height: 70vh;
+        }
+      }
+
+
     </style>
 
     <!-- Navbar -->
+<!--    <div style="width: 100vw; height: 9vh;" class="d-block d-md-none top-bar">-->
+<!--      <div class="d-flex justify-content-center">-->
+<!--        <div class="">-->
+<!--          <h4 class="rounded-3">[[${churchDetail?.church?.churchName}]]-->
+<!--          </h4>-->
+<!--          <p class="text-center"> ([[${churchDetail?.address?.city}]], [[${churchDetail?.address?.country}]])</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
     <nav class="navbar navbar-expand-lg p-4">
+
       <div class="w-100">
         <!-- Brand logo -->
         <div class="row">
@@ -120,43 +318,43 @@
               <ol class="breadcrumb mb-0 flex-grow-1 text-end">
                 <!-- Dashboard link -->
                 <li sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')"  class="breadcrumb-item d-none d-md-block">
-                  <a th:href="@{/dashboard/home}" class="fw-bold fs-md-5 fs-6 text-white">
+                  <a th:href="@{/dashboard/home}" class="fw-bold fs-md-5 fs-6 text-white text-decoration-none">
                     Dashboard
                   </a>
                 </li>
 
                 <!-- Membership link -->
                 <li class="breadcrumb-item d-none d-md-inline">
-                  <a th:href="@{/members/form}" class="fw-bold fs-md-5 fs-6 text-white">
+                  <a th:href="@{/members/form}" class="fw-bold fs-md-5 fs-6 text-white text-decoration-none">
                     Membership
                   </a>
                 </li>
 
                 <!-- About Us link -->
                 <li class="breadcrumb-item d-none d-md-inline">
-                  <a th:href="@{/aboutUs}" class="fw-bold fs-md-5 fs-6 text-white">
+                  <a th:href="@{/aboutUs}" class="fw-bold fs-md-5 fs-6 text-white text-decoration-none">
                     About Us
                   </a>
                 </li>
 
                 <!-- Authentication Links (Login/Register/Logout) -->
                 <li sec:authorize="isAnonymous()" class="breadcrumb-item">
-                  <a th:href="@{/users/login}" class="fw-bold fs-md-5 fs-6 text-white">
+                  <a th:href="@{/users/login}" class="fw-bold fs-md-5 fs-6 text-white text-decoration-none">
                     Login
                   </a>
                 </li>
                 <li sec:authorize="isAnonymous()" class="breadcrumb-item me-2">
-                  <a th:href="@{/users/register}" class="fw-bold fs-md-5 fs-6 text-white">
+                  <a th:href="@{/users/register}" class="fw-bold fs-md-5 fs-6 text-white text-decoration-none">
                     Register
                   </a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="breadcrumb-item d-none d-md-block">
-                  <a th:href="@{/users/profile}" class="fw-bold fs-md-5 fs-6 text-white">
+                  <a th:href="@{/users/profile}" class="fw-bold fs-md-5 fs-6 text-white text-decoration-none">
                     Profile
                   </a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="breadcrumb-item d-none d-md-block">
-                  <a th:href="@{/users/logout}" class="fw-bold fs-md-5 fs-6 text-white">
+                  <a th:href="@{/users/logout}" class="fw-bold fs-md-5 fs-6 text-white text-decoration-none">
                     Logout
                   </a>
                 </li>
@@ -174,12 +372,12 @@
 
         </div>
         <!-- Collapsible content -->
-        <div class="collapse navbar-collapse w-100 mt-4 rounded-md-pill ps-3 round-pill" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto text-mute">
-            <li class="d-block d-md-none nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/members/form}">Membership</a></li>
-            <li class="nav-item fs-md-5 fs-6 pe-3 d-md-none d-block">
-              <a th:href="@{/dashboard/home}" sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')" class="nav-link">
-                Dashboard
+        <div class="collapse navbar-collapse w-100 mt-4 rounded-md-pill ps-3 round-pill" id="navbarSupportedContent" >
+            <ul class="navbar-nav ms-auto text-mute" style="overflow-y: auto !important;"  id="menu-ul">
+              <li class="d-block d-md-none nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/members/form}">Membership</a></li>
+              <li class="nav-item fs-md-5 fs-6 pe-3 d-md-none d-block">
+                <a th:href="@{/dashboard/home}" sec:authorize="hasAnyRole('ADMIN', 'ROLE_CLERGY')" class="nav-link">
+                  Dashboard
               </a>
             </li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/church-services}">Services</a></li>
@@ -191,9 +389,9 @@
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/events}">Events</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/blogs}">Blogs</a></li>
             <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/contactUs}">Contact Us</a></li>
-            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/aboutUs}">About Us</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3 d-md-none"><a class="nav-link" th:href="@{/aboutUs}">About Us</a></li>
 <!--            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link" th:href="@{/theClergy}">The Clergy</a></li>-->
-            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link"  th:href="@{/shopping/products}" style="color: red !important;">Shop</a></li>
+            <li class="nav-item fs-md-5 fs-6 pe-3"><a class="nav-link fw-bold"  th:href="@{/shopping/products}" style="color: green !important;">Shop</a></li>
             <li class="nav-item fw-bold"><a class="nav-link" th:href="@{/donation/options}" style="color: white !important; display: inline-block; width: auto !important;"><h5 class="warning-button button-sm rounded-3">Donate</h5></a></li>
             <li sec:authorize="isAuthenticated()" class="nav-item fs-md-5 fs-6 pe-3 d-md-none d-block">
               <a th:href="@{/users/logout}" class="nav-link">
@@ -202,7 +400,7 @@
             </li>
 
           </ul>
-        </div>
+          </div>
       </div>
     </nav>
 
@@ -223,6 +421,9 @@
           window.location.href = url.toString();
         }
       }
+
+
+
     </script>
 
   </header>

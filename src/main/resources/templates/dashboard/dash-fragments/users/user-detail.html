@@ -9,7 +9,7 @@
   <div th:fragment="user-detail" class="mt-5">
     <div class="text-end mb-4">
           <a href="/dashboard/users" class="success-button me-2 mb-2">Back to Users List</a>
-          <a th:href="@{'/dashboard/users/edit/'+${user.userId}}" class="warning-button">Edit</a>
+          <a th:href="@{'/dashboard/users/edit/'+${anyUser.userId}}" class="warning-button">Edit</a>
     </div>
     <h1>User Details</h1>
 
@@ -19,11 +19,11 @@
         <h3>User Information</h3>
       </div>
       <div class="card-body">
-        <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
-        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
-        <p><strong>Registration Date:</strong> <span th:text="${user.registrationTime.format(@dateTimeFormatter)}"></span></p>
-        <p><strong>Status:</strong> <span th:text="${user.isActive ? 'Active' : 'Inactive'}"></span></p>
-        <p><strong>Blocked:</strong> <span th:text="${user.isBlocked ? 'Blocked' : 'Not Blocked'}"></span></p>
+        <p><strong>Username:</strong> <span th:text="${anyUser.username}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${anyUser.email}"></span></p>
+        <p><strong>Registration Date:</strong> <span th:text="${anyUser.registrationTime.format(@dateTimeFormatter)}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${anyUser.isActive ? 'Active' : 'Inactive'}"></span></p>
+        <p><strong>Blocked:</strong> <span th:text="${anyUser.isBlocked ? 'Blocked' : 'Not Blocked'}"></span></p>
       </div>
     </div>
 
@@ -33,15 +33,15 @@
         <h3>Profile Information</h3>
       </div>
       <div class="card-body">
-        <p><strong>Full Name:</strong> <span th:text="${user.userProfile?.firstName + ' ' + user.userProfile?.lastName}"></span></p>
-        <p><strong>Spiritual Father:</strong> <span th:text="${user.userProfile?.spiritualFatherName}"></span></p>
-        <p><strong>Christian Name:</strong> <span th:text="${user.userProfile?.christianName}"></span></p>
-        <p><strong>Gender:</strong> <span th:text="${user.userProfile?.gender}"></span></p>
-        <p><strong>Date of Birth:</strong> <span th:text="${user.userProfile?.dob}"></span></p>
-        <p><strong>Phone Number:</strong> <span th:text="${user.userProfile?.phoneNumber}"></span></p>
-        <p><strong>Biography:</strong> <span th:text="${user.userProfile?.biography}"></span></p>
+        <p><strong>Full Name:</strong> <span th:text="${anyUser.userProfile?.firstName + ' ' + anyUser.userProfile?.lastName}"></span></p>
+        <p><strong>Spiritual Father:</strong> <span th:text="${anyUser.userProfile?.spiritualFatherName}"></span></p>
+        <p><strong>Christian Name:</strong> <span th:text="${anyUser.userProfile?.christianName}"></span></p>
+        <p><strong>Gender:</strong> <span th:text="${anyUser.userProfile?.gender}"></span></p>
+        <p><strong>Date of Birth:</strong> <span th:text="${anyUser.userProfile?.dob}"></span></p>
+        <p><strong>Phone Number:</strong> <span th:text="${anyUser.userProfile?.phoneNumber}"></span></p>
+        <p><strong>Biography:</strong> <span th:text="${anyUser.userProfile?.biography}"></span></p>
         <p><strong>Profile Photo:</strong></p>
-        <img th:src="@{${user.userProfile?.profilePhoto}}" class="img-thumbnail" alt="Profile Photo" width="200">
+        <img th:src="@{${anyUser.userProfile?.profilePhoto}}" class="img-thumbnail" alt="Profile Photo" width="200">
       </div>
     </div>
 
@@ -52,7 +52,7 @@
       </div>
       <div class="card-body">
         <ul class="list-group">
-          <li th:each="role : ${user.roles}" class="list-group-item">
+          <li th:each="role : ${anyUser.roles}" class="list-group-item">
             <span th:text="${role.roleName}"></span> - <span th:text="${role.roleDescription}"></span>
           </li>
         </ul>
@@ -60,7 +60,7 @@
     </div>
     <div class="text-end mb-4">
       <a href="/dashboard/users" class="success-button me-2 mb-2">Back to Users List</a>
-      <a th:href="@{'/dashboard/users/edit/'+${user.userId}}" class="warning-button">Edit</a>
+      <a th:href="@{'/dashboard/users/edit/'+${anyUser.userId}}" class="warning-button">Edit</a>
     </div>
   </div>
 </body>

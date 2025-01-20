@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:fragment="title">Landing Page</title>
 </head>
-<body>
-    <main th:if="${landingContentList?.size() > 0}" th:fragment="landing-page" class="mt-5">
+<body th:fragment="landing-page" class="bg-smoke">
+    <main th:if="${landingContentList?.size() > 0}" th:class="${announcements?.size() > 0 or newsList?.size() > 0 ? 'mt-3' : ' mt-5'}" >
         <!-- Alert Messages -->
         <div th:if="${param.logout}" class="alert alert-success text-center" role="alert">
             You are logged out!
@@ -24,11 +24,11 @@
         </div>
 
         <!-- Content and Sidebar -->
-        <div class="row my-4 shadow-sm p-md-4 bg-white rounded">
+        <div class="row my-4 rounded">
             <!-- Main Content -->
-            <div class="col-md-9">
+            <div th:class="${announcements?.size() > 0 or newsList?.size() > 0 ? 'col-md-9' : ''}">
                 <div th:each="landingContent : ${landingContentList}" class="mb-3">
-                    <div class="shadow-sm p-md-3 rounded bg-light">
+                    <div class="shadow-sm p-3 p-md-5 rounded bg-white">
                         <p class="mb-0" th:utext="${landingContent.content}"></p>
                     </div>
                 </div>
@@ -36,24 +36,28 @@
 
             <!-- Announcements and News Sidebar -->
             <div th:if="${announcements?.size() > 0 or newsList?.size() > 0}" class="col-md-3">
-                <div class="shadow my-2 py-2 rounded-3">
+                <div class="shadow my-2 p-2 rounded-3 bg-beige">
                     <div class="">
                         <!-- Announcements Section -->
-                        <div th:if="${announcements?.size() > 0}">
-                            <h5 class="text-center mb-3">Featured Announcements</h5>
+                        <div th:if="${announcements?.size() > 0}" class="mb-5">
+                            <h6 class="text-center text-muted mb-3">Featured Announcements</h6>
                             <ul class="list-group list-group-flush">
-                                <li th:each="announcement : ${announcements}" class="list-group-item">
-                                    <span th:text="${announcement.title}"></span>
+                                <li th:each="announcement : ${announcements}" class="bg-beige list-group-item text-center mb-3">
+                                    <a th:href="@{/announcements/detail/{id}(id=${announcement.Id})}" class="text-success fw-bold link-hover">
+                                        <span th:text="${announcement.title}"></span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
 
                         <!-- News Section -->
                         <div th:if="${newsList?.size() > 0}" class="mt-4">
-                            <h5 class="text-center mb-3">Featured News</h5>
+                            <h6 class="text-center text-muted mb-3">Featured News</h6>
                             <ul class="list-group list-group-flush">
-                                <li th:each="news : ${newsList}" class="list-group-item">
-                                    <span th:text="${news.newsTitle}"></span>
+                                <li th:each="news : ${newsList}" class="list-group-item bg-beige text-center mb-3">
+                                    <a th:href="@{/news/detail/{id}(id=${news.newsId})}" class="text-success fw-bold link-hover">
+                                        <span th:text="${news.newsTitle}"></span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>

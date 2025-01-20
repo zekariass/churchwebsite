@@ -13,6 +13,7 @@ import com.churchwebsite.churchwebsite.services.payment.DonationService;
 import com.churchwebsite.churchwebsite.services.payment.StripeService;
 import com.churchwebsite.churchwebsite.utils.LocaleUtil;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +80,7 @@ public class DonationController {
     public String donationCheckout(@Valid @ModelAttribute("donation") Donation donation,
                                    BindingResult result,
                                    RedirectAttributes redirectAttributes,
+                                   HttpServletRequest request,
                                    Model model) {
 
 //        System.out.println("===========================================: "+ donation);
@@ -119,8 +121,8 @@ public class DonationController {
 
             // Call service to process checkout
             StripeResponse stripeResponse = stripeService.checkoutProducts(productRequest,
-                    "http://localhost:9090/donation/donation-success",
-                    "http://localhost:9090/donation/donation-cancel");
+                    getBaseUrl(request) + "/donation/donation-success",
+                    getBaseUrl(request) + "/donation/donation-cancel");
 
 
             // if there is a failure in stripe payment
@@ -142,6 +144,10 @@ public class DonationController {
 //        donationService.saveDonation(donation);
         return "redirect:/donation/donation-success";
 
+    }
+
+    private String getBaseUrl(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     }
 
 

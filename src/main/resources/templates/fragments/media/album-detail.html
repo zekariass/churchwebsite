@@ -75,19 +75,20 @@
     <div class="row g-4 mb-4">
         <!-- Gallery Item 1 -->
         <div th:each="image: ${images}" class="col-md-6">
-            <div class="card gallery-item">
-                <div class="card-body">
+            <div class="shadow gallery-item">
+                <div class="">
                     <!--           <img th:src="${baseMediaPath + image.mediaPath}" alt="Image 1" width="100%" style="max-height: 500px;">-->
-                    <img th:src="${image.imagePath}" th:alt="${image.imagePath}" style="max-height: 500px; width: 100%;" >
+                    <img th:src="${image.imagePath}" th:alt="${image.imagePath}" style="max-height: 500px; width: 100%;" class="rounded-3">
                     <div class="caption"></div>
                 </div>
                 <!-- Button for copying -->
-                <button class="btn btn-white path-btn text-primary"
-                        th:attr="data-copy=${image.imagePath}"
-                        onclick="copyToClipboard(this)">
-                    Copy The URL
-                </button>
-                <P class="text-success path-copied text-center" style="display: none;"> URL copied!</P>
+<!--                <button class="btn btn-white path-btn text-primary"-->
+<!--                        th:attr="data-copy=${image.imagePath}"-->
+<!--                        onclick="copyToClipboard(this)">-->
+<!--                    Copy The URL-->
+<!--                </button>-->
+                <!--                <P class="text-success path-copied text-center" style="display: none;"> URL copied!</P>-->
+                <P class="text-center h6 pt-2">[[${image.imageName}]]</P>
             </div>
         </div>
     </div>

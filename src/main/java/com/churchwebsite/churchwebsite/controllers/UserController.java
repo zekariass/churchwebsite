@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("dashboard/users")
@@ -64,7 +65,7 @@ public class UserController {
 
         model.addAttribute("roles", roleService.findAll());
 
-        model.addAttribute("users", users);
+        model.addAttribute("allUsers", users);
         model.addAttribute("activeDashPage", "users-list");
 
         return DASHBOARD_MAIN_PANEL;
@@ -75,7 +76,7 @@ public class UserController {
     @GetMapping("/edit/{id}")
     public String showUserEditForm(@PathVariable("id") User user, Model model){
 
-        model.addAttribute("user", user);
+        model.addAttribute("anyUser", user);
         model.addAttribute("userRoles", roleService.findAll());
         model.addAttribute("activeDashPage", "user-edit-form");
 
@@ -83,11 +84,13 @@ public class UserController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user, Model model){
-        if(user.isBlocked()){
-            user.setActive(false);
+    public String updateUser(@ModelAttribute("anyUser") User anyUser, Model model){
+        if(anyUser.isBlocked()){
+            anyUser.setActive(false);
         }
-        userService.saveUser(user);
+        Optional<User> existingUser = userService.getUserById(anyUser.getUserId());
+        existingUser.ifPresent(user -> anyUser.setPassword(user.getPassword()));
+        userService.saveUser(anyUser);
 
         return "redirect:/dashboard/users";
     }
@@ -95,7 +98,7 @@ public class UserController {
     @GetMapping("/detail/{id}")
     public String showUserDetail(@PathVariable("id") User user, Model model){
 
-        model.addAttribute("user", user);
+        model.addAttribute("anyUser", user);
         model.addAttribute("activeDashPage", "user-detail");
 
         return DASHBOARD_MAIN_PANEL;

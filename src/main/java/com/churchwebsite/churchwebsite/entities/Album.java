@@ -23,12 +23,13 @@ public class Album {
     private String albumDescription;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime creationTime;
 
     @Column(name = "is_archived")
     private boolean archived;
 
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<Image> imageList;
 
     public Album() {}

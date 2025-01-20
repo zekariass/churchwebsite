@@ -105,12 +105,15 @@ public class PasswordResetTokenController {
                 .append(savedToken.getToken());
 
         StringBuilder churchLogoUrl = new StringBuilder();
-        churchLogoUrl.append(scheme)
-                .append("://")
-                .append(serverName)
-                .append(":")
-                .append(serverPort)
-                .append(churchDetail.getChurch().getChurchLogo());
+
+        if (churchDetail != null && churchDetail.getChurch() != null){
+            churchLogoUrl.append(scheme)
+                    .append("://")
+                    .append(serverName)
+                    .append(":")
+                    .append(serverPort)
+                    .append(churchDetail.getChurch().getChurchLogo());
+        }
 
         String subject = "Password Reset Link";
 

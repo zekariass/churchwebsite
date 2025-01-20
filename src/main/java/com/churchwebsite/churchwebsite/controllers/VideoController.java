@@ -88,4 +88,18 @@ public class VideoController {
 
         return "redirect:/videos";
     }
+
+
+    @GetMapping("/edit/{id}")
+    public String editVideo(@PathVariable("id") int id, Model model){
+
+        Video video = videoService.findById(id);
+
+        model.addAttribute("activeDashPage", "video-form");
+        model.addAttribute("video", video);
+        model.addAttribute("pageTitle", "Video Form");
+
+
+        return DASHBOARD_MAIN_PANEL;
+    }
 }

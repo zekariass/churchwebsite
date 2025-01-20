@@ -77,6 +77,7 @@ public class PublicMediaCenterController {
                                 @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                                 @RequestParam(value = "size", required = false) Integer pageSize,
                                 @RequestParam(value = "sortBy", required = false, defaultValue = "creationTime") String sortBy,
+                                @RequestParam(value = "archived", defaultValue = "false") Boolean archived,
                                 AttachmentService attachmentService,
                                 AttachmentTypeService attachmentTypeService,
                                 HttpServletRequest request){
@@ -85,7 +86,7 @@ public class PublicMediaCenterController {
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
-        Page<Album> pagedAlbums = albumService.getAlbumList(page, pageSize, sortBy);
+        Page<Album> pagedAlbums = albumService.getAlbumListByArchived(page, pageSize, sortBy, archived);
         List<Album> albums = pagedAlbums.getContent();
 
         model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
@@ -109,7 +110,7 @@ public class PublicMediaCenterController {
                                   @RequestParam(value = "page", defaultValue = "1") int page,
                                   @RequestParam(value = "size", required = false) Integer pageSize,
                                   @RequestParam(value = "sortBy", defaultValue = "", required = false) String sortBy,
-                                  @RequestParam(value = "archived", required = false) Boolean archived,
+                                  @RequestParam(value = "archived", defaultValue = "false") Boolean archived,
                                   Model model,
                                   HttpServletRequest request){
 
@@ -146,7 +147,7 @@ public class PublicMediaCenterController {
     public String showVideoList(Model model,
                                 @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                                 @RequestParam(value = "size", required = false) Integer pageSize,
-                                @RequestParam(value = "archived", required = false) Boolean archived,
+                                @RequestParam(value = "archived", defaultValue = "false") Boolean archived,
                                 HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
@@ -183,14 +184,18 @@ public class PublicMediaCenterController {
                                      @RequestParam(value = "page", defaultValue = "1") int page,
                                      @RequestParam(value = "size", required = false) Integer pageSize,
                                      @RequestParam(value = "sortBy", defaultValue = "", required = false) String sortBy,
-                                     @RequestParam(value = "archived", required = false) Boolean archived,
+                                     @RequestParam(value = "archived", required = false, defaultValue = "false") Boolean archived,
+                                     @RequestParam(value = "name", required = false) String name,
                                      HttpServletRequest request){
 
         pageSize = (pageSize != null && pageSize > 0) ? pageSize: paginationService.getPageSize();
 
         Page<Attachment> pagedAttachments;
 
-        if(archived == null){
+        if(name != null){
+            pagedAttachments = attachmentService.findByAttachmentNameContaining(name, page, pageSize, sortBy);
+        }
+        else if(archived == null){
             pagedAttachments = attachmentService.findAll(page, pageSize, sortBy);
         }else{
             pagedAttachments = attachmentService.findByArchived(archived, page, pageSize, sortBy);

@@ -15,9 +15,9 @@
     align-items: center;
 }
 
-body {
-   background-color: #F5F5F5; /* Light background */
-  }
+/*body {
+   background-color: #F5F5F5;
+  }*/
 
 
 /* ============== HEADER ========================== */
@@ -41,9 +41,9 @@ footer{
     margin-right: 5%;
 }
 
-.content{
+/*.content{
     background-color: #FCFBF4 !important;
-}
+}*/
 
 @media (max-width: 768px){
     .content-page{
@@ -87,10 +87,9 @@ footer{
 
 /* =========================================================== */
 /******* NEWS LIST ***********/
-body{
+/*body{
     margin-top:20px;
-    background:#eee;
-}
+}*/
 
 .timeline {
     list-style-type: none;
@@ -425,4 +424,8 @@ body{
 
 tr:hover{
     background-color: #F5FEFD !important;
+}
+
+body{
+    background-color: #F5F5F5 !important;
 }

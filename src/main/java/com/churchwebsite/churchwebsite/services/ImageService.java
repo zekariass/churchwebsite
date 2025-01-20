@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ImageService {
@@ -121,5 +122,14 @@ public class ImageService {
 
         Album album = albumService.getAlbumById(albumId);
         return imageRepository.findByAlbumAndArchived(album, archived, pageable);
+    }
+
+
+    public Optional<Image> findById(int imageId) {
+        return imageRepository.findById(imageId);
+    }
+
+    public void deleteById(int imageId) {
+        imageRepository.deleteById(imageId);
     }
 }

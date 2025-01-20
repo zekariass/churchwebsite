@@ -32,6 +32,7 @@ public class AlbumController {
     private final ChurchDetailService churchDetailService;
 
 
+
 //    private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-fragments/dash-main-panel";
     private final String DASHBOARD_MAIN_PANEL = "dashboard/dash-layouts/dash-base";
 
@@ -144,11 +145,26 @@ public class AlbumController {
         return DASHBOARD_MAIN_PANEL;
     }
 
+    @GetMapping("/edit/{id}")
+    public String updateAlbum(@PathVariable(value = "id", required = false) int albumId, Model model){
+
+        Album album = albumService.getAlbumById(albumId);
+
+        model.addAttribute("album", album);
+        model.addAttribute("activeDashPage", "album-form");
+        model.addAttribute("churchDetail", churchDetailService.getChurchDetail());
+        model.addAttribute("pageTitle", "Album Form");
+
+        return DASHBOARD_MAIN_PANEL;
+    }
+
     @GetMapping("/delete/{id}")
-    public String showAlbumDelete(@PathVariable(value = "id", required = false) int albumId, Model model){
+    public String albumDelete(@PathVariable(value = "id", required = false) int albumId, Model model){
 
         albumService.deleteById(albumId);
 
         return "redirect:/images/albums/list";
     }
+
+
 }

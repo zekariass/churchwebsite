@@ -89,7 +89,9 @@ public class CloudinaryFileStorageManager {
 
     public void deleteFile(String publicId) throws IOException {
 
-        cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("invalidate", true));
+        if(publicId != null && !publicId.isEmpty()){
+            cloudinary.uploader().destroy(publicId, ObjectUtils.asMap("invalidate", true));
+        }
     }
 
 }

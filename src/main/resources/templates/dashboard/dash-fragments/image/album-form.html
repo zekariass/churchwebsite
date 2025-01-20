@@ -7,14 +7,19 @@
 <body th:fragment="album-form">
   <form th:action="@{/images/albums/processForm}" method="POST" class="width-75">
     <div th:fragment="album-form-fields" >
+      <input type="hidden" th:field="*{album.albumId}">
       <div class="my-3">
-        <label for="albumName" class="h3 form-label mb-3">Album Name</label>
+        <label for="albumName" class="form-label mb-3">Album Name</label>
         <input id="albumName" th:field="*{album.albumName}" type="text" class="form-control">
         <p th:if="${#fields.hasErrors('album')}" th:errors="*{album.albumName}" class="error"></p>
       </div>
       <div class="my-3">
-        <label for="albumDesc" class="h3 form-label mb-3">Album Description</label>
+        <label for="albumDesc" class="form-label mb-3">Album Description</label>
         <textarea id="albumDesc" th:field="*{album.albumDescription}"></textarea>
+      </div>
+      <div class="my-3">
+        <input id="isArchived" th:field="*{album.archived}" type="checkbox" class="form-check-input">
+        <label for="isArchived" class="form-check-label mb-3">Archive this album</label>
       </div>
     </div>
     <div>

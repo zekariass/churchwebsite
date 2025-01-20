@@ -260,8 +260,8 @@ public class CartController {
 
             // Call service to process checkout
             stripeResponse = stripeService.checkoutProducts(productRequest,
-                    "http://localhost:9090/shopping/cart/checkout-success",
-                    "http://localhost:9090/shopping/cart/checkout-cancel");
+                    getBaseUrl(request) + "/shopping/cart/checkout-success",
+                    getBaseUrl(request) + "/shopping/cart/checkout-cancel");
 
             // Add the response to the model
             model.addAttribute("stripeResponse", stripeResponse);
@@ -274,6 +274,11 @@ public class CartController {
 
         return null;
     }
+
+    private String getBaseUrl(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+    }
+
 
 
     @GetMapping("/checkout-success")
